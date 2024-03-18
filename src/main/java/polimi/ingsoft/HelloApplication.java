@@ -1,4 +1,4 @@
-package polimi.ingsoft.demo;
+package src.main.java.polimi.ingsoft;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

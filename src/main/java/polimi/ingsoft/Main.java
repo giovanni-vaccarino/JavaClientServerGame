@@ -1,3 +1,5 @@
+package src.main.java.polimi.ingsoft;
+
 import java.io.PrintStream;
 import java.util.Iterator;
 

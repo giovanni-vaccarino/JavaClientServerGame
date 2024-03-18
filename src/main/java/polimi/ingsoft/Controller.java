@@ -1,3 +1,5 @@
+package src.main.java.polimi.ingsoft;
+
 public class Controller {
     Tile tile;
     CartaOro cartaOro;

@@ -1,4 +1,4 @@
-package polimi.ingsoft.demo;
+package src.main.java.polimi.ingsoft;
 
 public class CartaOro implements ConditionalPointsCard {
     int getPoints() {

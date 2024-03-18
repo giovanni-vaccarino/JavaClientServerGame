@@ -1,3 +1,5 @@
+package src.main.java.polimi.ingsoft;
+
 public class QuestCard implements Drawable, ConditionalPointsCard {
 
     @Override

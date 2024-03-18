@@ -1,3 +1,5 @@
+package src.main.java.polimi.ingsoft;
+
 public enum Object implements Item {
     PARCHMENT("PAR"), SPELL("SPE");
 

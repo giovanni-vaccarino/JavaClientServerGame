@@ -1,4 +1,4 @@
-package polimi.ingsoft.demo;
+package src.main.java.polimi.ingsoft;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
