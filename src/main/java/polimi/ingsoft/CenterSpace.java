@@ -1,5 +1,4 @@
-package src.main.java.polimi.ingsoft;
-
+package polimi.ingsoft;
 import java.util.List;
 
 public class CenterSpace extends Space<Resource> {

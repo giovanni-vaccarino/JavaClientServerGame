@@ -1,4 +1,4 @@
-package src.main.java.polimi.ingsoft;
+package polimi.ingsoft;
 
 public class GoldCard extends GameCard implements Drawable, ConditionalPointsCard {
     private final Pattern pattern;

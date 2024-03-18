@@ -1,5 +1,4 @@
-package src.main.java.polimi.ingsoft;
-
-public class InitialCard extends GameCard implements Drawable{
+package polimi.ingsoft;
+public class InitialCard extends GameCard implements Drawable {
 
 }

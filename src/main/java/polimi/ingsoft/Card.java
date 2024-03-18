@@ -1,7 +1,12 @@
-package src.main.java.polimi.ingsoft;
+package polimi.ingsoft;
 
 /**
  * Oggetto carta, con 2 facce orientate
  */
-public interface Card {
+public abstract class Card {
+    private int score;
+
+    public int getScore() {
+        return score;
+    }
 }

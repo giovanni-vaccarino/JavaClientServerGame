@@ -1,4 +1,5 @@
-package src.main.java.polimi.ingsoft;
+package polimi.ingsoft;
+import polimi.ingsoft.CardCollection;
 
-public interface Deck<T extends Drawable> {
+public class Deck extends CardCollection<MixedCard> {
 }
