@@ -4,6 +4,17 @@ import java.util.List;
 
 public abstract class Space<T extends Item> {
 
-    List<Item> items;
-    public abstract List<T> getItems();
+    protected final List<T> items;
+
+    protected Space(List<T> items) {
+        this.items = items;
+    }
+
+    public List<T> getItems() {
+        return items;
+    }
+
+    public boolean isEmpty(){
+        return items.isEmpty();
+    }
 }
