@@ -1,7 +1,8 @@
 package polimi.ingsoft;
 
 public class Message {
-    private String sender,text;
+    private String sender;
+    private String text;
 
     public Message(String sender,String text){
         this.sender=new String(sender);

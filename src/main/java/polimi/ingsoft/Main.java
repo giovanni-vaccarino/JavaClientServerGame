@@ -71,16 +71,6 @@ do
 
 
 
-class Tabellone {
-    DrawableDeck<ResourceCard> deck;
-    ResourceCard slotA, slotB;
-
-    public ResourceCard getSlotA() {
-        ResourceCard result = slotA;
-        slotA = deck.pop();
-        return result;
-    }
-}
 
 class TabelloneController {
 
