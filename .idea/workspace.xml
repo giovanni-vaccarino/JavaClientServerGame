@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="global package name change">
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Coordinates.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlayedCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_03_2024_16_30_[Changes]1/shelved.patch" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_03_2024_16_30_[Changes]1/shelved.patch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CornerSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CornerSpace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Face.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Face.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/ItemPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/ItemPosition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlayedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlayedCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

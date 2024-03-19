@@ -51,4 +51,21 @@ public class PlayedCard {
     public boolean isFacingUp() {
         return facingUp;
     }
+
+    public CornerSpace getUpRightCorner(){
+        return card.getUpRightCorner(facingUp);
+    }
+
+    public CornerSpace getUpLeftCorner(){
+        return card.getUpLeftCorner(facingUp);
+    }
+
+    public CornerSpace getBottomRightCorner(){
+        return card.getBottomRightCorner(facingUp);
+    }
+
+    public CornerSpace getBottomLeftCorner(){
+        return card.getBottomLeftCorner(facingUp);
+    }
+
 }

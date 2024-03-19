@@ -17,7 +17,21 @@ public abstract class GameCard extends Card {
         return this.back;
     }
 
-    
+    public CornerSpace getUpLeftCorner(boolean isFront){
+        return isFront ? front.getUpLeft(): back.getUpLeft();
+    }
+
+    public CornerSpace getUpRightCorner(boolean isFront){
+        return isFront ? front.getUpRight(): back.getUpRight();
+    }
+
+    public CornerSpace getBottomLeftCorner(boolean isFront){
+        return isFront ? front.getBottomLeft(): back.getBottomLeft();
+    }
+
+    public CornerSpace getBottomRightCorner(boolean isFront){
+        return isFront ? front.getBottomRight(): back.getBottomLeft());
+    }
 
 
 }
