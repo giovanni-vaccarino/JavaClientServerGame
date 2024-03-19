@@ -1,0 +1,256 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"a0c1a128-e941-4630-9b78-dcdd7878dcba\" name=\"Changes\" comment=\"global package name change\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/CardCollection.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Chat.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Message.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Card.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Card.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/CartaOro.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/CartaOro.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/CenterSpace.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/CenterSpace.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/ConditionalPointsCard.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/ConditionalPointsCard.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Deck.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Deck.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Drawable.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Drawable.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Face.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Face.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/GoldCard.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/GoldCard.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/InitialCard.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/InitialCard.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Item.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Item.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/MixedCard.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/MixedCard.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Pattern.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Pattern.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Resource.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Resource.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Space.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/polimi/ingsoft/Space.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Andrea-Vigano&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">\r\n    <option name=\"selectedUrlAndAccountId\">\r\n      <UrlAndAccount>\r\n        <option name=\"accountId\" value=\"df494cd9-ccb7-4f2c-ad2e-5678a1910c73\" />\r\n        <option name=\"url\" value=\"https://github.com/gianniiiiii/ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino.git\" />\r\n      </UrlAndAccount>\r\n    </option>\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHomeTypeForPersistence\" value=\"WRAPPER\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2drVvuRFK2LrwhhHRBdOO4n80Xn\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Project\",\r\n    \"project.structure.proportion\": \"0.0\",\r\n    \"project.structure.side.proportion\": \"0.0\",\r\n    \"settings.editor.selected.configurable\": \"preferences.lookFeel\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"a0c1a128-e941-4630-9b78-dcdd7878dcba\" name=\"Changes\" comment=\"\" />\r\n      <created>1710766420909</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1710766420909</updated>\r\n      <workItem from=\"1710766422055\" duration=\"744000\" />\r\n      <workItem from=\"1710772404695\" duration=\"4650000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"global package name change\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1710767589141</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1710767589141</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.History.Properties\">\r\n    <option name=\"COLUMN_ID_ORDER\">\r\n      <list>\r\n        <option value=\"Default.Root\" />\r\n        <option value=\"Default.Author\" />\r\n        <option value=\"Default.Date\" />\r\n        <option value=\"Default.Subject\" />\r\n        <option value=\"Space.CommitStatus\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"global package name change\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"global package name change\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,27 +4,15 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="global package name change">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CardCollection.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Chat.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Message.java" afterDir="false" />
++    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="various fixes with package import&#10;new class chat&#10;new class message">
++      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Board.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Coordinates.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlayedCard.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Card.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CartaOro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CartaOro.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CenterSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CenterSpace.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/ConditionalPointsCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/ConditionalPointsCard.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Deck.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Drawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Drawable.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Face.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Face.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CornerSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CornerSpace.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GoldCard.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/InitialCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/InitialCard.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Item.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/MixedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/MixedCard.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Pattern.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Resource.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Space.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Tile.java" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -67,33 +55,34 @@
+ }</component>
+   <component name="ProjectId" id="2drVvuRFK2LrwhhHRBdOO4n80Xn" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
++    <OptionsSetting value="false" id="Update" />
+     <ConfirmationsSetting value="2" id="Add" />
+   </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "git-widget-placeholder": "master",
+-    "ignore.virus.scanning.warn.message": "true",
+-    "kotlin-language-version-configured": "true",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Project",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.0",
+-    "settings.editor.selected.configurable": "preferences.lookFeel",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
++    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+@@ -110,7 +99,9 @@
+       <option name="presentableId" value="Default" />
+       <updated>1710766420909</updated>
+       <workItem from="1710766422055" duration="744000" />
+-      <workItem from="1710772404695" duration="4650000" />
++      <workItem from="1710772404695" duration="4767000" />
++      <workItem from="1710854603891" duration="2695000" />
++      <workItem from="1710857827319" duration="2646000" />
+     </task>
+     <task id="LOCAL-00001" summary="global package name change">
+       <option name="closed" value="true" />
+@@ -120,7 +111,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1710767589141</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="various fixes with package import&#10;new class chat&#10;new class message">
++      <option name="closed" value="true" />
++      <created>1710777325015</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1710777325015</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -151,6 +150,7 @@
+   <component name="VcsManagerConfiguration">
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="global package name change" />
+-    <option name="LAST_COMMIT_MESSAGE" value="global package name change" />
++    <MESSAGE value="various fixes with package import&#10;new class chat&#10;new class message" />
++    <option name="LAST_COMMIT_MESSAGE" value="various fixes with package import&#10;new class chat&#10;new class message" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/polimi/ingsoft/Coordinates.java
+===================================================================
+diff --git a/src/main/java/polimi/ingsoft/Coordinates.java b/src/main/java/polimi/ingsoft/Coordinates.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/polimi/ingsoft/Coordinates.java	
+@@ -0,0 +1,35 @@
++package polimi.ingsoft;
++
++public class Coordinates {
++    private final int x;
++    private final int y;
++    public Coordinates(int x,int y){
++        this.x=x;
++        this.y=y;
++    }
++    public Coordinates upLeft(){
++        return new Coordinates(this.x-1,this.y+1);
++    }
++    public Coordinates upRight(){
++        return new Coordinates(this.x+1,this.y+1);
++    }
++    public Coordinates downLeft(){
++        return new Coordinates(this.x-1,this.y-1);
++    }
++    public Coordinates downRight(){
++        return new Coordinates(this.x+1,this.y-1);
++    }
++
++    public Coordinates Up(){
++        return new Coordinates(this.x,this.y+2);
++    }
++    public Coordinates Down(){
++        return new Coordinates(this.x,this.y-2);
++    }
++    public Coordinates Left(){
++        return new Coordinates(this.x-2,this.y);
++    }
++    public Coordinates Right(){
++        return new Coordinates(this.x+2,this.y);
++    }
++}
+Index: src/main/java/polimi/ingsoft/PlayedCard.java
+===================================================================
+diff --git a/src/main/java/polimi/ingsoft/PlayedCard.java b/src/main/java/polimi/ingsoft/PlayedCard.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/polimi/ingsoft/PlayedCard.java	
+@@ -0,0 +1,54 @@
++package polimi.ingsoft;
++
++public class PlayedCard {
++    private GameCard card;
++    private boolean upRight=true;
++    private boolean upLeft=true;
++    private boolean downRight=true;
++    private boolean downLeft=true;
++    final private boolean facingUp;
++
++    public PlayedCard(GameCard card,boolean facingUp){
++        this.card=card;
++        this.facingUp=facingUp;
++    }
++    public Face getFace(){
++        return facingUp ? card.getFront() : card.getBack();
++    }
++    public void setUpRight(){
++        this.upRight=false;
++    }
++    public void setUpLeft() {
++        this.upLeft = false;
++    }
++    public void setDownRight() {
++        this.downRight = false;
++    }
++    public void setDownLeft() {
++        this.downLeft = false;
++    }
++
++    public GameCard getCard() {
++        return card;
++    }
++
++    public boolean isFreeUpRight() {
++        return upRight;
++    }
++
++    public boolean isFreeUpLeft() {
++        return upLeft;
++    }
++
++    public boolean isFreeDownRight() {
++        return downRight;
++    }
++
++    public boolean isFreeDownLeft() {
++        return downLeft;
++    }
++
++    public boolean isFacingUp() {
++        return facingUp;
++    }
++}
+Index: src/main/java/polimi/ingsoft/ItemPosition.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package src.main.java.polimi.ingsoft;\r\n\r\npublic enum ItemPosition {\r\n    TOP_RIGHT,TOP_LEFT,BOTTOM_RIGHT,BOTTOM_LEFT;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/polimi/ingsoft/ItemPosition.java b/src/main/java/polimi/ingsoft/ItemPosition.java
+--- a/src/main/java/polimi/ingsoft/ItemPosition.java	
++++ b/src/main/java/polimi/ingsoft/ItemPosition.java	
+@@ -1,4 +1,4 @@
+-package src.main.java.polimi.ingsoft;
++package polimi.ingsoft;
+ 
+ public enum ItemPosition {
+     TOP_RIGHT,TOP_LEFT,BOTTOM_RIGHT,BOTTOM_LEFT;

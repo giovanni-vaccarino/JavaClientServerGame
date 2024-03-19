@@ -1,4 +1,4 @@
-package src.main.java.polimi.ingsoft;
+package polimi.ingsoft;
 
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -25,7 +25,6 @@ public class Main {
         } while (!lastRound);
     }
 }
-
 class Player {}
 abstract class MatchController {
     Player currentPlayer;
@@ -71,6 +70,16 @@ do
 
 
 
+class Tabellone {
+    DrawableDeck<ResourceCard> deck;
+    ResourceCard slotA, slotB;
+
+    public ResourceCard getSlotA() {
+        ResourceCard result = slotA;
+        slotA = deck.pop();
+        return result;
+    }
+}
 
 class TabelloneController {
 

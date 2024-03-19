@@ -7,6 +7,17 @@ public abstract class GameCard extends Card {
     public GameCard(Face front,Face back){
         this.front=front;
         this.back=back;
-        }
+    }
+
+    public Face getFront(){
+        return this.front;
+    }
+
+    public Face getBack(){
+        return this.back;
+    }
+
+    
+
 
 }
