@@ -8,7 +8,7 @@ public class Board {
     }
 
     public void add(Coordinates position,PlayedCard card){
-        if(this.verifica(position)) {
+        if(this.check(position)) {
             this.placedCards.put(position, card);
             if(placedCards.containsKey(position.downRight()))placedCards.get(position.downRight()).setUpLeft();
             if(placedCards.containsKey(position.upRight()))placedCards.get(position.upRight()).setDownLeft();
@@ -17,7 +17,7 @@ public class Board {
             }
     }
 
-    public boolean verifica(Coordinates position){
+    public boolean check(Coordinates position){
         boolean verify=false;
         if(placedCards.containsKey(position))return verify;
         if(!(placedCards.containsKey(position.downLeft()) || placedCards.containsKey(position.upLeft())
