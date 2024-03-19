@@ -26,7 +26,6 @@ public class Main {
         controller.endMatch(matchController.getMatchId());
     }
 }
-
 class Player {}
 abstract class MatchController {
     Player currentPlayer;
