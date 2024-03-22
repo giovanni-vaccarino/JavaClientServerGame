@@ -7,14 +7,16 @@ public class Board {
         this.placedCards = new HashMap<Coordinates, PlayedCard>();
     }
 
-    public void add(Coordinates position,PlayedCard card){
+    public boolean add(Coordinates position,PlayedCard card){
         if(this.check(position)) {
             this.placedCards.put(position, card);
-            if(placedCards.containsKey(position.downRight()))placedCards.get(position.downRight()).setUpLeft();
-            if(placedCards.containsKey(position.upRight()))placedCards.get(position.upRight()).setDownLeft();
-            if(placedCards.containsKey(position.upLeft()))placedCards.get(position.upLeft()).setDownRight();
-            if(placedCards.containsKey(position.downLeft()))placedCards.get(position.downLeft()).setUpRight();
-            }
+            if (placedCards.containsKey(position.downRight())) placedCards.get(position.downRight()).setUpLeft();
+            if (placedCards.containsKey(position.upRight())) placedCards.get(position.upRight()).setDownLeft();
+            if (placedCards.containsKey(position.upLeft())) placedCards.get(position.upLeft()).setDownRight();
+            if (placedCards.containsKey(position.downLeft())) placedCards.get(position.downLeft()).setUpRight();
+            return true;
+        }
+        return false;
     }
 
     public boolean check(Coordinates position){

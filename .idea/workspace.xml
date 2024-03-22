@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="minor change in board's method's name">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="it's reported as not pushed yet">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_03_2024_16_30_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +87,8 @@
       <updated>1710766420909</updated>
       <workItem from="1710766422055" duration="744000" />
       <workItem from="1710772404695" duration="4650000" />
+      <workItem from="1710866018863" duration="127000" />
+      <workItem from="1711101492545" duration="1304000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -111,7 +114,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710865955868</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="it's reported as not pushed yet">
+      <option name="closed" value="true" />
+      <created>1710866088636</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710866088636</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +155,7 @@
     <MESSAGE value="global package name change" />
     <MESSAGE value="new class playedcard&#10;new class coordinates&#10;almost fixed class cornerspace&#10;almost fixed class face" />
     <MESSAGE value="minor change in board's method's name" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor change in board's method's name" />
+    <MESSAGE value="it's reported as not pushed yet" />
+    <option name="LAST_COMMIT_MESSAGE" value="it's reported as not pushed yet" />
   </component>
 </project>
