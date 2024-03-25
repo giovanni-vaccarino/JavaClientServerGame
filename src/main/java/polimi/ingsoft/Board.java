@@ -24,14 +24,11 @@ public class Board {
         if(placedCards.containsKey(position))return verify;
         if(!(placedCards.containsKey(position.downLeft()) || placedCards.containsKey(position.upLeft())
                 || placedCards.containsKey(position.upRight()) || placedCards.containsKey(position.downRight())))return verify;
+
         if(placedCards.containsKey(position.downRight()) && placedCards.get(position.downRight()).getUpLeftCorner()==null)return verify;
         if(placedCards.containsKey(position.upRight()) && placedCards.get(position.upRight()).getBottomLeftCorner()==null)return verify;
         if(placedCards.containsKey(position.upLeft()) && placedCards.get(position.upLeft()).getBottomRightCorner()==null)return verify;
         if(placedCards.containsKey(position.downLeft()) && placedCards.get(position.downLeft()).getUpRightCorner()==null)return verify;
         return !verify;
         }
-
-
-
-    }
 }

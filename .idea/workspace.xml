@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="minor update on class Board">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="minor update on class Board 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +90,7 @@
       <workItem from="1710772404695" duration="4650000" />
       <workItem from="1710866018863" duration="127000" />
       <workItem from="1711101492545" duration="1608000" />
-      <workItem from="1711376860145" duration="2509000" />
+      <workItem from="1711376860145" duration="3862000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -131,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711103095458</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="minor update on class Board 2">
+      <option name="closed" value="true" />
+      <created>1711383978302</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1711383978302</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +175,7 @@
     <MESSAGE value="minor change in board's method's name" />
     <MESSAGE value="it's reported as not pushed yet" />
     <MESSAGE value="minor update on class Board" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor update on class Board" />
+    <MESSAGE value="minor update on class Board 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor update on class Board 2" />
   </component>
 </project>
