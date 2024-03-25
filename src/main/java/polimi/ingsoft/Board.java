@@ -7,9 +7,9 @@ public class Board {
         this.placedCards = new HashMap<Coordinates, PlayedCard>();
     }
 
-    public boolean add(Coordinates position,PlayedCard card){
+    public boolean add(Coordinates position,GameCard card,boolean facingUp){
         if(this.check(position)) {
-            this.placedCards.put(position, card);
+            this.placedCards.put(position, new PlayedCard(card,facingUp));
             if (placedCards.containsKey(position.downRight())) placedCards.get(position.downRight()).setUpLeft();
             if (placedCards.containsKey(position.upRight())) placedCards.get(position.upRight()).setDownLeft();
             if (placedCards.containsKey(position.upLeft())) placedCards.get(position.upLeft()).setDownRight();
