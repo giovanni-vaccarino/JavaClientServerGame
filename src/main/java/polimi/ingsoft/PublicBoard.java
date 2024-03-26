@@ -5,28 +5,29 @@ public class PublicBoard {
         RESOURCE, GOLD, MIXED
     }
 
-    private final PlaceInPublicBoard<ResourceCard> placeA;
-    private final PlaceInPublicBoard<GoldCard> placeB;
-    private final PlaceInPublicBoard<MixedCard> placeC;
+    private final PlaceInPublicBoard<ResourceCard> placeResource;
+    private final PlaceInPublicBoard<GoldCard> placeGold;
+    private final PlaceInPublicBoard<MixedCard> placeMixed;
 
-    public PublicBoard(Deck<ResourceCard> resourceCardsDeck, Deck<GoldCard> goldCardsDeck, Deck<MixedCard> mixedCardDeck) {
-        placeA = new PlaceInPublicBoard<>(resourceCardsDeck);
-        placeB = new PlaceInPublicBoard<>(goldCardsDeck);
-        placeC = new PlaceInPublicBoard<>(mixedCardDeck);
+    public PublicBoard(
+            Deck<ResourceCard> resourceCardsDeck,
+            Deck<GoldCard> goldCardsDeck,
+            Deck<MixedCard> mixedCardDeck
+    ) {
+        placeResource = new PlaceInPublicBoard<>(resourceCardsDeck);
+        placeGold = new PlaceInPublicBoard<>(goldCardsDeck);
+        placeMixed = new PlaceInPublicBoard<>(mixedCardDeck);
     }
 
-    public GameCard getCard(PublicBoard.Slots boardSlot, PlaceInPublicBoard.Slots spaceSlot) {
-        switch (boardSlot) {
-            case RESOURCE -> {
-                return placeA.get(spaceSlot);
-            }
-            case GOLD -> {
-                return placeB.get(spaceSlot);
-            }
-            case MIXED -> {
-                return placeC.get(spaceSlot);
-            }
-        }
-        return null;
+    public ResourceCard getResource(PlaceInPublicBoard.Slots spaceSlot) {
+        return placeResource.get(spaceSlot);
+    }
+
+    public GoldCard getGold(PlaceInPublicBoard.Slots spaceSlot) {
+        return placeGold.get(spaceSlot);
+    }
+
+    public MixedCard getMixed(PlaceInPublicBoard.Slots spaceSlot) {
+        return placeMixed.get(spaceSlot);
     }
 }
