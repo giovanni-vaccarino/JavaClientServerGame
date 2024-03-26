@@ -3,12 +3,13 @@ package polimi.ingsoft;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerHand <T extends Drawable> extends CardCollection<T>{
-    List<Card> cards=new ArrayList<Card>();
+// TODO change generic to MixedCards
+public class PlayerHand<T extends Drawable> extends CardCollection<T>{
+    public T get(int index){
+        return this.cards.get(index);
+    }
 
-    public Card draw(){
-        Card temp=cards.get();
-        cards.remove(cards.get());
-        return temp;
-        }
+    public void add(T card) {
+        this.cards.addLast(card);
+    }
 }

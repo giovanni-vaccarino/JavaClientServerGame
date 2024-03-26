@@ -1,15 +1,32 @@
 package polimi.ingsoft;
 
 public class PublicBoard {
-    Place[] place=new Place[3];
+    public enum Slots {
+        RESOURCE, GOLD, MIXED
+    }
 
-    public PublicBoard(){
-        for (Place x : place)x=new Place();
+    private final PlaceInPublicBoard<ResourceCard> placeA;
+    private final PlaceInPublicBoard<GoldCard> placeB;
+    private final PlaceInPublicBoard<MixedCard> placeC;
+
+    public PublicBoard(Deck<ResourceCard> resourceCardsDeck, Deck<GoldCard> goldCardsDeck, Deck<MixedCard> mixedCardDeck) {
+        placeA = new PlaceInPublicBoard<>(resourceCardsDeck);
+        placeB = new PlaceInPublicBoard<>(goldCardsDeck);
+        placeC = new PlaceInPublicBoard<>(mixedCardDeck);
+    }
+
+    public GameCard getCard(PublicBoard.Slots boardSlot, PlaceInPublicBoard.Slots spaceSlot) {
+        switch (boardSlot) {
+            case RESOURCE -> {
+                return placeA.get(spaceSlot);
+            }
+            case GOLD -> {
+                return placeB.get(spaceSlot);
+            }
+            case MIXED -> {
+                return placeC.get(spaceSlot);
+            }
         }
-    public Card getCard(int space,int pos) throws IndexOutOfBoundsException{
-        if(pos<0 || pos>2)return null;
-        return this.place[space].getCard(pos);
-
+        return null;
     }
 }
-

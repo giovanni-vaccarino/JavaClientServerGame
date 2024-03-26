@@ -1,4 +1,7 @@
 package polimi.ingsoft;
 
-public interface MixedCard extends Drawable{
+public abstract class MixedCard extends GameCard {
+    public MixedCard(Face front, Face back) {
+        super(front, back);
+    }
 }

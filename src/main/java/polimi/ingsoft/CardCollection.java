@@ -1,4 +1,8 @@
 package polimi.ingsoft;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class CardCollection <T extends Drawable>{
-    public abstract Card draw();
+    List<T> cards = new ArrayList<>();
 }
