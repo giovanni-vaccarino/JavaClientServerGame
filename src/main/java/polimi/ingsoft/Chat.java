@@ -1,15 +1,16 @@
 package polimi.ingsoft;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Chat {
-    List<Message> messages;
-    public Chat(){
-        messages=new ArrayList<Message>();
+    private final ArrayList<Message> messages = new ArrayList<>();
+
+    public void addMessage(PlayerColors sender, String text) {
+        messages.add(new Message(sender, text));
     }
-    public void newMessage(String sender, String text){ // il sender sarà un'enumerazione(giallo, verde....)
-        messages.add(new Message(sender,text));
-        System.out.println(sender+text); //inserire metodo per stampare ultimo messaggio
-        }
-    public void updatePrintedChat(){}
+
+    public String printable() {
+        return "";
+    }
+
+    public void updatePrintedChat() { }
 }
