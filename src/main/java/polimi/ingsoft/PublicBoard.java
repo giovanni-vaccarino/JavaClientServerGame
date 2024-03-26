@@ -1,9 +1,6 @@
 package polimi.ingsoft;
 
 public class PublicBoard {
-    public enum Slots {
-        RESOURCE, GOLD, MIXED
-    }
 
     private final PlaceInPublicBoard<ResourceCard> placeResource;
     private final PlaceInPublicBoard<GoldCard> placeGold;
