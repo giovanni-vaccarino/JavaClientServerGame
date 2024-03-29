@@ -1,7 +1,6 @@
 package polimi.ingsoft.model;
 public class Face {
     private CornerSpace upLeft,upRight,bottomLeft,bottomRight;
-
     public CornerSpace getUpLeft(){
         return upLeft;
     }
