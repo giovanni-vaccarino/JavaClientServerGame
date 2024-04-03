@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="minor update on class Board 2">
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/demo/ClassClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/BoardTest.java" afterDir="false" />
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="update con class Board- creator method">
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/CoordinatesTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/CornerSpaceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/FaceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/enumerations/Object.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/enumerations/Object.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CenterSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CenterSpace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Coordinates.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Face.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Face.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Space.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/BoardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +64,14 @@
     "Application.Main.executor": "Run",
     "JUnit.BoardTest.add.executor": "Run",
     "JUnit.BoardTest.executor": "Run",
+    "JUnit.CoordinatesTest.executor": "Run",
+    "JUnit.CoordinatesTest.upLeft.executor": "Run",
+    "JUnit.CornerSpaceTest.getItems.executor": "Run",
+    "JUnit.CornerSpaceTest.isEmpty.executor": "Run",
+    "JUnit.FaceTest.executor": "Run",
+    "JUnit.FaceTest.getUpLeft.executor": "Run",
+    "JUnit.FaceTest.getUpRight.executor": "Run",
+    "JUnit.FaceTest.setUpLeft.executor": "Run",
     "JUnit.MainTest.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -93,21 +106,8 @@
       <recent name="polimi.ingsoft" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BoardTest.add">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.Main" />
-      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.FaceTest">
+    <configuration name="CornerSpaceTest.isEmpty" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
@@ -116,39 +116,71 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTest.add" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
-      <option name="METHOD_NAME" value="add" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.CornerSpaceTest" />
+      <option name="METHOD_NAME" value="isEmpty" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainTest.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="FaceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.*" />
+          <option name="PATTERN" value="polimi.ingsoft.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="polimi.ingsoft" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.MainTest" />
-      <option name="METHOD_NAME" value="main" />
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FaceTest.getUpLeft" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
+      <option name="METHOD_NAME" value="getUpLeft" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FaceTest.getUpRight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
+      <option name="METHOD_NAME" value="getUpRight" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FaceTest.setUpLeft" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
+      <option name="METHOD_NAME" value="setUpLeft" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -156,10 +188,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.BoardTest.add" />
-        <item itemvalue="JUnit.BoardTest" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.MainTest.main" />
+        <item itemvalue="JUnit.FaceTest" />
+        <item itemvalue="JUnit.FaceTest.getUpRight" />
+        <item itemvalue="JUnit.FaceTest.setUpLeft" />
+        <item itemvalue="JUnit.FaceTest.getUpLeft" />
+        <item itemvalue="JUnit.CornerSpaceTest.isEmpty" />
       </list>
     </recent_temporary>
   </component>
@@ -184,6 +217,8 @@
       <workItem from="1711101492545" duration="1608000" />
       <workItem from="1711376860145" duration="3996000" />
       <workItem from="1711459624870" duration="3754000" />
+      <workItem from="1711725445036" duration="155000" />
+      <workItem from="1712133381817" duration="6703000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -241,7 +276,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711385628363</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update con class Board- creator method">
+      <option name="closed" value="true" />
+      <created>1711725420923</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711725420923</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,6 +320,7 @@
     <MESSAGE value="it's reported as not pushed yet" />
     <MESSAGE value="minor update on class Board" />
     <MESSAGE value="minor update on class Board 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor update on class Board 2" />
+    <MESSAGE value="update con class Board- creator method" />
+    <option name="LAST_COMMIT_MESSAGE" value="update con class Board- creator method" />
   </component>
 </project>

@@ -1,4 +1,7 @@
 package polimi.ingsoft.model;
+
+import java.util.Objects;
+
 public class Face {
     private CornerSpace upLeft,upRight,bottomLeft,bottomRight;
     public CornerSpace getUpLeft(){
@@ -26,4 +29,16 @@ public class Face {
         this.bottomRight = bottomRight;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Face face = (Face) o;
+        return Objects.equals(upLeft, face.upLeft) && Objects.equals(upRight, face.upRight) && Objects.equals(bottomLeft, face.bottomLeft) && Objects.equals(bottomRight, face.bottomRight);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(upLeft, upRight, bottomLeft, bottomRight);
+    }
 }
