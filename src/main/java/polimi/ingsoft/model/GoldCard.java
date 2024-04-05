@@ -2,8 +2,8 @@ package polimi.ingsoft.model;
 
 public class GoldCard extends MixedCard implements ConditionalPointsCard {
     private final Pattern pattern;
-    public GoldCard(Face front, Face back, Pattern pattern) {
-        super(front, back);
+    public GoldCard(Face front, Face back, Pattern pattern,int score) {
+        super(front, back,score);
         this.pattern = pattern;
     }
     @Override

@@ -4,6 +4,35 @@ import java.util.Objects;
 
 public class Face {
     private CornerSpace upLeft,upRight,bottomLeft,bottomRight;
+    private CenterSpace center;
+    public CenterSpace getCenter(){
+        return center;
+    }
+
+    public Face(){
+        upLeft=null;
+        upRight=null;
+        bottomLeft=null;
+        bottomRight=null;
+        center=null;
+    }
+    public Face(CornerSpace upLeft,CornerSpace upRight, CornerSpace bottomLeft, CornerSpace bottomRight){
+        this.upLeft=upLeft;
+        this.upRight=upRight;
+        this.bottomRight=bottomRight;
+        this.bottomLeft=bottomLeft;
+        this.center=null;
+    }
+    public Face(CornerSpace upLeft,CornerSpace upRight, CornerSpace bottomLeft, CornerSpace bottomRight,CenterSpace center){
+        this.upLeft=upLeft;
+        this.upRight=upRight;
+        this.bottomRight=bottomRight;
+        this.bottomLeft=bottomLeft;
+        this.center=center;
+    }
+    public void setCenter(CenterSpace center){
+        this.center=center;
+    }
     public CornerSpace getUpLeft(){
         return upLeft;
     }
