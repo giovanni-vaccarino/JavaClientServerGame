@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="update con class Board- creator method">
-      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/CoordinatesTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/CornerSpaceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/FaceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/enumerations/Object.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/enumerations/Object.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CenterSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CenterSpace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Face.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Face.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Space.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/BoardTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -218,7 +207,7 @@
       <workItem from="1711376860145" duration="3996000" />
       <workItem from="1711459624870" duration="3754000" />
       <workItem from="1711725445036" duration="155000" />
-      <workItem from="1712133381817" duration="6703000" />
+      <workItem from="1712133381817" duration="6931000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -284,7 +273,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711725420923</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources">
+      <option name="closed" value="true" />
+      <created>1712141339462</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1712141339462</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,6 +318,7 @@
     <MESSAGE value="minor update on class Board" />
     <MESSAGE value="minor update on class Board 2" />
     <MESSAGE value="update con class Board- creator method" />
-    <option name="LAST_COMMIT_MESSAGE" value="update con class Board- creator method" />
+    <MESSAGE value="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources" />
+    <option name="LAST_COMMIT_MESSAGE" value="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources" />
   </component>
 </project>
