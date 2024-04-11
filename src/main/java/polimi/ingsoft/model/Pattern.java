@@ -1,5 +1,5 @@
 package polimi.ingsoft.model;
 
 public interface Pattern {
-    int getMatches(Board playerBoard);
+    public int getMatch(Board board);
 }

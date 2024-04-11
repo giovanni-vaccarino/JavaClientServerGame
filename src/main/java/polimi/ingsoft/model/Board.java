@@ -10,6 +10,9 @@ public class Board {
         this.cards=new HashMap<Coordinates,PlayedCard>();
         this.add(new Coordinates(0,0),initialcard,isFaceUp);
     }
+    public PlayedCard getCard(Coordinates coordinates){
+        return cards.get(coordinates);
+    }
 
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
         if(this.check(position)) {
