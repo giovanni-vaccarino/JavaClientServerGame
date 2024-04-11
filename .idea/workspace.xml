@@ -4,46 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="minor update on class Board 2">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/MainController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/MatchController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/exceptions/MatchNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Item.java" afterDir="false" />
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="defined new packages(model, exceptions and enumerations)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/controller/AdderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/AdderModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/rmi/RmiClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/rmi/RmiServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/rmi/VirtualServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/rmi/VirtualView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/socket/SocketClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/socket/SocketClientHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/socket/SocketServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/socket/VirtualServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/socket/VirtualSocketServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/socket/VirtualView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/CenterSpaceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CardCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CardCollection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CenterSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CenterSpace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Chat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/ConditionalPointsCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/ConditionalPointsCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/CornerSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CornerSpace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Drawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Drawable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Face.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Face.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GameCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/GameCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/GoldCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/InitialCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/InitialCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Item.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/ItemPosition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/MixedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/MixedCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Object.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/enumerations/Object.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Pattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlaceInPublicBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/PlaceInPublicBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlayedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/PlayedCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlayerColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/enumerations/PlayerColors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PlayerHand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/PlayerHand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/PublicBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/PublicBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/QuestCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/QuestCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/enumerations/Resource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/ResourceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/ResourceCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Space.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/Table.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CenterSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CenterSpace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CornerSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/CornerSpace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Space.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +33,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -89,9 +71,14 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.RmiClient.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RmiServer.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CenterSpaceTest.createCenterSpace.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -108,14 +95,77 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="polimi.ingsoft" />
     </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="polimi.ingsoft.model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.RmiClient">
+    <configuration name="RmiClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.rmi.RmiClient" />
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;127.0.0.1&quot;" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.rmi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RmiServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.rmi.RmiServer" />
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.rmi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CenterSpaceTest.createCenterSpace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.CenterSpaceTest" />
+      <option name="METHOD_NAME" value="createCenterSpace" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.RmiClient" />
+      <item itemvalue="Application.RmiServer" />
+      <item itemvalue="JUnit.CenterSpaceTest.createCenterSpace" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.RmiClient" />
+        <item itemvalue="Application.RmiServer" />
+        <item itemvalue="JUnit.CenterSpaceTest.createCenterSpace" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-7d648f2c" />
       </set>
     </attachedChunks>
   </component>
@@ -133,6 +183,11 @@
       <workItem from="1711101492545" duration="1608000" />
       <workItem from="1711376860145" duration="3996000" />
       <workItem from="1711459624870" duration="3754000" />
+      <workItem from="1711761736058" duration="1233000" />
+      <workItem from="1712597744494" duration="1042000" />
+      <workItem from="1712661378772" duration="772000" />
+      <workItem from="1712760667830" duration="8402000" />
+      <workItem from="1712856837044" duration="548000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -190,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711385628363</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="defined new packages(model, exceptions and enumerations)">
+      <option name="closed" value="true" />
+      <created>1711638299098</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711638299098</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,6 +289,7 @@
     <MESSAGE value="it's reported as not pushed yet" />
     <MESSAGE value="minor update on class Board" />
     <MESSAGE value="minor update on class Board 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor update on class Board 2" />
+    <MESSAGE value="defined new packages(model, exceptions and enumerations)" />
+    <option name="LAST_COMMIT_MESSAGE" value="defined new packages(model, exceptions and enumerations)" />
   </component>
 </project>
