@@ -21,12 +21,32 @@ public class SchemePattern implements Pattern{
                 count = count + (getMatch(board, count, actualLink, actualCoordinates.sum(new Coordinates(1, -1))));
             }
         else if(board.getCard(actualCoordinates).getColor().getFirst()==order.get(actualLink).getColor()){
-            if(actualLink==0&&order.get(1).getPosFromBegin().equals(new Coordinates(1,1))&&board.getCard(actualCoordinates.sum(new Coordinates(1,1))).getColor().getFirst()==order.get(actualLink).getColor())getMatch(board,count,actualLink,actualCoordinates);
-            if(actualLink==0&&order.get(1).getPosFromBegin().equals(new Coordinates(-1,-1))&&board.getCard(actualCoordinates.sum(new Coordinates(-1,-1))).getColor().getFirst()==order.get(actualLink).getColor())getMatch(board,count,actualLink,actualCoordinates);
-            if(actualLink==0&&order.get(1).getPosFromBegin().equals(new Coordinates(-1,1))&&board.getCard(actualCoordinates.sum(new Coordinates(-1,1))).getColor().getFirst()==order.get(actualLink).getColor())getMatch(board,count,actualLink,actualCoordinates);
-            if(actualLink==0&&order.get(1).getPosFromBegin().equals(new Coordinates(1,1))&&board.getCard(actualCoordinates.sum(new Coordinates(1,-1))).getColor().getFirst()==order.get(actualLink).getColor())getMatch(board,count,actualLink,actualCoordinates);
-            else if(actualLink<maxSize)count=count+getMatch(board,count,actualLink+1,actualCoordinates.sum(order.get(actualLink).getPosFromBegin()));
-            else if(actualLink==maxSize)return 1;
+            if(actualLink<maxSize) {
+                if (order.get(1).getPosFromBegin().equals(new Coordinates(1, 1))) {
+                    if (board.getCard(actualCoordinates.sum(new Coordinates(1, 1))).getColor().getFirst() == order.get(actualLink).getColor())
+                        getMatch(board, count, actualLink, actualCoordinates.sum(new Coordinates(1, 1)));
+                    else count = count + getMatch(board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(1, 1)));
+                }
+                else if (order.get(1).getPosFromBegin().equals(new Coordinates(-1, -1))) {
+                    if (board.getCard(actualCoordinates.sum(new Coordinates(-1, -1))).getColor().getFirst() == order.get(actualLink).getColor())
+                        getMatch(board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, -1)));
+                    else count = count + getMatch(board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(-1, -1)));
+                }
+                else if (order.get(1).getPosFromBegin().equals(new Coordinates(-1, 1))) {
+                    if (board.getCard(actualCoordinates.sum(new Coordinates(-1, 1))).getColor().getFirst() == order.get(actualLink).getColor())
+                        getMatch(board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, 1)));
+                    else count = count + getMatch(board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(-1, 1)));
+                }
+                else if (order.get(1).getPosFromBegin().equals(new Coordinates(1, -1))) {
+                    if (board.getCard(actualCoordinates.sum(new Coordinates(1, -1))).getColor().getFirst() == order.get(actualLink).getColor())
+                        getMatch(board, count, actualLink, actualCoordinates.sum(new Coordinates(1, -1)));
+                    else
+                        count = count + getMatch(board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(1, -1)));
+                }
+                else
+                    count = count + getMatch(board, count, actualLink + 1, actualCoordinates.sum(order.get(actualLink).getPosFromBegin()));
+            }
+            else if(actualLink==maxSize&&board.getCard(actualCoordinates).getColor().getFirst()==order.get(actualLink).getColor())return 1;
             }
         return count;
         }

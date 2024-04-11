@@ -45,6 +45,10 @@ public class Coordinates {
         return new Coordinates(this.getX()+add.getX(),this.getY()+add.getY());
     }
 
+    public Coordinates sub(Coordinates add){
+        return new Coordinates(this.getX()-add.getX(),this.getY()-add.getY());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
