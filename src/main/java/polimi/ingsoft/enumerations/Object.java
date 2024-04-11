@@ -3,7 +3,7 @@ package polimi.ingsoft.enumerations;
 import polimi.ingsoft.model.Item;
 
 public enum Object implements Item {
-    PARCHMENT("PAR"), SPELL("SPE");
+    SCROLL("SCR"), SPELL("SPE");
 
     private final String abbreviation;
 
@@ -14,4 +14,6 @@ public enum Object implements Item {
     public String getAbbreviation(){
         return abbreviation;
     }
+
+
 }

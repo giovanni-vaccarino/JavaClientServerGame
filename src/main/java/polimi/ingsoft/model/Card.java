@@ -4,9 +4,12 @@ package polimi.ingsoft.model;
  * Oggetto carta, con 2 facce orientate
  */
 public abstract class Card implements Drawable {
-    private int score;
+    private final int score;
 
-    public int getScore() {
+    protected Card(int score){
+        this.score=score;
+    }
+    protected int getScore() {
         return score;
     }
 }

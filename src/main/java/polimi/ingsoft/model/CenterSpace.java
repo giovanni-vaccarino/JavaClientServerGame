@@ -8,4 +8,5 @@ public class CenterSpace extends Space<Resource> {
     protected CenterSpace(List<Resource> items) {
         super(items);
     }
+
 }
