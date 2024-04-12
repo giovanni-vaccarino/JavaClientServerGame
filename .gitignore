@@ -33,7 +33,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
 .idea/
+.idea/workspace.xml
 
 ### Mac OS ###
 .DS_Store
