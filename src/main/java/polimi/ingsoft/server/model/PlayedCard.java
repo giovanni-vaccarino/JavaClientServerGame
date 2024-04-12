@@ -1,4 +1,8 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.model;
+import polimi.ingsoft.enumerations.Resource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayedCard {
     private final GameCard card;
@@ -11,6 +15,9 @@ public class PlayedCard {
     public PlayedCard(GameCard card,boolean facingUp){
         this.card=card;
         this.facingUp=facingUp;
+    }
+    public List<Resource> getColor(){
+        return card.getFront().getCenter().getItems();
     }
     public Face getFace(){
         return facingUp ? card.getFront() : card.getBack();
