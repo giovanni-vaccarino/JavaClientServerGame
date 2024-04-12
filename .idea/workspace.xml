@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="created interface Pattern&#10;created class schemepattern which checks for schemes of cards as objectives&#10;created class Link representing abovementioned schemes of cards&#10;inserted method getcolor PlayedCard class&#10;commented ConditionalPointsCard (i suggest to remove it)&#10;created sum() method in coordinates class&#10;created itempattern class -&gt; to be implemented&#10;deleted getpattern method from goldcard&#10;created getcard method in board class">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="improvement on getmatch method in schemepattern class&#10;added sub methon in coordinates class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Coordinates.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/SchemePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/SchemePattern.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +218,8 @@
       <workItem from="1712654236563" duration="7868000" />
       <workItem from="1712830985844" duration="63000" />
       <workItem from="1712838787621" duration="2105000" />
-      <workItem from="1712850807219" duration="2048000" />
+      <workItem from="1712850807219" duration="2166000" />
+      <workItem from="1712910815230" duration="7717000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -333,7 +333,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712840499447</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="improvement on getmatch method in schemepattern class&#10;added sub methon in coordinates class">
+      <option name="closed" value="true" />
+      <created>1712852896070</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1712852896071</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,6 +383,7 @@
     <MESSAGE value="unversioned files updated" />
     <MESSAGE value="face creator methods (null initializer, front and back initializer)&#10;changed getscore method to protected in interface card, added getscore method in gamecard&#10;getcenter,setcenter methods added in face class&#10;added protected creator method in card -&gt;updated gamecard, resourcecard,goldcard,mixedcard,initialcard and all classes with creator methods calling abovementioned creator method&#10;temporarily removed abstract property from gamecard class in order to ease testing for all subclasses" />
     <MESSAGE value="created interface Pattern&#10;created class schemepattern which checks for schemes of cards as objectives&#10;created class Link representing abovementioned schemes of cards&#10;inserted method getcolor PlayedCard class&#10;commented ConditionalPointsCard (i suggest to remove it)&#10;created sum() method in coordinates class&#10;created itempattern class -&gt; to be implemented&#10;deleted getpattern method from goldcard&#10;created getcard method in board class" />
-    <option name="LAST_COMMIT_MESSAGE" value="created interface Pattern&#10;created class schemepattern which checks for schemes of cards as objectives&#10;created class Link representing abovementioned schemes of cards&#10;inserted method getcolor PlayedCard class&#10;commented ConditionalPointsCard (i suggest to remove it)&#10;created sum() method in coordinates class&#10;created itempattern class -&gt; to be implemented&#10;deleted getpattern method from goldcard&#10;created getcard method in board class" />
+    <MESSAGE value="improvement on getmatch method in schemepattern class&#10;added sub methon in coordinates class" />
+    <option name="LAST_COMMIT_MESSAGE" value="improvement on getmatch method in schemepattern class&#10;added sub methon in coordinates class" />
   </component>
 </project>
