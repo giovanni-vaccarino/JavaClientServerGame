@@ -2,10 +2,10 @@ package polimi.ingsoft.model;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.*;
-import polimi.ingsoft.enumerations.Object;
-import polimi.ingsoft.enumerations.Resource;
+import polimi.ingsoft.server.enumerations.Object;
+import polimi.ingsoft.server.model.CornerSpace;
+import polimi.ingsoft.server.model.Item;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

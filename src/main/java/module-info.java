@@ -3,6 +3,6 @@ module polimi.ingsoft.demo {
     requires javafx.fxml;
 
 
-    opens polimi.ingsoft.demo to javafx.fxml;
-    exports polimi.ingsoft.demo;
+    opens polimi.ingsoft.server.demo to javafx.fxml;
+    exports polimi.ingsoft.server.demo;
 }
