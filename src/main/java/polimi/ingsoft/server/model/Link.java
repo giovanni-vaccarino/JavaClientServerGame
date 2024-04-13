@@ -1,5 +1,5 @@
-package polimi.ingsoft.model;
-import polimi.ingsoft.enumerations.Resource;
+package polimi.ingsoft.server.model;
+import polimi.ingsoft.server.enumerations.Resource;
 
 public class Link {
     private final Resource color;

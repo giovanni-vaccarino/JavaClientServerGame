@@ -1,5 +1,4 @@
 package polimi.ingsoft.server.model;
-
 import java.util.HashMap;
 
 // TODO refactor

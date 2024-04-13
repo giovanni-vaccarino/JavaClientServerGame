@@ -1,4 +1,4 @@
-package polimi.ingsoft.model;
+package polimi.ingsoft.server.model;
 
 public class ItemPattern implements Pattern{
     @Override

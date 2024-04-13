@@ -1,7 +1,5 @@
-package polimi.ingsoft.model;
-import polimi.ingsoft.enumerations.Resource;
-
-import java.util.ArrayList;
+package polimi.ingsoft.server.model;
+import polimi.ingsoft.server.enumerations.Resource;
 import java.util.List;
 
 public class PlayedCard {
