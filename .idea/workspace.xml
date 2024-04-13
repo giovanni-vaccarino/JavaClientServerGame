@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="unversioned files updated">
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/exceptions/NotValidMessageException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/ChatTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/MessageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_16_24__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_16_24__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Link.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Link.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/VirtualServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/VirtualServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -101,6 +105,7 @@
       <recent name="polimi.ingsoft" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="polimi.ingsoft.server.model" />
       <recent name="polimi.ingsoft.model" />
       <recent name="polimi.ingsoft" />
     </key>
@@ -184,6 +189,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.FaceTest" />
+      <item itemvalue="JUnit.FaceTest.getCenter" />
+      <item itemvalue="JUnit.FaceTest.getUpRight" />
+      <item itemvalue="JUnit.FaceTest.setCenter" />
+      <item itemvalue="JUnit.GameCardTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.GameCardTest" />
