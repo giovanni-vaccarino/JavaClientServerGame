@@ -1,6 +1,7 @@
 package polimi.ingsoft.model;
 
 import org.junit.jupiter.api.Test;
+import polimi.ingsoft.server.model.Coordinates;
 
 import static org.junit.jupiter.api.Assertions.*;
 

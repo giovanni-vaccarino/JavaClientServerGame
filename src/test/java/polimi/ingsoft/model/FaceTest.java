@@ -1,15 +1,17 @@
 package polimi.ingsoft.model;
 
-import polimi.ingsoft.enumerations.Resource;
+import polimi.ingsoft.server.enumerations.Resource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.enumerations.Object;
+import polimi.ingsoft.server.enumerations.Object;
+import polimi.ingsoft.server.model.CenterSpace;
+import polimi.ingsoft.server.model.CornerSpace;
+import polimi.ingsoft.server.model.Face;
+import polimi.ingsoft.server.model.Item;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static polimi.ingsoft.model.CornerSpaceTest.t;
 
 class FaceTest {
     Face t=new Face();

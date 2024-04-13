@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="further improvement on getmatch method in schemepattern class -&gt;infinite loop avoidance&#10;to do: inserting a way to save already found patterns&#10;fix diagonal schemes search">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="unversioned files updated">
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/GameCardTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/SchemePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/SchemePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Face.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/Face.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/GameCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/GameCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/GoldCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/InitialCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/InitialCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/MixedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/MixedCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/ResourceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/model/ResourceCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/FaceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/FaceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -50,45 +58,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.add.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CoordinatesTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CoordinatesTest.upLeft.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CornerSpaceTest.getItems.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CornerSpaceTest.isEmpty.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.getCenter.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.getUpLeft.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.getUpRight.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.setCenter.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.setUpLeft.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MainTest.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "JUnit.BoardTest.add.executor": "Run",
+    "JUnit.BoardTest.executor": "Run",
+    "JUnit.CoordinatesTest.executor": "Run",
+    "JUnit.CoordinatesTest.upLeft.executor": "Run",
+    "JUnit.CornerSpaceTest.getItems.executor": "Run",
+    "JUnit.CornerSpaceTest.isEmpty.executor": "Run",
+    "JUnit.FaceTest.executor": "Run",
+    "JUnit.FaceTest.getCenter.executor": "Run",
+    "JUnit.FaceTest.getUpLeft.executor": "Run",
+    "JUnit.FaceTest.getUpRight.executor": "Run",
+    "JUnit.FaceTest.setCenter.executor": "Run",
+    "JUnit.FaceTest.setUpLeft.executor": "Run",
+    "JUnit.GameCardTest.executor": "Run",
+    "JUnit.MainTest.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -213,14 +221,7 @@
       <workItem from="1711459624870" duration="3754000" />
       <workItem from="1711725445036" duration="155000" />
       <workItem from="1712133381817" duration="6931000" />
-      <workItem from="1712301752046" duration="5380000" />
-      <workItem from="1712563303329" duration="2000" />
-      <workItem from="1712654236563" duration="7868000" />
-      <workItem from="1712830985844" duration="63000" />
-      <workItem from="1712838787621" duration="2105000" />
-      <workItem from="1712850807219" duration="2166000" />
-      <workItem from="1712910815230" duration="7807000" />
-      <workItem from="1713019605627" duration="755000" />
+      <workItem from="1712301752046" duration="4855000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -310,47 +311,7 @@
       <option name="project" value="LOCAL" />
       <updated>1712301885109</updated>
     </task>
-    <task id="LOCAL-00012" summary="face creator methods (null initializer, front and back initializer)&#10;changed getscore method to protected in interface card, added getscore method in gamecard&#10;getcenter,setcenter methods added in face class&#10;added protected creator method in card -&gt;updated gamecard, resourcecard,goldcard,mixedcard,initialcard and all classes with creator methods calling abovementioned creator method&#10;temporarily removed abstract property from gamecard class in order to ease testing for all subclasses">
-      <option name="closed" value="true" />
-      <created>1712307031502</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1712307031502</updated>
-    </task>
-    <task id="LOCAL-00013" summary="created interface Pattern&#10;created class schemepattern which checks for schemes of cards as objectives&#10;created class Link representing abovementioned schemes of cards&#10;inserted method getcolor PlayedCard class&#10;commented ConditionalPointsCard (i suggest to remove it)&#10;created sum() method in coordinates class&#10;created itempattern class -&gt; to be implemented&#10;deleted getpattern method from goldcard&#10;created getcard method in board class">
-      <option name="closed" value="true" />
-      <created>1712840409299</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1712840409299</updated>
-    </task>
-    <task id="LOCAL-00014" summary="created interface Pattern&#10;created class schemepattern which checks for schemes of cards as objectives&#10;created class Link representing abovementioned schemes of cards&#10;inserted method getcolor PlayedCard class&#10;commented ConditionalPointsCard (i suggest to remove it)&#10;created sum() method in coordinates class&#10;created itempattern class -&gt; to be implemented&#10;deleted getpattern method from goldcard&#10;created getcard method in board class">
-      <option name="closed" value="true" />
-      <created>1712840499447</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1712840499447</updated>
-    </task>
-    <task id="LOCAL-00015" summary="improvement on getmatch method in schemepattern class&#10;added sub methon in coordinates class">
-      <option name="closed" value="true" />
-      <created>1712852896070</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1712852896071</updated>
-    </task>
-    <task id="LOCAL-00016" summary="further improvement on getmatch method in schemepattern class -&gt;infinite loop avoidance&#10;to do: inserting a way to save already found patterns&#10;fix diagonal schemes search">
-      <option name="closed" value="true" />
-      <created>1712919302152</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1712919302152</updated>
-    </task>
-    <option name="localTasksCounter" value="17" />
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -390,10 +351,6 @@
     <MESSAGE value="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources" />
     <MESSAGE value="workspace.xml updated" />
     <MESSAGE value="unversioned files updated" />
-    <MESSAGE value="face creator methods (null initializer, front and back initializer)&#10;changed getscore method to protected in interface card, added getscore method in gamecard&#10;getcenter,setcenter methods added in face class&#10;added protected creator method in card -&gt;updated gamecard, resourcecard,goldcard,mixedcard,initialcard and all classes with creator methods calling abovementioned creator method&#10;temporarily removed abstract property from gamecard class in order to ease testing for all subclasses" />
-    <MESSAGE value="created interface Pattern&#10;created class schemepattern which checks for schemes of cards as objectives&#10;created class Link representing abovementioned schemes of cards&#10;inserted method getcolor PlayedCard class&#10;commented ConditionalPointsCard (i suggest to remove it)&#10;created sum() method in coordinates class&#10;created itempattern class -&gt; to be implemented&#10;deleted getpattern method from goldcard&#10;created getcard method in board class" />
-    <MESSAGE value="improvement on getmatch method in schemepattern class&#10;added sub methon in coordinates class" />
-    <MESSAGE value="further improvement on getmatch method in schemepattern class -&gt;infinite loop avoidance&#10;to do: inserting a way to save already found patterns&#10;fix diagonal schemes search" />
-    <option name="LAST_COMMIT_MESSAGE" value="further improvement on getmatch method in schemepattern class -&gt;infinite loop avoidance&#10;to do: inserting a way to save already found patterns&#10;fix diagonal schemes search" />
+    <option name="LAST_COMMIT_MESSAGE" value="unversioned files updated" />
   </component>
 </project>
