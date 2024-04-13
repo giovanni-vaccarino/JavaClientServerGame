@@ -26,7 +26,7 @@ public class MainController {
     }
 
     public MatchController getMatch(int id) throws MatchNotFoundException {
-
+        return null;
     }
 
     public void endMatch(int id) throws MatchNotFoundException, IOException {
