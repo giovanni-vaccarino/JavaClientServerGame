@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="unversioned files updated">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Link.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Link.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" afterDir="false" />
-    </list>
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="added memory for alredy used patterns in schemepattern class &#10;to do :&#10;thorough testing" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -307,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712301885109</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added memory for alredy used patterns in schemepattern class &#10;to do :&#10;thorough testing">
+      <option name="closed" value="true" />
+      <created>1713022448747</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1713022448747</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,6 +348,7 @@
     <MESSAGE value="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources" />
     <MESSAGE value="workspace.xml updated" />
     <MESSAGE value="unversioned files updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="unversioned files updated" />
+    <MESSAGE value="added memory for alredy used patterns in schemepattern class &#10;to do :&#10;thorough testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="added memory for alredy used patterns in schemepattern class &#10;to do :&#10;thorough testing" />
   </component>
 </project>
