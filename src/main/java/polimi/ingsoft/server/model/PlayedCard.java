@@ -14,8 +14,8 @@ public class PlayedCard {
         this.card=card;
         this.facingUp=facingUp;
     }
-    public List<Resource> getColor(){
-        return card.getFront().getCenter().getItems();
+    public Resource getColor(){
+        return card.getFront().getCenter().getItems().getFirst();
     }
     public Face getFace(){
         return facingUp ? card.getFront() : card.getBack();
