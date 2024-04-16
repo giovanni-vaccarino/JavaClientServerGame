@@ -1,5 +1,4 @@
 package polimi.ingsoft.server.model;
-
 import java.util.HashMap;
 
 // TODO refactor
@@ -28,6 +27,7 @@ public class Board {
 
     public boolean check(Coordinates position){
         boolean verify=false;
+        if(position.equals(new Coordinates(0,0)))return !verify;
         if(cards.containsKey(position))return verify;
         if(!(cards.containsKey(position.downLeft()) || cards.containsKey(position.upLeft())
                 || cards.containsKey(position.upRight()) || cards.containsKey(position.downRight())))return verify;
