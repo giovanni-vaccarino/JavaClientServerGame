@@ -62,8 +62,8 @@ public class SchemePattern implements Pattern {
                      //}
                     System.out.println(actualCoordinates.getX()+","+actualCoordinates.getY());
                     return 1;
-                }
-            }
+                }else return 0;
+            }else if(!setvisited)return 0;
         //return setvisited? count : 0;
         return count;
         }
