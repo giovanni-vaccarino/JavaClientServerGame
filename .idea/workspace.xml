@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="update on schemepattern class now working properly">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="implemented questcard class with relative methods&#10;added resources hashmap to board class &#10;to do: implement resource update in board class when putting card">
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -228,7 +226,7 @@
       <workItem from="1713367250513" duration="4957000" />
       <workItem from="1713389123049" duration="738000" />
       <workItem from="1713422193343" duration="938000" />
-      <workItem from="1713427685665" duration="1198000" />
+      <workItem from="1713427685665" duration="1569000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -358,7 +356,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713423010420</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="implemented questcard class with relative methods&#10;added resources hashmap to board class &#10;to do: implement resource update in board class when putting card">
+      <option name="closed" value="true" />
+      <created>1713428974857</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1713428974857</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +409,8 @@
     <MESSAGE value="testing on schemepattern&#10;various improvement on schemepattern class&#10;to do: fix issues with schemepattern return values&#10;while schemepattern's function works properly, the return values are somehow divergent" />
     <MESSAGE value="backup" />
     <MESSAGE value="update on schemepattern class now working properly" />
-    <option name="LAST_COMMIT_MESSAGE" value="update on schemepattern class now working properly" />
+    <MESSAGE value="implemented questcard class with relative methods&#10;added resources hashmap to board class &#10;to do: implement resource update in board class when putting card" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented questcard class with relative methods&#10;added resources hashmap to board class &#10;to do: implement resource update in board class when putting card" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$SchemePatternTest_getMatch.ic" NAME="SchemePatternTest.getMatch Coverage Results" MODIFIED="1713176061919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
