@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="backup">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="update on schemepattern class now working properly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/SchemePatternTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/SchemePatternTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +227,8 @@
       <workItem from="1712301752046" duration="4855000" />
       <workItem from="1713367250513" duration="4957000" />
       <workItem from="1713389123049" duration="738000" />
-      <workItem from="1713422193343" duration="756000" />
+      <workItem from="1713422193343" duration="938000" />
+      <workItem from="1713427685665" duration="1198000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -349,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713389821506</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="update on schemepattern class now working properly">
+      <option name="closed" value="true" />
+      <created>1713423010420</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1713423010420</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +402,8 @@
     <MESSAGE value="cant pull" />
     <MESSAGE value="testing on schemepattern&#10;various improvement on schemepattern class&#10;to do: fix issues with schemepattern return values&#10;while schemepattern's function works properly, the return values are somehow divergent" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="update on schemepattern class now working properly" />
+    <option name="LAST_COMMIT_MESSAGE" value="update on schemepattern class now working properly" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$SchemePatternTest_getMatch.ic" NAME="SchemePatternTest.getMatch Coverage Results" MODIFIED="1713176061919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

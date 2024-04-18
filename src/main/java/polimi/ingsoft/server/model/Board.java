@@ -4,10 +4,12 @@ import java.util.HashMap;
 // TODO refactor
 public class Board {
     private final HashMap<Coordinates, PlayedCard> cards;
-
+    private HashMap<Item,Integer> resources;
     public Board(GameCard initialcard,boolean isFaceUp){
         this.cards=new HashMap<Coordinates,PlayedCard>();
         this.add(new Coordinates(0,0),initialcard,isFaceUp);
+        resources=new HashMap<>();
+
     }
     public PlayedCard getCard(Coordinates coordinates){
         return cards.get(coordinates);
