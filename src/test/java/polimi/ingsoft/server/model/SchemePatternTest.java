@@ -272,8 +272,8 @@ class SchemePatternTest {
         pattern=new SchemePattern(link8);
         assertEquals(1,pattern.getMatch(board));
         /**///System.out.println("RES8:"+pattern.getMatch(board));
-
     }
+
     void getMatch1() {
         pattern=new SchemePattern(link1);
         assertEquals(1,pattern.getMatch(board));
