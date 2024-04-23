@@ -22,9 +22,9 @@ class FaceTest {
     static ArrayList<Item> a=new ArrayList<Item>(),b=new ArrayList<Item>(),c=new ArrayList<Item>(),d=new ArrayList<Item>();
     static ArrayList<Resource> e=new ArrayList<Resource>();
    @BeforeAll public static void init() {
-        a.add(Object.SPELL);
+        a.add(Object.POTION);
         a.add(Object.SCROLL);
-        b.add(Object.SPELL);
+        b.add(Object.POTION);
         c.add(Object.SCROLL);
         e.add(Resource.LEAF);
         e.add(Resource.WOLF);
