@@ -1,10 +1,13 @@
-package polimi.ingsoft.rmi;
+package polimi.ingsoft.server.rmi;
+
+import polimi.ingsoft.server.model.Message;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import java.util.Scanner;
 
 //Rmi client extends UnicastRemoteObject in modo che possa essere passato al server
@@ -27,9 +30,9 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView {
             int command = scan.nextInt();
 
             if (command == 0){
-                server.reset();
+                server.addMessage("ciao");
             }else{
-                server.add(command);
+                server.addMessage("ciao" + command);
             }
         }
     }
@@ -45,9 +48,19 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
-    public void showUpdate(Integer number) throws RemoteException {
+    public void showUpdateChat(List<Message> messages) throws RemoteException {
         //Attenzione alle data races
-        System.out.print("\n= " + number + "\n>");
+
+    }
+
+    @Override
+    public void showUpdatePublicBoard() throws RemoteException {
+
+    }
+
+    @Override
+    public void showUpdateBoard() throws RemoteException {
+
     }
 
     @Override

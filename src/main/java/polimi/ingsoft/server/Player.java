@@ -1,9 +1,6 @@
 package polimi.ingsoft.server;
 
-import polimi.ingsoft.server.model.Board;
-import polimi.ingsoft.server.model.InitialCard;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlayerHand;
+import polimi.ingsoft.server.model.*;
 
 public class Player {
     private Board board;
@@ -11,6 +8,8 @@ public class Player {
     private InitialCard initialCard;
 
     public Player(PlayerHand<MixedCard> hand) {
+        InitialCard test = new InitialCard(new Face(), new Face(), 0);
+        this.board = new Board(test, true);
         this.hand = hand;
     }
 

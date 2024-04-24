@@ -5,8 +5,8 @@ module polimi.ingsoft.demo {
 
     opens polimi.ingsoft.demo to javafx.fxml;
     exports polimi.ingsoft.server;
-    exports polimi.ingsoft.rmi;
-    exports polimi.ingsoft.controller;
+    exports polimi.ingsoft.server.rmi;
+    exports polimi.ingsoft.server.controllerg;
 }
 
 
