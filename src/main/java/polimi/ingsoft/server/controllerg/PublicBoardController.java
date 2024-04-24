@@ -13,7 +13,7 @@ public class PublicBoardController {
         this.publicBoard = new PublicBoard(resourceDeck, goldDeck, questDeck);
     }
 
-    public GameCard drawCard(String deckType, PlaceInPublicBoard.Slots slot){
+    public MixedCard drawCard(String deckType, PlaceInPublicBoard.Slots slot){
         switch(deckType){
             case "Resource" -> {
                 return this.publicBoard.getResource(slot);

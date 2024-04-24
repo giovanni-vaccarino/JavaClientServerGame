@@ -12,15 +12,9 @@ public class ChatController {
         this.gameChat = new Chat();
     }
 
-    public void writeMessage(String message){
+    public Message writeMessage(String message){
         synchronized (this.gameChat){
-            this.gameChat.addMessage(PlayerColors.RED, message);
-        }
-    }
-
-    public List<Message> getChat(){
-        synchronized (this.gameChat){
-            return this.gameChat.getMessages();
+            return this.gameChat.addMessage(PlayerColors.RED, message);
         }
     }
 }

@@ -1,20 +1,20 @@
-package polimi.ingsoft.server.rmi;
+package polimi.ingsoft.client.rmi;
 
 import polimi.ingsoft.server.model.Message;
+import polimi.ingsoft.server.rmi.VirtualMatchServer;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.List;
 import java.util.Scanner;
 
 //Rmi client extends UnicastRemoteObject in modo che possa essere passato al server
 public class RmiClient extends UnicastRemoteObject implements VirtualView {
-    final VirtualServer server;
+    final VirtualMatchServer server;
 
-    public RmiClient(VirtualServer server) throws RemoteException{
+    public RmiClient(VirtualMatchServer server) throws RemoteException{
         this.server = server;
     }
 
@@ -39,18 +39,18 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView {
 
     //Anche qui gestire le eccezioni con un senso, non throwandole
     public static void main(String[] args) throws RemoteException, NotBoundException {
-        final String serverName = "AdderServer";
+        final String serverName = "Server";
         Registry registry = LocateRegistry.getRegistry(args[0], 1234);
 
-        VirtualServer server = (VirtualServer) registry.lookup(serverName);
+        VirtualMatchServer server = (VirtualMatchServer) registry.lookup(serverName);
 
         new RmiClient(server).run();
     }
 
     @Override
-    public void showUpdateChat(List<Message> messages) throws RemoteException {
+    public void showUpdateChat(Message message) throws RemoteException {
         //Attenzione alle data races
-
+        //Aggiungo l'ultimo messaggio alla lista
     }
 
     @Override

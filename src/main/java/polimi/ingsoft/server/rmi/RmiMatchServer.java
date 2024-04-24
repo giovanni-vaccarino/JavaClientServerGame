@@ -1,7 +1,9 @@
 package polimi.ingsoft.server.rmi;
 
+import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.controllerg.MainController;
 import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.GameCard;
 import polimi.ingsoft.server.model.Message;
 import polimi.ingsoft.server.model.MixedCard;
@@ -14,20 +16,20 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RmiServer implements VirtualServer{
+public class RmiMatchServer implements VirtualMatchServer {
     final MainController controller;
     final List<VirtualView> clients = new ArrayList<>();
 
-    public RmiServer(MainController controller) {
+    public RmiMatchServer(MainController controller) {
         this.controller = controller;
     }
 
     //Al posto di mettere throws eccezioni, gestisci bene in un try catch il tutto
     public static void main(String[] args) throws RemoteException{
-        final String serverName = "AdderServer";
+        final String serverName = "Server";
 
-        VirtualServer server = new RmiServer(new MainController());
-        VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server,0);
+        VirtualMatchServer server = new RmiMatchServer(new MainController());
+        VirtualMatchServer stub = (VirtualMatchServer) UnicastRemoteObject.exportObject(server,0);
         Registry registry = LocateRegistry.createRegistry(1234);
         registry.rebind(serverName, stub);
         System.out.println("server bound.");
@@ -42,12 +44,11 @@ public class RmiServer implements VirtualServer{
 
     @Override
     public void addMessage(String message) throws RemoteException{
-        this.controller.writeMessage(message);
-        List<Message> currentMessages = this.controller.getChat();
+        Message messageSent = this.controller.writeMessage(message);
 
         synchronized (this.clients){
             for(var client : this.clients){
-                client.showUpdateChat(currentMessages);
+                client.showUpdateChat(messageSent);
             }
         }
     }
@@ -66,7 +67,7 @@ public class RmiServer implements VirtualServer{
     }
 
     @Override
-    public void placeCard(Player player, MixedCard card) throws RemoteException{
+    public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException{
 
     }
 }

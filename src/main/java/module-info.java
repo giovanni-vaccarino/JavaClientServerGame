@@ -7,6 +7,7 @@ module polimi.ingsoft.demo {
     exports polimi.ingsoft.server;
     exports polimi.ingsoft.server.rmi;
     exports polimi.ingsoft.server.controllerg;
+    exports polimi.ingsoft.client.rmi;
 }
 
 

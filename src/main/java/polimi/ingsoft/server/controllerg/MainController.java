@@ -1,14 +1,18 @@
 package polimi.ingsoft.server.controllerg;
 
 import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.enumerations.TurnPhase;
 import polimi.ingsoft.server.model.GameCard;
 import polimi.ingsoft.server.model.Message;
+import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard.Slots;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
-    final Player first_player;
+    final ArrayList<Player> players = new ArrayList<>();
+    private TurnPhase turnPhase;
     final ChatController chatController;
 
     final PublicBoardController publicBoardController;
@@ -22,22 +26,19 @@ public class MainController {
 
         }
         */
-        this.first_player = new Player()
+        this.turnPhase = TurnPhase.DRAW;
     }
 
 
 
-    public void writeMessage(String message){
-        this.chatController.writeMessage(message);
+    public Message writeMessage(String message){
+        return this.chatController.writeMessage(message);
     }
 
-    public List<Message> getChat(){
-        return this.chatController.getChat();
-    }
+    public MixedCard drawCard(Player player, String deckType, Slots slot){
+        // Ensure that the player sending the request is the right player and that it's draw phase
 
-    public GameCard drawCard(Player player, String deckType, Slots slot){
-        GameCard drawedCard;
-        drawedCard = this.publicBoardController.drawCard(deckType, slot);
+        MixedCard drawedCard = this.publicBoardController.drawCard(deckType, slot);
 
         //adding to the playerhand the card drawed
 

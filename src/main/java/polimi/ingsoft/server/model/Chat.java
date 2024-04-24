@@ -8,15 +8,18 @@ import java.util.List;
 public class Chat {
     private final ArrayList<Message> messages = new ArrayList<>();
 
-    public void addMessage(PlayerColors sender, String text) throws NotValidMessageException{
+    public Message addMessage(PlayerColors sender, String text) throws NotValidMessageException{
         if (sender == null || text == null || text.isEmpty()) {
             throw new NotValidMessageException();
         }
 
         messages.add(new Message(sender, text));
+
+        return getLastMessage();
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    //Private?
+    public Message getLastMessage() {
+        return messages.get(messages.size() - 1);
     }
 }

@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.rmi;
+package polimi.ingsoft.client.rmi;
 
 
 import polimi.ingsoft.server.model.Message;
@@ -9,7 +9,7 @@ import java.util.List;
 
 //Interfaccia che utilizziamo dal server per interagire coi client
 public interface VirtualView extends Remote{
-    void showUpdateChat(List<Message> messages) throws RemoteException;
+    void showUpdateChat(Message message) throws RemoteException;
 
     void showUpdatePublicBoard() throws RemoteException;
 
