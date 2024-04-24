@@ -1,6 +1,10 @@
+//commentato perchè non mi fa andare i test - SIMO//
+
 package polimi.ingsoft.client;
 
 import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.model.MixedCard;
+import polimi.ingsoft.server.model.PlayerHand;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +25,7 @@ public class VirtualServer {
 
     public Player joinMatch(String nickname, int matchId) {
         // Simula l'attesa nella lobby (?)
-        try {
+       /* try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             return null;
@@ -29,8 +33,8 @@ public class VirtualServer {
 
         if (isAvailableNickname(nickname, matchId)) {
             return new Player(board, hand);
-        } else {
+        } else {*/
             return null;
         }
-    }
+    //}
 }

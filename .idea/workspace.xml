@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="unversioned files updated">
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/exceptions/NotValidMessageException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/ChatTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/MessageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_16_24__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_03_2024_16_24__Changes_.xml" afterDir="false" />
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="update on board class -&gt; now counting player's resources&#10;added getCenter method in playedcard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/VirtualServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/VirtualServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Chat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/enumerations/Object.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/enumerations/Object.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GameCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GameCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/BoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/CornerSpaceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/CornerSpaceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/FaceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/FaceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -58,45 +55,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.add.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CoordinatesTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CoordinatesTest.upLeft.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CornerSpaceTest.getItems.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CornerSpaceTest.isEmpty.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.getCenter.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.getUpLeft.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.getUpRight.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.setCenter.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FaceTest.setUpLeft.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MainTest.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "JUnit.BoardTest.add.executor": "Run",
+    "JUnit.BoardTest.check.executor": "Run",
+    "JUnit.BoardTest.executor": "Run",
+    "JUnit.CoordinatesTest.executor": "Run",
+    "JUnit.CoordinatesTest.upLeft.executor": "Run",
+    "JUnit.CornerSpaceTest.getItems.executor": "Run",
+    "JUnit.CornerSpaceTest.isEmpty.executor": "Run",
+    "JUnit.FaceTest.executor": "Run",
+    "JUnit.FaceTest.getCenter.executor": "Run",
+    "JUnit.FaceTest.getUpLeft.executor": "Run",
+    "JUnit.FaceTest.getUpRight.executor": "Run",
+    "JUnit.FaceTest.setCenter.executor": "Run",
+    "JUnit.FaceTest.setUpLeft.executor": "Run",
+    "JUnit.GameCardTest.executor": "Run",
+    "JUnit.MainTest.main.executor": "Run",
+    "JUnit.SchemePatternTest.executor": "Run",
+    "JUnit.SchemePatternTest.getMatch.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -110,8 +110,8 @@
       <recent name="polimi.ingsoft" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameCardTest">
-    <configuration name="FaceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.BoardTest.add">
+    <configuration name="BoardTest.add" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
@@ -120,29 +120,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FaceTest.getCenter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
-      <option name="METHOD_NAME" value="getCenter" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
+      <option name="METHOD_NAME" value="add" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FaceTest.getUpRight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BoardTest.check" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
@@ -151,24 +136,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
-      <option name="METHOD_NAME" value="getUpRight" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FaceTest.setCenter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.FaceTest" />
-      <option name="METHOD_NAME" value="setCenter" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
+      <option name="METHOD_NAME" value="check" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -189,20 +158,51 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SchemePatternTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.server.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.server.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.server.model.SchemePatternTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SchemePatternTest.getMatch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polimi.ingsoft.server.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.server.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.server.model.SchemePatternTest" />
+      <option name="METHOD_NAME" value="getMatch" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="JUnit.FaceTest" />
-      <item itemvalue="JUnit.FaceTest.getCenter" />
-      <item itemvalue="JUnit.FaceTest.getUpRight" />
-      <item itemvalue="JUnit.FaceTest.setCenter" />
+      <item itemvalue="JUnit.BoardTest.add" />
+      <item itemvalue="JUnit.BoardTest.check" />
+      <item itemvalue="JUnit.SchemePatternTest" />
+      <item itemvalue="JUnit.SchemePatternTest.getMatch" />
       <item itemvalue="JUnit.GameCardTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BoardTest.add" />
+        <item itemvalue="JUnit.BoardTest.check" />
+        <item itemvalue="JUnit.SchemePatternTest.getMatch" />
+        <item itemvalue="JUnit.SchemePatternTest" />
         <item itemvalue="JUnit.GameCardTest" />
-        <item itemvalue="JUnit.FaceTest.setCenter" />
-        <item itemvalue="JUnit.FaceTest.getCenter" />
-        <item itemvalue="JUnit.FaceTest" />
-        <item itemvalue="JUnit.FaceTest.getUpRight" />
       </list>
     </recent_temporary>
   </component>
@@ -230,6 +230,15 @@
       <workItem from="1711725445036" duration="155000" />
       <workItem from="1712133381817" duration="6931000" />
       <workItem from="1712301752046" duration="4855000" />
+      <workItem from="1713367250513" duration="4957000" />
+      <workItem from="1713389123049" duration="738000" />
+      <workItem from="1713422193343" duration="938000" />
+      <workItem from="1713427685665" duration="1922000" />
+      <workItem from="1713430173702" duration="265000" />
+      <workItem from="1713442549914" duration="278000" />
+      <workItem from="1713774838920" duration="240000" />
+      <workItem from="1713783258090" duration="2863000" />
+      <workItem from="1713873387242" duration="8078000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -319,7 +328,79 @@
       <option name="project" value="LOCAL" />
       <updated>1712301885109</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="created SchemePatternTest class with testing cases&#10;-&gt; anomaly on schemepattern return values&#10;&#10;minor fixes on board,playhedcard,questcard,resource classses&#10;commented code on VirtualServer so that i could compile">
+      <option name="closed" value="true" />
+      <created>1713202794066</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1713202794066</updated>
+    </task>
+    <task id="LOCAL-00013" summary="cant pull">
+      <option name="closed" value="true" />
+      <created>1713367286193</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1713367286193</updated>
+    </task>
+    <task id="LOCAL-00014" summary="testing on schemepattern&#10;various improvement on schemepattern class&#10;to do: fix issues with schemepattern return values&#10;while schemepattern's function works properly, the return values are somehow divergent">
+      <option name="closed" value="true" />
+      <created>1713372087289</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1713372087289</updated>
+    </task>
+    <task id="LOCAL-00015" summary="backup">
+      <option name="closed" value="true" />
+      <created>1713389821506</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1713389821506</updated>
+    </task>
+    <task id="LOCAL-00016" summary="update on schemepattern class now working properly">
+      <option name="closed" value="true" />
+      <created>1713423010420</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1713423010420</updated>
+    </task>
+    <task id="LOCAL-00017" summary="implemented questcard class with relative methods&#10;added resources hashmap to board class &#10;to do: implement resource update in board class when putting card">
+      <option name="closed" value="true" />
+      <created>1713428974857</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1713428974857</updated>
+    </task>
+    <task id="LOCAL-00018" summary="more fixes on questcard">
+      <option name="closed" value="true" />
+      <created>1713429536174</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1713429536174</updated>
+    </task>
+    <task id="LOCAL-00019" summary="more fixes on questcard">
+      <option name="closed" value="true" />
+      <created>1713430430660</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1713430430660</updated>
+    </task>
+    <task id="LOCAL-00020" summary="update on board class -&gt; now counting player's resources&#10;added getCenter method in playedcard">
+      <option name="closed" value="true" />
+      <created>1713787103157</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1713787103157</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,6 +440,19 @@
     <MESSAGE value="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources" />
     <MESSAGE value="workspace.xml updated" />
     <MESSAGE value="unversioned files updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="unversioned files updated" />
+    <MESSAGE value="created SchemePatternTest class with testing cases&#10;-&gt; anomaly on schemepattern return values&#10;&#10;minor fixes on board,playhedcard,questcard,resource classses&#10;commented code on VirtualServer so that i could compile" />
+    <MESSAGE value="cant pull" />
+    <MESSAGE value="testing on schemepattern&#10;various improvement on schemepattern class&#10;to do: fix issues with schemepattern return values&#10;while schemepattern's function works properly, the return values are somehow divergent" />
+    <MESSAGE value="backup" />
+    <MESSAGE value="update on schemepattern class now working properly" />
+    <MESSAGE value="implemented questcard class with relative methods&#10;added resources hashmap to board class &#10;to do: implement resource update in board class when putting card" />
+    <MESSAGE value="more fixes on questcard" />
+    <MESSAGE value="update on board class -&gt; now counting player's resources&#10;added getCenter method in playedcard" />
+    <option name="LAST_COMMIT_MESSAGE" value="update on board class -&gt; now counting player's resources&#10;added getCenter method in playedcard" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$SchemePatternTest_getMatch.ic" NAME="SchemePatternTest.getMatch Coverage Results" MODIFIED="1713176061919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>polimi.ingsoft.server.model.*</FILTER>
+    </SUITE>
   </component>
 </project>

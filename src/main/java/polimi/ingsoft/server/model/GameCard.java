@@ -33,7 +33,7 @@ public /*abstract*/ class GameCard extends Card {
     }
 
     public CornerSpace getBottomRightCorner(boolean isFront){
-        return isFront ? front.getBottomRight(): back.getBottomLeft();
+        return isFront ? front.getBottomRight(): back.getBottomRight();
     }
 
     public int getScore(boolean isFront){

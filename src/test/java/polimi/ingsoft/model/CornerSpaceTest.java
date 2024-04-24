@@ -17,10 +17,10 @@ class CornerSpaceTest {
 
      @BeforeAll public static void init(){
         a =new ArrayList<Item>();
-        a.add(Object.SPELL);
+        a.add(Object.POTION);
         a.add(Object.SCROLL);
          t= new ArrayList<Item>();
-         t.add(Object.SPELL);
+         t.add(Object.POTION);
          t.add(Object.SCROLL);
          x=new CornerSpace(t);
     }

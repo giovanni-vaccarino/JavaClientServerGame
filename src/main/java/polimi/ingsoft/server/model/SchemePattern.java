@@ -9,62 +9,63 @@ public class SchemePattern implements Pattern {
         this.order=order;
     }
     private int getMatch(HashMap<Coordinates,Boolean> used,boolean setvisited,HashMap<Coordinates,Boolean> visited, Board board, int count, int actualLink, Coordinates actualCoordinates) {
-        if (board.getCard(actualCoordinates/*.sum(order.get(actualLink).getPosFromBegin())*/) == null) return 0;
+        if (board.getCard(actualCoordinates/*.sum(order.get(actualLink).getPosFromBegin())*/) == null) return count;//0;
         if(setvisited)visited.put(actualCoordinates,true);
         if (setvisited) {
             if (board.getCard(actualCoordinates).getUpLeftCorner()!=null
-                    &&visited.get(actualCoordinates.sum(new Coordinates(-1, 1)))==null)
-                count = count + (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, 1))));
+                    &&!visited.containsKey(actualCoordinates.sum(new Coordinates(-1, 1))))
+                count = /*count +*/ (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, 1))));
             if (board.getCard(actualCoordinates).getUpRightCorner() != null
-                    &&visited.get(actualCoordinates.sum(new Coordinates(1, 1)))==null)
-                count = count + (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, 1))));
+                    &&!visited.containsKey(actualCoordinates.sum(new Coordinates(1, 1))))
+                count = /*count +*/ (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, 1))));
             if (board.getCard(actualCoordinates).getBottomLeftCorner() != null
-                    &&visited.get(actualCoordinates.sum(new Coordinates(-1, -1)))==null)
-                count = count + (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, -1))));
+                    &&!visited.containsKey(actualCoordinates.sum(new Coordinates(-1, -1))))
+                count = /*count +*/ (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, -1))));
             if (board.getCard(actualCoordinates).getBottomRightCorner() != null
-                    &&visited.get(actualCoordinates.sum(new Coordinates(1, -1)))!=null)
-                count = count + (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, -1))));
+                    &&!visited.containsKey(actualCoordinates.sum(new Coordinates(1, -1))))
+                count = /*count +*/ (getMatch(used,true,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, -1))));
             }
         if(!actualCoordinates.equals(new Coordinates(0,0))
-                &&board.getCard(actualCoordinates).getColor().getFirst()==order.get(actualLink).getColor()
-                    &&used.get(actualCoordinates)==null){
+                &&board.getCard(actualCoordinates).getColor().equals(order.get(actualLink).getColor())
+                    &&!used.containsKey(actualCoordinates)){
             if(actualLink<maxSize) { //rivedere riguardo le diagonali
-                if (order.get(1).getPosFromBegin().equals(new Coordinates(1, 1))) {
-                    if (board.getCard(actualCoordinates.sum(new Coordinates(1, 1))).getColor().getFirst() == order.get(actualLink).getColor()
-                            &&visited.get(actualCoordinates.sub(new Coordinates(1,1)))==null&&used.get(actualCoordinates.sub(new Coordinates(1,1)))==null)
-                        getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, 1)));
-                    else if(visited.get(actualCoordinates.sub(new Coordinates(1,1))))count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(1, 1)));
-                }
-                else if (order.get(1).getPosFromBegin().equals(new Coordinates(-1, -1))) {
-                    if (board.getCard(actualCoordinates.sum(new Coordinates(-1, -1))).getColor().getFirst() == order.get(actualLink).getColor()
-                            &&visited.get(actualCoordinates.sub(new Coordinates(-1,-1)))==null&&used.get(actualCoordinates.sub(new Coordinates(-1,-1)))==null)
-                        getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, -1)));
-                    else if(visited.get(actualCoordinates.sub(new Coordinates(-1,-1)))) count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(-1, -1)));
-                }
-                else if (order.get(1).getPosFromBegin().equals(new Coordinates(-1, 1))) {
-                    if (board.getCard(actualCoordinates.sum(new Coordinates(-1, 1))).getColor().getFirst() == order.get(actualLink).getColor()
-                            &&visited.get(actualCoordinates.sub(new Coordinates(-1,1)))==null&&used.get(actualCoordinates.sub(new Coordinates(-1,1)))==null)
-                        getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, 1)));
-                    else if(visited.get(actualCoordinates.sub(new Coordinates(-1,1))))count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(-1, 1)));
-                }
-                else if (order.get(1).getPosFromBegin().equals(new Coordinates(1, -1))) {
-                    if (board.getCard(actualCoordinates.sum(new Coordinates(1, -1))).getColor().getFirst() == order.get(actualLink).getColor()
-                            &&visited.get(actualCoordinates.sub(new Coordinates(1,-1)))==null&&used.get(actualCoordinates.sub(new Coordinates(1,-1)))==null)
-                        getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, -1)));
-                    else if(visited.get(actualCoordinates.sub(new Coordinates(1,-1))))count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(1, -1)));
-                }
-                else count = count + getMatch(used,false, visited, board, count, actualLink + 1, actualCoordinates.sum(order.get(actualLink + 1).getPosFromBegin()));
-            }
-                else if(actualLink==maxSize&&board.getCard(actualCoordinates).getColor().getFirst()==order.get(actualLink).getColor()&&used.get(board.getCard(actualCoordinates))==null){
-                    if(order.get(1).getPosFromBegin().equals(new Coordinates(1, -1))||order.get(1).getPosFromBegin().equals(new Coordinates(-1, 1))||order.get(1).getPosFromBegin().equals(new Coordinates(-1, -1))||order.get(1).getPosFromBegin().equals(new Coordinates(1, 1))){
-                    for(int i=0;i<maxSize+1;i++)used.put(actualCoordinates.sum(order.get(i).getPosFromBegin()),true);
-                    }else {
+//                if (order.get(1).getPosFromBegin().equals(new Coordinates(1, 1))) {
+//                    if (board.getCard(actualCoordinates.sum(new Coordinates(1, 1)))!=null&&board.getCard(actualCoordinates.sum(new Coordinates(1, 1))).getColor() == order.get(actualLink).getColor()
+//                            &&visited.get(actualCoordinates.sub(new Coordinates(1,1)))==null&&used.get(actualCoordinates.sub(new Coordinates(1,1)))==null)
+//                        count=count+getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, 1)));
+//                    else if(visited.get(actualCoordinates.sub(new Coordinates(1,1))))count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(1, 1)));
+//                }
+//                else if (order.get(1).getPosFromBegin().equals(new Coordinates(-1, -1))) {
+//                    if (board.getCard(actualCoordinates.sum(new Coordinates(-1, -1)))!=null&&board.getCard(actualCoordinates.sum(new Coordinates(-1, -1))).getColor() == order.get(actualLink).getColor()
+//                            &&visited.get(actualCoordinates.sub(new Coordinates(-1,-1)))==null&&used.get(actualCoordinates.sub(new Coordinates(-1,-1)))==null)
+//                        count=count+getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, -1)));
+//                    else if(visited.get(actualCoordinates.sub(new Coordinates(-1,-1)))) count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(-1, -1)));
+//                }
+//                else if (order.get(1).getPosFromBegin().equals(new Coordinates(-1, 1))) {
+//                    if (board.getCard(actualCoordinates.sum(new Coordinates(-1, 1)))!=null&&board.getCard(actualCoordinates.sum(new Coordinates(-1, 1))).getColor() == order.get(actualLink).getColor()
+//                            &&visited.get(actualCoordinates.sub(new Coordinates(-1,1)))==null&&used.get(actualCoordinates.sub(new Coordinates(-1,1)))==null)
+//                        count=count+getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(-1, 1)));
+//                    else if(visited.get(actualCoordinates.sub(new Coordinates(-1,1))))count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(-1, 1)));
+//                }
+//                else if (order.get(1).getPosFromBegin().equals(new Coordinates(1, -1))) {
+//                    if (board.getCard(actualCoordinates.sum(new Coordinates(1, -1)))!=null&&board.getCard(actualCoordinates.sum(new Coordinates(1, -1))).getColor()== order.get(actualLink).getColor()
+//                            &&visited.get(actualCoordinates.sub(new Coordinates(1,-1)))==null&&used.get(actualCoordinates.sub(new Coordinates(1,-1)))==null)
+//                        count=count+getMatch(used,false,visited,board, count, actualLink, actualCoordinates.sum(new Coordinates(1, -1)));
+//                    else if(visited.get(actualCoordinates.sub(new Coordinates(1,-1))))count = count + getMatch(used,false,visited,board, count, actualLink + 1, actualCoordinates.sub(new Coordinates(1, -1)));
+//                }
+              /*else*//* count = count +*/ return /*count+*/getMatch(used,false, visited, board, count, actualLink + 1, actualCoordinates.sub(order.get(actualLink).getPosFromBegin()).sum(order.get(actualLink + 1).getPosFromBegin()));
+            } else if(board.getCard(actualCoordinates).getColor().equals(order.get(actualLink).getColor())&&!used.containsKey(board.getCard(actualCoordinates))){
+                    //if(order.get(1).getPosFromBegin().equals(new Coordinates(1, -1))||order.get(1).getPosFromBegin().equals(new Coordinates(-1, 1))||order.get(1).getPosFromBegin().equals(new Coordinates(-1, -1))||order.get(1).getPosFromBegin().equals(new Coordinates(1, 1))){
+                        //for(int i=0;i<maxSize+1;i++)used.put(actualCoordinates.sum(order.get(i).getPosFromBegin()),true);
+                    //}else {
                         for(int i=0;i<maxSize+1;i++)used.put(actualCoordinates.sub(order.get(actualLink).getPosFromBegin()).sum(order.get(i).getPosFromBegin()),true);
-                     }
-                    return 1;
-                }
-            }
-        return setvisited? count : 0;
+                     //}
+                /**///System.out.println(actualCoordinates.getX()+","+actualCoordinates.getY());
+                    return count+1;
+                }//else return 0;
+            }//else if(!setvisited)return 0;
+        //return setvisited? count : 0;
+        return count;
         }
 
     public int getMatch(Board board){
