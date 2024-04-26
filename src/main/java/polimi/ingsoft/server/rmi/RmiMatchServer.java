@@ -1,7 +1,7 @@
 package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.controllerg.MainController;
+import polimi.ingsoft.server.controllerg.MatchController;
 import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.GameCard;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RmiMatchServer implements VirtualMatchServer {
-    final MainController controller;
+    final MatchController controller;
     final List<VirtualView> clients = new ArrayList<>();
 
-    public RmiMatchServer(MainController controller) {
+    public RmiMatchServer(MatchController controller) {
         this.controller = controller;
     }
 
@@ -28,7 +28,7 @@ public class RmiMatchServer implements VirtualMatchServer {
     public static void main(String[] args) throws RemoteException{
         final String serverName = "Server";
 
-        VirtualMatchServer server = new RmiMatchServer(new MainController());
+        VirtualMatchServer server = new RmiMatchServer(new MatchController());
         VirtualMatchServer stub = (VirtualMatchServer) UnicastRemoteObject.exportObject(server,0);
         Registry registry = LocateRegistry.createRegistry(1234);
         registry.rebind(serverName, stub);
