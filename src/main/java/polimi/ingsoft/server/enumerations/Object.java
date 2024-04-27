@@ -3,7 +3,7 @@ package polimi.ingsoft.server.enumerations;
 import polimi.ingsoft.server.model.Item;
 
 public enum Object implements Item {
-    SCROLL("SCR"), SPELL("SPE");
+    SCROLL("SCR"), POTION("POT") , FEATHER("FEA");
 
     private final String abbreviation;
 

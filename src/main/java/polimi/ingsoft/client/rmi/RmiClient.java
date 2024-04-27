@@ -1,4 +1,7 @@
-package polimi.ingsoft.rmi;
+package polimi.ingsoft.client.rmi;
+
+import polimi.ingsoft.server.model.Message;
+import polimi.ingsoft.server.rmi.VirtualMatchServer;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -9,9 +12,9 @@ import java.util.Scanner;
 
 //Rmi client extends UnicastRemoteObject in modo che possa essere passato al server
 public class RmiClient extends UnicastRemoteObject implements VirtualView {
-    final VirtualServer server;
+    final VirtualMatchServer server;
 
-    public RmiClient(VirtualServer server) throws RemoteException{
+    public RmiClient(VirtualMatchServer server) throws RemoteException{
         this.server = server;
     }
 
@@ -27,27 +30,37 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView {
             int command = scan.nextInt();
 
             if (command == 0){
-                server.reset();
+                server.addMessage("ciao");
             }else{
-                server.add(command);
+                server.addMessage("ciao" + command);
             }
         }
     }
 
     //Anche qui gestire le eccezioni con un senso, non throwandole
     public static void main(String[] args) throws RemoteException, NotBoundException {
-        final String serverName = "AdderServer";
+        final String serverName = "Server";
         Registry registry = LocateRegistry.getRegistry(args[0], 1234);
 
-        VirtualServer server = (VirtualServer) registry.lookup(serverName);
+        VirtualMatchServer server = (VirtualMatchServer) registry.lookup(serverName);
 
         new RmiClient(server).run();
     }
 
     @Override
-    public void showUpdate(Integer number) throws RemoteException {
+    public void showUpdateChat(Message message) throws RemoteException {
         //Attenzione alle data races
-        System.out.print("\n= " + number + "\n>");
+        //Aggiungo l'ultimo messaggio alla lista
+    }
+
+    @Override
+    public void showUpdatePublicBoard() throws RemoteException {
+
+    }
+
+    @Override
+    public void showUpdateBoard() throws RemoteException {
+
     }
 
     @Override

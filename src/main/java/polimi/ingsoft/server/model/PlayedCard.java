@@ -13,7 +13,11 @@ public class PlayedCard {
     public PlayedCard(GameCard card,boolean facingUp){
         this.card=card;
         this.facingUp=facingUp;
-    }
+        if(card.getUpLeftCorner(facingUp)==null)this.setUpLeft();
+        if(card.getUpRightCorner(facingUp)==null)this.setUpRight();
+        if(card.getBottomLeftCorner(facingUp)==null)this.setDownLeft();
+        if(card.getBottomRightCorner(facingUp)==null)this.setDownRight();
+        }
     public Resource getColor(){
         return card.getFront().getCenter().getItems().getFirst();
     }
@@ -71,6 +75,10 @@ public class PlayedCard {
 
     public CornerSpace getBottomLeftCorner(){
         return card.getBottomLeftCorner(facingUp);
+    }
+
+    public CenterSpace getCenter(){
+        return card.getFront().getCenter();
     }
 
 }
