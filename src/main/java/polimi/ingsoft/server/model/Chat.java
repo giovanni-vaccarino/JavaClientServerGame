@@ -22,4 +22,7 @@ public class Chat {
     public Message getLastMessage() {
         return messages.get(messages.size() - 1);
     }
+    public ArrayList<Message> getMessages(){
+        return this.messages;
+    }
 }

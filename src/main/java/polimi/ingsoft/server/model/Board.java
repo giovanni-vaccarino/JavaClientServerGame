@@ -30,19 +30,27 @@ public class Board {
             this.cards.put(position, new PlayedCard(card, facingUp));
             if (cards.containsKey(position.downRight())){
                 cards.get(position.downRight()).setUpLeft();
-                if(!cards.get(position.downRight()).getFace().getUpLeft().getItems().isEmpty()&&resources.get(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst())>0)resources.put(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst(),resources.get(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst())-1);
+                if(!cards.get(position.downRight()).getFace().getUpLeft().getItems().isEmpty()&&
+                        resources.get(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst())>0)
+                    resources.put(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst(),resources.get(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst())-1);
             }
             if (cards.containsKey(position.upRight())){
                 cards.get(position.upRight()).setDownLeft();
-                if(!cards.get(position.upRight()).getFace().getBottomLeft().getItems().isEmpty()&&resources.get(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst())>0)resources.put(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst(),resources.get(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst())-1);
+                if(!cards.get(position.upRight()).getFace().getBottomLeft().getItems().isEmpty()&&
+                        resources.get(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst())>0)
+                    resources.put(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst(),resources.get(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst())-1);
             }
             if (cards.containsKey(position.upLeft())){
                 cards.get(position.upLeft()).setDownRight();
-                if(!cards.get(position.upLeft()).getFace().getBottomRight().getItems().isEmpty()&&resources.get(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst())>0)resources.put(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst(),resources.get(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst())-1);
+                if(!cards.get(position.upLeft()).getFace().getBottomRight().getItems().isEmpty()&&
+                        resources.get(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst())>0)
+                    resources.put(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst(),resources.get(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst())-1);
             }
             if (cards.containsKey(position.downLeft())){
                 cards.get(position.downLeft()).setUpRight();
-                if(!cards.get(position.downLeft()).getFace().getUpRight().getItems().isEmpty()&&resources.get(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst())>0)resources.put(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst(),resources.get(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst())-1);
+                if(!cards.get(position.downLeft()).getFace().getUpRight().getItems().isEmpty()&&
+                        resources.get(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst())>0)
+                    resources.put(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst(),resources.get(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst())-1);
             }
             if(cards.get(position).getBottomLeftCorner()!=null&&!cards.get(position).getBottomLeftCorner().getItems().isEmpty())resources.put(cards.get(position).getBottomLeftCorner().getItems().getFirst(),resources.get(cards.get(position).getBottomLeftCorner().getItems().getFirst())+1);
             if(cards.get(position).getBottomRightCorner()!=null&&!cards.get(position).getBottomRightCorner().getItems().isEmpty())resources.put(cards.get(position).getBottomRightCorner().getItems().getFirst(),resources.get(cards.get(position).getBottomRightCorner().getItems().getFirst())+1);
