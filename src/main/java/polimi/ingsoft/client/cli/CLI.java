@@ -37,7 +37,7 @@ public class CLI {
         out.println(MESSAGES.WELCOME.getValue());
         out.println("0. CREATE A NEW MATCH");
         for (String match : matches) {
-            out.printf("{}. {}%n", ++i, match);
+            out.printf("%d. %s%n", ++i, match);
         }
 
         int matchId;
@@ -45,6 +45,7 @@ public class CLI {
         do {
             out.print(MESSAGES.CHOOSE_MATCH.getValue());
             matchId = in.nextInt();
+            in.nextLine();
             if (matchId < matches.length) isValid = true;
             else out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
         } while (!isValid);
@@ -57,7 +58,7 @@ public class CLI {
         boolean isValid = false;
 
         do {
-            out.println(MESSAGES.CHOOSE_NICKNAME.getValue());
+            out.print(MESSAGES.CHOOSE_NICKNAME.getValue());
             nickname = in.nextLine();
             if (virtualServer.isAvailableNickname(nickname, matchId)) isValid = true;
             else out.println(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE.getValue());

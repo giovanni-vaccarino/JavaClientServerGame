@@ -6,8 +6,10 @@ public class Player {
     private Board board;
     private final PlayerHand<MixedCard> hand;
     private InitialCard initialCard;
+    private final String nickname;
 
-    public Player(PlayerHand<MixedCard> hand) {
+    public Player(PlayerHand<MixedCard> hand, String nickname) {
+        this.nickname = nickname;
         InitialCard test = new InitialCard(new Face(), new Face(), 0);
         this.board = new Board(test, true);
         this.hand = hand;

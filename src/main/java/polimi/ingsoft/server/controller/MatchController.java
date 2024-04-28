@@ -5,6 +5,7 @@ import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
 import polimi.ingsoft.server.model.*;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,28 +17,20 @@ public class MatchController {
     }
 
     private TURN_STEP currentStep;
-    private Player currentPlayer;
+    private int currentPlayerIndex;
     private ArrayList<Player> players = new ArrayList<>();
 
     private final PublicBoard publicBoard;
 
-    protected Iterator<Player> getPlayers(){
-        return players.iterator();
-    }
-
-    protected final Scanner in;
-    protected final PrintWriter out;
+    protected final PrintStream logger;
 
     protected final int matchId;
 
-    public MatchController(
-        Scanner in,
-        PrintWriter out,
+    public MatchController(PrintStream logger,
         int matchId,
         PublicBoard publicBoard
     ) {
-        this.in = in;
-        this.out = out;
+        this.logger = logger;
         this.matchId = matchId;
         this.publicBoard = publicBoard;
     }
@@ -46,25 +39,17 @@ public class MatchController {
         return matchId;
     }
 
-    public void addPlayer(Player player) {
+    public void addPlayer(String nickname) {
+        Player player = new Player(new PlayerHand<>(), nickname);
         players.add(player);
     }
 
-    private void playTurn() {
-        Iterator<Player> players = getPlayers();
-        while (players.hasNext()) {
-            currentPlayer = players.next();
-
-        }
+    private Player getCurrentPlayer() {
+        return players.get(currentPlayerIndex);
     }
 
-    public void play() {
-        boolean lastRound = false;
-
-        do {
-            if (isLastRound()) lastRound = true;
-            playTurn();
-        } while (!lastRound);
+    private void goToNextPlayer() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
 
     private boolean isLastRound() {
@@ -72,7 +57,7 @@ public class MatchController {
     }
 
     private void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        if (player != currentPlayer) throw new WrongPlayerForCurrentTurnException();
+        if (player != getCurrentPlayer()) throw new WrongPlayerForCurrentTurnException();
         if (currentStep != move) throw new WrongStepException();
     }
 
@@ -97,5 +82,6 @@ public class MatchController {
     private void place(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException {
         validateMove(player, TURN_STEP.PLACE);
         player.getBoard().add(coordinates, card, facingUp);
+        goToNextPlayer();
     }
 }

@@ -2,8 +2,8 @@ package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.server.common.MatchActionsInterface;
 import polimi.ingsoft.server.common.MatchManagerInterface;
-import polimi.ingsoft.server.controllerg.MainController;
-import polimi.ingsoft.server.controllerg.MatchController;
+import polimi.ingsoft.server.controller.MainController;
+import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
@@ -36,7 +36,8 @@ public class RmiServer implements MatchManagerInterface, MatchActionsInterface {
     public void addMessage(int matchId, String message) throws RemoteException {
         MatchController matchController = mainController.getMatch(matchId);
         if (matchController != null) {
-            matchController.writeMessage(message);
+            // Sorry l'ho tolto ):
+            // matchController.writeMessage(message);
         } else {
             throw new RemoteException("Match not found.");
         }

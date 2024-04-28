@@ -12,7 +12,8 @@ class SchemePatternTest {
     static Board board;
     static ArrayList<Link> link1,link2,link3,link4,link5,link6,link7,link8;
     SchemePattern pattern;
-    @BeforeAll public static void init(){
+    @BeforeAll
+    public static void init(){
         ArrayList<Item> corners=new ArrayList<Item>();
         ArrayList<Resource> center=new ArrayList<Resource>();
         ResourceCard resource;
