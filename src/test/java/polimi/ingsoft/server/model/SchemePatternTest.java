@@ -241,69 +241,69 @@ class SchemePatternTest {
     @Test
     void getMatch() {
 
-        pattern=new SchemePattern(link1);
-        assertEquals(1,pattern.getMatch(board));
+        pattern=new SchemePattern();
+        assertEquals(1,pattern.getMatch(board,link1));
         /**///System.out.println("RES1:"+pattern.getMatch(board));
 
-        pattern=new SchemePattern(link2);
-        assertEquals(1,pattern.getMatch(board));
+        //pattern=new SchemePattern();
+        assertEquals(1,pattern.getMatch(board,link2));
         /**///System.out.println("RES2:"+pattern.getMatch(board));
 
-        pattern=new SchemePattern(link3);
-        assertEquals(1,pattern.getMatch(board));
+        //pattern=new SchemePattern();
+        assertEquals(1,pattern.getMatch(board,link3));
         /**///System.out.println("RES3:"+pattern.getMatch(board));
 
-        pattern=new SchemePattern(link4);
-        assertEquals(1,pattern.getMatch(board));
+        //pattern=new SchemePattern();
+        assertEquals(1,pattern.getMatch(board,link4));
         /**///System.out.println("RES4:"+pattern.getMatch(board));
 
-        pattern=new SchemePattern(link5);
-        assertEquals(2,pattern.getMatch(board));
+        //pattern=new SchemePattern();
+        assertEquals(2,pattern.getMatch(board,link5));
         /**///System.out.println("RES5:"+pattern.getMatch(board));
 
-        pattern=new SchemePattern(link6);
-        assertEquals(2,pattern.getMatch(board));
+        //pattern=new SchemePattern();
+        assertEquals(2,pattern.getMatch(board,link6));
         /**///System.out.println("RES6:"+pattern.getMatch(board));
 
-        pattern=new SchemePattern(link7);
-        assertEquals(2,pattern.getMatch(board));
+        //pattern=new SchemePattern();
+        assertEquals(2,pattern.getMatch(board,link7));
         /**///System.out.println("RES7:"+pattern.getMatch(board));
 
-        pattern=new SchemePattern(link8);
-        assertEquals(1,pattern.getMatch(board));
+        //pattern=new SchemePattern();
+        assertEquals(1,pattern.getMatch(board,link8));
         /**///System.out.println("RES8:"+pattern.getMatch(board));
     }
 
-    void getMatch1() {
-        pattern=new SchemePattern(link1);
-        assertEquals(1,pattern.getMatch(board));
-    }
-    void getMatch2() {
-        pattern=new SchemePattern(link2);
-        assertEquals(1,pattern.getMatch(board));
-    }
-    void getMatch3() {
-        pattern=new SchemePattern(link3);
-        assertEquals(1,pattern.getMatch(board));
-    }
-    void getMatch4() {
-        pattern=new SchemePattern(link4);
-        assertEquals(1,pattern.getMatch(board));
-    }
-    void getMatch5() {
-        pattern=new SchemePattern(link5);
-        assertEquals(2,pattern.getMatch(board));
-    }
-    void getMatch6() {
-        pattern=new SchemePattern(link6);
-        assertEquals(2,pattern.getMatch(board));
-    }
-    void getMatch7() {
-        pattern=new SchemePattern(link7);
-        assertEquals(2,pattern.getMatch(board));
-    }
-    void getMatch8() {
-        pattern=new SchemePattern(link8);
-        assertEquals(1,pattern.getMatch(board));
-    }
+//    void getMatch1() {
+//        pattern=new SchemePattern(link1);
+//        assertEquals(1,pattern.getMatch(board));
+//    }
+//    void getMatch2() {
+//        pattern=new SchemePattern(link2);
+//        assertEquals(1,pattern.getMatch(board));
+//    }
+//    void getMatch3() {
+//        pattern=new SchemePattern(link3);
+//        assertEquals(1,pattern.getMatch(board));
+//    }
+//    void getMatch4() {
+//        pattern=new SchemePattern(link4);
+//        assertEquals(1,pattern.getMatch(board));
+//    }
+//    void getMatch5() {
+//        pattern=new SchemePattern(link5);
+//        assertEquals(2,pattern.getMatch(board));
+//    }
+//    void getMatch6() {
+//        pattern=new SchemePattern(link6);
+//        assertEquals(2,pattern.getMatch(board));
+//    }
+//    void getMatch7() {
+//        pattern=new SchemePattern(link7);
+//        assertEquals(2,pattern.getMatch(board));
+//    }
+//    void getMatch8() {
+//        pattern=new SchemePattern(link8);
+//        assertEquals(1,pattern.getMatch(board));
+//    }
 }

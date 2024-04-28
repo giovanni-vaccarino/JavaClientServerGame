@@ -1,5 +1,8 @@
 package polimi.ingsoft.server.model;
 
-public interface Pattern {
-    public int getMatch(Board board);
+import java.lang.reflect.GenericArrayType;
+import java.util.ArrayList;
+
+public interface Pattern<T> {
+    int getMatch(Board board, T obj);//<T> array);
 }
