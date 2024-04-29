@@ -29,8 +29,8 @@ public class ProtocolChoiceCLI {
             in.nextLine();
             if (protocolIndex < protocols.length) isValid = true;
             else out.println(ERROR_MESSAGES.PROTOCOL_NUMBER_OUT_OF_BOUND);
-        } while (isValid);
+        } while (!isValid);
 
-        return protocols[protocolIndex];
+        return protocols[protocolIndex - 1];
     }
 }
