@@ -6,6 +6,7 @@ public enum MESSAGES {
     WELCOME("Welcome to CODEX, choose your match between the ones available: \n"),
     CHOOSE_MATCH("Choose your match: "),
     CHOOSE_NICKNAME("Choose your nickname: "),
+    CHOOSE_NUMPLAYERS("Choose how many players should the game have: "),
     JOINING_MATCH("Joining match..."),
     JOINED_MATCH("Succesfully joined match");
 

@@ -13,6 +13,8 @@ public class MatchController {
         DRAW, PLACE
     }
 
+    private final Integer requestedNumPlayers;
+
     private TURN_STEP currentStep;
     private int currentPlayerIndex;
 
@@ -27,9 +29,11 @@ public class MatchController {
 
     public MatchController(PrintStream logger,
                            int matchId,
+                           int requestedNumPlayers,
                            PublicBoard publicBoard,
                            ChatController chatController
     ) {
+        this.requestedNumPlayers = requestedNumPlayers;
         this.chatController = chatController;
         this.logger = logger;
         this.matchId = matchId;

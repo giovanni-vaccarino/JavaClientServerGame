@@ -7,11 +7,15 @@ import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
+import java.util.Set;
 
 public interface VirtualServerInterface extends Remote {
     void connect(VirtualView client) throws RemoteException;
 
-    void createMatch(String nickname, Integer requiredNumPlayers) throws RemoteException;
+    List<Integer> getMatches() throws RemoteException;
+
+    Integer createMatch(Integer requiredNumPlayers) throws RemoteException;
 
     void joinMatch(Integer matchId, String nickname) throws RemoteException;
 

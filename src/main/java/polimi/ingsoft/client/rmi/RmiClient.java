@@ -10,8 +10,10 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 //Rmi client extends UnicastRemoteObject in modo che possa essere passato al server
 public class RmiClient extends UnicastRemoteObject implements VirtualView, Client {
@@ -41,18 +43,41 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public Map<Integer, String> getAvailableMatches() {
+    public List<Integer> getAvailableMatches() {
+        try{
+            return server.getMatches();
+        }catch(RemoteException exception){
+            System.out.println(exception);
+        }
+
         return null;
     }
 
     @Override
-    public Player createMatch(String nickname) {
+    public Integer createMatch(Integer requestedNumPlayers) {
+        try{
+            return server.createMatch(requestedNumPlayers);
+        }catch(RemoteException exception){
+            System.out.println(exception);
+        }
+
         return null;
     }
 
     @Override
-    public Player joinMatch(int matchId, String nickname) {
-        return null;
+    public Boolean joinMatch(int matchId, String nickname) {
+        try{
+            server.joinMatch(matchId, nickname);
+            return true;
+        }catch(RemoteException exception){
+            System.out.println(exception);
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean isMatchJoinable(int matchId) {
+        return false;
     }
 
     @Override

@@ -9,9 +9,9 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class MatchFactory {
-    public static MatchController createMatch(PrintStream out, int matchId) {
+    public static MatchController createMatch(PrintStream out, int matchId, int requestedNumPlayers) {
         PublicBoard publicBoard = PublicBoardFactory.createPublicBoard();
         ChatController chatController = ChatControllerFactory.createChatController();
-        return new MatchController(out, matchId, publicBoard, chatController);
+        return new MatchController(out, matchId, requestedNumPlayers, publicBoard, chatController);
     }
 }

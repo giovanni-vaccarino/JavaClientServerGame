@@ -8,17 +8,22 @@ import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
+import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class RmiServer implements VirtualServerInterface {
     final MainController mainController;
 
     final List<VirtualView> clients = new ArrayList<>();
 
-    public RmiServer(MainController mainController) {
+    private final PrintStream logger;
+
+    public RmiServer(MainController mainController, PrintStream logger) {
         this.mainController = mainController;
+        this.logger = logger;
     }
 
     @Override
@@ -26,11 +31,17 @@ public class RmiServer implements VirtualServerInterface {
         synchronized (this.clients){
             this.clients.add(client);
         }
+        logger.println("RMI: NEW CLIENT ADDED");
     }
 
     @Override
-    public void createMatch(String nickname, Integer requiredNumPlayers) throws RemoteException {
-        this.mainController.createMatch(nickname, requiredNumPlayers);
+    public List<Integer> getMatches() throws RemoteException {
+        return mainController.getMatches();
+    }
+
+    @Override
+    public Integer createMatch(Integer requiredNumPlayers) throws RemoteException {
+        return this.mainController.createMatch(requiredNumPlayers);
     }
 
     @Override

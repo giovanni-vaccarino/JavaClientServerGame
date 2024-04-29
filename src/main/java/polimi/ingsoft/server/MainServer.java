@@ -16,7 +16,7 @@ public class MainServer {
     private final static MainController controller = new MainController(logger);
 
     private final static SocketServer socketServer = new SocketServer(4444, logger, controller);
-    private final static RmiServer rmiServer = new RmiServer(controller);
+    private final static RmiServer rmiServer = new RmiServer(controller, logger);
 
     public static void main(String[] args) {
         logger.println("MAIN: Starting servers (RMI & Socket)");

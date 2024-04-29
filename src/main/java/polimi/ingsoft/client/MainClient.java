@@ -30,9 +30,10 @@ public class MainClient {
             Client client = createClient(protocol)
         ) {
             VirtualServer virtualServer = new VirtualServer();
-            CLI cli = new CLI(scanner, printStream, virtualServer);
+            CLI cli = new CLI(scanner, printStream, virtualServer, client);
 
-            Player player = cli.runJoinMatchRoutine();
+            //Player player = cli.runJoinMatchRoutine();
+            Boolean isAdded = cli.runJoinMatchRoutine();
         } catch (IOException ignored) { }
     }
     
