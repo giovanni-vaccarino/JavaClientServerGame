@@ -1,50 +1,27 @@
 package polimi.ingsoft.client.rmi;
 
+import polimi.ingsoft.client.Client;
+import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.model.Message;
-import polimi.ingsoft.server.rmi.VirtualMatchServer;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Map;
 import java.util.Scanner;
 
 //Rmi client extends UnicastRemoteObject in modo che possa essere passato al server
-public class RmiClient extends UnicastRemoteObject implements VirtualView {
-    final VirtualMatchServer server;
+public class RmiClient extends UnicastRemoteObject implements VirtualView, Client {
+    final VirtualServerInterface server;
 
-    public RmiClient(VirtualMatchServer server) throws RemoteException{
-        this.server = server;
-    }
-
-    private void run() throws RemoteException{
+    public RmiClient(String rmiServerHostName, String rmiServerName, Integer rmiServerPort) throws RemoteException, NotBoundException{
+        Registry registry = LocateRegistry.getRegistry(rmiServerHostName, rmiServerPort);
+        VirtualServerInterface rmiServer = (VirtualServerInterface) registry.lookup(rmiServerName);
+        this.server = rmiServer;
         this.server.connect(this);
-        this.runCli();
-    }
-
-    private void runCli() throws RemoteException{
-        Scanner scan = new Scanner(System.in);
-        while (true){
-            System.out.print("> ");
-            int command = scan.nextInt();
-
-            if (command == 0){
-                server.addMessage("ciao");
-            }else{
-                server.addMessage("ciao" + command);
-            }
-        }
-    }
-
-    //Anche qui gestire le eccezioni con un senso, non throwandole
-    public static void main(String[] args) throws RemoteException, NotBoundException {
-        final String serverName = "Server";
-        Registry registry = LocateRegistry.getRegistry(args[0], 1234);
-
-        VirtualMatchServer server = (VirtualMatchServer) registry.lookup(serverName);
-
-        new RmiClient(server).run();
     }
 
     @Override
@@ -64,7 +41,22 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
-    public void reportError(String details) throws RemoteException {
-        System.err.print("\n[ERROR]" + details + "\n> ");
+    public Map<Integer, String> getAvailableMatches() {
+        return null;
+    }
+
+    @Override
+    public Player createMatch(String nickname) {
+        return null;
+    }
+
+    @Override
+    public Player joinMatch(int matchId, String nickname) {
+        return null;
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }

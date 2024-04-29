@@ -14,7 +14,4 @@ public interface VirtualView extends Remote{
     void showUpdatePublicBoard() throws RemoteException;
 
     void showUpdateBoard() throws RemoteException;
-
-    void reportError(String details) throws RemoteException;
-
 }

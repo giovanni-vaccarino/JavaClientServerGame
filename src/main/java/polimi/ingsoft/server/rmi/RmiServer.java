@@ -1,7 +1,7 @@
 package polimi.ingsoft.server.rmi;
 
-import polimi.ingsoft.server.common.MatchActionsInterface;
-import polimi.ingsoft.server.common.MatchManagerInterface;
+import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
@@ -9,12 +9,23 @@ import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RmiServer implements MatchManagerInterface, MatchActionsInterface {
+public class RmiServer implements VirtualServerInterface {
     final MainController mainController;
+
+    final List<VirtualView> clients = new ArrayList<>();
 
     public RmiServer(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    @Override
+    public void connect(VirtualView client) throws RemoteException {
+        synchronized (this.clients){
+            this.clients.add(client);
+        }
     }
 
     @Override
