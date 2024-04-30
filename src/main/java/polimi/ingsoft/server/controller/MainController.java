@@ -3,8 +3,8 @@ package polimi.ingsoft.server.controller;
 import polimi.ingsoft.server.factories.MatchFactory;
 
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
 public class MainController {
 
@@ -13,6 +13,7 @@ public class MainController {
 
     public MainController(PrintStream logger) {
         this.matches = new HashMap<>();
+        this.matches.put(1, MatchFactory.createMatch(logger, 1, 3));
         this.logger = logger;
     }
 
@@ -25,12 +26,13 @@ public class MainController {
         return true;
     }
 
-    public void createMatch(String nickname, Integer requiredNumPlayers){
+    public Integer createMatch(Integer requiredNumPlayers){
         int matchId = matches.keySet().size() + 1;
 
-        MatchController match = MatchFactory.createMatch(logger, matchId);
+        MatchController match = MatchFactory.createMatch(logger, matchId, requiredNumPlayers);
         matches.put(matchId, match);
-        match.addPlayer(nickname);
+
+        return matchId;
     }
 
     public void joinMatch(Integer matchId, String nickname) {
@@ -49,6 +51,11 @@ public class MainController {
 
     public void reJoinMatch(Integer lobbyId, String nickname){
 
+    }
+
+    public List<Integer> getMatches(){
+        Set<Integer> keys = this.matches.keySet();
+        return new ArrayList<>(keys);
     }
 
     public MatchController getMatch(int matchId){

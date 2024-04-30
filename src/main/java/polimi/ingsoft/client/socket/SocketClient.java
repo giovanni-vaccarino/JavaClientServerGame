@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 
 public class SocketClient implements Client {
     private final Socket socket;
@@ -29,19 +30,24 @@ public class SocketClient implements Client {
     }
 
     @Override
-    public HashMap<Integer, String> getAvailableMatches() {
+    public List<Integer> getAvailableMatches() {
         out.println(SocketCommand.AVAILABLE_MATCHES);
         return null;
     }
 
     @Override
-    public Player createMatch(String nickname) {
+    public Integer createMatch(Integer requestedNumPlayers) {
         return null;
     }
 
     @Override
-    public Player joinMatch(int matchId, String nickname) {
-        return null;
+    public Boolean joinMatch(int matchId, String nickname) {
+        return true;
+    }
+
+    @Override
+    public Boolean isMatchJoinable(int matchId) {
+        return true;
     }
 
     @Override

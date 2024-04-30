@@ -16,8 +16,12 @@ public class MatchController {
         DRAW, PLACE
     }
 
+    private final Integer requestedNumPlayers;
+
     private TURN_STEP currentStep;
     private int currentPlayerIndex;
+
+    final ChatController chatController;
     private ArrayList<Player> players = new ArrayList<>();
 
     private final PublicBoard publicBoard;
@@ -27,10 +31,14 @@ public class MatchController {
     protected final int matchId;
 
     public MatchController(PrintStream logger,
-        int matchId,
-        PublicBoard publicBoard
+                           int matchId,
+                           int requestedNumPlayers,
+                           PublicBoard publicBoard,
+                           ChatController chatController
     ) {
         // Aggiungere validazione stato partita a validateMove (inizio, durante, fine partita)
+        this.requestedNumPlayers = requestedNumPlayers;
+        this.chatController = chatController;
         this.logger = logger;
         this.matchId = matchId;
         this.publicBoard = publicBoard;
@@ -87,5 +95,29 @@ public class MatchController {
         validateMove(player, TURN_STEP.PLACE);
         player.getBoard().add(coordinates, card, facingUp);
         goToNextPlayer();
+    }
+
+    public Message writeMessage(String message){
+        return this.chatController.writeMessage(message);
+    }
+
+    public void drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot){
+        // Ensure that the player sending the request is the right player and that it's draw phase
+
+        //adding to the playerhand the card drawed
+
+    }
+
+    public MixedCard drawCard(String deckType, PlaceInPublicBoard.Slots slot){
+        switch(deckType){
+            case "Resource" -> {
+                return this.publicBoard.getResource(slot);
+            }
+            case "Gold" -> {
+                return this.publicBoard.getGold(slot);
+            }
+        }
+
+        return null;
     }
 }

@@ -1,25 +1,47 @@
 package polimi.ingsoft.server.rmi;
 
-import polimi.ingsoft.server.common.MatchActionsInterface;
-import polimi.ingsoft.server.common.MatchManagerInterface;
+import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
+import java.io.PrintStream;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-public class RmiServer implements MatchManagerInterface, MatchActionsInterface {
+public class RmiServer implements VirtualServerInterface {
     final MainController mainController;
 
-    public RmiServer(MainController mainController) {
+    final List<VirtualView> clients = new ArrayList<>();
+
+    private final PrintStream logger;
+
+    public RmiServer(MainController mainController, PrintStream logger) {
         this.mainController = mainController;
+        this.logger = logger;
     }
 
     @Override
-    public void createMatch(String nickname, Integer requiredNumPlayers) throws RemoteException {
-        this.mainController.createMatch(nickname, requiredNumPlayers);
+    public void connect(VirtualView client) throws RemoteException {
+        synchronized (this.clients){
+            this.clients.add(client);
+        }
+        logger.println("RMI: NEW CLIENT ADDED");
+    }
+
+    @Override
+    public List<Integer> getMatches() throws RemoteException {
+        return mainController.getMatches();
+    }
+
+    @Override
+    public Integer createMatch(Integer requiredNumPlayers) throws RemoteException {
+        return this.mainController.createMatch(requiredNumPlayers);
     }
 
     @Override

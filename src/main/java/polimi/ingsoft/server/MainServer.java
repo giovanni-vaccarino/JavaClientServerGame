@@ -1,6 +1,6 @@
 package polimi.ingsoft.server;
 
-import polimi.ingsoft.server.common.MatchManagerInterface;
+import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.rmi.RmiServer;
 import polimi.ingsoft.server.socket.SocketServer;
@@ -16,7 +16,7 @@ public class MainServer {
     private final static MainController controller = new MainController(logger);
 
     private final static SocketServer socketServer = new SocketServer(4444, logger, controller);
-    private final static RmiServer rmiServer = new RmiServer(controller);
+    private final static RmiServer rmiServer = new RmiServer(controller, logger);
 
     public static void main(String[] args) {
         logger.println("MAIN: Starting servers (RMI & Socket)");
@@ -33,7 +33,7 @@ public class MainServer {
 
     private static void runRmiServer() {
         try {
-            MatchManagerInterface stub = (MatchManagerInterface) UnicastRemoteObject.exportObject(rmiServer, 0);
+            VirtualServerInterface stub = (VirtualServerInterface) UnicastRemoteObject.exportObject(rmiServer, 0);
 
             Registry registry = LocateRegistry.createRegistry(1234);
             registry.rebind("MatchManagerServer", stub);

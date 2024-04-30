@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.controllerg;
+package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.Chat;
