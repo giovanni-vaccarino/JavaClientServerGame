@@ -30,6 +30,7 @@ public class MatchController {
         int matchId,
         PublicBoard publicBoard
     ) {
+        // Aggiungere validazione stato partita a validateMove (inizio, durante, fine partita)
         this.logger = logger;
         this.matchId = matchId;
         this.publicBoard = publicBoard;
@@ -40,6 +41,8 @@ public class MatchController {
     }
 
     public void addPlayer(String nickname) {
+        // TODO player factory
+        // Separare creazione player da inizializzazione player hand
         Player player = new Player(new PlayerHand<>(), nickname);
         players.add(player);
     }
@@ -50,6 +53,7 @@ public class MatchController {
 
     private void goToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        currentStep = TURN_STEP.DRAW;
     }
 
     private boolean isLastRound() {
