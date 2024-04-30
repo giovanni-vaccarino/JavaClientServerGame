@@ -6,5 +6,5 @@ import java.util.ArrayList;
 public interface Pattern {
 
 
-    int getMatch(Board board);//<T> array);
+    int getMatch(Board board);
 }

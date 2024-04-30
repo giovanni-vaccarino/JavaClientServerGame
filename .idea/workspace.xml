@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="implemented itempattern class -&gt;to be tested&#10;created getMessages method in chat class&#10;minor fixes in goldcard, questcard classes&#10;minor fix in schemepattern class">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D">
+      <change afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/QuestCardTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Pattern.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/SchemePatternTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/SchemePatternTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,6 +73,7 @@
     "JUnit.FaceTest.setUpLeft.executor": "Run",
     "JUnit.GameCardTest.executor": "Run",
     "JUnit.MainTest.main.executor": "Run",
+    "JUnit.QuestCardTest.test.executor": "Run",
     "JUnit.SchemePatternTest.executor": "Run",
     "JUnit.SchemePatternTest.getMatch.executor": "Run",
     "JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino.executor": "Coverage",
@@ -111,7 +111,7 @@
       <recent name="polimi.ingsoft" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino">
+  <component name="RunManager" selected="JUnit.SchemePatternTest.getMatch">
     <configuration name="BoardTest.add" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
@@ -144,7 +144,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SchemePatternTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="QuestCardTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
@@ -153,8 +153,9 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="polimi.ingsoft.server.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.server.model.SchemePatternTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.server.model.QuestCardTest" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -184,19 +185,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.QuestCardTest.test" />
       <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <item itemvalue="JUnit.BoardTest.add" />
       <item itemvalue="JUnit.BoardTest.check" />
-      <item itemvalue="JUnit.SchemePatternTest" />
       <item itemvalue="JUnit.SchemePatternTest.getMatch" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
         <item itemvalue="JUnit.SchemePatternTest.getMatch" />
+        <item itemvalue="JUnit.QuestCardTest.test" />
+        <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
         <item itemvalue="JUnit.BoardTest.add" />
         <item itemvalue="JUnit.BoardTest.check" />
-        <item itemvalue="JUnit.SchemePatternTest" />
       </list>
     </recent_temporary>
   </component>
@@ -236,7 +237,7 @@
       <workItem from="1714221382170" duration="6843000" />
       <workItem from="1714296843062" duration="553000" />
       <workItem from="1714377718508" duration="57000" />
-      <workItem from="1714477126604" duration="2053000" />
+      <workItem from="1714477126604" duration="3312000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -414,7 +415,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714231891809</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D">
+      <option name="closed" value="true" />
+      <created>1714483945295</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1714483945295</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -464,7 +473,8 @@
     <MESSAGE value="update on board class -&gt; now counting player's resources&#10;added getCenter method in playedcard" />
     <MESSAGE value="test on board class&#10;minor fixes on board class - now working properly&#10;minor fixes on facetest-cornerspacetest&#10;minor fix on gamecard -&gt; mistake on return value now fixed&#10;minor fix on object enum (changed name from spell to POTION)" />
     <MESSAGE value="implemented itempattern class -&gt;to be tested&#10;created getMessages method in chat class&#10;minor fixes in goldcard, questcard classes&#10;minor fix in schemepattern class" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented itempattern class -&gt;to be tested&#10;created getMessages method in chat class&#10;minor fixes in goldcard, questcard classes&#10;minor fix in schemepattern class" />
+    <MESSAGE value="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D" />
+    <option name="LAST_COMMIT_MESSAGE" value="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$SchemePatternTest_getMatch.ic" NAME="SchemePatternTest.getMatch Coverage Results" MODIFIED="1713176061919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

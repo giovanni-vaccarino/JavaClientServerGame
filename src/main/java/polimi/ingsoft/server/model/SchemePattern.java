@@ -30,7 +30,7 @@ public class SchemePattern implements Pattern{
                     &&!used.containsKey(actualCoordinates)){
             if(actualLink<maxSize) {
                 return getMatch(used,false, visited, board, count, actualLink + 1, actualCoordinates.sub(order.get(actualLink).getPosFromBegin()).sum(order.get(actualLink + 1).getPosFromBegin()));
-            } else if(board.getCard(actualCoordinates).getColor().equals(order.get(actualLink).getColor()) && !used.containsKey(board.getCard(actualCoordinates))){
+            } else if(board.getCard(actualCoordinates).getColor().equals(order.get(actualLink).getColor()) && !used.containsKey(actualCoordinates)){
                     for(int i=0;i<maxSize+1;i++)used.put(actualCoordinates.sub(order.get(actualLink).getPosFromBegin()).sum(order.get(i).getPosFromBegin()),true);
                     return count+1;
                 }
