@@ -1,19 +1,11 @@
 package polimi.ingsoft.client.gui;
 
 import javafx.application.Application;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.animation.FadeTransition;
-import javafx.util.Duration;
-import java.io.IOException;
+
 import java.net.URL;
 
 public class homeController extends Application {
@@ -22,8 +14,8 @@ public class homeController extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        URL resourceUrl = getClass().getResource("/StartingScene.fxml");
+    public void start(Stage stage) throws Exception{
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/home.fxml");
         if (resourceUrl == null) {
             System.out.println("Starting scene fxml not found");
             return;
