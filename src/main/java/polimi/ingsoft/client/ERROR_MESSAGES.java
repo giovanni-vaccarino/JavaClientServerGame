@@ -1,6 +1,7 @@
 package polimi.ingsoft.client;
 
 public enum ERROR_MESSAGES {
+    PLAYERS_OUT_OF_BOUND("Number of players not accepted. Type a number between 2 and 4"),
     PROTOCOL_NUMBER_OUT_OF_BOUND("Protocol does not exist"),
     MATCH_NUMBER_OUT_OF_BOUND("Match does not exist"),
     NICKNAME_NOT_AVAILABLE("Nickname is not available"),

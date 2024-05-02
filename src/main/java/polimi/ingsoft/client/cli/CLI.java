@@ -13,13 +13,15 @@ import java.util.Set;
 public class CLI {
     private final Scanner in;
     private final PrintStream out;
-    private final VirtualServer virtualServer;
     private final Client client;
-    public CLI(Scanner in, PrintStream out, VirtualServer virtualServer, Client client) {
-        this.virtualServer = virtualServer;
+    public CLI(Scanner in, PrintStream out, Client client) {
         this.in = in;
         this.out = out;
         this.client = client;
+    }
+
+    public void runWaitingLobby(){
+        out.flush();
     }
 
     public Boolean runJoinMatchRoutine() {
@@ -84,12 +86,16 @@ public class CLI {
             if(matchId == 0){// NEW MATCH CASE
                 isValid = true;
             }else{
+                //TODO add isAvailable
+                isValid = true;
+                /*
                 if (virtualServer.isAvailableNickname(nickname, matchId)){
                     isValid = true;
                 }
                 else {
                     out.println(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE.getValue());
                 }
+                */
             }
         } while (!isValid);
 
@@ -108,7 +114,7 @@ public class CLI {
                 isValid = true;
             }
             else {
-                out.println(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE.getValue());
+                out.println(ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND.getValue());
             }
         } while (!isValid);
 
@@ -129,6 +135,8 @@ public class CLI {
         */
         // THE CHECKS ARE ALREADY SERVER SIDE -> IMPLEMENTING ALSO CLIENT VERIFICATION?
 
-        return client.joinMatch(matchId, nickname);
+        Boolean result = client.joinMatch(matchId, nickname);
+        out.println("player added");
+        return result;
     }
 }

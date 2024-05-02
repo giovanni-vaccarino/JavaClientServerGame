@@ -29,11 +29,14 @@ public class MainClient {
         try (
             Client client = createClient(protocol)
         ) {
-            VirtualServer virtualServer = new VirtualServer();
-            CLI cli = new CLI(scanner, printStream, virtualServer, client);
+            CLI cli = new CLI(scanner, printStream, client);
 
             //Player player = cli.runJoinMatchRoutine();
             Boolean isAdded = cli.runJoinMatchRoutine();
+
+            //Phase when player is waiting till all the requested players join
+            cli.runWaitingLobby();
+
         } catch (IOException ignored) { }
     }
     
