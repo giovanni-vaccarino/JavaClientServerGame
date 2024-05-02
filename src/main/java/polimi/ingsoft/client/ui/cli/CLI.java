@@ -1,16 +1,20 @@
-package polimi.ingsoft.client.cli;
+package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.client.Client;
 import polimi.ingsoft.client.ERROR_MESSAGES;
-import polimi.ingsoft.client.VirtualServer;
+import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.server.Player;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
-public class CLI {
+public class CLI extends UI {
+    enum CurrentPage {
+        WELCOME, CHOOSE_MATCH, LOBBY, GAME;
+    }
+    private CurrentPage currentPage = CurrentPage.WELCOME;
     private final Scanner in;
     private final PrintStream out;
     private final Client client;
@@ -18,18 +22,16 @@ public class CLI {
         this.in = in;
         this.out = out;
         this.client = client;
+        client.run();
     }
 
-    public void runWaitingLobby(){
-        out.flush();
-    }
-
-    public Boolean runJoinMatchRoutine() {
+    public Boolean runJoinMatchRoutine() throws IOException {
         Player result;
         Boolean resultBool;
 
         do {
-            int matchId = this.showWelcomeScreen();
+            this.showWelcomeScreen();
+            int matchId = 0;
             String nickname = this.showChoosePlayerNicknameScreen(matchId);
 
             //if (matchId == VirtualServer.NEW_MATCH_ID){
@@ -48,32 +50,43 @@ public class CLI {
         return resultBool;
     }
 
-    private int showWelcomeScreen() {
-        //String[] matches = virtualServer.getAvailableMatches();
-        List<Integer> matches = client.getAvailableMatches();
-        int i = 0;
-
-        out.println(MESSAGES.WELCOME.getValue());
-        out.println("0. CREATE A NEW MATCH");
-
-        for (Integer match : matches) {
-            out.printf("%d. %d%n", ++i, match);
+    public void showWelcomeScreen() throws IOException {
+        if (currentPage == CurrentPage.WELCOME) {
+            client.getMatches();
+            currentPage = CurrentPage.CHOOSE_MATCH;
         }
+    }
 
-        int matchId;
-        boolean isValid = false;
-        do {
-            out.print(MESSAGES.CHOOSE_MATCH.getValue());
-            matchId = in.nextInt();
-            in.nextLine();
-            if (matchId < matches.size()){
-                isValid = true;
-            }else{
-                out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
+    // TODO remove exceptions
+    public void showMatchesList(List<Integer> matches) throws IOException {
+        if (currentPage == CurrentPage.CHOOSE_MATCH) {
+            int i = 0;
+            out.println("0. CREATE A NEW MATCH");
+
+            for (Integer match : matches) {
+                out.printf("%d. %d%n", ++i, match);
             }
-        } while (!isValid);
 
-        return matchId;
+            int matchId;
+            boolean isValid = false;
+            do {
+                out.print(MESSAGES.CHOOSE_MATCH.getValue());
+                matchId = in.nextInt();
+                in.nextLine();
+                if (matchId < matches.size()) {
+                    isValid = true;
+                } else {
+                    out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
+                }
+            } while (!isValid);
+
+            String nickname = this.showChoosePlayerNicknameScreen(matchId);
+            if (matchId == 0) {
+                Integer requestedNumPlayers = this.showChooseNumberPlayersScreen();
+                client.createMatch(requestedNumPlayers);
+            }
+            currentPage = CurrentPage.LOBBY;
+        }
     }
 
     private String showChoosePlayerNicknameScreen(int matchId) {
@@ -86,16 +99,13 @@ public class CLI {
             if(matchId == 0){// NEW MATCH CASE
                 isValid = true;
             }else{
-                //TODO add isAvailable
+//                if (client.isAvailableNickname(nickname, matchId)){
+//                    isValid = true;
+//                }
+//                else {
+//                    out.println(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE.getValue());
+//                }
                 isValid = true;
-                /*
-                if (virtualServer.isAvailableNickname(nickname, matchId)){
-                    isValid = true;
-                }
-                else {
-                    out.println(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE.getValue());
-                }
-                */
             }
         } while (!isValid);
 
@@ -121,7 +131,7 @@ public class CLI {
         return requestedNumPlayers;
     }
 
-    private Boolean joinMatch(String nickname, int matchId) {
+    private Boolean joinMatch(String nickname, int matchId) throws IOException {
         out.println(MESSAGES.JOINING_MATCH.getValue());
         /*
         Player result = virtualServer.joinMatch(nickname, matchId);
@@ -135,8 +145,6 @@ public class CLI {
         */
         // THE CHECKS ARE ALREADY SERVER SIDE -> IMPLEMENTING ALSO CLIENT VERIFICATION?
 
-        Boolean result = client.joinMatch(matchId, nickname);
-        out.println("player added");
-        return result;
+        return client.joinMatch(matchId, nickname);
     }
 }

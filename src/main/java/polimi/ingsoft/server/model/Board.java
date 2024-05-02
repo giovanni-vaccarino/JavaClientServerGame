@@ -2,10 +2,11 @@ package polimi.ingsoft.server.model;
 import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.Resource;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 // TODO refactor
-public class Board {
+public class Board implements Serializable {
     private final HashMap<Coordinates, PlayedCard> cards;
     private HashMap<Item,Integer> resources;
     public Board(GameCard initialcard,boolean isFaceUp){
@@ -73,6 +74,24 @@ public class Board {
         if(cards.containsKey(position.upLeft()) && !cards.get(position.upLeft()).isFreeDownRight())return verify;
         if(cards.containsKey(position.downLeft()) && !cards.get(position.downLeft()).isFreeUpRight())return verify;
         return !verify;
+    }
+    public boolean isBlocked(){
+        Coordinates coordinates=new Coordinates(0,0);
+        HashMap<Coordinates,Boolean> visited=new HashMap<Coordinates, Boolean>();
+        return !this.isBlocked(coordinates,visited);
+    }
+    private boolean isBlocked(Coordinates coordinates,HashMap<Coordinates,Boolean> visited){
+        visited.put(coordinates,true);
+        boolean a=false;
+        Coordinates next=coordinates.sum(new Coordinates(1,1));
+        if(!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        next=coordinates.sum(new Coordinates(-1,1));
+        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        next=coordinates.sum(new Coordinates(1,-1));
+        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        next=coordinates.sum(new Coordinates(-1,-1));
+        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        return a||cards.get(coordinates).isFreeUpRight()||cards.get(coordinates).isFreeUpLeft()||cards.get(coordinates).isFreeDownRight()||cards.get(coordinates).isFreeDownLeft();
     }
     public int getWolfs(){
         return resources.get(Resource.WOLF);

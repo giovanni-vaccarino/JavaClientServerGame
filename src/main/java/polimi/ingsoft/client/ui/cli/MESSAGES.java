@@ -1,4 +1,4 @@
-package polimi.ingsoft.client.cli;
+package polimi.ingsoft.client.ui.cli;
 
 public enum MESSAGES {
     CHOOSE_PROTOCOL_LIST("Before starting, choose which communication protocol you want to use: "),

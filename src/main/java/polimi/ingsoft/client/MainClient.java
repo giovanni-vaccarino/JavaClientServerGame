@@ -1,16 +1,12 @@
 package polimi.ingsoft.client;
 
-import polimi.ingsoft.client.cli.CLI;
-import polimi.ingsoft.client.cli.ProtocolChoiceCLI;
-import polimi.ingsoft.client.cli.Protocols;
-import polimi.ingsoft.client.rmi.RmiClient;
+import polimi.ingsoft.client.ui.UIType;
+import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
+import polimi.ingsoft.client.ui.cli.Protocols;
 import polimi.ingsoft.client.socket.SocketClient;
-import polimi.ingsoft.server.Player;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class MainClient {
@@ -29,35 +25,34 @@ public class MainClient {
         try (
             Client client = createClient(protocol)
         ) {
-            CLI cli = new CLI(scanner, printStream, client);
-
             //Player player = cli.runJoinMatchRoutine();
-            Boolean isAdded = cli.runJoinMatchRoutine();
 
-            //Phase when player is waiting till all the requested players join
-            cli.runWaitingLobby();
-
+            // remove after we have RMI client in place
+            assert client != null;
+            client.getUI().showWelcomeScreen();
+            while (true) { }
         } catch (IOException ignored) { }
     }
     
     private static Client createClient(Protocols protocol) throws IOException {
         if (protocol == Protocols.RMI)
-            return createRmiClient();
+            // return createRmiClient();
+            return null;
         else
             return createSocketClient();
     }
 
-    private static Client createRmiClient(){
-        try{
-            printStream.println("Prendo RMI CLIENT");
-            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort);
-        }catch (RemoteException | NotBoundException exception){
-            System.out.println(exception);
-            return null;
-        }
-    }
+//    private static Client createRmiClient(){
+//        try{
+//            printStream.println("Prendo RMI CLIENT");
+//            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort);
+//        }catch (RemoteException | NotBoundException exception){
+//            System.out.println(exception);
+//            return null;
+//        }
+//    }
 
     private static Client createSocketClient() throws IOException {
-        return new SocketClient(socketServerHostName, socketServerPort);
+        return new SocketClient(socketServerHostName, socketServerPort, UIType.CLI, printStream, scanner);
     }
 }
