@@ -8,11 +8,9 @@ import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Set;
 
-public interface VirtualServerInterface extends Remote {
+public interface VirtualServerInterface extends Remote, VirtualServer {
     void connect(VirtualView client) throws RemoteException;
-
     List<Integer> getMatches() throws RemoteException;
 
     Integer createMatch(Integer requiredNumPlayers) throws RemoteException;
@@ -26,4 +24,5 @@ public interface VirtualServerInterface extends Remote {
     void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException;
 
     void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException;
+
 }

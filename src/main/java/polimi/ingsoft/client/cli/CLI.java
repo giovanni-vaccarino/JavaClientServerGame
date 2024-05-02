@@ -8,7 +8,6 @@ import polimi.ingsoft.server.Player;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class CLI {
     private final Scanner in;

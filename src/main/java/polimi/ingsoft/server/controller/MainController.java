@@ -35,18 +35,19 @@ public class MainController {
         return matchId;
     }
 
-    public void joinMatch(Integer matchId, String nickname) {
+    public Boolean joinMatch(Integer matchId, String nickname) {
         if(!matchExists(matchId)){
             //Lobby not found
-            return;
+            return false;
         }
 
         MatchController match = getMatch(matchId);
         if(!isJoinable(match)){
             //Lobby already full
-            return;
+            return false;
         }
         match.addPlayer(nickname);
+        return true;
     }
 
     public void reJoinMatch(Integer lobbyId, String nickname){
