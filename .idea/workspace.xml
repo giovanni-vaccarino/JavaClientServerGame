@@ -4,33 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D">
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/UI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/UIType.java" afterDir="false" />
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/MainClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/MainClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/cli/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/CLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/cli/MESSAGES.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/MESSAGES.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/cli/ProtocolChoiceCLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/ProtocolChoiceCLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/cli/Protocols.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/Protocols.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/socket/ServerProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/socket/ServerProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/socket/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/socket/SocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/common/VirtualServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/common/VirtualServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/common/VirtualServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/common/VirtualServerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MatchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MatchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/CardCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/CardCollection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Chat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Drawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Drawable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlaceInPublicBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlaceInPublicBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PublicBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PublicBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/rmi/RmiServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/rmi/RmiServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/socket/ConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/socket/ConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/socket/SocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/socket/SocketServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,9 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
-        <option value="Enum" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -115,7 +91,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -132,29 +108,35 @@
       <recent name="polimi.ingsoft" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainServer">
-    <configuration name="MainClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.client.MainClient" />
+  <component name="RunManager" selected="JUnit.SchemePatternTest.getMatch">
+    <configuration name="BoardTest.add" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.client.ui.*" />
+          <option name="PATTERN" value="polimi.ingsoft.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
+      <option name="METHOD_NAME" value="add" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.server.MainServer" />
+    <configuration name="BoardTest.check" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.server.*" />
+          <option name="PATTERN" value="polimi.ingsoft.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
+      <option name="METHOD_NAME" value="check" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -200,19 +182,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MainClient" />
-      <item itemvalue="Application.MainServer" />
       <item itemvalue="JUnit.QuestCardTest.test" />
       <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <item itemvalue="JUnit.BoardTest.add" />
+      <item itemvalue="JUnit.BoardTest.check" />
       <item itemvalue="JUnit.SchemePatternTest.getMatch" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainClient" />
-        <item itemvalue="Application.MainServer" />
         <item itemvalue="JUnit.SchemePatternTest.getMatch" />
         <item itemvalue="JUnit.QuestCardTest.test" />
         <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+        <item itemvalue="JUnit.BoardTest.add" />
+        <item itemvalue="JUnit.BoardTest.check" />
       </list>
     </recent_temporary>
   </component>
@@ -252,7 +234,9 @@
       <workItem from="1714221382170" duration="6843000" />
       <workItem from="1714296843062" duration="553000" />
       <workItem from="1714377718508" duration="57000" />
-      <workItem from="1714477126604" duration="3312000" />
+      <workItem from="1714477126604" duration="3577000" />
+      <workItem from="1714486222496" duration="1248000" />
+      <workItem from="1714637960831" duration="2110000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -438,7 +422,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714483945295</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method">
+      <option name="closed" value="true" />
+      <created>1714485410521</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1714485410521</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -489,12 +481,17 @@
     <MESSAGE value="test on board class&#10;minor fixes on board class - now working properly&#10;minor fixes on facetest-cornerspacetest&#10;minor fix on gamecard -&gt; mistake on return value now fixed&#10;minor fix on object enum (changed name from spell to POTION)" />
     <MESSAGE value="implemented itempattern class -&gt;to be tested&#10;created getMessages method in chat class&#10;minor fixes in goldcard, questcard classes&#10;minor fix in schemepattern class" />
     <MESSAGE value="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D" />
-    <option name="LAST_COMMIT_MESSAGE" value="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D" />
+    <MESSAGE value="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method" />
+    <option name="LAST_COMMIT_MESSAGE" value="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$java_in_ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino.ic" NAME="java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino Coverage Results" MODIFIED="1714477679958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$SchemePatternTest_getMatch.ic" NAME="SchemePatternTest.getMatch Coverage Results" MODIFIED="1713176061919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>polimi.ingsoft.server.model.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$java_in_ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino.ic" NAME="java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino Coverage Results" MODIFIED="1714477679958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
