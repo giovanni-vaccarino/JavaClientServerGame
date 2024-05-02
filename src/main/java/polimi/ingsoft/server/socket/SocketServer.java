@@ -35,7 +35,7 @@ public class SocketServer {
             while (true) {
                 try {
                     Socket socket = server.accept();
-                    ConnectionHandler handler = new ConnectionHandler(socket, controller, this);
+                    ConnectionHandler handler = new ConnectionHandler(socket, controller, this, logger);
                     clients.add(handler);
                     executor.submit(handler);
                 } catch (IOException e) {
@@ -56,22 +56,18 @@ public class SocketServer {
         }
     }
 
-    public void broadcastUpdateMatchesList(List<Integer> matches) {
+    public void broadcastUpdateMatchesList(List<Integer> matches) throws IOException {
         synchronized (this.clients) {
             for (var client : this.clients) {
-                try {
-                    client.showUpdateMatchesList(matches);
-                } catch (IOException ignored) { }
+                client.showUpdateMatchesList(matches);
             }
         }
     }
 
-    public void singleUpdateMatchCreate(VirtualView client, MatchController match) {
+    public void singleUpdateMatchCreate(VirtualView client, MatchController match) throws IOException {
         // TODO fixare e usare granularità sul singolo client
         synchronized (this.clients) {
-            try {
-                client.showUpdateMatchCreate(match);
-            } catch (IOException ignored) { }
+            client.showUpdateMatchCreate(match);
         }
     }
 

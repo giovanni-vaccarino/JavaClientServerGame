@@ -2,7 +2,9 @@ package polimi.ingsoft.server;
 
 import polimi.ingsoft.server.model.*;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private Board board;
     private final PlayerHand<MixedCard> hand;
     private InitialCard initialCard;

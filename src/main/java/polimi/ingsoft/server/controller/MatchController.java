@@ -7,11 +7,12 @@ import polimi.ingsoft.server.model.*;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class MatchController {
+public class MatchController implements Serializable {
     private enum TURN_STEP {
         DRAW, PLACE
     }
@@ -26,7 +27,7 @@ public class MatchController {
 
     private final PublicBoard publicBoard;
 
-    protected final PrintStream logger;
+    protected transient final PrintStream logger;
 
     protected final int matchId;
 

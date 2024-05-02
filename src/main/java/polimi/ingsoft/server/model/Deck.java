@@ -1,5 +1,7 @@
 package polimi.ingsoft.server.model;
 
+import java.io.Serializable;
+
 public class Deck<T extends Drawable> extends CardCollection<T> {
 
     public T draw(){

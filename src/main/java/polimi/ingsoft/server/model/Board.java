@@ -2,10 +2,11 @@ package polimi.ingsoft.server.model;
 import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.Resource;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 // TODO refactor
-public class Board {
+public class Board implements Serializable {
     private final HashMap<Coordinates, PlayedCard> cards;
     private HashMap<Item,Integer> resources;
     public Board(GameCard initialcard,boolean isFaceUp){

@@ -12,7 +12,7 @@ public interface VirtualServer {
 
     Integer createMatch(Integer requiredNumPlayers) throws IOException;
 
-    void joinMatch(Integer matchId, String nickname) throws IOException;
+    Boolean joinMatch(Integer matchId, String nickname) throws IOException;
 
     void reJoinMatch(Integer matchId, String nickname) throws IOException;
 

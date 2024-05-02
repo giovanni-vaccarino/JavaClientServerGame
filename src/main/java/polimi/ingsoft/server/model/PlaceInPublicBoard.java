@@ -1,6 +1,8 @@
 package polimi.ingsoft.server.model;
 
-public class PlaceInPublicBoard<T extends Drawable> {
+import java.io.Serializable;
+
+public class PlaceInPublicBoard<T extends Drawable> implements Serializable {
     public enum Slots {
         DECK, SLOT_A, SLOT_B
     }

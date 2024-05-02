@@ -2,10 +2,11 @@ package polimi.ingsoft.server.model;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.exceptions.NotValidMessageException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chat {
+public class Chat implements Serializable {
     private final ArrayList<Message> messages = new ArrayList<>();
 
     public Message addMessage(PlayerColors sender, String text) throws NotValidMessageException{

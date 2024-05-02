@@ -1,15 +1,10 @@
 package polimi.ingsoft.client;
 
-import polimi.ingsoft.server.Player;
+import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.server.common.VirtualServer;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-public interface Client extends AutoCloseable {
-    List<Integer> getAvailableMatches();
-    Integer createMatch(Integer requestedNumPlayers);
-    Boolean joinMatch(int matchId, String nickname);
-    Boolean isMatchJoinable(int matchId);
-
+public interface Client extends AutoCloseable, VirtualView, VirtualServer {
+    void run();
+    UI getUI();
 }
