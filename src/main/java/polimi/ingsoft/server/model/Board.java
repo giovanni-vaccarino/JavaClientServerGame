@@ -77,7 +77,7 @@ public class Board {
     public boolean isBlocked(){
         Coordinates coordinates=new Coordinates(0,0);
         HashMap<Coordinates,Boolean> visited=new HashMap<Coordinates, Boolean>();
-        return this.isBlocked(coordinates,visited);
+        return !this.isBlocked(coordinates,visited);
     }
     private boolean isBlocked(Coordinates coordinates,HashMap<Coordinates,Boolean> visited){
         visited.put(coordinates,true);
