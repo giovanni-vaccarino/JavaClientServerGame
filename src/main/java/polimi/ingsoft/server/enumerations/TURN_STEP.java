@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.enumerations;
 
-public enum GamePhase {
-    PRESTART, PLAY
+public enum TURN_STEP {
+    DRAW, PLACE
 }
+

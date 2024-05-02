@@ -1,23 +1,23 @@
 package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
+import polimi.ingsoft.server.enumerations.TURN_STEP;
 import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
 import polimi.ingsoft.server.model.*;
 
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MatchController implements Serializable {
-    private enum TURN_STEP {
-        DRAW, PLACE
-    }
 
     private final Integer requestedNumPlayers;
 
     private TURN_STEP currentStep;
 
-    private GamePhase gamePhase;
+    private GAME_PHASE gamePhase;
     private int currentPlayerIndex;
 
     final ChatController chatController;
@@ -41,7 +41,7 @@ public class MatchController implements Serializable {
         this.logger = logger;
         this.matchId = matchId;
         this.publicBoard = publicBoard;
-        this.gamePhase = GamePhase.PRESTART;
+        this.gamePhase = GAME_PHASE.PRESTART;
     }
 
     public int getMatchId() {
@@ -55,7 +55,7 @@ public class MatchController implements Serializable {
         players.add(player);
 
         if(players.size() == requestedNumPlayers){
-            this.gamePhase = GamePhase.PLAY;
+            this.gamePhase = GAME_PHASE.PLAY;
         }
     }
 
@@ -72,8 +72,8 @@ public class MatchController implements Serializable {
         return false;
     }
 
-    private void validateMove(Player player, TurnPhase move) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        if (gamePhase != GamePhase.PLAY) throw new WrongStepException();//TODO Add exception for wrong game phase
+    private void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException {
+        if (gamePhase != GAME_PHASE.PLAY) throw new WrongStepException();//TODO Add exception for wrong game phase
         if (player != getCurrentPlayer()) throw new WrongPlayerForCurrentTurnException();
         if (currentStep != move) throw new WrongStepException();
     }

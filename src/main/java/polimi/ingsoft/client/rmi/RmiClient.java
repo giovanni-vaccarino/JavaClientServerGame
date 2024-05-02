@@ -14,7 +14,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-//Rmi client extends UnicastRemoteObject in modo che possa essere passato al server
+
 public class RmiClient extends UnicastRemoteObject implements VirtualView {
     final VirtualServerInterface server;
 
