@@ -8,7 +8,7 @@
             prefHeight="700.0" prefWidth="1200.0" style="-fx-background-image: url('polimi/ingsoft/demo/graphics/img/background/home.jpg');
             -fx-background-size: cover; -fx-background-position: center center;"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="polimi.ingsoft.client.gui.homeController">
+            fx:controller="polimi.ingsoft.client.ui.gui.homeController">
    <children>
       <Button id="start" layoutX="-8.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="414.0"
               prefWidth="615.0" text="Start" textAlignment="CENTER" visible="false"
