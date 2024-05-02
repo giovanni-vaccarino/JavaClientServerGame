@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 public class QuestCard extends Card implements Drawable, ConditionalPointsCard {
 
-    //private ArrayList<Link> links;
+    private final Pattern pattern;
 
-
-    public QuestCard(/*ArrayList<Link> links,*/int points){
+    public QuestCard(Pattern pattern,int points){
         super(points);
-        //this.links=links;
+        this.pattern=pattern;
     }
-
-//    public ArrayList<Link> getLink(){
-//        return this.links;
-//        }
+    public int getMatches(Board board) {
+        return pattern.getMatch(board)*super.getScore();
+    }
+    @Override
+    public Pattern getPattern() {
+        return pattern;
+    }
 }

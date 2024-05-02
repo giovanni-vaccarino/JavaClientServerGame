@@ -1,9 +1,7 @@
 package polimi.ingsoft.server.model;
 
-public interface ConditionalPointsCard{
+public interface ConditionalPointsCard {
+    Pattern getPattern();
 
-//    Pattern pattern;
-//    public ConditionalPointsCard(Pattern pattern){
-//        this.pattern=pattern;
-//    }
+    int getMatches(Board board);
 }
