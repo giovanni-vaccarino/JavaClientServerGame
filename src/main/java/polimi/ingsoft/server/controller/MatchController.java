@@ -1,24 +1,23 @@
 package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
+import polimi.ingsoft.server.enumerations.TURN_STEP;
 import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
 import polimi.ingsoft.server.model.*;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
 
-public class MatchController {
-    private enum TURN_STEP {
-        DRAW, PLACE
-    }
+public class MatchController implements Serializable {
 
     private final Integer requestedNumPlayers;
 
     private TURN_STEP currentStep;
+
+    private GAME_PHASE gamePhase;
     private int currentPlayerIndex;
 
     final ChatController chatController;
@@ -26,7 +25,7 @@ public class MatchController {
 
     private final PublicBoard publicBoard;
 
-    protected final PrintStream logger;
+    protected transient final PrintStream logger;
 
     protected final int matchId;
 
@@ -42,6 +41,7 @@ public class MatchController {
         this.logger = logger;
         this.matchId = matchId;
         this.publicBoard = publicBoard;
+        this.gamePhase = GAME_PHASE.PRESTART;
     }
 
     public int getMatchId() {
@@ -53,6 +53,10 @@ public class MatchController {
         // Separare creazione player da inizializzazione player hand
         Player player = new Player(new PlayerHand<>(), nickname);
         players.add(player);
+
+        if(players.size() == requestedNumPlayers){
+            this.gamePhase = GAME_PHASE.PLAY;
+        }
     }
 
     private Player getCurrentPlayer() {
@@ -69,6 +73,7 @@ public class MatchController {
     }
 
     private void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException {
+        if (gamePhase != GAME_PHASE.PLAY) throw new WrongStepException();//TODO Add exception for wrong game phase
         if (player != getCurrentPlayer()) throw new WrongPlayerForCurrentTurnException();
         if (currentStep != move) throw new WrongStepException();
     }

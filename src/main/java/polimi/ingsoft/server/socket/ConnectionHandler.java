@@ -10,6 +10,7 @@ import polimi.ingsoft.server.socket.protocol.SocketMessage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.util.List;
 
@@ -21,13 +22,16 @@ public class ConnectionHandler implements Runnable, VirtualView {
     private final ObjectOutputStream out;
     private final SocketServer server;
 
-    public ConnectionHandler(Socket socket, MainController controller, SocketServer server) throws IOException {
+    private final PrintStream logger;
+
+    public ConnectionHandler(Socket socket, MainController controller, SocketServer server, PrintStream logger) throws IOException {
         this.socket = socket;
         this.controller = controller;
         this.server = server;
         this.in = new ObjectInputStream(socket.getInputStream());
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.view = new ClientProxy(out);
+        this.logger = logger;
     }
 
     @Override
@@ -38,6 +42,9 @@ public class ConnectionHandler implements Runnable, VirtualView {
             while ((item = (SocketMessage) in.readObject()) != null) {
                 MessageCodes type = item.type;
                 Object payload = item.payload;
+                logger.println("SOCKET: Received request with type: " + type.toString());
+                logger.println("SOCKET: And payload: " + payload);
+
                 // Read message and perform action
                 switch (type) {
                     case CONNECT -> { }
@@ -69,20 +76,22 @@ public class ConnectionHandler implements Runnable, VirtualView {
             in.close();
             out.close();
             socket.close();
-        } catch (IOException | ClassNotFoundException ignored) { }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public void showUpdateMatchesList(List<Integer> matches) {
+    public void showUpdateMatchesList(List<Integer> matches) throws IOException {
+        logger.println("SOCKET: Sending matches list update: " + matches.toString());
         synchronized (this.view) {
-            try {
-                this.view.showUpdateMatchesList(matches);
-            } catch (IOException ignore) { }
+            this.view.showUpdateMatchesList(matches);
         }
     }
 
     @Override
     public void showUpdateMatchJoin(Boolean success) {
+        logger.println("SOCKET: Sending match join update: " + success);
         synchronized (this.view) {
             try {
                 this.view.showUpdateMatchJoin(success);
@@ -91,11 +100,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateMatchCreate(MatchController match) {
+    public void showUpdateMatchCreate(MatchController match) throws IOException {
+        logger.println("SOCKET: Sending match create update: " + match);
         synchronized (this.view) {
-            try {
-                this.view.showUpdateMatchCreate(match);
-            } catch (IOException ignore) { }
+            this.view.showUpdateMatchCreate(match);
         }
     }
 

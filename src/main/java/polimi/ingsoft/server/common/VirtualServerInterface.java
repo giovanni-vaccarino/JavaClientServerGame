@@ -15,7 +15,7 @@ public interface VirtualServerInterface extends Remote, VirtualServer {
 
     Integer createMatch(Integer requiredNumPlayers) throws RemoteException;
 
-    void joinMatch(Integer matchId, String nickname) throws RemoteException;
+    Boolean joinMatch(Integer matchId, String nickname) throws RemoteException;
 
     void reJoinMatch(Integer matchId, String nickname) throws RemoteException;
 

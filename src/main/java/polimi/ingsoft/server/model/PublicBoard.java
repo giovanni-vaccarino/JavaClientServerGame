@@ -1,6 +1,8 @@
 package polimi.ingsoft.server.model;
 
-public class PublicBoard {
+import java.io.Serializable;
+
+public class PublicBoard implements Serializable {
 
     private final PlaceInPublicBoard<ResourceCard> placeResource;
     private final PlaceInPublicBoard<GoldCard> placeGold;

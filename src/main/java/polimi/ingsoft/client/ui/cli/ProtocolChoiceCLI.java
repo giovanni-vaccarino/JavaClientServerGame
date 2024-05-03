@@ -1,4 +1,4 @@
-package polimi.ingsoft.client.cli;
+package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.client.ERROR_MESSAGES;
 
@@ -27,8 +27,8 @@ public class ProtocolChoiceCLI {
             out.print(MESSAGES.CHOOSE_PROTOCOL.getValue());
             protocolIndex = in.nextInt();
             in.nextLine();
-            if (protocolIndex < protocols.length) isValid = true;
-            else out.println(ERROR_MESSAGES.PROTOCOL_NUMBER_OUT_OF_BOUND);
+            if (protocolIndex <= protocols.length) isValid = true;
+            else out.println(ERROR_MESSAGES.PROTOCOL_NUMBER_OUT_OF_BOUND.getValue());
         } while (!isValid);
 
         return protocols[protocolIndex - 1];

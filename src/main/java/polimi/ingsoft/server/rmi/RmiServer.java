@@ -12,7 +12,6 @@ import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class RmiServer implements VirtualServerInterface {
     final MainController mainController;
@@ -45,8 +44,9 @@ public class RmiServer implements VirtualServerInterface {
     }
 
     @Override
-    public void joinMatch(Integer matchId, String nickname) throws RemoteException {
+    public Boolean joinMatch(Integer matchId, String nickname) throws RemoteException {
         this.mainController.joinMatch(matchId, nickname);
+        return null;
     }
 
     @Override

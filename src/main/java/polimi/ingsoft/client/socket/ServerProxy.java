@@ -9,7 +9,6 @@ import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.List;
 
 public class ServerProxy implements VirtualServer {
@@ -37,13 +36,14 @@ public class ServerProxy implements VirtualServer {
     }
 
     @Override
-    public void joinMatch(Integer matchId, String nickname) throws IOException {
+    public Boolean joinMatch(Integer matchId, String nickname) throws IOException {
         SocketMessage message = new SocketMessage(
                 MessageCodes.MATCH_CREATE_REQUEST,
                 new SocketMessage.IdAndNickname(matchId, nickname)
         );
         out.writeObject(message);
         out.flush();
+        return null;
     }
 
     @Override
