@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
-    </list>
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="fixed method isblocked" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -236,7 +232,7 @@
       <workItem from="1714377718508" duration="57000" />
       <workItem from="1714477126604" duration="3577000" />
       <workItem from="1714486222496" duration="1248000" />
-      <workItem from="1714637960831" duration="2110000" />
+      <workItem from="1714637960831" duration="2845000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -430,7 +426,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714485410521</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="added isBlocked method in Board class">
+      <option name="closed" value="true" />
+      <created>1714640092267</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1714640092267</updated>
+    </task>
+    <task id="LOCAL-00026" summary="fixed method isblocked">
+      <option name="closed" value="true" />
+      <created>1714640174241</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1714640174241</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -482,7 +494,9 @@
     <MESSAGE value="implemented itempattern class -&gt;to be tested&#10;created getMessages method in chat class&#10;minor fixes in goldcard, questcard classes&#10;minor fix in schemepattern class" />
     <MESSAGE value="andre is now happy with conditionalpointscard implementaton&#10;and i am too&#10;:D" />
     <MESSAGE value="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method" />
-    <option name="LAST_COMMIT_MESSAGE" value="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method" />
+    <MESSAGE value="added isBlocked method in Board class" />
+    <MESSAGE value="fixed method isblocked" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed method isblocked" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
