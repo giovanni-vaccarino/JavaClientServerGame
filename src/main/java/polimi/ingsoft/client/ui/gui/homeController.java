@@ -1,20 +1,14 @@
 package polimi.ingsoft.client.ui.gui;
 
-
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Timer;
@@ -44,7 +38,7 @@ public class homeController extends Application {
 
             @Override
             public void run() {
-                if (secondsPassed < 1) {
+                if (secondsPassed < 3) {
                     // print a wait message (?)
                     secondsPassed++;
                     System.out.println(secondsPassed);
@@ -66,7 +60,6 @@ public class homeController extends Application {
     }
 
     public void nextPage(Stage stage) throws IOException {
-
         URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/connectionPage.fxml");
         if (resource == null) {
             System.out.println("Starting scene fxml not found");
@@ -74,15 +67,19 @@ public class homeController extends Application {
         }
 
         Parent root = FXMLLoader.load(resource);
-        //Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        stage.getScene().setRoot(root);
+
+        connectionPageController connectionController = new connectionPageController(stage);
+        try {
+            connectionController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

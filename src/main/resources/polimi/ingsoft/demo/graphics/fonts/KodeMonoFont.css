@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'KodeMono';
+    src: url('KodeMono-VariableFont_wght.ttf');
+}
+
+* {
+    -fx-font-family: 'KodeMono'; /* Fall back to sans-serif if KodeMono is not available */
+}
