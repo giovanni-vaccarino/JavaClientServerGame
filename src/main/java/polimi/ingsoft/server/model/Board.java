@@ -75,22 +75,22 @@ public class Board implements Serializable {
         if(cards.containsKey(position.downLeft()) && !cards.get(position.downLeft()).isFreeUpRight())return verify;
         return !verify;
     }
-    public boolean isBlocked(){
+    public boolean isNotBlocked(){
         Coordinates coordinates=new Coordinates(0,0);
         HashMap<Coordinates,Boolean> visited=new HashMap<Coordinates, Boolean>();
-        return !this.isBlocked(coordinates,visited);
+        return this.isNotBlocked(coordinates,visited);
     }
-    private boolean isBlocked(Coordinates coordinates,HashMap<Coordinates,Boolean> visited){
+    private boolean isNotBlocked(Coordinates coordinates,HashMap<Coordinates,Boolean> visited){
         visited.put(coordinates,true);
         boolean a=false;
         Coordinates next=coordinates.sum(new Coordinates(1,1));
-        if(!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        if(!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
         next=coordinates.sum(new Coordinates(-1,1));
-        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
         next=coordinates.sum(new Coordinates(1,-1));
-        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
         next=coordinates.sum(new Coordinates(-1,-1));
-        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isBlocked(next,visited);
+        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
         return a||cards.get(coordinates).isFreeUpRight()||cards.get(coordinates).isFreeUpLeft()||cards.get(coordinates).isFreeDownRight()||cards.get(coordinates).isFreeDownLeft();
     }
     public int getWolfs(){
