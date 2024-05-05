@@ -1,38 +1,30 @@
 package polimi.ingsoft.client.ui.gui;
 
-import javafx.application.Application;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.animation.FadeTransition;
 import javafx.util.Duration;
-import java.io.IOException;
-import java.net.URL;
-
 
 import java.io.IOException;
 import java.net.URL;
 
-public class connectionPageController{
+public class NewGamePageController {
     private Stage stage;
 
     // Default constructor
-    public connectionPageController() {}
+    public NewGamePageController() {}
 
     // Constructor with stage parameter
-    public connectionPageController(Stage stage) {
+    public NewGamePageController(Stage stage) {
         this.stage = stage;
     }
     public void start() throws Exception {
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/connectionPage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/NewGamePage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -41,7 +33,7 @@ public class connectionPageController{
         Parent root = FXMLLoader.load(resourceUrl);
 
         // Load CSS file
-        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/genericStyle.css");
+        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
             //System.out.println("CSS file found");
@@ -57,7 +49,7 @@ public class connectionPageController{
 
     public void nextPage(ActionEvent actionEvent) throws IOException {
 
-        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/startingPage.fxml");
+        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/StartingPage.fxml");
         if (resource == null) {
             System.out.println("First choice fxml not found");
             return;

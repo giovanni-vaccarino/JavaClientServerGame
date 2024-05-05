@@ -1,43 +1,28 @@
 package polimi.ingsoft.client.ui.gui;
 
 import javafx.application.Application;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.animation.FadeTransition;
-import javafx.util.Duration;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class homeController extends Application {
+public class HomeController extends Application {
     public static void main(String[] args){
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception{
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/home.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/Home.fxml");
         if (resourceUrl == null) {
             System.out.println("Starting scene fxml not found");
             return;
@@ -76,7 +61,7 @@ public class homeController extends Application {
     }
 
     public void nextPage(Stage stage) throws IOException {
-        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/connectionPage.fxml");
+        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/ConnectionPage.fxml");
         if (resource == null) {
             System.out.println("Starting scene fxml not found");
             return;
@@ -96,7 +81,7 @@ public class homeController extends Application {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    connectionPageController connectionController = new connectionPageController(stage);
+                    ConnectionPageController connectionController = new ConnectionPageController(stage);
                     try {
                         connectionController.start();
                     } catch (Exception e) {

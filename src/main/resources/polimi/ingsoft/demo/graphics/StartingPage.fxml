@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.VBox?>
-<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/genericStyle.css"
-            fx:id="connectionPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="polimi.ingsoft.client.ui.gui.connectionPageController"
+<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="polimi.ingsoft.client.ui.gui.StartingPageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="800.0" prefWidth="1350.0"
 >
@@ -19,7 +19,8 @@
             <children>
                 <Button mnemonicParsing="false" text="New Game"
                         prefWidth="230" prefHeight="50" styleClass="buttonLarge"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/genericStyle.css">
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        onAction="#newGame">
                 </Button>
             </children>
         </StackPane>
@@ -28,7 +29,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Join Game"
                         prefWidth="230" prefHeight="50" styleClass="buttonLarge"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/genericStyle.css">
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
                 </Button>
             </children>
         </StackPane>
