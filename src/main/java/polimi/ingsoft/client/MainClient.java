@@ -39,8 +39,7 @@ public class MainClient {
     
     private static Client createClient(Protocols protocol) throws IOException {
         if (protocol == Protocols.RMI)
-            // return createRmiClient();
-            return null;
+            return createRmiClient();
         else
             return createSocketClient();
     }
@@ -48,9 +47,7 @@ public class MainClient {
 
     private static Client createRmiClient(){
         try{
-            //TODO RmiClient implements Client?
-            new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner);
-            return null;
+            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner);
         }catch (RemoteException | NotBoundException exception){
             System.out.println(exception);
             return null;
