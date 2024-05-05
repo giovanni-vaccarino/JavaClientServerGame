@@ -4,6 +4,12 @@
     -fx-background-position: center center;
 }
 
+.splitMenuButtonSmall {
+    -fx-font-size: 20px;
+    -fx-background-color: #705f16;
+    -fx-font-family: 'Old English Text MT';
+}
+
 .textSmall {
     -fx-font-size: 30px;
     -fx-font-family: 'Old English Text MT';

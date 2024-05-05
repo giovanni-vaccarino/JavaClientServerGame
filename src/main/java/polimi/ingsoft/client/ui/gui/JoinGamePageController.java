@@ -1,48 +1,36 @@
 package polimi.ingsoft.client.ui.gui;
 
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.scene.control.RadioButton;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class NewGamePageController {
+public class JoinGamePageController {
     private Stage stage;
     private String nickname;
     private int numberPlayers;
     @FXML
     private TextField nicknameInput;
 
-    @FXML
-    private RadioButton twoPlayersRadioButton;
-
-    @FXML
-    private RadioButton threePlayersRadioButton;
-
-    @FXML
-    private RadioButton fourPlayersRadioButton;
-
     // Default constructor
-    public NewGamePageController() {}
+    public JoinGamePageController() {}
 
     // Constructor with stage parameter
-    public NewGamePageController(Stage stage) {
+    public JoinGamePageController(Stage stage) {
         this.stage = stage;
     }
 
     public void start() throws Exception {
 
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/NewGamePage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/JoinGamePage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -59,7 +47,7 @@ public class NewGamePageController {
             System.out.println("CSS file not found");
         }
         stage.getScene().setRoot(root);
-    }
+    } // !!! POTREBBE ESTENDERE UNA SOVRACLASSE CHE DEFINISCE IL METODO START E GLI PASSA IL FILE FXML IN INPUT
 
     // 2 PAGINE FXML: NewGamePage e ContinueNewGamePage
     // metodi/variabili associati alla seconda pagina hanno come prefisso "continue"
@@ -82,22 +70,22 @@ public class NewGamePageController {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        NewGamePageController newGamePageController = new NewGamePageController(stage);
+        JoinGamePageController newJoinPageController = new JoinGamePageController(stage);
         try {
-            newGamePageController.start();
+            newJoinPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void continueNewGame(ActionEvent actionEvent) throws IOException {
+    public void continueJoinGame(ActionEvent actionEvent) throws IOException {
 
         if(!nicknameInput.getText().trim().equals("")) {
             setNickname();
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ContinueNewGamePage.fxml");
+            URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ContinueJoinGamePage.fxml");
             if (resourceUrl == null) {
                 System.out.println("FXML file not found");
                 return;
@@ -122,33 +110,6 @@ public class NewGamePageController {
     public void setNickname() {
         nickname = nicknameInput.getText().trim();
         System.out.println(nickname);
-    }
-
-    public void setNumberPlayers(ActionEvent actionEvent) {
-        if(twoPlayersRadioButton.isSelected()){
-
-            numberPlayers=2;
-
-        } else if (threePlayersRadioButton.isSelected()) {
-
-            numberPlayers=3;
-
-        } else if (fourPlayersRadioButton.isSelected()) {
-
-            numberPlayers=4;
-        }
-
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        WaitingPageController waitingPageController = new WaitingPageController(stage);
-        try {
-            waitingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println(numberPlayers);
     }
 }
 

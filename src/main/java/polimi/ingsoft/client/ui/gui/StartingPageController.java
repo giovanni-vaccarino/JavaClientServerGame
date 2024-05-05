@@ -53,6 +53,18 @@ public class StartingPageController {
         }
     }
 
+    public void joinGame(ActionEvent actionEvent) throws IOException {
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        JoinGamePageController joinGamePageController = new JoinGamePageController(stage);
+        try {
+            joinGamePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void backPage(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
