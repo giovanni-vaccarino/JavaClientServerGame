@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface VirtualServerInterface extends Remote, VirtualServer {
     void connect(VirtualView client) throws RemoteException;
-    List<Integer> getMatches() throws RemoteException;
+    void getMatches() throws RemoteException;
 
-    Integer createMatch(Integer requiredNumPlayers) throws RemoteException;
+    void createMatch(Integer requiredNumPlayers) throws RemoteException;
 
-    Boolean joinMatch(Integer matchId, String nickname) throws RemoteException;
+    void joinMatch(Integer matchId, String nickname) throws RemoteException;
 
     void reJoinMatch(Integer matchId, String nickname) throws RemoteException;
 

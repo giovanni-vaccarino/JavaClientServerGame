@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.util.List;
 
 public interface VirtualServer {
-    List<Integer> getMatches() throws IOException;
+    void getMatches() throws IOException;
 
-    Integer createMatch(Integer requiredNumPlayers) throws IOException;
+    void createMatch(Integer requiredNumPlayers) throws IOException;
 
-    Boolean joinMatch(Integer matchId, String nickname) throws IOException;
+    void joinMatch(Integer matchId, String nickname) throws IOException;
 
     void reJoinMatch(Integer matchId, String nickname) throws IOException;
 

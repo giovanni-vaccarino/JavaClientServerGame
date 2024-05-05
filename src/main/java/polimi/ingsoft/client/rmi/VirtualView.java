@@ -9,16 +9,15 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-//Interfaccia che utilizziamo dal server per interagire coi client
 public interface VirtualView extends Remote{
-    void showUpdateMatchesList(List<Integer> matches) throws IOException;
-    void showUpdateMatchJoin(Boolean success) throws IOException;
-    void showUpdateMatchCreate(MatchController match) throws IOException;
-    void showUpdateChat(Message message) throws IOException;
+    void showUpdateMatchesList(List<Integer> matches) throws IOException, RemoteException;
+    void showUpdateMatchJoin(Boolean success) throws IOException, RemoteException;
+    void showUpdateMatchCreate(MatchController match) throws IOException, RemoteException;
+    void showUpdateChat(Message message) throws IOException, RemoteException;
 
-    void showUpdatePublicBoard() throws IOException;
+    void showUpdatePublicBoard() throws IOException, RemoteException;
 
-    void showUpdateBoard() throws IOException;
+    void showUpdateBoard() throws IOException, RemoteException;
 
-    void reportError(String details) throws IOException;
+    void reportError(String details) throws IOException, RemoteException;
 }

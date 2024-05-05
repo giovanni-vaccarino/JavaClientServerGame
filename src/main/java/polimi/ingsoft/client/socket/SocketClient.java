@@ -18,7 +18,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 
-public class SocketClient implements AutoCloseable, Client {
+public class SocketClient implements Client {
     private final Socket socket;
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
@@ -122,19 +122,18 @@ public class SocketClient implements AutoCloseable, Client {
     }
 
     @Override
-    public List<Integer> getMatches() throws IOException {
-        return server.getMatches();
+    public void getMatches() throws IOException {
+        server.getMatches();
     }
 
     @Override
-    public Integer createMatch(Integer requiredNumPlayers) throws IOException {
-        return server.createMatch(requiredNumPlayers);
+    public void createMatch(Integer requiredNumPlayers) throws IOException {
+        server.createMatch(requiredNumPlayers);
     }
 
     @Override
-    public Boolean joinMatch(Integer matchId, String nickname) throws IOException {
+    public void joinMatch(Integer matchId, String nickname) throws IOException {
         server.joinMatch(matchId, nickname);
-        return null;
     }
 
     @Override

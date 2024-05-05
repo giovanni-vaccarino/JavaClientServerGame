@@ -90,13 +90,7 @@ public class MatchController implements Serializable {
         return publicBoard.getGold(slot);
     }
 
-    private QuestCard drawQuestCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        validateMove(player, TURN_STEP.DRAW);
-        currentStep = TURN_STEP.PLACE;
-        return publicBoard.getQuest(slot);
-    }
-
-    private void place(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException {
+    public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException {
         validateMove(player, TURN_STEP.PLACE);
         player.getBoard().add(coordinates, card, facingUp);
         goToNextPlayer();
@@ -106,21 +100,13 @@ public class MatchController implements Serializable {
         return this.chatController.writeMessage(message);
     }
 
-    public void drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot){
-        // Ensure that the player sending the request is the right player and that it's draw phase
-
-        //adding to the playerhand the card drawed
-
-    }
-
-    public MixedCard drawCard(String deckType, PlaceInPublicBoard.Slots slot){
+    public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException {
         switch(deckType){
-            case "Resource" -> {
-                return this.publicBoard.getResource(slot);
-            }
-            case "Gold" -> {
-                return this.publicBoard.getGold(slot);
-            }
+            case "Resource":
+                return this.drawResourceCard(player, slot);
+
+            case "Gold":
+                return this.drawGoldCard(player, slot);
         }
 
         return null;

@@ -7,6 +7,7 @@ import polimi.ingsoft.server.Player;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class CLI extends UI {
     private final Scanner in;
     private final PrintStream out;
     private final Client client;
-    public CLI(Scanner in, PrintStream out, Client client) {
+    public CLI(Scanner in, PrintStream out, Client client) throws RemoteException {
         this.in = in;
         this.out = out;
         this.client = client;
@@ -41,7 +42,7 @@ public class CLI extends UI {
             // CREATING A NEW MATCH IF IT'S NEW MATCH CASE
             if (matchId == 0){
                 Integer requestedNumPlayers = this.showChooseNumberPlayersScreen();
-                matchId = client.createMatch(requestedNumPlayers);
+                client.createMatch(requestedNumPlayers);
             }
 
             resultBool = this.joinMatch(nickname, matchId);
@@ -145,6 +146,9 @@ public class CLI extends UI {
         */
         // THE CHECKS ARE ALREADY SERVER SIDE -> IMPLEMENTING ALSO CLIENT VERIFICATION?
 
-        return client.joinMatch(matchId, nickname);
+        client.joinMatch(matchId, nickname);
+
+        //TODO Edit fixed return value
+        return true;
     }
 }
