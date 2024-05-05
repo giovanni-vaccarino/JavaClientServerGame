@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.RadioButton;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,9 +18,18 @@ import java.net.URL;
 public class NewGamePageController {
     private Stage stage;
     private String nickname;
+    private int numberPlayers;
     @FXML
     private TextField nicknameInput;
 
+    @FXML
+    private RadioButton twoPlayersRadioButton;
+
+    @FXML
+    private RadioButton threePlayersRadioButton;
+
+    @FXML
+    private RadioButton fourPlayersRadioButton;
 
     // Default constructor
     public NewGamePageController() {}
@@ -82,29 +92,63 @@ public class NewGamePageController {
 
     public void continueNewGame(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        if(!nicknameInput.getText().trim().equals("")) {
+            setNickname();
 
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ContinueNewGamePage.fxml");
-        if (resourceUrl == null) {
-            System.out.println("FXML file not found");
-            return;
-        }
-        //System.out.println("FXML file found");
-        Parent root = FXMLLoader.load(resourceUrl);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        // Load CSS file
-        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
-        if (cssUrl != null) {
-            root.getStylesheets().add(cssUrl.toExternalForm());
-            //System.out.println("CSS file found");
-        } else {
-            System.out.println("CSS file not found");
+            URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ContinueNewGamePage.fxml");
+            if (resourceUrl == null) {
+                System.out.println("FXML file not found");
+                return;
+            }
+            //System.out.println("FXML file found");
+            Parent root = FXMLLoader.load(resourceUrl);
+
+            // Load CSS file
+            URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
+            if (cssUrl != null) {
+                root.getStylesheets().add(cssUrl.toExternalForm());
+                //System.out.println("CSS file found");
+            } else {
+                System.out.println("CSS file not found");
+            }
+            stage.getScene().setRoot(root);
+        }else{
+            nicknameInput.setStyle("-fx-background-color: #d34813;");;
         }
-        stage.getScene().setRoot(root);
     }
 
     public void setNickname() {
         nickname = nicknameInput.getText();
+        System.out.println(nickname);
+    }
+
+    public void setNumberPlayers(ActionEvent actionEvent) {
+        if(twoPlayersRadioButton.isSelected()){
+
+            numberPlayers=2;
+
+        } else if (threePlayersRadioButton.isSelected()) {
+
+            numberPlayers=3;
+
+        } else if (fourPlayersRadioButton.isSelected()) {
+
+            numberPlayers=4;
+        }
+
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        WaitingPageController waitingPageController = new WaitingPageController(stage);
+        try {
+            waitingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(numberPlayers);
     }
 }
 
