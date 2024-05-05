@@ -1,0 +1,32 @@
+.page {
+    -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/background/generalBackground7_big.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.textBold {
+    -fx-font-size: 55px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Old English Text MT';
+    /*-fx-font-family:'DragonHunter';*/
+}
+
+.buttonRegular {
+    -fx-font-size: 25px;
+    -fx-background-color: #705f16;
+    -fx-background-radius: 10;
+    -fx-border-color: b6da9f;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
+}
+
+.buttonLarge {
+    -fx-font-size: 35px;
+    -fx-background-color: #705f16;
+    -fx-background-radius: 10;
+    -fx-border-color: b6da9f;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
+}

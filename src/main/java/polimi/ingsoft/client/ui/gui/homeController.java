@@ -1,6 +1,22 @@
 package polimi.ingsoft.client.ui.gui;
 
 import javafx.application.Application;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
+import java.io.IOException;
+import java.net.URL;
+
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,12 +54,12 @@ public class homeController extends Application {
 
             @Override
             public void run() {
-                if (secondsPassed < 3) {
+                if (secondsPassed < 1) {
                     // print a wait message (?)
                     secondsPassed++;
-                    System.out.println(secondsPassed);
+                    //System.out.println(secondsPassed);
                 } else {
-                    System.out.println("FINE FINE FINE");
+                    //System.out.println("FINE FINE FINE");
                     timer.cancel(); // Terminate the timer
                     Platform.runLater(() -> {
                         try {
@@ -75,11 +91,22 @@ public class homeController extends Application {
 
         stage.getScene().setRoot(root);
 
-        connectionPageController connectionController = new connectionPageController(stage);
-        try {
-            connectionController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Timer timer = new Timer();
+        TimerTask delayTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    connectionPageController connectionController = new connectionPageController(stage);
+                    try {
+                        connectionController.start();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+        };
+
+        // Schedule the delay task to execute after one second
+        timer.schedule(delayTask, 1000);
     }
 }

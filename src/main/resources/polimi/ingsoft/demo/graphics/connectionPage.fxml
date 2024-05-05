@@ -5,31 +5,43 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.BackgroundFill?>
 <?import javafx.scene.layout.Background?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="700.0" prefWidth="1200.0"
-            style="-fx-background-image: url('polimi/ingsoft/demo/graphics/img/background/generalBackground2.jpg');
-            -fx-background-size: cover; -fx-background-position: center center;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            stylesheets="/polimi/ingsoft/demo/graphics/fonts/KodeMonoFont.css"
+<?import javafx.scene.layout.VBox?>
+<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/genericStyle.css"
+            fx:id="connectionPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.connectionPageController"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="800.0" prefWidth="1350.0"
 >
     <children>
-        <StackPane layoutX="160.0" layoutY="210.0" prefWidth="900" prefHeight="100">
+        <StackPane layoutX="0.0" layoutY="250.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
-                <Label text="CHOOSE CONNECTION" style="-fx-font-size: 50px; -fx-font-weight: bold;" />
+                <Label text="Connection" styleClass="textBold"
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/genericStyle.css">
+                </Label>
             </children>
         </StackPane>
 
-        <Button layoutX="560.0" layoutY="350.0" mnemonicParsing="false" text="RMI"
-                prefWidth="70" prefHeight="30"
-                style="-fx-font-size: 20px; -fx-background-color: #1eb81e; -fx-background-radius: 10;
-                             -fx-border-color: b6da9f; -fx-border-radius: 10; -fx-border-width: 2;"
-        />
-        <Button layoutX="545.0" layoutY="450.0" mnemonicParsing="false" text="Socket"
-                prefWidth="100" prefHeight="30"
-                style="-fx-font-size: 20px; -fx-background-color: #1eb81e; -fx-background-radius: 10;
-                             -fx-border-color: b6da9f; -fx-border-radius: 10; -fx-border-width: 2;"
-        />
+        <StackPane layoutX="0.0" layoutY="370.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="rmi"
+                        prefWidth="90" prefHeight="30" styleClass="buttonRegular"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/genericStyle.css"
+                        onAction="#nextPage">
+                </Button>
+            </children>
+        </StackPane>
+
+        <StackPane layoutX="0.0" layoutY="465.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="Socket"
+                        prefWidth="120" prefHeight="30" styleClass="buttonRegular"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/genericStyle.css"
+                        onAction="#nextPage">
+                </Button>
+            </children>
+        </StackPane>
+
     </children>
 </AnchorPane>
