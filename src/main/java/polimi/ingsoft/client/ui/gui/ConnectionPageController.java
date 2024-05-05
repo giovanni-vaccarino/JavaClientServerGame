@@ -31,6 +31,11 @@ public class ConnectionPageController {
         //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
 
+        /*FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();*/
+
         // Load CSS file
         URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
         if (cssUrl != null) {
@@ -40,29 +45,12 @@ public class ConnectionPageController {
             System.out.println("CSS file not found");
         }
 
-        // Set up the stage
-        stage.setResizable(false);
-        stage.setScene(new Scene(root));
-        stage.show();
+        stage.getScene().setRoot(root);
     }
 
     public void nextPageRMI(ActionEvent actionEvent) throws IOException {
 
-        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/StartingPage.fxml");
-        if (resource == null) {
-            System.out.println("First choice fxml not found");
-            return;
-        }
-
-        Parent root = FXMLLoader.load(resource);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        /*FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
-        fadeTransition.setFromValue(0.0);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();*/
-
-        stage.getScene().setRoot(root);
 
         StartingPageController startingPageController = new StartingPageController(stage);
         try {
@@ -74,21 +62,7 @@ public class ConnectionPageController {
 
     public void nextPageSocket(ActionEvent actionEvent) throws IOException {
 
-        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/StartingPage.fxml");
-        if (resource == null) {
-            System.out.println("First choice fxml not found");
-            return;
-        }
-
-        Parent root = FXMLLoader.load(resource);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        /*FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
-        fadeTransition.setFromValue(0.0);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();*/
-
-        stage.getScene().setRoot(root);
 
         StartingPageController startingPageController = new StartingPageController(stage);
         try {

@@ -16,6 +16,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class HomeController extends Application {
+
+    int waitingTime = 1;
     public static void main(String[] args){
         launch(args);
     }
@@ -39,7 +41,7 @@ public class HomeController extends Application {
 
             @Override
             public void run() {
-                if (secondsPassed < 1) {
+                if (secondsPassed < waitingTime) {
                     // print a wait message (?)
                     secondsPassed++;
                     //System.out.println(secondsPassed);
@@ -61,37 +63,11 @@ public class HomeController extends Application {
     }
 
     public void nextPage(Stage stage) throws IOException {
-        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/ConnectionPage.fxml");
-        if (resource == null) {
-            System.out.println("Starting scene fxml not found");
-            return;
+        ConnectionPageController connectionController = new ConnectionPageController(stage);
+        try {
+            connectionController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        Parent root = FXMLLoader.load(resource);
-
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
-        fadeTransition.setFromValue(0.0);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();
-
-        stage.getScene().setRoot(root);
-
-        Timer timer = new Timer();
-        TimerTask delayTask = new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    ConnectionPageController connectionController = new ConnectionPageController(stage);
-                    try {
-                        connectionController.start();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
-        };
-
-        // Schedule the delay task to execute after one second
-        timer.schedule(delayTask, 1000);
     }
 }

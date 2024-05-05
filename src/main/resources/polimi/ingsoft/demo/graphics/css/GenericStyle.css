@@ -4,11 +4,35 @@
     -fx-background-position: center center;
 }
 
+.textSmall {
+    -fx-font-size: 30px;
+    -fx-font-family: 'Old English Text MT';
+}
+
+.textRegular {
+    -fx-font-size: 40px;
+    -fx-font-family: 'Old English Text MT';
+    /*-fx-font-family:'DragonHunter';*/
+}
+
 .textBold {
     -fx-font-size: 55px;
     -fx-font-weight: bold;
     -fx-font-family: 'Old English Text MT';
     /*-fx-font-family:'DragonHunter';*/
+}
+
+.buttonBack {
+    -fx-font-size: 20px;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0.0em; /* Adjust padding as needed */
+    /*-fx-text-fill: #d34813;*/
+    -fx-text-fill: #705f16;
+    -fx-font-family: 'Old English Text MT';
+    -fx-underline: true;
 }
 
 .buttonRegular {

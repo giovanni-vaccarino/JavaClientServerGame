@@ -38,34 +38,28 @@ public class StartingPageController {
         } else {
             System.out.println("CSS file not found");
         }
-
-        // Set up the stage
-        stage.setResizable(false);
-        stage.setScene(new Scene(root));
-        stage.show();
+        stage.getScene().setRoot(root);
     }
 
     public void newGame(ActionEvent actionEvent) throws IOException {
 
-        URL resource = getClass().getResource("/polimi/ingsoft/demo/graphics/NewGamePage.fxml");
-        if (resource == null) {
-            System.out.println("First choice fxml not found");
-            return;
-        }
-
-        Parent root = FXMLLoader.load(resource);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        /*FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
-        fadeTransition.setFromValue(0.0);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();*/
-
-        stage.getScene().setRoot(root);
 
         NewGamePageController newGamePageController = new NewGamePageController(stage);
         try {
             newGamePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void backPage(ActionEvent actionEvent) throws IOException {
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        ConnectionPageController connectionPageController = new ConnectionPageController(stage);
+        try {
+            connectionPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
