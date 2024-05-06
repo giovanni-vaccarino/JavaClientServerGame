@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.enumerations;
 
-public enum TurnPhase {
+public enum TURN_STEP {
     DRAW, PLACE
 }
 

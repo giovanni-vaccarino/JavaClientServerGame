@@ -1,5 +1,6 @@
 package polimi.ingsoft.client;
 
+import polimi.ingsoft.client.rmi.RmiClient;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
 import polimi.ingsoft.client.ui.cli.Protocols;
@@ -7,6 +8,8 @@ import polimi.ingsoft.client.socket.SocketClient;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class MainClient {
@@ -36,21 +39,20 @@ public class MainClient {
     
     private static Client createClient(Protocols protocol) throws IOException {
         if (protocol == Protocols.RMI)
-            // return createRmiClient();
-            return null;
+            return createRmiClient();
         else
             return createSocketClient();
     }
 
-//    private static Client createRmiClient(){
-//        try{
-//            printStream.println("Prendo RMI CLIENT");
-//            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort);
-//        }catch (RemoteException | NotBoundException exception){
-//            System.out.println(exception);
-//            return null;
-//        }
-//    }
+
+    private static Client createRmiClient(){
+        try{
+            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner);
+        }catch (RemoteException | NotBoundException exception){
+            System.out.println(exception);
+            return null;
+        }
+    }
 
     private static Client createSocketClient() throws IOException {
         return new SocketClient(socketServerHostName, socketServerPort, UIType.CLI, printStream, scanner);

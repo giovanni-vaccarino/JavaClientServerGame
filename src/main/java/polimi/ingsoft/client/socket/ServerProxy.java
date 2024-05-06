@@ -19,30 +19,27 @@ public class ServerProxy implements VirtualServer {
     }
 
     @Override
-    public List<Integer> getMatches() throws IOException {
+    public void getMatches() throws IOException {
         SocketMessage message = new SocketMessage(MessageCodes.MATCHES_LIST_REQUEST, null);
         out.writeObject(message);
         out.flush();
-        return null;
     }
 
     @Override
-    public Integer createMatch(Integer requiredNumPlayers) throws IOException {
+    public void createMatch(Integer requiredNumPlayers) throws IOException {
         SocketMessage message = new SocketMessage(MessageCodes.MATCH_CREATE_REQUEST, requiredNumPlayers);
         out.writeObject(message);
         out.flush();
-        return null;
     }
 
     @Override
-    public Boolean joinMatch(Integer matchId, String nickname) throws IOException {
+    public void joinMatch(Integer matchId, String nickname) throws IOException {
         SocketMessage message = new SocketMessage(
                 MessageCodes.MATCH_CREATE_REQUEST,
                 new SocketMessage.IdAndNickname(matchId, nickname)
         );
         out.writeObject(message);
         out.flush();
-        return null;
     }
 
     @Override
