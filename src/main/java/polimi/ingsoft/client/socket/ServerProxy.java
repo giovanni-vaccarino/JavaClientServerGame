@@ -31,7 +31,6 @@ public class ServerProxy implements VirtualServer {
         SocketMessage message = new SocketMessage(MessageCodes.MATCH_CREATE_REQUEST, requiredNumPlayers);
         out.writeObject(message);
         out.flush();
-        // TODO discuss if we need to keep a return value for these
         return null;
     }
 
