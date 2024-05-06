@@ -1,10 +1,16 @@
-.page {
+.initialPage {
     -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/background/generalBackground7_big.jpg');
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
 
-.home{
+.gamePage {
+    -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/background/generalBackground8.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.home {
     -fx-background-image: url('polimi/ingsoft/demo/graphics/img/background/home.jpg');
     -fx-background-size: cover;
     -fx-background-position: center center;

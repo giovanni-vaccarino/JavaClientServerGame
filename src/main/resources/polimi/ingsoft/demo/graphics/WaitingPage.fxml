@@ -9,7 +9,7 @@
 
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextField?>
-<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
+<AnchorPane styleClass="initialPage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.WaitingPageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -30,6 +30,16 @@
                         prefWidth="150" prefHeight="50" styleClass="buttonCancel"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#cancelNewGame">
+                </Button>
+            </children>
+        </StackPane>
+
+        <StackPane layoutX="0.0" layoutY="210.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="Start Game"
+                        prefWidth="190" prefHeight="50" styleClass="buttonRegular"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        onAction="#startGame">
                 </Button>
             </children>
         </StackPane>

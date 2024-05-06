@@ -63,11 +63,21 @@ public class HomeController extends Application {
     }
 
     public void nextPage(Stage stage) throws IOException {
+
+        //RIGHT ONE:
         ConnectionPageController connectionController = new ConnectionPageController(stage);
         try {
             connectionController.start(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        /*TEST ONE:
+        GamePageController gamePageController = new GamePageController(stage);
+        try {
+            gamePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }*/
     }
 }

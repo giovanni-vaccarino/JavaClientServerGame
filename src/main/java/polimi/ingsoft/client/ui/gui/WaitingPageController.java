@@ -57,4 +57,16 @@ public class WaitingPageController {
             throw new RuntimeException(e);
         }
     }
+
+    public void startGame(ActionEvent actionEvent) throws IOException {
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        GamePageController gamePageController = new GamePageController(stage);
+        try {
+            gamePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
