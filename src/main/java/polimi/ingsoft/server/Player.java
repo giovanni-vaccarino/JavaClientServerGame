@@ -22,4 +22,6 @@ public class Player implements Serializable {
     public Board getBoard() {
         return this.board;
     }
+
+    public String getNickname(){return this.nickname;}
 }

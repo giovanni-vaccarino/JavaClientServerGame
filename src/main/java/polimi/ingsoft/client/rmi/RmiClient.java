@@ -4,6 +4,7 @@ import polimi.ingsoft.client.Client;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.CLI;
+import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
@@ -33,15 +34,16 @@ public class RmiClient extends UnicastRemoteObject implements Client {
                      UIType ui,
                      PrintStream printStream,
                      Scanner scanner) throws RemoteException, NotBoundException{
-
         Registry registry = LocateRegistry.getRegistry(rmiServerHostName, rmiServerPort);
         VirtualServerInterface rmiServer = (VirtualServerInterface) registry.lookup(rmiServerName);
         this.server = rmiServer;
-        if (ui == UIType.CLI)
+        if (ui == UIType.CLI){
             this.ui = new CLI(scanner, printStream, this);
-        else
+        } else{
             // TODO create GUI here
             this.ui = new CLI(scanner, printStream, this);
+        }
+
     }
 
     @Override
@@ -51,12 +53,42 @@ public class RmiClient extends UnicastRemoteObject implements Client {
 
     @Override
     public UI getUI() {
-        return null;
+        return this.ui;
+    }
+
+    @Override
+    public void clientJoinMatch(Integer matchId, String nickname) throws RemoteException {
+        try {
+            server.joinMatch(this, matchId, nickname);
+        } catch (IOException exception){
+
+        }
+    }
+
+    @Override
+    public void showJoinMatchResult(Boolean joinResult, List<Player> players) throws IOException {
+        List<String> playersName = players.stream().map(p -> p.getNickname()).toList();
+
+        if (joinResult){
+            System.out.println("Successfully joined the match. Waiting for the required players to start... ");
+            System.out.println("Players in lobby: ");
+            for(var name : playersName){
+                System.out.println(name);
+            }
+        }
     }
 
     @Override
     public void showUpdateMatchesList(List<Integer> matches) throws RemoteException {
-
+        //TODO Add a queue of updates, and in another thread update
+        System.out.println("Got update: MATCHES LIST: " + matches);
+            new Thread(()->{
+                try {
+                    ui.showMatchesList(matches);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
     }
 
     @Override
@@ -95,18 +127,18 @@ public class RmiClient extends UnicastRemoteObject implements Client {
     }
 
     @Override
-    public void getMatches() throws IOException {
-
+    public void getMatches(VirtualView client) throws IOException {
+        server.getMatches(client);
     }
 
     @Override
     public void createMatch(Integer requiredNumPlayers) throws IOException {
-
+        server.createMatch(requiredNumPlayers);
     }
 
     @Override
-    public void joinMatch(Integer matchId, String nickname) throws IOException {
-
+    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException {
+        server.joinMatch(client, matchId, nickname);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Message;
@@ -13,11 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class SocketServer {
+public class SocketServer implements ConnectionsClient {
     private final int port;
     private final PrintStream logger;
     private final MainController controller;
-    private final List<VirtualView> clients = new ArrayList<>();
 
     public SocketServer(int port, PrintStream logger, MainController controller) {
         this.port = port;

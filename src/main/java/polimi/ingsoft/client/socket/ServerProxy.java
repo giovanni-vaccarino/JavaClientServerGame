@@ -1,5 +1,6 @@
 package polimi.ingsoft.client.socket;
 
+import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.MixedCard;
@@ -19,7 +20,7 @@ public class ServerProxy implements VirtualServer {
     }
 
     @Override
-    public void getMatches() throws IOException {
+    public void getMatches(VirtualView client) throws IOException {
         SocketMessage message = new SocketMessage(MessageCodes.MATCHES_LIST_REQUEST, null);
         out.writeObject(message);
         out.flush();
@@ -33,7 +34,7 @@ public class ServerProxy implements VirtualServer {
     }
 
     @Override
-    public void joinMatch(Integer matchId, String nickname) throws IOException {
+    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException {
         SocketMessage message = new SocketMessage(
                 MessageCodes.MATCH_CREATE_REQUEST,
                 new SocketMessage.IdAndNickname(matchId, nickname)

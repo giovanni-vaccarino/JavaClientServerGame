@@ -2,6 +2,7 @@ package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
@@ -11,17 +12,17 @@ import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
-public class RmiServer implements VirtualServerInterface {
+public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     final MainController mainController;
-
-    final List<VirtualView> clients = new ArrayList<>();
 
     private final PrintStream logger;
 
@@ -45,6 +46,8 @@ public class RmiServer implements VirtualServerInterface {
         }
     });
 
+    // connect, getMatches
+
     //TODO Fix the casting
     private void executeMethod(RmiMethodCall methodCall) {
         String methodName = methodCall.getMethodName();
@@ -52,76 +55,112 @@ public class RmiServer implements VirtualServerInterface {
 
 
         switch (methodName) {
-            case "connect":
+            case "connect" -> {
                 this.addClient((VirtualView) args[0]);
                 // TODO put the notification to the client
-                break;
+            }
 
-            case "getMatches":
+            case "getMatches" -> {
                 List<Integer> matches = this.listMatches();
-                // TODO put the return list to the client
-                break;
 
-            case "createMatch":
+                VirtualView client = (VirtualView) args[0];
+                //TODO Ensure that the client has already done connect
+                synchronized (client) {
+                    try {
+                        client.showUpdateMatchesList(matches);
+                    } catch (IOException exception) {
+
+                    }
+                }
+            }
+
+            case "createMatch" -> {
                 this.addMatch((Integer) args[0]);
-                // TODO put the notification to the client
-                break;
+                List<Integer> listMatches = this.listMatches();
+                // TODO put the notification for clients connected with socket
+                // TODO Do a blocking queue also for this
+                synchronized (this.clients) {
+                    for (var client : this.clients) {
+                        try {
+                            client.showUpdateMatchesList(listMatches);
+                        } catch (IOException exception) {
 
-            case "joinMatch":
-                Boolean joinResult = this.enterMatch((Integer) args[0], (String) args[1]);
+                        }
+                    }
+                }
+            }
+
+            case "joinMatch" -> {
+                VirtualView client = (VirtualView) args[0];
+                int matchId = (Integer) args[1];
+                String nick = (String) args[2];
+
+                Boolean joinResult = this.enterMatch(matchId, nick);
+                MatchController match = this.mainController.getMatch(matchId);
+                List<Player> players = match.getPlayers();
+
                 // TODO put the notification to the client
-                if(joinResult){
-                    //client.showJoinMatchResult();
-                }else{
+                if (joinResult) {
+                    try {
+                        client.showJoinMatchResult(joinResult, players);
+                    } catch (IOException exception) {
+
+                    }
+                } else {
                     //client.reportJoinMatchError();
                 }
-                break;
+            }
 
-            case "addMessage":
+            case "addMessage" -> {
                 Boolean addMessageResult = this.writeMessage((Integer) args[0], (String) args[1]);
-                // TODO put the return list to the client
-                if(addMessageResult){
+                // TODO get of the clients to notify
+
+                // TODO notification to the clients
+                if (addMessageResult) {
                     // another blocking queue for the client chat updates?
                     // for each client in the game
                     //client.showUpdateChat();
-                }else{
+                } else {
                     //client.reportUpdateChatError();
                 }
-                break;
+            }
 
-            case "drawCard":
+            case "drawCard" -> {
                 Boolean addDrawResult = this.takeCard((Integer) args[0],
-                                                        (Player) args[1],
-                                                        (String) args[2],
-                                                        (PlaceInPublicBoard.Slots) args[3]);
+                        (Player) args[1],
+                        (String) args[2],
+                        (PlaceInPublicBoard.Slots) args[3]);
+                // TODO get of the clients to notify
+
                 // TODO put the notification to the client
-                if(addDrawResult){
+                if (addDrawResult) {
                     //for each client in the game
                     //client.showUpdateDraw();
-                }else{
+                } else {
                     //client.reportErrorDraw();
                 }
-                break;
+            }
 
-            case "placeCard":
+            case "placeCard" -> {
                 Boolean placeCardResult = this.addBoardCard((Integer) args[0],
-                                                            (Player) args[1],
-                                                            (MixedCard) args[2],
-                                                            (Coordinates) args[3],
-                                                            (Boolean) args[4]);
+                        (Player) args[1],
+                        (MixedCard) args[2],
+                        (Coordinates) args[3],
+                        (Boolean) args[4]);
+                // TODO get of the clients to notify
+
                 // TODO put the notification to the client
-                if(placeCardResult){
+                if (placeCardResult) {
                     //for each client in the game
                     //client.showUpdatePlace();
-                }else{
+                } else {
                     //client.reportErrorPlace();
                 }
+            }
 
-                break;
         }
     }
 
-    //TODO For connect, getMatches, and other getters should I use methodQueue?
     @Override
     public void connect(VirtualView client) throws RemoteException {
         try {
@@ -132,9 +171,9 @@ public class RmiServer implements VirtualServerInterface {
     }
 
     @Override
-    public void getMatches() throws RemoteException {
+    public void getMatches(VirtualView client) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall("getMatches", new Object[]{}));
+            methodQueue.put(new RmiMethodCall("getMatches", new Object[]{client}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -150,9 +189,9 @@ public class RmiServer implements VirtualServerInterface {
     }
 
     @Override
-    public void joinMatch(Integer matchId, String nickname) throws RemoteException {
+    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall("joinMatch", new Object[]{matchId, nickname}));
+            methodQueue.put(new RmiMethodCall("joinMatch", new Object[]{client, matchId, nickname}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

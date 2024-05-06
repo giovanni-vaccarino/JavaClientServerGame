@@ -53,7 +53,7 @@ public class CLI extends UI {
 
     public void showWelcomeScreen() throws IOException {
         if (currentPage == CurrentPage.WELCOME) {
-            client.getMatches();
+            client.getMatches(this.client);
             currentPage = CurrentPage.CHOOSE_MATCH;
         }
     }
@@ -74,7 +74,7 @@ public class CLI extends UI {
                 out.print(MESSAGES.CHOOSE_MATCH.getValue());
                 matchId = in.nextInt();
                 in.nextLine();
-                if (matchId < matches.size()) {
+                if (matchId <= matches.size()) {
                     isValid = true;
                 } else {
                     out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
@@ -85,7 +85,12 @@ public class CLI extends UI {
             if (matchId == 0) {
                 Integer requestedNumPlayers = this.showChooseNumberPlayersScreen();
                 client.createMatch(requestedNumPlayers);
+                //TODO get the correct matchId
+                matchId = matches.size() + 1;
             }
+
+            //TODO discuss changing
+            client.clientJoinMatch(matchId, nickname);
             currentPage = CurrentPage.LOBBY;
         }
     }

@@ -10,6 +10,7 @@ import polimi.ingsoft.server.model.*;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MatchController implements Serializable {
 
@@ -57,6 +58,10 @@ public class MatchController implements Serializable {
         if(players.size() == requestedNumPlayers){
             this.gamePhase = GAME_PHASE.PLAY;
         }
+    }
+
+    public List<Player> getPlayers(){
+        return players;
     }
 
     private Player getCurrentPlayer() {

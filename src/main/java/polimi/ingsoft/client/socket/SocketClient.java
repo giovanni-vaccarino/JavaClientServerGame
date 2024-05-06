@@ -1,9 +1,11 @@
 package polimi.ingsoft.client.socket;
 
 import polimi.ingsoft.client.Client;
+import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.CLI;
+import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
@@ -15,6 +17,7 @@ import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -86,6 +89,11 @@ public class SocketClient implements Client {
     }
 
     @Override
+    public void showJoinMatchResult(Boolean joinResult, List<Player> players) throws IOException {
+
+    }
+
+    @Override
     public void showUpdateMatchesList(List<Integer> matches) throws IOException {
         System.out.println("Got update: MATCHES LIST: " + matches);
         ui.showMatchesList(matches);
@@ -122,8 +130,8 @@ public class SocketClient implements Client {
     }
 
     @Override
-    public void getMatches() throws IOException {
-        server.getMatches();
+    public void getMatches(VirtualView client) throws IOException {
+        server.getMatches(client);
     }
 
     @Override
@@ -132,8 +140,8 @@ public class SocketClient implements Client {
     }
 
     @Override
-    public void joinMatch(Integer matchId, String nickname) throws IOException {
-        server.joinMatch(matchId, nickname);
+    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException {
+        server.joinMatch(client, matchId, nickname);
     }
 
     @Override
@@ -159,5 +167,10 @@ public class SocketClient implements Client {
     @Override
     public UI getUI() {
         return ui;
+    }
+
+    @Override
+    public void clientJoinMatch(Integer matchId, String nickname) throws RemoteException {
+
     }
 }

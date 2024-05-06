@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Message;
@@ -79,6 +80,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void showJoinMatchResult(Boolean joinResult, List<Player> players) throws IOException {
+
     }
 
     @Override

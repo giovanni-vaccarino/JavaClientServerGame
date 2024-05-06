@@ -28,10 +28,7 @@ public class MainClient {
         try (
             Client client = createClient(protocol)
         ) {
-            //Player player = cli.runJoinMatchRoutine();
 
-            // remove after we have RMI client in place
-            assert client != null;
             client.getUI().showWelcomeScreen();
             while (true) { }
         } catch (IOException ignored) { }
