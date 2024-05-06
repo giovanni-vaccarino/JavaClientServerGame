@@ -20,6 +20,13 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/*TO FIX:
+- resourceCardDeck is null, set the background from java
+- define a function that from (x,y) it returns the position in the ancor pane where x0,y0 is the initial card
+- define buttons to see boards of the other players
+- find a way to expand the board when it becomes too big for the table
+ */
+
 public class GamePageController /*implements Initializable*/{
     private Stage stage;
     @FXML
