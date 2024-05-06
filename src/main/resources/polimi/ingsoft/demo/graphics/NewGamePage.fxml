@@ -9,7 +9,7 @@
 
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextField?>
-<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.NewGamePageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -19,7 +19,7 @@
         <StackPane layoutX="0.0" layoutY="200.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="New Game" styleClass="textBold"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
                 </Label>
             </children>
         </StackPane>
@@ -27,7 +27,7 @@
         <StackPane layoutX="0.0" layoutY="300.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="Nickname" styleClass="textRegular"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
                 </Label>
             </children>
         </StackPane>
@@ -35,7 +35,7 @@
         <StackPane layoutX="578.0" layoutY="400.0" prefWidth="200" prefHeight="100" alignment="CENTER">
             <children>
                 <TextField fx:id="nicknameInput" promptText="Enter here" styleClass="textSmall"
-                           stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"/>
+                           stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css"/>
             </children>
         </StackPane>
 
@@ -43,7 +43,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Continue"
                         prefWidth="150" prefHeight="50" styleClass="buttonRegular"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#continueNewGame">
                 </Button>
             </children>
@@ -53,7 +53,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Back"
                         prefWidth="50" prefHeight="50" styleClass="buttonBack"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#backPage">
                 </Button>
             </children>

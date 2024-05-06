@@ -12,7 +12,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.Region?>
-<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.NewGamePageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -22,7 +22,7 @@
         <StackPane layoutX="0.0" layoutY="200.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="New Game" styleClass="textBold"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
                 </Label>
             </children>
         </StackPane>
@@ -30,7 +30,7 @@
         <StackPane layoutX="0.0" layoutY="300.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="Number of players" styleClass="textRegular"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
                 </Label>
             </children>
         </StackPane>
@@ -42,7 +42,7 @@
                         <RadioButton fx:id="twoPlayersRadioButton" onAction="#setNumberPlayers"/>
                         <Region prefWidth="10" />
                         <Label text="Two" styleClass="textSmall"
-                               stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css" />
+                               stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER">
@@ -50,7 +50,7 @@
                         <RadioButton fx:id="threePlayersRadioButton" onAction="#setNumberPlayers"/>
                         <Region prefWidth="10" />
                         <Label text="Three" styleClass="textSmall"
-                               stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css" />
+                               stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css" />
                     </children>
 
                 </HBox>
@@ -59,7 +59,7 @@
                         <RadioButton fx:id="fourPlayersRadioButton" onAction="#setNumberPlayers" />
                         <Region prefWidth="10" />
                         <Label text="Four" styleClass="textSmall"
-                               stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css" />
+                               stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css" />
                     </children>
 
                 </HBox>
@@ -70,7 +70,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Back"
                         prefWidth="50" prefHeight="50" styleClass="buttonBack"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#continueBackPage">
                 </Button>
             </children>

@@ -1,0 +1,7 @@
+.card {
+    -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/front/fronteCarta(1).jpg');;
+    -fx-background-size: 112% 131%;
+    -fx-background-position: 54% 31%;
+    -fx-border-color: #dfd7b0; /* Border color */
+    -fx-border-width: 2,5px;
+}

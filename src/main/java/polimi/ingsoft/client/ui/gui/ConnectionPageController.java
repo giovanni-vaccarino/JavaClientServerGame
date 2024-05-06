@@ -4,7 +4,6 @@ import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
@@ -21,7 +20,9 @@ public class ConnectionPageController {
     public ConnectionPageController(Stage stage) {
         this.stage = stage;
     }
-    public void start() throws Exception {
+
+    // transition to set the FadeTransition or not
+    public void start(boolean transition) throws Exception {
         // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ConnectionPage.fxml");
         if (resourceUrl == null) {
@@ -31,13 +32,15 @@ public class ConnectionPageController {
         //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
 
-        /*FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
-        fadeTransition.setFromValue(0.0);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();*/
+        if(transition){
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
+            fadeTransition.setFromValue(0.0);
+            fadeTransition.setToValue(1.0);
+            fadeTransition.play();
+        }
 
         // Load CSS file
-        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
+        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
             //System.out.println("CSS file found");

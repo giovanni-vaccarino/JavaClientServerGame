@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,7 +30,7 @@ public class StartingPageController {
         Parent root = FXMLLoader.load(resourceUrl);
 
         // Load CSS file
-        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
+        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
             //System.out.println("CSS file found");
@@ -71,7 +70,7 @@ public class StartingPageController {
 
         ConnectionPageController connectionPageController = new ConnectionPageController(stage);
         try {
-            connectionPageController.start();
+            connectionPageController.start(false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

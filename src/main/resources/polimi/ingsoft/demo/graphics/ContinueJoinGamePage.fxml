@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.JoinGamePageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -24,7 +24,7 @@
         <StackPane layoutX="0.0" layoutY="200.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="Join Game" styleClass="textBold"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
                 </Label>
             </children>
         </StackPane>
@@ -32,7 +32,7 @@
         <StackPane layoutX="0.0" layoutY="300.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="Choose your game" styleClass="textRegular"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
                 </Label>
             </children>
         </StackPane>
@@ -42,7 +42,7 @@
                 <HBox alignment="CENTER">
                     <Region HBox.hgrow="ALWAYS" />
                     <SplitMenuButton text="Games" styleClass="splitMenuButtonSmall"
-                                     stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                                     stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
                         <!-- Add your menu items here -->
                         <items>
                             <MenuItem text="Item 1" />
@@ -59,7 +59,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Back"
                         prefWidth="50" prefHeight="50" styleClass="buttonBack"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#continueBackPage">
                 </Button>
             </children>

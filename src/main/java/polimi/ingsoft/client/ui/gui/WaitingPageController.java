@@ -35,7 +35,7 @@ public class WaitingPageController {
         fadeTransition.play();*/
 
         // Load CSS file
-        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
+        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
             //System.out.println("CSS file found");
@@ -44,5 +44,17 @@ public class WaitingPageController {
         }
 
         stage.getScene().setRoot(root);
+    }
+
+    public void cancelNewGame(ActionEvent actionEvent) throws IOException {
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        StartingPageController startingPageController = new StartingPageController(stage);
+        try {
+            startingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

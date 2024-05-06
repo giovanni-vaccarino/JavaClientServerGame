@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -39,7 +38,7 @@ public class JoinGamePageController {
         Parent root = FXMLLoader.load(resourceUrl);
 
         // Load CSS file
-        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
+        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
             //System.out.println("CSS file found");
@@ -80,7 +79,7 @@ public class JoinGamePageController {
 
     public void continueJoinGame(ActionEvent actionEvent) throws IOException {
 
-        if(!nicknameInput.getText().trim().equals("")) {
+        if(!nicknameInput.getText().trim().equals("")) {// DEFINISCI E CAMBIA CON FUNZIONE VALIDATION_NAME
             setNickname();
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -94,7 +93,7 @@ public class JoinGamePageController {
             Parent root = FXMLLoader.load(resourceUrl);
 
             // Load CSS file
-            URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/GenericStyle.css");
+            URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
             if (cssUrl != null) {
                 root.getStylesheets().add(cssUrl.toExternalForm());
                 //System.out.println("CSS file found");

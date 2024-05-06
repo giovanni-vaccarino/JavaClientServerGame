@@ -65,7 +65,7 @@ public class HomeController extends Application {
     public void nextPage(Stage stage) throws IOException {
         ConnectionPageController connectionController = new ConnectionPageController(stage);
         try {
-            connectionController.start();
+            connectionController.start(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

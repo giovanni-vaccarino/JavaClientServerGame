@@ -1,31 +1,7 @@
-.page {
-    -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/background/generalBackground7_big.jpg');
-    -fx-background-size: cover;
-    -fx-background-position: center center;
-}
-
 .splitMenuButtonSmall {
     -fx-font-size: 20px;
     -fx-background-color: #705f16;
     -fx-font-family: 'Old English Text MT';
-}
-
-.textSmall {
-    -fx-font-size: 30px;
-    -fx-font-family: 'Old English Text MT';
-}
-
-.textRegular {
-    -fx-font-size: 40px;
-    -fx-font-family: 'Old English Text MT';
-    /*-fx-font-family:'DragonHunter';*/
-}
-
-.textBold {
-    -fx-font-size: 55px;
-    -fx-font-weight: bold;
-    -fx-font-family: 'Old English Text MT';
-    /*-fx-font-family:'DragonHunter';*/
 }
 
 .buttonBack {
@@ -39,6 +15,16 @@
     -fx-text-fill: #705f16;
     -fx-font-family: 'Old English Text MT';
     -fx-underline: true;
+}
+
+.buttonCancel {
+    -fx-font-size: 25px;
+    -fx-background-color: #da4d17;
+    -fx-background-radius: 10;
+    -fx-border-color: b6da9f;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
 }
 
 .buttonRegular {

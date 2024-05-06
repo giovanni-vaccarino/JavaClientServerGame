@@ -16,21 +16,10 @@
             prefHeight="800.0" prefWidth="1350.0"
 >
     <children>
-        <StackPane layoutX="0.0" layoutY="350.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
+        <StackPane
+                styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css"
+                layoutX="500.0" layoutY="350.0" prefWidth="102.4" prefHeight="83.3" alignment="CENTER">
             <children>
-                <Label text="Waiting for players" styleClass="textBold"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
-                </Label>
-            </children>
-        </StackPane>
-
-        <StackPane layoutX="0.0" layoutY="540.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" text="Cancel"
-                        prefWidth="150" prefHeight="50" styleClass="buttonCancel"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        onAction="#cancelNewGame">
-                </Button>
             </children>
         </StackPane>
 

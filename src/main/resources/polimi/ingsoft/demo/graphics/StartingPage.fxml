@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.VBox?>
-<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.StartingPageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -19,7 +19,7 @@
             <children>
                 <Button mnemonicParsing="false" text="New Game"
                         prefWidth="230" prefHeight="50" styleClass="buttonLarge"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#newGame">
                 </Button>
             </children>
@@ -29,7 +29,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Join Game"
                         prefWidth="230" prefHeight="50" styleClass="buttonLarge"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#joinGame">
                 </Button>
             </children>
@@ -39,7 +39,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Back"
                         prefWidth="50" prefHeight="50" styleClass="buttonBack"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#backPage">
                 </Button>
             </children>

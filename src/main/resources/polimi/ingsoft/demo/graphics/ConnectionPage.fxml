@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.VBox?>
-<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+<AnchorPane styleClass="page" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             fx:id="connectionPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.ConnectionPageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -18,7 +18,7 @@
         <StackPane layoutX="0.0" layoutY="250.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="Connection" styleClass="textBold"
-                       stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css">
+                       stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css">
                 </Label>
             </children>
         </StackPane>
@@ -27,7 +27,7 @@
             <children>
                 <Button mnemonicParsing="false" text="rmi"
                         prefWidth="90" prefHeight="30" styleClass="buttonRegular"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#nextPageRMI">
                 </Button>
             </children>
@@ -37,7 +37,7 @@
             <children>
                 <Button mnemonicParsing="false" text="Socket"
                         prefWidth="120" prefHeight="30" styleClass="buttonRegular"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/GenericStyle.css"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#nextPageSocket">
                 </Button>
             </children>
