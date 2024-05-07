@@ -60,8 +60,14 @@ public class MatchController implements Serializable {
         }
     }
 
-    public List<Player> getPlayers(){
+    private List<Player> getPlayers(){
         return players;
+    }
+
+    public List<String> getNamePlayers(){
+        return players.stream().
+                map(player -> player.getNickname()).
+                toList();
     }
 
     private Player getCurrentPlayer() {

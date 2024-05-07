@@ -33,10 +33,12 @@ public class RmiClient extends UnicastRemoteObject implements Client {
                      Integer rmiServerPort,
                      UIType ui,
                      PrintStream printStream,
-                     Scanner scanner) throws RemoteException, NotBoundException{
+                     Scanner scanner,
+                     String nickname) throws RemoteException, NotBoundException{
         Registry registry = LocateRegistry.getRegistry(rmiServerHostName, rmiServerPort);
         VirtualServerInterface rmiServer = (VirtualServerInterface) registry.lookup(rmiServerName);
         this.server = rmiServer;
+        this.server.connect(this, nickname);
         if (ui == UIType.CLI){
             this.ui = new CLI(scanner, printStream, this);
         } else{
@@ -48,7 +50,7 @@ public class RmiClient extends UnicastRemoteObject implements Client {
 
     @Override
     public void run() throws RemoteException {
-        this.server.connect(this);
+
     }
 
     @Override
@@ -66,13 +68,12 @@ public class RmiClient extends UnicastRemoteObject implements Client {
     }
 
     @Override
-    public void showJoinMatchResult(Boolean joinResult, List<Player> players) throws IOException {
-        List<String> playersName = players.stream().map(p -> p.getNickname()).toList();
+    public void showJoinMatchResult(Boolean joinResult, List<String> players) throws IOException {
 
         if (joinResult){
             System.out.println("Successfully joined the match. Waiting for the required players to start... ");
             System.out.println("Players in lobby: ");
-            for(var name : playersName){
+            for(var name : players){
                 System.out.println(name);
             }
         }

@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface VirtualView extends Remote{
-    void showJoinMatchResult(Boolean joinResult, List<Player> players) throws  IOException;
+    void showJoinMatchResult(Boolean joinResult, List<String> players) throws  IOException;
     void showUpdateMatchesList(List<Integer> matches) throws RemoteException, IOException;
     void showUpdateMatchJoin(Boolean success) throws IOException, RemoteException;
     void showUpdateMatchCreate(MatchController match) throws IOException, RemoteException;

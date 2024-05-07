@@ -13,7 +13,7 @@ public class MainController {
 
     public MainController(PrintStream logger) {
         this.matches = new HashMap<>();
-        this.matches.put(1, MatchFactory.createMatch(logger, 1, 3));
+        this.matches.put(1, MatchFactory.createMatch(logger, 1, 3)); //TODO Just for sample -> remove
         this.logger = logger;
     }
 

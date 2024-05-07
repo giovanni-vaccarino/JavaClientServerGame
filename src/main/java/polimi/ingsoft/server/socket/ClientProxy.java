@@ -20,7 +20,7 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showJoinMatchResult(Boolean joinResult, List<Player> players) throws IOException {
+    public void showJoinMatchResult(Boolean joinResult, List<String> players) throws IOException {
 
     }
 

@@ -22,11 +22,12 @@ public class MainClient {
     private static final String rmiServerName = "MatchManagerServer";
 
     public static void main(String[] args) throws Exception {
+        String nickname = "Nick"; // Add routine to choose nickname
         ProtocolChoiceCLI protocolChoiceCLI = new ProtocolChoiceCLI(scanner, printStream);
         Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
 
         try (
-            Client client = createClient(protocol)
+            Client client = createClient(protocol, nickname)
         ) {
 
             client.getUI().showWelcomeScreen();
@@ -34,17 +35,17 @@ public class MainClient {
         } catch (IOException ignored) { }
     }
     
-    private static Client createClient(Protocols protocol) throws IOException {
+    private static Client createClient(Protocols protocol, String nickname) throws IOException {
         if (protocol == Protocols.RMI)
-            return createRmiClient();
+            return createRmiClient(nickname);
         else
             return createSocketClient();
     }
 
 
-    private static Client createRmiClient(){
+    private static Client createRmiClient(String nickname){
         try{
-            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner);
+            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner, nickname);
         }catch (RemoteException | NotBoundException exception){
             System.out.println(exception);
             return null;
