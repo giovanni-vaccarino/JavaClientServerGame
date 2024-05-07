@@ -2,6 +2,7 @@ package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
+import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
 import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
@@ -97,9 +98,13 @@ public class MatchController implements Serializable {
 
     public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException {
         validateMove(player, TURN_STEP.PLACE);
-        player.getBoard().add(coordinates, card, facingUp);
+        Board board=player.getBoard();
+        Boolean isAdded = board.add(coordinates, card, facingUp);
+        if(isAdded && card.getPlayability(board)>0)board.updatePoints(card.getPoints(board,coordinates)*card.getScore(facingUp));
+        else //TODO
         goToNextPlayer();
     }
+
 
     public Message writeMessage(String message){
         return this.chatController.writeMessage(message);

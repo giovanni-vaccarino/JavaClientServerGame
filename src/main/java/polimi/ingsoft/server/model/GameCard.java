@@ -2,7 +2,7 @@ package polimi.ingsoft.server.model;
 
 import java.util.Objects;
 
-public /*abstract*/ class GameCard extends Card {
+public abstract class GameCard extends Card {
     private final Face front;
     private final Face back;
 
@@ -37,7 +37,7 @@ public /*abstract*/ class GameCard extends Card {
     }
 
     public int getScore(boolean isFront){
-        return isFront?super.getScore():0;
+        return isFront?0:super.getScore();
     }
 
     @Override
