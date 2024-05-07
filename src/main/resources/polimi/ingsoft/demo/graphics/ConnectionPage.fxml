@@ -8,6 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
 <AnchorPane styleClass="initialPage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             fx:id="connectionPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.ConnectionPageController"
@@ -15,6 +16,7 @@
             prefHeight="800.0" prefWidth="1350.0"
 >
     <children>
+
         <StackPane layoutX="0.0" layoutY="250.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
                 <Label text="Connection" styleClass="textBold"

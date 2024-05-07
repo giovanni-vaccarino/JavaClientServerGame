@@ -3,56 +3,59 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
+<?import javafx.scene.image.ImageView?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1350.0" styleClass="gamePage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polimi.ingsoft.client.ui.gui.GamePageController">
     <children>
 
-        <AnchorPane layoutX="20.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0">
+        <AnchorPane stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" layoutX="20.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0">
             <children>
                 <!-- score -->
                 <StackPane alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="360" prefWidth="200" styleClass="plateauScore" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
 
                 <!-- resource card deck -->
-                <StackPane alignment="CENTER" layoutX="231.0" layoutY="14.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="227.0" layoutY="10.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="224.0" layoutY="6.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <!-- TO FIX --><StackPane fx:id="resourceCardDeck" alignment="CENTER" layoutX="220.0" layoutY="2.0" prefHeight="100" prefWidth="140" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="resourceCardDeck1" layoutX="231.0" layoutY="14.0"/>
+                <ImageView fx:id="resourceCardDeck2" layoutX="227.0" layoutY="10.0"/>
+                <ImageView fx:id="resourceCardDeck3" layoutX="224.0" layoutY="6.0"/>
+                <ImageView fx:id="resourceCardDeck4" layoutX="220.0" layoutY="2.0"/>
+
 
                 <!-- visible resource cards -->
-                <StackPane alignment="CENTER" layoutX="380.0" layoutY="14.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="530.0" layoutY="14.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(2).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="resourceCard1" layoutX="380.0" layoutY="14.0"/>
+                <ImageView fx:id="resourceCard2" layoutX="530.0" layoutY="14.0"/>
 
                 <!-- gold card deck -->
-                <StackPane alignment="CENTER" layoutX="231.0" layoutY="148.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/goldCard/backGoldCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="227.0" layoutY="144.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/goldCard/backGoldCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="224.0" layoutY="140.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/goldCard/backGoldCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="220.0" layoutY="136.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/goldCard/backGoldCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="goldCardDeck1" layoutX="231.0" layoutY="148.0"/>
+                <ImageView fx:id="goldCardDeck2" layoutX="227.0" layoutY="144.0"/>
+                <ImageView fx:id="goldCardDeck3" layoutX="224.0" layoutY="140.0"/>
+                <ImageView fx:id="goldCardDeck4" layoutX="220.0" layoutY="136.0"/>
 
                 <!-- visible gold cards -->
-                <StackPane alignment="CENTER" layoutX="380.0" layoutY="148.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/goldCard/frontGoldCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="530.0" layoutY="148.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/goldCard/frontGoldCard(2).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="goldCard1" layoutX="380.0" layoutY="148.0"/>
+                <ImageView fx:id="goldCard2" layoutX="530.0" layoutY="148.0"/>
 
                 <!-- quest card deck -->
-                <StackPane alignment="CENTER" layoutX="231.0" layoutY="274.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/questCard/backQuestCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="227.0" layoutY="270.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/questCard/backQuestCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="224.0" layoutY="266.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/questCard/backQuestCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="220.0" layoutY="262.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/backCard/questCard/backQuestCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="questCardDeck1" layoutX="231.0" layoutY="274.0"/>
+                <ImageView fx:id="questCardDeck2" layoutX="227.0" layoutY="270.0"/>
+                <ImageView fx:id="questCardDeck3" layoutX="224.0" layoutY="266.0"/>
+                <ImageView fx:id="questCardDeck4" layoutX="220.0" layoutY="262.0"/>
 
                 <!-- visible quest cards -->
-                <StackPane alignment="CENTER" layoutX="380.0" layoutY="274.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(1).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="530.0" layoutY="274.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(2).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-            </children>
+                <ImageView fx:id="questCard1" layoutX="380.0" layoutY="274.0"/>
+                <ImageView fx:id="questCard2" layoutX="530.0" layoutY="274.0"/>
+
+                </children>
         </AnchorPane>
 
         <AnchorPane layoutX="20.0" layoutY="540.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="248.0" prefWidth="564.0">
             <children>
 
                 <!-- personal quest card -->
-                <StackPane alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(4).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="personalQuestCard" layoutX="50.0" layoutY="50.0"/>
 
                 <!-- personal resource/gold cards -->
-                <StackPane alignment="CENTER" layoutX="225.0" layoutY="50.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg');" styleClass="cardRotatedm3" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="360.0" layoutY="63.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(13).jpg');" styleClass="cardRotatedp3" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <StackPane alignment="CENTER" layoutX="500.0" layoutY="50.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(30).jpg');" styleClass="cardRotatedm10" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="personalMixedCard1" layoutX="250.0" layoutY="50.0"/>
+                <ImageView fx:id="personalMixedCard2" layoutX="400.0" layoutY="50.0"/>
+                <ImageView fx:id="personalMixedCard3" layoutX="550.0" layoutY="50.0"/>
 
             </children>
         </AnchorPane>

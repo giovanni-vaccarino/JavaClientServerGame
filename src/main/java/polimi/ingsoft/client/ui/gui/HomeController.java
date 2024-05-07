@@ -72,8 +72,8 @@ public class HomeController extends Application {
             throw new RuntimeException(e);
         }
 
-        /*TEST ONE:
-        GamePageController gamePageController = new GamePageController(stage);
+        //TEST ONE:
+        /*GamePageController gamePageController = new GamePageController(stage);
         try {
             gamePageController.start();
         } catch (Exception e) {

@@ -1,8 +1,8 @@
 .card {
     -fx-background-size: 112% 131%;
     -fx-background-position: 54% 31%;
-    -fx-border-color: #dfd7b0; /* Border color */
-    -fx-border-width: 2,5px;
+    /*-fx-border-color: #dfd7b0;
+    -fx-border-width: 2,5px;*/
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
 }
 
