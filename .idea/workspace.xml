@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="isblocked method changed to isNOTblocked in board class">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/CornerPattern.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MatchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/controller/MatchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GameCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GameCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ItemPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/MixedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/MixedCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/Pattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ResourceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ResourceCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/SchemePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/GameCardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/model/GameCardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/SchemePatternTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/server/model/SchemePatternTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +28,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -524,6 +536,6 @@
     <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$SchemePatternTest_getMatch.ic" NAME="SchemePatternTest.getMatch Coverage Results" MODIFIED="1713176061919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>polimi.ingsoft.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$java_in_ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino.ic" NAME="java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino Coverage Results" MODIFIED="1714477679958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino$java_in_ing_sw_2024_Zacchi_Vigano_Vacis_Vaccarino.ic" NAME="java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino Coverage Results" MODIFIED="1715082672192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

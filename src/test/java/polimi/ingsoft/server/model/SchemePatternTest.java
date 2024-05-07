@@ -243,35 +243,35 @@ class SchemePatternTest {
     void getMatch() {
 
         pattern=new SchemePattern(link1);
-        assertEquals(1,pattern.getMatch(board));
+        assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES1:"+pattern.getMatch(board));
 
         pattern=new SchemePattern(link2);
-        assertEquals(1,pattern.getMatch(board));
+        assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES2:"+pattern.getMatch(board));
 
         pattern=new SchemePattern(link3);
-        assertEquals(1,pattern.getMatch(board));
+        assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES3:"+pattern.getMatch(board));
 
         pattern=new SchemePattern(link4);
-        assertEquals(1,pattern.getMatch(board));
+        assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES4:"+pattern.getMatch(board));
 
         pattern=new SchemePattern(link5);
-        assertEquals(2,pattern.getMatch(board));
+        assertEquals(2,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES5:"+pattern.getMatch(board));
 
         pattern=new SchemePattern(link6);
-        assertEquals(2,pattern.getMatch(board));
+        assertEquals(2,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES6:"+pattern.getMatch(board));
 
         pattern=new SchemePattern(link7);
-        assertEquals(2,pattern.getMatch(board));
+        assertEquals(2,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES7:"+pattern.getMatch(board));
 
         pattern=new SchemePattern(link8);
-        assertEquals(1,pattern.getMatch(board));
+        assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES8:"+pattern.getMatch(board));
     }
 

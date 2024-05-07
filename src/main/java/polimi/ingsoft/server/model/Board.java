@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 // TODO refactor
 public class Board implements Serializable {
+    private int score;
     private final HashMap<Coordinates, PlayedCard> cards;
     private HashMap<Item,Integer> resources;
     public Board(GameCard initialcard,boolean isFaceUp){
@@ -20,13 +21,13 @@ public class Board implements Serializable {
         resources.put(Object.POTION,0);
         resources.put(Object.FEATHER,0);
         this.add(new Coordinates(0,0),initialcard,isFaceUp);
+        this.score=0;
     }
     public PlayedCard getCard(Coordinates coordinates){
         return cards.get(coordinates);
     }
 
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
-
         if(this.check(position)) {
             this.cards.put(position, new PlayedCard(card, facingUp));
             if (cards.containsKey(position.downRight())){
@@ -75,6 +76,10 @@ public class Board implements Serializable {
         if(cards.containsKey(position.downLeft()) && !cards.get(position.downLeft()).isFreeUpRight())return verify;
         return !verify;
     }
+    public void updatePoints(int points){
+        score=score+points;
+    }
+
     public boolean isNotBlocked(){
         Coordinates coordinates=new Coordinates(0,0);
         HashMap<Coordinates,Boolean> visited=new HashMap<Coordinates, Boolean>();
