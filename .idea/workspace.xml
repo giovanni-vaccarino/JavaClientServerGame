@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="fixed method isblocked" />
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="isblocked method changed to isNOTblocked in board class">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,10 +33,13 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="df494cd9-ccb7-4f2c-ad2e-5678a1910c73" />
-        <option name="url" value="https://github.com/gianniiiiii/ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino.git" />
+        <option name="accountId" value="5d0c3788-f6e4-40a1-afa6-ccede3211552" />
+        <option name="url" value="https://github.com/giovanni-vaccarino/ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino.git" />
       </UrlAndAccount>
     </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -104,7 +110,7 @@
       <recent name="polimi.ingsoft" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SchemePatternTest.getMatch">
+  <component name="RunManager" selected="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino">
     <configuration name="BoardTest.add" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
@@ -116,22 +122,6 @@
       <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
       <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
       <option name="METHOD_NAME" value="add" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTest.check" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
-      <option name="METHOD_NAME" value="check" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -169,6 +159,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ingsoft in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/polimi/ingsoft" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <option name="TEST_OBJECT" value="directory" />
@@ -178,19 +176,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.ingsoft in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <item itemvalue="JUnit.QuestCardTest.test" />
       <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <item itemvalue="JUnit.BoardTest.add" />
-      <item itemvalue="JUnit.BoardTest.check" />
       <item itemvalue="JUnit.SchemePatternTest.getMatch" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
+        <item itemvalue="JUnit.ingsoft in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
         <item itemvalue="JUnit.SchemePatternTest.getMatch" />
         <item itemvalue="JUnit.QuestCardTest.test" />
-        <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
         <item itemvalue="JUnit.BoardTest.add" />
-        <item itemvalue="JUnit.BoardTest.check" />
       </list>
     </recent_temporary>
   </component>
@@ -198,6 +196,7 @@
     <attachedChunks>
       <set>
         <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
       </set>
     </attachedChunks>
   </component>
@@ -233,6 +232,16 @@
       <workItem from="1714477126604" duration="3577000" />
       <workItem from="1714486222496" duration="1248000" />
       <workItem from="1714637960831" duration="2845000" />
+      <workItem from="1714728907754" duration="2032000" />
+      <workItem from="1714731808999" duration="1663000" />
+      <workItem from="1714734274413" duration="604000" />
+      <workItem from="1714737008217" duration="1338000" />
+      <workItem from="1714804165085" duration="1771000" />
+      <workItem from="1714806057789" duration="319000" />
+      <workItem from="1714806923607" duration="3550000" />
+      <workItem from="1714826643736" duration="1963000" />
+      <workItem from="1714829133287" duration="3416000" />
+      <workItem from="1714916826850" duration="5803000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -442,7 +451,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714640174241</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="isblocked method changed to isNOTblocked in board class">
+      <option name="closed" value="true" />
+      <created>1714728996120</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1714728996120</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,7 +513,8 @@
     <MESSAGE value="getmatches method added in goldcard,questcard and ConditionalPointsCard classes&#10;minor fix on schemepattern getmatches method" />
     <MESSAGE value="added isBlocked method in Board class" />
     <MESSAGE value="fixed method isblocked" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed method isblocked" />
+    <MESSAGE value="isblocked method changed to isNOTblocked in board class" />
+    <option name="LAST_COMMIT_MESSAGE" value="isblocked method changed to isNOTblocked in board class" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

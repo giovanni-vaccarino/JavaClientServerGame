@@ -88,7 +88,7 @@ public class CLI extends UI {
         */
         // THE CHECKS ARE ALREADY SERVER SIDE -> IMPLEMENTING ALSO CLIENT VERIFICATION?
 
-        client.joinMatch(matchId, nickname);
+        //client.joinMatch(matchId, nickname);
 
         //TODO Edit fixed return value
         return true;
