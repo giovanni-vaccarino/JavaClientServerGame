@@ -6,6 +6,60 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
 }
 
+.cardRotatedp1 {
+    -fx-background-size: 112% 131%;
+    -fx-background-position: 54% 31%;
+    -fx-border-color: #dfd7b0; /* Border color */
+    -fx-border-width: 2,5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
+    -fx-rotate: 1;
+}
+
+.cardRotatedm1 {
+    -fx-background-size: 112% 131%;
+    -fx-background-position: 54% 31%;
+    -fx-border-color: #dfd7b0; /* Border color */
+    -fx-border-width: 2,5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
+    -fx-rotate: 1;
+}
+
+.cardRotatedp2 {
+    -fx-background-size: 112% 131%;
+    -fx-background-position: 54% 31%;
+    -fx-border-color: #dfd7b0; /* Border color */
+    -fx-border-width: 2,5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
+    -fx-rotate: 2;
+}
+
+.cardRotatedm3 {
+    -fx-background-size: 112% 131%;
+    -fx-background-position: 54% 31%;
+    -fx-border-color: #dfd7b0; /* Border color */
+    -fx-border-width: 2,5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
+    -fx-rotate: -3;
+}
+
+.cardRotatedp3 {
+    -fx-background-size: 112% 131%;
+    -fx-background-position: 54% 31%;
+    -fx-border-color: #dfd7b0; /* Border color */
+    -fx-border-width: 2,5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
+    -fx-rotate: 3;
+}
+
+.cardRotatedm10 {
+    -fx-background-size: 112% 131%;
+    -fx-background-position: 54% 31%;
+    -fx-border-color: #dfd7b0; /* Border color */
+    -fx-border-width: 2,5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);
+    -fx-rotate: -10;
+}
+
 .plateauScore {
     -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/plateauScore.jpg');
     -fx-background-size: 100% 100%;

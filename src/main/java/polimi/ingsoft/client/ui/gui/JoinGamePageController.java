@@ -37,7 +37,7 @@ public class JoinGamePageController {
         //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
 
-        // Load CSS file
+        // Load CSS file - DO I NEED THIS?
         URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
