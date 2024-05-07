@@ -47,7 +47,7 @@
             <children>
 
                 <!-- personal quest card -->
-                <StackPane alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(4).jpg');" styleClass="cardRotatedp2" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <StackPane alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(4).jpg');" styleClass="card" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
 
                 <!-- personal resource/gold cards -->
                 <StackPane alignment="CENTER" layoutX="225.0" layoutY="50.0" prefHeight="100" prefWidth="140" style="-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg');" styleClass="cardRotatedm3" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
