@@ -2,6 +2,7 @@ package polimi.ingsoft.client;
 
 import polimi.ingsoft.client.rmi.RmiClient;
 import polimi.ingsoft.client.ui.UIType;
+import polimi.ingsoft.client.ui.cli.NickChoiceCLI;
 import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
 import polimi.ingsoft.client.ui.cli.Protocols;
 import polimi.ingsoft.client.socket.SocketClient;
@@ -22,7 +23,10 @@ public class MainClient {
     private static final String rmiServerName = "MatchManagerServer";
 
     public static void main(String[] args) throws Exception {
-        String nickname = "Nick"; // Add routine to choose nickname
+        //TODO Add validation of nickname
+        NickChoiceCLI nickChoiceCLI = new NickChoiceCLI(scanner, printStream);
+        String nickname = nickChoiceCLI.runChooseNickRoutine();
+
         ProtocolChoiceCLI protocolChoiceCLI = new ProtocolChoiceCLI(scanner, printStream);
         Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
 

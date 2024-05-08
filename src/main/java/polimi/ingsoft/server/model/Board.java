@@ -80,6 +80,8 @@ public class Board implements Serializable {
         score=score+points;
     }
 
+    public Integer getScore(){return this.score;}
+
     public boolean isNotBlocked(){
         Coordinates coordinates=new Coordinates(0,0);
         HashMap<Coordinates,Boolean> visited=new HashMap<Coordinates, Boolean>();

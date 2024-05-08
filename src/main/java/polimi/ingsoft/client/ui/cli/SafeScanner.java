@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class SafeScanner {
-    private Thread waitThread;
+    private Thread waitThread = new Thread(()->{});
     private final Scanner in;
     private final PrintStream out;
 

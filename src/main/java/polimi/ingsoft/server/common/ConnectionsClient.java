@@ -10,5 +10,5 @@ import java.util.Map;
 public interface ConnectionsClient {
     static final Map<String, VirtualView> clients = new HashMap<>();
 
-    static final Map<Integer, List<VirtualView>> matchNotifications = new HashMap<>();
+    static final Map<Integer, List<VirtualView>> matchNotificationList = new HashMap<>();
 }

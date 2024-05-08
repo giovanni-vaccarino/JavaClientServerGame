@@ -13,7 +13,6 @@ public class MainController {
 
     public MainController(PrintStream logger) {
         this.matches = new HashMap<>();
-        this.matches.put(1, MatchFactory.createMatch(logger, 1, 3)); //TODO Just for sample -> remove
         this.logger = logger;
     }
 
@@ -37,7 +36,6 @@ public class MainController {
 
     public Boolean joinMatch(Integer matchId, String nickname) {
         if(!matchExists(matchId)){
-            //Lobby not found
             return false;
         }
 
@@ -47,6 +45,7 @@ public class MainController {
             return false;
         }
         match.addPlayer(nickname);
+
         return true;
     }
 
