@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.MenuItem?>
+
 <AnchorPane styleClass="initialPage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="polimi.ingsoft.client.ui.gui.JoinGamePageController"
@@ -41,14 +42,9 @@
             <children>
                 <HBox alignment="CENTER">
                     <Region HBox.hgrow="ALWAYS" />
-                    <SplitMenuButton text="Games" styleClass="splitMenuButtonSmall"
-                                     stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
-                        <!-- Add your menu items here -->
-                        <items>
-                            <MenuItem text="Item 1" />
-                            <MenuItem text="Item 2" />
-                            <MenuItem text="Item 3" />
-                        </items>
+                    <SplitMenuButton fx:id="gameList" text="Games" styleClass="splitMenuButtonSmall"
+                                     stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                                     onAction="#initializeGames">
                     </SplitMenuButton>
                     <Region HBox.hgrow="ALWAYS" />
                 </HBox>

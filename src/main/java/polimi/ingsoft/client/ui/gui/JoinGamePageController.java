@@ -3,13 +3,18 @@ package polimi.ingsoft.client.ui.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class JoinGamePageController {
     private Stage stage;
@@ -18,12 +23,27 @@ public class JoinGamePageController {
     @FXML
     private TextField nicknameInput;
 
+    @FXML
+    SplitMenuButton gameList;
+
     // Default constructor
     public JoinGamePageController() {}
 
     // Constructor with stage parameter
     public JoinGamePageController(Stage stage) {
         this.stage = stage;
+    }
+
+    public void initializeGames(){
+        List<String> items = List.of("Game 1", "Game 2", "Game 3"); // DA SETTARE
+        setGameList(items);
+    }
+
+    public void setGameList(List<String> games){
+        for (String game : games) {
+            MenuItem menuItem = new MenuItem(game);
+            gameList.getItems().add(menuItem);
+        }
     }
 
     public void start() throws Exception {
@@ -46,6 +66,8 @@ public class JoinGamePageController {
             System.out.println("CSS file not found");
         }
         stage.getScene().setRoot(root);
+
+
     } // !!! POTREBBE ESTENDERE UNA SOVRACLASSE CHE DEFINISCE IL METODO START E GLI PASSA IL FILE FXML IN INPUT
 
     // 2 PAGINE FXML: NewGamePage e ContinueNewGamePage

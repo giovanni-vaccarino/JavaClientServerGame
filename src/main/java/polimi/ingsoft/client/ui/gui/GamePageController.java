@@ -2,8 +2,12 @@ package polimi.ingsoft.client.ui.gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.net.URL;
 import javafx.fxml.Initializable;
@@ -19,101 +23,130 @@ import java.util.ResourceBundle;
 public class GamePageController implements Initializable{
     private Stage stage;
 
-    @FXML
-    private ImageView resourceCardDeck1;
-    @FXML
-    private ImageView resourceCardDeck2;
-    @FXML
-    private ImageView resourceCardDeck3;
-    @FXML
-    private ImageView resourceCardDeck4;
+    @FXML private GridPane coveredDrawableDeck1;
+    @FXML private GridPane coveredDrawableDeck2;
+    @FXML private GridPane coveredDrawableDeck3;
+    @FXML private GridPane coveredDrawableDeck4;
+    @FXML private GridPane visibleDrawableDeck;
+    @FXML private GridPane personalDeck;
 
-    @FXML
-    private ImageView resourceCard1;
-    @FXML
-    private ImageView resourceCard2;
+    @FXML private GridPane board;
 
-    @FXML
-    private ImageView goldCardDeck1;
-    @FXML
-    private ImageView goldCardDeck2;
-    @FXML
-    private ImageView goldCardDeck3;
-    @FXML
-    private ImageView goldCardDeck4;
-
-    @FXML
-    private ImageView goldCard1;
-    @FXML
-    private ImageView goldCard2;
-
-    @FXML
-    private ImageView questCardDeck1;
-    @FXML
-    private ImageView questCardDeck2;
-    @FXML
-    private ImageView questCardDeck3;
-    @FXML
-    private ImageView questCardDeck4;
-
-    @FXML
-    private ImageView questCard1;
-    @FXML
-    private ImageView questCard2;
-
-    @FXML
-    private ImageView personalQuestCard;
-
-    @FXML
-    private ImageView personalMixedCard1;
-    @FXML
-    private ImageView personalMixedCard2;
-    @FXML
-    private ImageView personalMixedCard3;
 
     public GamePageController() {}
 
-    // Constructor with stage parameter
     public GamePageController(Stage stage) {
         this.stage = stage;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Load image using a default path
-        loadImage(resourceCardDeck1,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(resourceCardDeck2,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(resourceCardDeck3,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(resourceCardDeck4,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        // Initial Card
+        placeCard(2,4, board, "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg");
 
-        loadImage(resourceCard1,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(resourceCard2,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        // Free places on Board
+        possibleOptions();
 
-        loadImage(goldCardDeck1,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(goldCardDeck2,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(goldCardDeck3,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(goldCardDeck4,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        // Personal cards
+        placeCardHandler(0,0, personalDeck);
+        placeCardHandler(1,0, personalDeck);
+        placeCardHandler(2,0, personalDeck);
+        placeCardHandler(3,0, personalDeck);
 
-        loadImage(goldCard1,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(goldCard2,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        // Visible Drawable Cards
+        placeCardHandler(0,0, visibleDrawableDeck);
+        placeCardHandler(1,0, visibleDrawableDeck);
 
-        loadImage(questCardDeck1,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(questCardDeck2,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(questCardDeck3,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(questCardDeck4,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        placeCardHandler(0,1, visibleDrawableDeck);
+        placeCardHandler(1,1, visibleDrawableDeck);
 
-        loadImage(questCard1,"/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(1).jpg");
-        loadImage(questCard2,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        placeCardHandler(0,2, visibleDrawableDeck);
+        placeCardHandler(1,2, visibleDrawableDeck);
 
-        loadImage(personalQuestCard,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        // Covered Drawable Cards
 
-        loadImage(personalMixedCard1,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(personalMixedCard2,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
-        loadImage(personalMixedCard3,"/polimi/ingsoft/demo/graphics/img/card/backCard/resourceCard/backResourceCard(1).jpg");
+        placeCardHandler(0,0, coveredDrawableDeck1);
+        placeCardHandler(0,1, coveredDrawableDeck1);
+        placeCardHandler(0,2, coveredDrawableDeck1);
+
+        placeCardHandler(0,0, coveredDrawableDeck2);
+        placeCardHandler(0,1, coveredDrawableDeck2);
+        placeCardHandler(0,2, coveredDrawableDeck2);
+
+        placeCardHandler(0,0, coveredDrawableDeck3);
+        placeCardHandler(0,1, coveredDrawableDeck3);
+        placeCardHandler(0,2, coveredDrawableDeck3);
+
+        placeCardHandler(0,0, coveredDrawableDeck4);
+        placeCardHandler(0,1, coveredDrawableDeck4);
+        placeCardHandler(0,2, coveredDrawableDeck4);
+
+        // Make position editable (only for board)
+        for (Node node : board.getChildren()) {
+            // Attach a mouse click event handler to each cell
+            node.setOnMouseClicked(event -> {
+                System.out.println(board.getChildren());
+                int y = GridPane.getRowIndex(node);
+                int x = GridPane.getColumnIndex(node);
+
+                placeCardHandler(x, y, board);
+            });
+        }
     }
 
-    // Method to load image with a given path
-    public void loadImage(ImageView imageView,String imagePath) {
+    public void possibleOptions(){
+        // LINK TO THE AVAILABLE PLACES
+
+        // margins:
+        //coloredCell(0,0);
+        //coloredCell(4,8);
+
+        coloredCell(3,5);
+        coloredCell(3,3);
+    }
+
+    public void coloredCell(int x, int y){
+        /*Region cellBackground = new Region();
+        cellBackground.setStyle("-fx-background-color: #d64917;");
+
+        // Set the background to only one cell (row 1, column 1)
+        GridPane.setRowIndex(cellBackground, y);
+        GridPane.setColumnIndex(cellBackground, x);
+
+        // Add the background to the GridPane
+        board.getChildren().add(cellBackground);*/
+
+        // TO COLOR BOARD FREE POSITIONS
+
+        ImageView imageView = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/background/possiblePosition.png"));
+
+        imageView.setFitWidth(140);
+        imageView.setFitHeight(100);
+
+        imageView.setStyle("-fx-border-width: 5; -fx-border-color: black");
+
+        // Add the ImageView to the specific cell in the GridPane
+        board.add(imageView, x, y);
+    }
+
+    public void placeCardHandler(int x,int y, GridPane gridPane){
+        placeCard(x,y,gridPane,"/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg");
+    }
+
+    public void placeCard(int x, int y, GridPane gridPane, String imagePath){
+        ImageView imageView = new ImageView(new Image(imagePath));
+
+        imageView.setFitWidth(140);
+        imageView.setFitHeight(100);
+
+        imageView.setViewport(new javafx.geometry.Rectangle2D(61, 64, 908, 628));
+        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+
+        // Add the ImageView to the specific cell in the GridPane
+        gridPane.add(imageView, x, y);
+    }
+
+    public void loadCard(ImageView imageView, String imagePath) {
         Image image = new Image(imagePath);
         imageView.setImage(image);
 
