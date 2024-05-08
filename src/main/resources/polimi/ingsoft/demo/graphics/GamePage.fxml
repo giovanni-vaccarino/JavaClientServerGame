@@ -6,20 +6,21 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Button?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1350.0" styleClass="gamePage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polimi.ingsoft.client.ui.gui.GamePageController">
     <children>
 
-        <AnchorPane layoutX="20.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css">
+        <!-- Score Board -->
+        <AnchorPane layoutX="10.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css">
             <children>
-                <!-- score -->
-                <StackPane alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="360" prefWidth="200" styleClass="plateauScore" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <StackPane alignment="CENTER" layoutX="0.0" layoutY="14.0" prefHeight="360" prefWidth="200" styleClass="plateauScore" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
 
             </children>
         </AnchorPane>
 
         <!-- Covered Drawable Deck(s) - lev4 -->
-        <GridPane fx:id="coveredDrawableDeck4" layoutX="250.0" layoutY="99.0" prefHeight="390.0" prefWidth="150.0">
+        <GridPane fx:id="coveredDrawableDeck4" layoutX="226.0" layoutY="99.0" prefHeight="390.0" prefWidth="150.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
             </columnConstraints>
@@ -32,7 +33,7 @@
         </GridPane>
 
         <!-- Covered Drawable Deck(s) - lev3 -->
-        <GridPane fx:id="coveredDrawableDeck3" layoutX="246.0" layoutY="95.0" prefHeight="390.0" prefWidth="150.0">
+        <GridPane fx:id="coveredDrawableDeck3" layoutX="222.0" layoutY="95.0" prefHeight="390.0" prefWidth="150.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
             </columnConstraints>
@@ -45,7 +46,7 @@
         </GridPane>
 
         <!-- Covered Drawable Deck(s) - lev2 -->
-        <GridPane fx:id="coveredDrawableDeck2" layoutX="242.0" layoutY="91.0" prefHeight="390.0" prefWidth="150.0">
+        <GridPane fx:id="coveredDrawableDeck2" layoutX="218.0" layoutY="91.0" prefHeight="390.0" prefWidth="150.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
             </columnConstraints>
@@ -58,7 +59,7 @@
         </GridPane>
 
         <!-- Covered Drawable Deck(s) - lev1 -->
-        <GridPane fx:id="coveredDrawableDeck1" layoutX="238.0" layoutY="87.0" prefHeight="390.0" prefWidth="150.0">
+        <GridPane fx:id="coveredDrawableDeck1" layoutX="214.0" layoutY="87.0" prefHeight="390.0" prefWidth="150.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
             </columnConstraints>
@@ -71,7 +72,7 @@
         </GridPane>
 
         <!-- Visible Drawable Deck(s) -->
-        <GridPane fx:id="visibleDrawableDeck" layoutX="400.0" layoutY="99.0" prefHeight="390.0" prefWidth="300.0">
+        <GridPane fx:id="visibleDrawableDeck" layoutX="376.0" layoutY="99.0" prefHeight="390.0" prefWidth="300.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
@@ -85,7 +86,7 @@
         </GridPane>
 
         <!-- Personal deck -->
-        <GridPane fx:id="personalDeck" layoutX="70.0" layoutY="520.0" prefHeight="248.0" prefWidth="620.0">
+        <GridPane fx:id="personalDeck" layoutX="51.0" layoutY="520.0" prefHeight="248.0" prefWidth="620.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
@@ -120,6 +121,41 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
+
+        <!-- Board arrows -->
+        <StackPane layoutX="765.0" layoutY="695.0" prefWidth="540" prefHeight="100" alignment="CENTER">
+            <children>
+                <ImageView fx:id="arrowS"/>
+            </children>
+        </StackPane>
+        <StackPane layoutX="765.0" layoutY="155.0" prefWidth="540" prefHeight="100" alignment="CENTER">
+            <children>
+                <ImageView fx:id="arrowN"/>
+            </children>
+        </StackPane>
+        <StackPane layoutX="725.0" layoutY="425.0" prefWidth="540" prefHeight="100" alignment="CENTER_LEFT">
+            <children>
+                <ImageView fx:id="arrowO"/>
+            </children>
+        </StackPane>
+        <StackPane layoutX="800.0" layoutY="425.0" prefWidth="540" prefHeight="100" alignment="CENTER_RIGHT">
+            <children>
+                <ImageView fx:id="arrowE"/>
+            </children>
+        </StackPane>
+
+        <!-- Buttons for Other Players Board -->
+        <GridPane fx:id="otherBoards" layoutX="780.0" layoutY="50.0" prefHeight="150.0" prefWidth="510.0" stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" halignment="CENTER"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" halignment="CENTER"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" halignment="CENTER"/>
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
 
     </children>
 </AnchorPane>

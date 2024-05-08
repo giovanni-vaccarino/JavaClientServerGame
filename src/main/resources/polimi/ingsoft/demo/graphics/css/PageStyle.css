@@ -5,7 +5,8 @@
 }
 
 .gamePage {
-    -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/background/generalBackground8.jpg');
+    -fx-background-image: url('/polimi/ingsoft/demo/graphics/img/background/generalBackground13.JPG');
+    /*-fx-background-image: url('/polimi/ingsoft/demo/graphics/img/background/generalBackground8.jpg');*/
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
