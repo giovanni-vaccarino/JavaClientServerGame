@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;

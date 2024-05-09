@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.exceptions.WrongGamePhaseException;
 import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
@@ -8,12 +8,10 @@ import polimi.ingsoft.server.exceptions.WrongStepException;
 import polimi.ingsoft.server.factories.PlayerFactory;
 import polimi.ingsoft.server.model.*;
 
-import javax.sound.sampled.BooleanControl;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MatchController implements Serializable {
 

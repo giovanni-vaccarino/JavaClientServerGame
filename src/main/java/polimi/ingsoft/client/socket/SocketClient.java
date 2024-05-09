@@ -5,7 +5,6 @@ import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.CLI;
-import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;

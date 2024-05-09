@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Message;

@@ -1,6 +1,5 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.InitialCard;
 import polimi.ingsoft.server.model.MixedCard;

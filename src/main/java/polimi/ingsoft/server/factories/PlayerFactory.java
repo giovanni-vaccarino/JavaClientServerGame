@@ -1,13 +1,9 @@
 package polimi.ingsoft.server.factories;
 
-import polimi.ingsoft.server.Player;
-import polimi.ingsoft.server.controller.ChatController;
-import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.*;
-
-import java.io.PrintStream;
 
 public class PlayerFactory {
     public static Player createPlayer(PlayerInitialSetting playerInitialSetting) {

@@ -1,4 +1,4 @@
-package polimi.ingsoft.server;
+package polimi.ingsoft.server.model;
 
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.*;

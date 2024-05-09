@@ -1,7 +1,6 @@
 package polimi.ingsoft.client.rmi;
 
 
-import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Message;
 
