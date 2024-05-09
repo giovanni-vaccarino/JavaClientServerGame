@@ -15,10 +15,7 @@ import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /*TO FIX:
 - define a function that from (x,y) it returns the position in the ancor pane where x0,y0 is the initial card
@@ -44,7 +41,14 @@ public class GamePageController implements Initializable{
     @FXML private ImageView arrowO;
     @FXML private ImageView arrowN;
 
-    ImageView[][] tableAppo;
+    @FXML private ImageView blueScoreImg;
+    @FXML private ImageView greenScoreImg;
+    @FXML private ImageView redScoreImg;
+    @FXML private ImageView yellowScoreImg;
+
+    private List<Integer> score;
+
+    private ImageView[][] tableAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
 
     private int rowNum;
     private int colNum;
@@ -112,10 +116,18 @@ public class GamePageController implements Initializable{
         otherBoards(playerList);
 
         // Set arrows
-        setArrow("S", arrowS);
-        setArrow("E", arrowE);
-        setArrow("O", arrowO);
-        setArrow("N", arrowN);
+        placeArrow("S", arrowS);
+        placeArrow("E", arrowE);
+        placeArrow("O", arrowO);
+        placeArrow("N", arrowN);
+
+        // Set score positions
+        score = new ArrayList<>();
+        score.add(16);
+        score.add(17);
+        score.add(16);
+        score.add(18);
+        placeScore();
 
         // Make position editable (only for board)
         for (Node node : board.getChildren()) {
@@ -164,7 +176,228 @@ public class GamePageController implements Initializable{
         }
     }
 
-    public void setArrow(String dir, ImageView imageView){
+    public void placeScore(){
+        /*
+        1.blue
+        2.green
+        3.red
+        4.yellow
+         */
+
+        ImageView imageView = null;
+        String imageUrl = null;
+        int x=41,y=331;
+
+        if(score != null){
+            if(score.size()<=4){
+                System.out.println(score.size());
+                System.out.println(score);
+                for(int i=0; i<score.size(); i++){
+                    System.out.println(i);
+                    switch (i){
+                        case 0:
+                            imageUrl = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
+                            imageView = blueScoreImg;
+                            break;
+                        case 1:
+                            imageUrl = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
+                            imageView = greenScoreImg;
+                            break;
+                        case 2:
+                            imageUrl = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
+                            imageView = redScoreImg;
+                            break;
+                        case 3:
+                            imageUrl = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
+                            imageView = yellowScoreImg;
+                            break;
+                    }
+
+                    switch(score.get(i)){
+                        case 0:
+                            x=41;
+                            y=331;
+                            break;
+                        case 1:
+                            x=85;
+                            y=331;
+                            break;
+                        case 2:
+                            x=129;
+                            y=331;
+                            break;
+                        case 3:
+                            x=153;
+                            y=294;
+                            break;
+                        case 4:
+                            x=108;
+                            y=294;
+                            break;
+                        case 5:
+                            x=64;
+                            y=294;
+                            break;
+                        case 6:
+                            x=19;
+                            y=294;
+                            break;
+                        case 7:
+                            x=19;
+                            y=251;
+                            break;
+
+                        case 8:
+                            x=62;
+                            y=251;
+                            break;
+
+                        case 9:
+                            x=108;
+                            y=251;
+                            break;
+
+                        case 10:
+                            x=153;
+                            y=251;
+                            break;
+
+                        case 11:
+                            x=153;
+                            y=219;
+                            break;
+
+                        case 12:
+                            x=108;
+                            y=219;
+                            break;
+
+                        case 13:
+                            x=63;
+                            y=219;
+                            break;
+
+                        case 14:
+                            x=19;
+                            y=219;
+                            break;
+
+                        case 15:
+                            x=19;
+                            y=180;
+                            break;
+
+                        case 16:
+                            x=63;
+                            y=180;
+                            break;
+
+                        case 17:
+                            x=108;
+                            y=180;
+                            break;
+
+                        case 18:
+                            x=153;
+                            y=180;
+                            break;
+
+                        case 19:
+                            x=153;
+                            y=143;
+                            break;
+
+                        case 20:
+                            x=86;
+                            y=123;
+                            break;
+
+                        case 21:
+                            x=19;
+                            y=143;
+                            break;
+
+                        case 22:
+                            x=19;
+                            y=104;
+                            break;
+
+                        case 23:
+                            x=19;
+                            y=67;
+                            break;
+
+                        case 24:
+                            x=44;
+                            y=35;
+                            break;
+
+                        case 25:
+                            x=86;
+                            y=28;
+                            break;
+
+                        case 26:
+                            x=127;
+                            y=35;
+                            break;
+
+                        case 27:
+                            x=153;
+                            y=67;
+                            break;
+
+                        case 28:
+                            x=153;
+                            y=104;
+                            break;
+
+                        case 29:
+                            x=86;
+                            y=75;
+                            break;
+                    }
+
+                    x += (-4)*countSameScore(i);
+                    y += (-6)*countSameScore(i);
+
+
+                    placeSingolScore(x,y,imageUrl, imageView);
+                }
+            }else{
+                //errore numero giocatori
+            }
+        }
+    }
+
+    public void placeSingolScore(int x, int y, String imageUrl, ImageView imageView){
+        Image image = new Image(imageUrl);
+
+        imageView.setFitWidth(29);
+        imageView.setFitHeight(29);
+
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
+
+        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+
+        imageView.setImage(image);
+    }
+
+    public int countSameScore(int s){
+        int counter = 0;
+
+        if(s<score.size() && s>0){
+            for(int i=s-1; i>=0; i--){
+                if(score.get(i).equals(score.get(s))){
+                    counter++;
+                }
+            }
+        }
+
+        return counter;
+    }
+    public void placeArrow(String dir, ImageView imageView){
         double rotationAngle = 0;
 
         String imageUrl = "/polimi/ingsoft/demo/graphics/img/arrow.PNG"; // Replace with your image URL
@@ -302,19 +535,6 @@ public class GamePageController implements Initializable{
 
         //for(int i=colNum-x; i<)
     }
-
-    public static ImageView getImageViewByCoordinates(GridPane gridPane, int row, int column) {
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) == row &&
-                    GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == column) {
-                if (node instanceof ImageView) {
-                    return (ImageView) node;
-                }
-            }
-        }
-        return null; // Not found
-    }
-
     public void start() throws Exception {
         // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/GamePage.fxml");

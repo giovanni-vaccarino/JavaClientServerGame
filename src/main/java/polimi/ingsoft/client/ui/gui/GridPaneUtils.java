@@ -21,4 +21,16 @@ public class GridPaneUtils {
         }
         return null;
     }
+
+    public static ImageView getImageViewByCoordinates(GridPane gridPane, int row, int column) {
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) == row &&
+                    GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == column) {
+                if (node instanceof ImageView) {
+                    return (ImageView) node;
+                }
+            }
+        }
+        return null; // Not found
+    }
 }

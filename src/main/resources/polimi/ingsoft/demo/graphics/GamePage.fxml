@@ -15,7 +15,10 @@
         <AnchorPane layoutX="10.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css">
             <children>
                 <StackPane alignment="CENTER" layoutX="0.0" layoutY="14.0" prefHeight="360" prefWidth="200" styleClass="plateauScore" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-
+                <ImageView fx:id="blueScoreImg"/>
+                <ImageView fx:id="greenScoreImg"/>
+                <ImageView fx:id="redScoreImg"/>
+                <ImageView fx:id="yellowScoreImg"/>
             </children>
         </AnchorPane>
 
