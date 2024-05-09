@@ -5,6 +5,7 @@ import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.exceptions.WrongGamePhaseException;
 import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
+import polimi.ingsoft.server.factories.PlayerFactory;
 import polimi.ingsoft.server.model.*;
 
 import javax.sound.sampled.BooleanControl;
@@ -12,20 +13,19 @@ import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MatchController implements Serializable {
 
     private final Integer requestedNumPlayers;
 
-    private TURN_STEP currentStep;
-
-    private GAME_PHASE gamePhase;
-
-    private INITIAL_STEP initialStep;
-    private int currentPlayerIndex;
+    private final GameState gameState;
 
     final ChatController chatController;
+
     private List<Player> players = new ArrayList<>();
+
+    private List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
 
     private final PublicBoard publicBoard;
 
@@ -44,7 +44,7 @@ public class MatchController implements Serializable {
         this.logger = logger;
         this.matchId = matchId;
         this.publicBoard = publicBoard;
-        this.gamePhase = GAME_PHASE.WAITING_FOR_PLAYERS;
+        this.gameState = new GameState(this, requestedNumPlayers);
     }
 
     public int getMatchId() {
@@ -52,117 +52,75 @@ public class MatchController implements Serializable {
     }
 
     public void addPlayer(String nickname) {
-        // TODO player factory
-        Player player = new Player(new PlayerHand<>(),  new InitialCard(new Face(), new Face(), 0), nickname);
+        if(playerInitialSettings.size() == requestedNumPlayers){
+            //TODO Throw match already full
+        }
 
-        players.add(player);
+        playerInitialSettings.add(new PlayerInitialSetting(nickname));
 
-        updateGamePhase();
+        gameState.updateState();
     }
 
-    private void updateGamePhase() {
-        if(players.size() == requestedNumPlayers){
-            this.gamePhase = GAME_PHASE.INITIALIZATION;
+    public void initializePlayers(){
+        for (var playerSetting : this.playerInitialSettings){
+            Player player = PlayerFactory.createPlayer(playerSetting);
+
+            this.players.add(player);
         }
     }
 
-    private List<Player> getPlayers(){
+    public List<Player> getPlayers(){
         return players;
     }
 
     public List<String> getNamePlayers(){
-        return players.stream().
-                map(Player::getNickname).
+        return playerInitialSettings.stream().
+                map(PlayerInitialSetting::getNickname).
                 toList();
     }
 
-    private Player getCurrentPlayer() {
-        return players.get(currentPlayerIndex);
-    }
-
-    private void goToNextPlayer() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        currentStep = TURN_STEP.DRAW;
-    }
-
-    private boolean isLastRound() {
-        int playerScore;
-        List<Player> players = this.getPlayers();
-
-        for(var player : players){
-            playerScore = player.getBoard().getScore();
-
-            if (playerScore >= 20){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void setLastRound(){
-        boolean isLastRound = this.isLastRound();
-
-        if (isLastRound){
-            gamePhase = GAME_PHASE.LAST_ROUND;
-        }
-    }
-
-    private void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        if (gamePhase != GAME_PHASE.PLAY && gamePhase != GAME_PHASE.LAST_ROUND) throw new WrongGamePhaseException();
-        if (player != getCurrentPlayer()) throw new WrongPlayerForCurrentTurnException();
-        if (currentStep != move) throw new WrongStepException();
-    }
-
-    private void validateInitialChoice(Player player, GAME_PHASE phase, INITIAL_STEP step) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        if (this.gamePhase != phase) throw new WrongPlayerForCurrentTurnException();
-        if (this.initialStep != step) throw new WrongStepException();
-    }
-
     private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        validateMove(player, TURN_STEP.DRAW);
-        currentStep = TURN_STEP.PLACE;
+        gameState.validateMove(player, TURN_STEP.DRAW);
+
+        gameState.updateTurnStep();
+
         return publicBoard.getResource(slot);
     }
 
     private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        validateMove(player, TURN_STEP.DRAW);
-        currentStep = TURN_STEP.PLACE;
+        gameState.validateMove(player, TURN_STEP.DRAW);
+
+        gameState.updateTurnStep();
+
         return publicBoard.getGold(slot);
     }
 
-    public void setColor(Player player, PlayerColors color) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        validateInitialChoice(player, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
+    public void setPlayerColor(String player, PlayerColors color) throws WrongPlayerForCurrentTurnException, WrongStepException {
+        gameState.validateInitialChoice(player, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
+
         //player.setColor(isFaceUp);
 
-        //TODO Implementare il controllo se tutti hanno scelto
-        //if(){
-        //  initialStep = INITIAL_STEP.QUEST_CARD;
-        //}
+        gameState.updateInitialStep();
     }
 
-    public void setFaceInitialCard(Player player, Boolean isFaceUp) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        validateInitialChoice(player, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
-        player.setBoard(isFaceUp); //TODO Cambiare e avere un costruttore unico per tutto
+    public void setFaceInitialCard(String player, Boolean isFaceUp) throws WrongPlayerForCurrentTurnException, WrongStepException {
+        gameState.validateInitialChoice(player, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
 
-        //TODO Implementare il controllo se tutti hanno scelto
-        //if(){
-        //  initialStep = INITIAL_STEP.QUEST_CARD;
-        //}
+        //player.setFaceInitialCard(...)
+
+        gameState.updateInitialStep();
     }
 
-    public void setQuestCard(Player player, QuestCard questCard) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        validateInitialChoice(player, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
-        player.setQuestCard(questCard);
+    public void setQuestCard(String player, QuestCard questCard) throws WrongPlayerForCurrentTurnException, WrongStepException {
+        gameState.validateInitialChoice(player, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
 
-        //TODO Implementare il controllo se tutti hanno scelto
-        //if(){
-        //  gamePhase = GAME_PHASE.PLAY;
-        //}
+        //player.setQuestCard(questCard);
+
+        gameState.updateInitialStep();
     }
 
     public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        validateMove(player, TURN_STEP.PLACE);
+        gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
         boolean isAdded = board.add(coordinates, card, facingUp);
 
@@ -173,32 +131,8 @@ public class MatchController implements Serializable {
             //TODO
         }
 
-        setLastRound();
-        goToNextPlayer();
-    }
-
-    private Player getWinner(){
-        Player winner = null;
-        int playerScore, maxScore;
-
-        maxScore = -1;
-        List<Player> players = this.getPlayers();
-
-        for (var player : players){
-            playerScore = player.getBoard().getScore();
-
-            if (playerScore > maxScore){
-                maxScore = playerScore;
-                winner = player;
-            }
-        }
-
-        return winner;
-    }
-
-
-    public Message writeMessage(String message){
-        return this.chatController.writeMessage(message);
+        gameState.updateState();
+        gameState.goToNextPlayer();
     }
 
     public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
@@ -213,5 +147,9 @@ public class MatchController implements Serializable {
         }
 
         return null;
+    }
+
+    public Message writeMessage(String message){
+        return this.chatController.writeMessage(message);
     }
 }
