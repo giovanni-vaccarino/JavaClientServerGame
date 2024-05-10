@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 
 public class GridPaneUtils {
 
+    public GridPaneUtils() {}
     public static void removeImageViewIfExists(GridPane gridPane, int row, int col) {
         Node node = getNodeFromGridPane(gridPane, row, col);
         if (node != null && node instanceof ImageView) {

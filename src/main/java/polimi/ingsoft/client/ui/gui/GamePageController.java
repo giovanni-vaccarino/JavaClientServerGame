@@ -18,9 +18,11 @@ import javafx.scene.image.ImageView;
 import java.util.*;
 
 /*TO FIX:
-- define a function that from (x,y) it returns the position in the ancor pane where x0,y0 is the initial card
-- define buttons to see boards of the other players
-- find a way to expand the board when it becomes too big for the table
+- sistema il fondo della board (si fissano le carte)
+- aggiungi struttura dati per posizioni possibili in cui mettere la carta (con annessi metodi setter e getter)
+- aggiungi metodi collegati ai bottoni per la board di ogni giocatore (inizializza la board position con resetBoard() )
+- aggiungi mapping carta oggetto - path carta
+- aggiungi metodi setter e getter
  */
 
 public class GamePageController implements Initializable{
@@ -47,8 +49,13 @@ public class GamePageController implements Initializable{
     @FXML private ImageView yellowScoreImg;
 
     private List<Integer> score;
+    private HashMap<String,Coordinates> boardCoordinates;
+    private HashMap<Integer,String> boardOrder;
 
-    private ImageView[][] tableAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
+    private ImageView[][] boardAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
+
+    private int CenterBoardX;
+    private int CenterBoardY;
 
     private int rowNum;
     private int colNum;
@@ -67,11 +74,11 @@ public class GamePageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initial Card
-        ImageView initialCardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg"));
-        placeCard(2,4, board, initialCardImg);
+        //ImageView initialCardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg"));
+        //placeCard(2,4, board, initialCardImg);
 
         // Free places on Board
-        possibleOptions();
+        //possibleOptions();
 
         // Personal cards
         placeCardHandler(0,0, personalDeck);
@@ -107,9 +114,22 @@ public class GamePageController implements Initializable{
         placeCardHandler(0,1, coveredDrawableDeck4);
         placeCardHandler(0,2, coveredDrawableDeck4);
 
-        // Set table
+        // Board load
+        CenterBoardX = 2;
+        CenterBoardY = 4;
+        boardCoordinates = new HashMap<>();
+        boardOrder = new HashMap<>();
+        Coordinates coordinates = new Coordinates(0,0);
+        String initialCardPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg";
+        String cardPath = "polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg";
+        boardCoordinates.put(initialCardPath,coordinates);
+        boardOrder.put(0,initialCardPath);
+        Coordinates coordinates2 = new Coordinates(1,1);
+        boardCoordinates.put(cardPath,coordinates2);
+        boardOrder.put(1,cardPath);
         setNumTable();
-        //tableAppo = new ImageView[colNum][rowNum];
+        boardAppo = new ImageView[colNum][rowNum];
+        loadEntireBoard();
 
         // Set other Player's Boards
         List<String> playerList = Arrays.asList("Andre", "Gio", "Simon");
@@ -142,6 +162,20 @@ public class GamePageController implements Initializable{
         }
     }
 
+    public void setCenterBoardX(int x){
+        this.CenterBoardX=x;
+    }
+
+
+    public void setCenterBoardY(int y){
+        this.CenterBoardY=y;
+    }
+
+    public void resetCenterBoard(){
+        this.CenterBoardX = 2;
+        this.CenterBoardY = 4;
+    }
+
     public void otherBoards(List<String> playerList) {
 
         for (int col = 0; col < playerList.size(); col++) {
@@ -157,21 +191,57 @@ public class GamePageController implements Initializable{
         }
     }
 
-    public void loadEntireBoard(){
+    public void loadEntireBoard(){ // x,y coefficenti di traslazione
 
-        // LOAD THE TABLE FROM THE SERVER
-        // THEN LOAD THE GIRD FROM THE TABLE:
-        for (int i = 0; i < colNum; i++) {
-            for (int j = 0; j < rowNum; j++) {
-                if (tableAppo != null) {
+        Coordinates coordinates = new Coordinates(0,0);
+        GridPaneUtils gridPaneUtils = new GridPaneUtils();
+        boolean breakLoop = false;
+        Integer z = 0,i = 0, j=0;
+        String imagePath;
+
+        // Erase previous board
+        for (int c=0; c<colNum; c++){
+            for (int r=0; r<rowNum; r++){
+                gridPaneUtils.removeImageViewIfExists(board,c,r);
+            }
+        }
+
+        while (!breakLoop) {
+            System.out.println("dentro while");
+            imagePath= boardOrder.get(z);
+
+            // From board to table reference system
+            coordinates.setX(boardCoordinates.get(imagePath).getX());
+            coordinates.setY(-boardCoordinates.get(imagePath).getY()); // different SI
+            coordinates.addX(CenterBoardX);
+            coordinates.addY(CenterBoardY);
+
+            System.out.println(coordinates.getX());
+            System.out.println(coordinates.getY());
+
+            if(coordinates.getX()>=0 && coordinates.getX()<colNum
+                    && coordinates.getY()>=0 && coordinates.getY()<rowNum){
+
+                i= coordinates.getX();
+                j= coordinates.getY();
+
+                boardAppo[i][j] = new ImageView(new Image(imagePath));
+
+                // LOAD THE GIRD FROM THE TABLE
+                if (boardAppo != null) {
                     // ImageView found
-                    System.out.println(i);
-                    System.out.println(j);
 
-                    placeCard(i,j,board,tableAppo[i][j]);
+                    //gridPaneUtils.removeImageViewIfExists(board,i,j);
+                    placeCard(i,j,board, boardAppo[i][j]);
                 } else {
                     // ImageView not found at the specified coordinates
                 }
+            }
+
+            z++;
+
+            if (boardOrder.get(z) == null) {
+                breakLoop = true;
             }
         }
     }
@@ -190,10 +260,7 @@ public class GamePageController implements Initializable{
 
         if(score != null){
             if(score.size()<=4){
-                System.out.println(score.size());
-                System.out.println(score);
                 for(int i=0; i<score.size(); i++){
-                    System.out.println(i);
                     switch (i){
                         case 0:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
@@ -399,6 +466,7 @@ public class GamePageController implements Initializable{
     }
     public void placeArrow(String dir, ImageView imageView){
         double rotationAngle = 0;
+        String id;
 
         String imageUrl = "/polimi/ingsoft/demo/graphics/img/arrow.PNG"; // Replace with your image URL
         Image image = new Image(imageUrl);
@@ -418,6 +486,18 @@ public class GamePageController implements Initializable{
         imageView.setRotate(rotationAngle);
 
         imageView.setImage(image);
+
+        imageView.setOnMouseClicked(event -> {
+            if(imageView.getId().equals("arrowE")){
+                moveBoardHandler_E();
+            } else if (imageView.getId().equals("arrowN")) {
+                moveBoardHandler_N();
+            }else if (imageView.getId().equals("arrowO")) {
+                moveBoardHandler_O();
+            }else if (imageView.getId().equals("arrowS")) {
+                moveBoardHandler_S();
+            }
+        });
     }
 
     public void possibleOptions(){
@@ -483,57 +563,26 @@ public class GamePageController implements Initializable{
         imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
     }*/
 
-    public void moveBoardHandler_N(ActionEvent actionEvent){
-        moveBoard(0,-2);
-    }
-
-    public void moveBoardHandler_E(ActionEvent actionEvent){
-        moveBoard(2,0);
-    }
-
-    public void moveBoardHandler_O(ActionEvent actionEvent){
-        moveBoard(-2,0);
-    }
-
-    public void moveBoardHandler_S(ActionEvent actionEvent){
+    public void moveBoardHandler_N(){
         moveBoard(0,2);
     }
 
+    public void moveBoardHandler_E(){
+        moveBoard(2,0);
+    }
+
+    public void moveBoardHandler_O(){
+        moveBoard(-2,0);
+    }
+
+    public void moveBoardHandler_S(){
+        moveBoard(0,-2);
+    }
+
     public void moveBoard(int x, int y){
-
-        //RELOAD ALL THE IMAGES BY CHANGING THE COORDINATE (SUM with x,y)
-
-        /*
-        SAVES THE PRESENT CARD + LOAD THE MISSING CARDS
-
-        ImageView[][] tableAppo = new ImageView[colNum][rowNum];
-
-        for (int i = 0; i < colNum-x; i++) {
-            for (int j = 0; j < rowNum-y; j++) {
-                ImageView mixedCard = getImageViewByCoordinates(board, j, i);
-                if (mixedCard != null) {
-                    // ImageView found
-                    System.out.println(i);
-                    System.out.println(j);
-
-                    if(i+x<colNum && j+y<rowNum) {
-                        tableAppo[x][y] = mixedCard;
-                    }
-                } else {
-                    // ImageView not found at the specified coordinates
-                }
-            }
-        }
-
-        for(int i=0; i+x<colNum; i++){
-            for(int j=0; j+y<rowNum; y++){
-                GridPaneUtils.removeImageViewIfExists(board, j + y, i + x);
-                placeCard(i + x, j + y, board, tableAppo[x][y]);
-            }
-        }*/
-
-
-        //for(int i=colNum-x; i<)
+        this.CenterBoardX += x;
+        this.CenterBoardY += -y;
+        loadEntireBoard();
     }
     public void start() throws Exception {
         // Load FXML file
