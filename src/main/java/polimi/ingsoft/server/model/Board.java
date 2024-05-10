@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 // TODO refactor
 public class Board implements Serializable {
-    private int score;
+    private int score,numCards;
     private final HashMap<Coordinates, PlayedCard> cards;
     private HashMap<Item,Integer> resources;
     public Board(GameCard initialcard,boolean isFaceUp){
@@ -22,6 +22,7 @@ public class Board implements Serializable {
         resources.put(Object.FEATHER,0);
         this.add(new Coordinates(0,0),initialcard,isFaceUp);
         this.score=0;
+        this.numCards=0;
     }
     public PlayedCard getCard(Coordinates coordinates){
         return cards.get(coordinates);
@@ -29,7 +30,8 @@ public class Board implements Serializable {
 
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
         if(this.check(position)) {
-            this.cards.put(position, new PlayedCard(card, facingUp));
+            numCards++;
+            this.cards.put(position, new PlayedCard(card, facingUp,numCards));
             if (cards.containsKey(position.downRight())){
                 cards.get(position.downRight()).setUpLeft();
                 if(!cards.get(position.downRight()).getFace().getUpLeft().getItems().isEmpty()&&
@@ -100,6 +102,7 @@ public class Board implements Serializable {
         if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
         return a||cards.get(coordinates).isFreeUpRight()||cards.get(coordinates).isFreeUpLeft()||cards.get(coordinates).isFreeDownRight()||cards.get(coordinates).isFreeDownLeft();
     }
+    public int getNumCards(){return this.numCards;}
     public int getWolfs(){
         return resources.get(Resource.WOLF);
     }
