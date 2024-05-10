@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="major update on goldcard and resourcecard classes: now avaiable new method getpoints which returns the number of matches for pointpattern in goldcard and resourcecard classes &#10;new pattern type cornerpattern&#10;&#10;this will need a lot of fixing">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/CLI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,6 +243,8 @@
       <workItem from="1714829133287" duration="3416000" />
       <workItem from="1714916826850" duration="5803000" />
       <workItem from="1715250561600" duration="98000" />
+      <workItem from="1715322917725" duration="329000" />
+      <workItem from="1715339108897" duration="162000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -467,7 +470,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715093074969</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards">
+      <option name="closed" value="true" />
+      <created>1715323233654</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1715323233654</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,7 +508,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="new class playedcard&#10;new class coordinates&#10;almost fixed class cornerspace&#10;almost fixed class face" />
     <MESSAGE value="minor change in board's method's name" />
     <MESSAGE value="it's reported as not pushed yet" />
     <MESSAGE value="minor update on class Board" />
@@ -522,7 +532,8 @@
     <MESSAGE value="fixed method isblocked" />
     <MESSAGE value="isblocked method changed to isNOTblocked in board class" />
     <MESSAGE value="major update on goldcard and resourcecard classes: now avaiable new method getpoints which returns the number of matches for pointpattern in goldcard and resourcecard classes &#10;new pattern type cornerpattern&#10;&#10;this will need a lot of fixing" />
-    <option name="LAST_COMMIT_MESSAGE" value="major update on goldcard and resourcecard classes: now avaiable new method getpoints which returns the number of matches for pointpattern in goldcard and resourcecard classes &#10;new pattern type cornerpattern&#10;&#10;this will need a lot of fixing" />
+    <MESSAGE value="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards" />
+    <option name="LAST_COMMIT_MESSAGE" value="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
