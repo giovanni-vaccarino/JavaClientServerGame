@@ -1,5 +1,7 @@
 package polimi.ingsoft.server.controller;
 
+import com.sun.tools.jconsole.JConsoleContext;
+import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.factories.MatchFactory;
 
 import java.io.PrintStream;
@@ -44,7 +46,13 @@ public class MainController {
             //Lobby already full
             return false;
         }
-        match.addPlayer(nickname);
+
+        try{
+            match.addPlayer(nickname);
+        } catch (MatchAlreadyFullException exception){
+            //TODO Handle correctly the exception
+            logger.println(exception);
+        }
 
         return true;
     }
