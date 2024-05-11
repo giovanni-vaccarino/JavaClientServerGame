@@ -5,11 +5,15 @@ package polimi.ingsoft.server.model;
  */
 public abstract class Card implements Drawable {
     private final int score;
-
-    protected Card(int score){
+    private final String iD;
+    protected Card(int score,String iD){
         this.score=score;
+        this.iD=iD;
     }
     protected int getScore() {
         return score;
+    }
+    public String getID(){
+        return this.iD;
     }
 }
