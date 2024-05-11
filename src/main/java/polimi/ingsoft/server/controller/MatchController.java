@@ -54,6 +54,8 @@ public class MatchController implements Serializable {
         return players;
     }
 
+    public List<PlayerInitialSetting> getPlayerInitialSettings(){return playerInitialSettings;}
+
     public List<String> getNamePlayers(){
         return playerInitialSettings.stream().
                 map(PlayerInitialSetting::getNickname).

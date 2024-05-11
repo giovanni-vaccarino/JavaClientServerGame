@@ -46,6 +46,12 @@ public class GameState implements Serializable {
         return this.matchController.getNamePlayers();
     }
 
+    public GAME_PHASE getGamePhase(){return this.gamePhase;}
+
+    public INITIAL_STEP getCurrentInitialStep(){return this.currentInitialStep;}
+
+    public TURN_STEP getCurrentTurnStep(){return this.currentTurnStep;}
+
     public void updateState(){
         switch(gamePhase){
             case GAME_PHASE.WAITING_FOR_PLAYERS -> {
