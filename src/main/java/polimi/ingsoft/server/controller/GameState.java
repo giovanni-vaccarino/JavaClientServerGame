@@ -20,6 +20,10 @@ public class GameState implements Serializable {
 
     private int firstPlayerIndex;
 
+    private int turnNumber = 1;
+
+    private int endRound;
+
     private List<String> playerStepCheck = new ArrayList<>();
 
     private GAME_PHASE gamePhase;
@@ -61,6 +65,16 @@ public class GameState implements Serializable {
 
             case GAME_PHASE.PLAY -> {
                 setLastRound();
+            }
+
+            case GAME_PHASE.LAST_ROUND -> {
+                if(this.turnNumber == this.endRound){
+                    this.gamePhase = GAME_PHASE.END;
+                }
+            }
+
+            case GAME_PHASE.END -> {
+
             }
         }
     }
@@ -126,6 +140,7 @@ public class GameState implements Serializable {
 
         if (isLastRound){
             gamePhase = GAME_PHASE.LAST_ROUND;
+            this.endRound = this.turnNumber + 2;
         }
     }
 
@@ -136,9 +151,15 @@ public class GameState implements Serializable {
         currentPlayerIndex = firstPlayerIndex;
     }
 
+    private void updateTurnNumber(){
+        this.turnNumber += (currentPlayerIndex == firstPlayerIndex) ? 1 : 0;
+    }
+
     public void goToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % requestedNumPlayers;
-        this.currentTurnStep = TURN_STEP.DRAW;
+
+        this.updateTurnNumber();
+        this.updateTurnStep();
     }
 
     private Player getWinner() {

@@ -87,22 +87,6 @@ public class MatchController implements Serializable {
                 this.players;
     }
 
-    private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        gameState.validateMove(player, TURN_STEP.DRAW);
-
-        gameState.updateTurnStep();
-
-        return publicBoard.getResource(slot);
-    }
-
-    private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        gameState.validateMove(player, TURN_STEP.DRAW);
-
-        gameState.updateTurnStep();
-
-        return publicBoard.getGold(slot);
-    }
-
     public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
 
@@ -145,8 +129,9 @@ public class MatchController implements Serializable {
             //TODO
         }
 
-        gameState.updateState();
+        //TODO Ensures what should go first(goToNextPlayer or updateState)
         gameState.goToNextPlayer();
+        gameState.updateState();
     }
 
     public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
@@ -161,6 +146,22 @@ public class MatchController implements Serializable {
         }
 
         return null;
+    }
+
+    private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+        gameState.validateMove(player, TURN_STEP.DRAW);
+
+        gameState.updateTurnStep();
+
+        return publicBoard.getResource(slot);
+    }
+
+    private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+        gameState.validateMove(player, TURN_STEP.DRAW);
+
+        gameState.updateTurnStep();
+
+        return publicBoard.getGold(slot);
     }
 
     public Message writeMessage(String message){
