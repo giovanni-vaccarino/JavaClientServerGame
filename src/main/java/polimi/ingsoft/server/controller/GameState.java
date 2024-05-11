@@ -10,16 +10,15 @@ import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GameState implements Serializable {
     private volatile MatchController matchController;
     private final Integer requestedNumPlayers;
 
     private int currentPlayerIndex;
+
+    private int firstPlayerIndex;
 
     private List<String> playerStepCheck = new ArrayList<>();
 
@@ -39,22 +38,25 @@ public class GameState implements Serializable {
         return matchController.getPlayers().get(currentPlayerIndex);
     }
 
-    private List<String> getNicks(){
+    private List<String> getPlayersNick(){
         return this.matchController.getNamePlayers();
     }
 
     public void updateState(){
         switch(gamePhase){
             case GAME_PHASE.WAITING_FOR_PLAYERS -> {
-                if(getNicks().size() == requestedNumPlayers){
+                if(getPlayersNick().size() == requestedNumPlayers){
                     this.gamePhase = GAME_PHASE.INITIALIZATION;
                     this.currentInitialStep = INITIAL_STEP.COLOR;
                 }
             }
 
             case GAME_PHASE.INITIALIZATION -> {
-                this.matchController.initializePlayers();
-                this.gamePhase = GAME_PHASE.PLAY;
+                if (playerStepCheck.size() == requestedNumPlayers && this.currentInitialStep == INITIAL_STEP.QUEST_CARD){
+                    this.matchController.initializePlayers();
+                    this.setFirstPlayer();
+                    this.gamePhase = GAME_PHASE.PLAY;
+                }
             }
 
             case GAME_PHASE.PLAY -> {
@@ -125,6 +127,13 @@ public class GameState implements Serializable {
         if (isLastRound){
             gamePhase = GAME_PHASE.LAST_ROUND;
         }
+    }
+
+    private void setFirstPlayer(){
+        Random random = new Random();
+
+        this.firstPlayerIndex = random.nextInt(requestedNumPlayers);
+        currentPlayerIndex = firstPlayerIndex;
     }
 
     public void goToNextPlayer() {

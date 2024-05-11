@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class MatchController implements Serializable {
 
@@ -69,17 +71,20 @@ public class MatchController implements Serializable {
             throw new MatchAlreadyFullException();
         }
 
+        //TODO Retrieve from Public Board 1 initial card, 2 resource cards and 1 gold card
+        //     and then change the PlayerInitialSetting constructor
         playerInitialSettings.add(new PlayerInitialSetting(nickname));
 
         gameState.updateState();
     }
 
     public void initializePlayers(){
-        for (var playerSetting : this.playerInitialSettings){
-            Player player = PlayerFactory.createPlayer(playerSetting);
-
-            this.players.add(player);
-        }
+        this.players = this.players.isEmpty() ?
+                this.playerInitialSettings.stream()
+                        .map(PlayerFactory::createPlayer)
+                        .collect(Collectors.toList())
+                :
+                this.players;
     }
 
     private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
@@ -103,9 +108,7 @@ public class MatchController implements Serializable {
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
 
-        playerInitialSetting.ifPresent(player-> {
-            player.setColor(color);
-        });
+        playerInitialSetting.ifPresent(player-> player.setColor(color));
 
         gameState.updateInitialStep(playerNickname);
     }
@@ -115,9 +118,7 @@ public class MatchController implements Serializable {
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
 
-        playerInitialSetting.ifPresent(player-> {
-            player.setIsInitialFaceUp(isFaceUp);
-        });
+        playerInitialSetting.ifPresent(player-> player.setIsInitialFaceUp(isFaceUp));
 
         gameState.updateInitialStep(playerNickname);
     }
@@ -127,9 +128,7 @@ public class MatchController implements Serializable {
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
 
-        playerInitialSetting.ifPresent(player-> {
-            player.setQuestCard(questCard);
-        });
+        playerInitialSetting.ifPresent(player-> player.setQuestCard(questCard));
 
         gameState.updateInitialStep(playerNickname);
     }

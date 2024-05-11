@@ -8,7 +8,7 @@ import polimi.ingsoft.server.model.QuestCard;
 
 public class PlayerInitialSetting {
 
-    private String nickname;
+    private final String nickname;
 
     private boolean isInitialFaceUp;
 
