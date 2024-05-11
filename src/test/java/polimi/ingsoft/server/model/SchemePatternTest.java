@@ -21,180 +21,180 @@ class SchemePatternTest {
         center.add(Resource.MUSHROOM);
         Face front=new Face(new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners),new CenterSpace(center)),
             back=new Face(new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners));
-        InitialCard initial=new InitialCard(front,back,0);
+        InitialCard initial=new InitialCard("lol",front,back,0);
         board=new Board(initial,true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(1, -1), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-1, 1), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.BUTTERFLY);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-1, -1), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.BUTTERFLY);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(1, 1), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.BUTTERFLY);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(0, 2), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.LEAF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(0, -2), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.LEAF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(2, 2), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-2, -2), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-2, 0), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-3, -1), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-4, -2), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.BUTTERFLY);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-1, -3), resource, true);
         center = new ArrayList<Resource>();
         center.add(Resource.LEAF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(1, -3), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.LEAF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(2, -4), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.LEAF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(3, -5), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.BUTTERFLY);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(1, 3), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.BUTTERFLY);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-1, 3), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.LEAF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(2, 4), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-2, 4), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-3, 3), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-4, 2), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(-1, 5), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(0, 6), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(1, 7), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(0, 4), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(1, 5), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(2, 6), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(3, 7), resource, true);
 
         center = new ArrayList<Resource>();
         center.add(Resource.WOLF);
         front = new Face(new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CornerSpace(corners), new CenterSpace(center));
-        resource = new ResourceCard(front, back, 0);
+        resource = new ResourceCard("lol",front, back, 0);
         board.add(new Coordinates(4, 8), resource, true);
 
         link1=new ArrayList<Link>();
@@ -274,37 +274,4 @@ class SchemePatternTest {
         assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES8:"+pattern.getMatch(board));
     }
-
-//    void getMatch1() {
-//        pattern=new SchemePattern(link1);
-//        assertEquals(1,pattern.getMatch(board));
-//    }
-//    void getMatch2() {
-//        pattern=new SchemePattern(link2);
-//        assertEquals(1,pattern.getMatch(board));
-//    }
-//    void getMatch3() {
-//        pattern=new SchemePattern(link3);
-//        assertEquals(1,pattern.getMatch(board));
-//    }
-//    void getMatch4() {
-//        pattern=new SchemePattern(link4);
-//        assertEquals(1,pattern.getMatch(board));
-//    }
-//    void getMatch5() {
-//        pattern=new SchemePattern(link5);
-//        assertEquals(2,pattern.getMatch(board));
-//    }
-//    void getMatch6() {
-//        pattern=new SchemePattern(link6);
-//        assertEquals(2,pattern.getMatch(board));
-//    }
-//    void getMatch7() {
-//        pattern=new SchemePattern(link7);
-//        assertEquals(2,pattern.getMatch(board));
-//    }
-//    void getMatch8() {
-//        pattern=new SchemePattern(link8);
-//        assertEquals(1,pattern.getMatch(board));
-//    }
 }

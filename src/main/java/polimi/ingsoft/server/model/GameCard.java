@@ -6,8 +6,8 @@ public abstract class GameCard extends Card {
     private final Face front;
     private final Face back;
 
-    public GameCard(Face front,Face back,int score){
-        super(score);
+    public GameCard(String iD,Face front,Face back,int score){
+        super(score,iD);
         this.front=front;
         this.back=back;
     }

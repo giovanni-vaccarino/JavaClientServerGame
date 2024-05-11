@@ -5,8 +5,8 @@ import java.util.HashMap;
 public class GoldCard extends MixedCard implements ConditionalPointsCard {
     ItemPattern playPattern;
     Pattern pointPattern;
-    public GoldCard(Face front, Face back, ItemPattern playPattern,Pattern pointPattern,int score) {
-        super(front, back,score);
+    public GoldCard(String iD,Face front, Face back, ItemPattern playPattern,Pattern pointPattern,int score) {
+        super(iD,front, back,score);
         this.playPattern=playPattern;
         this.pointPattern=pointPattern;
     }
