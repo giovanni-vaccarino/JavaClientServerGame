@@ -105,7 +105,7 @@ class MatchControllerTest {
         assertThrows(InitalChoiceAlreadySetException.class, () ->
                 matchController.setPlayerColor("Player1", PlayerColors.GREEN));
         assertThrows(InitalChoiceAlreadySetException.class, () ->
-                matchController.setPlayerColor("Player1", PlayerColors.RED));
+                matchController.setPlayerColor("Player1", PlayerColors.YELLOW));
     }
 
     @Test

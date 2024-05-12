@@ -6,12 +6,11 @@ import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.factories.PlayerFactory;
 import polimi.ingsoft.server.model.*;
 
+import java.awt.*;
 import java.io.PrintStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class MatchController implements Serializable {
@@ -83,15 +82,16 @@ public class MatchController implements Serializable {
     }
 
     public void initializePlayers() {
-        if (this.players.isEmpty()) {
-            for (PlayerInitialSetting playerInitialSetting : getPlayerInitialSettings()) {
-                Player player = PlayerFactory.createPlayer(playerInitialSetting);
-                this.players.add(player);
-            }
-        }
+        this.players = this.players.isEmpty() ?
+                this.playerInitialSettings.stream()
+                        .map(PlayerFactory::createPlayer)
+                        .collect(Collectors.toList())
+                :
+                this.players;
     }
 
-    public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
+    public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
+        gameState.checkColorAvailability(color);
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
