@@ -12,7 +12,7 @@ public class GoldCard extends MixedCard implements ConditionalPointsCard {
     }
 
     @Override
-    public ItemPattern getPattern() {
+    public ItemPattern getPlayPattern() {
         return playPattern;
     }
 
@@ -33,4 +33,5 @@ public class GoldCard extends MixedCard implements ConditionalPointsCard {
     public int getPoints(Board board, Coordinates coordinates){
         return pointPattern==null? 1:pointPattern.getMatch(board,coordinates);
     }
+
 }
