@@ -50,6 +50,8 @@ public class MatchController implements Serializable {
         return matchId;
     }
 
+    public GameState getGameState(){return this.gameState;}
+
     public List<Player> getPlayers(){
         return players;
     }
@@ -80,13 +82,13 @@ public class MatchController implements Serializable {
         gameState.updateState();
     }
 
-    public void initializePlayers(){
-        this.players = this.players.isEmpty() ?
-                this.playerInitialSettings.stream()
-                        .map(PlayerFactory::createPlayer)
-                        .collect(Collectors.toList())
-                :
-                this.players;
+    public void initializePlayers() {
+        if (this.players.isEmpty()) {
+            for (PlayerInitialSetting playerInitialSetting : getPlayerInitialSettings()) {
+                Player player = PlayerFactory.createPlayer(playerInitialSetting);
+                this.players.add(player);
+            }
+        }
     }
 
     public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
@@ -110,7 +112,7 @@ public class MatchController implements Serializable {
     }
 
     public void setQuestCard(String playerNickname, QuestCard questCard) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
-        gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
+        gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.QUEST_CARD);
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
 

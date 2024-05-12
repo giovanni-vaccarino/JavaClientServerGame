@@ -1,10 +1,10 @@
 package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.enumerations.PlayerColors;
-import polimi.ingsoft.server.model.InitialCard;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlayerHand;
-import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.enumerations.Resource;
+import polimi.ingsoft.server.model.*;
+
+import java.util.ArrayList;
 
 public class PlayerInitialSetting {
 
@@ -12,7 +12,10 @@ public class PlayerInitialSetting {
 
     private boolean isInitialFaceUp;
 
-    private InitialCard initialCard;
+    //TODO Once added the initial card of the player remove this
+    private InitialCard initialCard = new InitialCard("temp",
+            new Face(new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CenterSpace(new ArrayList<>()))
+            , new Face(new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CenterSpace(new ArrayList<>())), 0);
 
     private PlayerHand<MixedCard> playerHand = new PlayerHand<>();
 

@@ -73,7 +73,7 @@ public class ClientHand {
                 break;
             case 2:
                 if(isFlipped.get(i))resources=actualCard.getFront().getUpRight().getItems();
-                else resources=cards.get(i).getBack().getUpRight().getItems()
+                else resources=cards.get(i).getBack().getUpRight().getItems();
                 break;
             case 3:
                 if(isFlipped.get(i))resources=actualCard.getFront().getBottomLeft().getItems();
