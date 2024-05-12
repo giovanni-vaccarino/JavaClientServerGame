@@ -126,8 +126,11 @@ public class ClientHand {
         this.isFlipped.add(i,flip);
     }
     private String printCenter(MixedCard card, int i, int j, String actualColor){
-        if(isFlipped.get(i)&&j!=0)return actualColor+"              ";
+        if(isFlipped.get(i)&&j!=0&&j!=8){
+            return actualColor+"              ";
+        }
         else if(j==0&&isFlipped.get(i))return printFirstRow(card,i,j,actualColor);
+        else if(j==8&&isFlipped.get(i))return printLastRow(card,i,j,actualColor);
         else{
             CenterSpace center;
             Resource resource = null;
@@ -137,53 +140,36 @@ public class ClientHand {
                 case 1:
                     if(j<3||j>5)return actualColor+"              ";
                     resource = center.getItems().getFirst();
-                    switch (j) {
-                        case 3:
-                            print = BLACKTEXT + "¡‾‾‾‾‾‾¡";
-                            break;
-                        case 4:
-                            print = BLACKTEXT + "|      |";
-                            break;
-                        case 5:
-                            print = BLACKTEXT + "!______!";
-                            break;
-                    }
+                    print = switch (j) {
+                        case 3 -> BLACKTEXT + "¡‾‾‾‾‾‾¡";
+                        case 4 -> BLACKTEXT + "|      |";
+                        case 5 -> BLACKTEXT + "!______!";
+                        default -> print;
+                    };
                     break;
                 case 2:
                     if(j<1||j>6)return actualColor+"              ";
                     if(j<4)resource = center.getItems().getFirst();
                     else resource=center.getItems().get(1);
-                    switch (j) {
-                        case 1, 4:
-                            print = BLACKTEXT + "¡‾‾‾‾‾‾¡";
-                            break;
-                        case 2, 5:
-                            print = BLACKTEXT + "|      |";
-                            break;
-                        case 3:
-                            print = BLACKTEXT + "!      !";
-                            break;
-                        case 6:
-                            print = BLACKTEXT + "!______!";
-                            break;
-                    }
+                    print = switch (j) {
+                        case 1, 4 -> BLACKTEXT + "¡‾‾‾‾‾‾¡";
+                        case 2, 5 -> BLACKTEXT + "|      |";
+                        case 3 -> BLACKTEXT + "!      !";
+                        case 6 -> BLACKTEXT + "!______!";
+                        default -> print;
+                    };
                     break;
                 case 3:
                     if(j==7)return actualColor+"              ";
-                    if(j<3)resource = center.getItems().getFirst();
+                    else if(j<3)resource = center.getItems().getFirst();
                     else if(j<5)resource=center.getItems().get(1);
                     else resource=center.getItems().get(2);
-                    switch (j) {
-                        case 1, 3, 5:
-                            print = BLACKTEXT + "¡‾‾‾‾‾‾¡";
-                            break;
-                        case 2, 4:
-                            print = BLACKTEXT + "!      !";
-                            break;
-                        case 6:
-                            print = BLACKTEXT + "!______!";
-                            break;
-                    }
+                    print = switch (j) {
+                        case 1, 3, 5 -> BLACKTEXT + "¡‾‾‾‾‾‾¡";
+                        case 2, 4 -> BLACKTEXT + "!      !";
+                        case 6 -> BLACKTEXT + "!______!";
+                        default -> print;
+                    };
                     break;
                 default:
                     return actualColor+"              ";
@@ -206,22 +192,80 @@ public class ClientHand {
         if(card.getScore(!isFlipped.get(i))!=0&&card.getPointPattern()==null)
             return actualColor+BLACKTEXT+"     | "+card.getScore(!isFlipped.get(i))+"|     ";
         else if(cards.get(i).getScore(!isFlipped.get(i))!=0&&card.getPointPattern()!=null) {
-            HashMap<Item,Integer>cost=((ItemPattern)card.getPointPattern()).getCost();
-            if(cost.get(Object.FEATHER)!=0)return actualColor+BLACKTEXT+" |"+card.getScore(!isFlipped.get(i))+"x Feather| ";
-            else if (cost.get(Object.POTION)!=0)return actualColor+BLACKTEXT+" |"+card.getScore(!isFlipped.get(i)) +"x Potion|  ";
-            else if (cost.get(Object.SCROLL)!=0)return actualColor+BLACKTEXT+" |"+card.getScore(!isFlipped.get(i)) +"x Scroll|  ";
+            try {
+                HashMap<Item, Integer> cost = ((ItemPattern) card.getPointPattern()).getCost();
+                if (cost.get(Object.FEATHER) != 0)
+                    return actualColor + BLACKTEXT + " |" + card.getScore(!isFlipped.get(i)) + "x Feather| ";
+                else if (cost.get(Object.POTION) != 0)
+                    return actualColor + BLACKTEXT + " |" + card.getScore(!isFlipped.get(i)) + "x Potion|  ";
+                else if (cost.get(Object.SCROLL) != 0)
+                    return actualColor + BLACKTEXT + " |" + card.getScore(!isFlipped.get(i)) + "x Scroll|  ";
+            }catch(ClassCastException e){
+                return actualColor + BLACKTEXT + " |" + card.getScore(!isFlipped.get(i)) + "x Corner|  ";
+            }
         }
         else return actualColor+"              ";
         return actualColor+"              ";
     }
 
-//    private String printLastRow(ResourceCard card, int i, int j, String actualColor){
-//        if(j==0&&cards.get(i).getScore(!isFlipped.get(i))!=0)
-//            return "     | "+cards.get(i).getScore(!isFlipped.get(i))+"|     ";
-//
-//        if(j==8&&isFlipped.get(i)){
-//
-//        }
-//    }
+    private String printLastRow(MixedCard card, int i, int j, String actualColor){
+        int counter=0;
+        String pre,post,output="";
+        if(isFlipped.get(i)&&card.getPlayPattern()!=null){
+           counter+=card.getPlayPattern().getCost().get(Resource.MUSHROOM);
+           counter+=card.getPlayPattern().getCost().get(Resource.WOLF);
+           counter+=card.getPlayPattern().getCost().get(Resource.LEAF);
+           counter+=card.getPlayPattern().getCost().get(Resource.BUTTERFLY);
+           switch (counter){
+               case 1:
+                   pre="     |";
+                   post="      ";
+                   break;
+               case 2:
+                   pre="    |";
+                   post="     ";
+                   break;
+               case 3:
+                   pre="   |";
+                   post="    ";
+                   break;
+               case 4:
+                   pre="  |";
+                   post="   ";
+                   break;
+               case 5:
+                   pre=" |";
+                   post="  ";
+                   break;
+               default:
+                   return actualColor+"              ";
+           }
+           pre=actualColor+pre;
+           post=actualColor+post;
+           int c=0;
+           while(c<card.getPlayPattern().getCost().get(Resource.MUSHROOM)){
+               output=output+RED+" "+actualColor+"|";
+               c++;
+           }
+           c=0;
+           while(c<card.getPlayPattern().getCost().get(Resource.LEAF)){
+               output=output+GREEN+" "+actualColor+"|";
+               c++;
+           }
+           c=0;
+           while(c<card.getPlayPattern().getCost().get(Resource.WOLF)){
+               output=output+BLUE+" "+actualColor+"|";
+               c++;
+           }
+           c=0;
+           while(c<card.getPlayPattern().getCost().get(Resource.BUTTERFLY)){
+               output=output+PURPLE+" "+actualColor+"|";
+               c++;
+           }
+           return pre+output+post;
+           }
+        else return actualColor+"              ";
+
+    }
 
 }

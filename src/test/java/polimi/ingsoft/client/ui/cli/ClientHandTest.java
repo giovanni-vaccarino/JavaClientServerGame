@@ -102,8 +102,11 @@ class ClientHandTest {
         back=new Face(upleft,null,bottomleft,bottomright);
         HashMap<Item,Integer>itemcost=new HashMap<>(),cost=new HashMap<>();
         cost.put(Object.FEATHER,1);
-        itemcost.put(Resource.MUSHROOM,1);
-        c=new GoldCard("lol",front,back,new ItemPattern(itemcost),new ItemPattern(cost),2);
+        itemcost.put(Resource.MUSHROOM,0);
+        itemcost.put(Resource.BUTTERFLY,1);
+        itemcost.put(Resource.WOLF,0);
+        itemcost.put(Resource.LEAF,0);
+        c=new GoldCard("lol",front,back,new ItemPattern(itemcost),new CornerPattern(),/*new ItemPattern(cost),*/2);
 
 
         list = new ArrayList<>();
@@ -135,10 +138,10 @@ class ClientHandTest {
     }
     @Test
     void print() {
-        //hand.addCard(a);
+        hand.addCard(a);
         hand.addCard(b);
         hand.addCard(c);
-        hand.addCard(d);
+        //hand.addCard(d);
         hand.print();
         System.out.print("\n\n");
         hand.flip(0);
