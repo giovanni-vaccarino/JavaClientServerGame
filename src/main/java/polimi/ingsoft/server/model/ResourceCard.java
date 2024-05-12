@@ -15,6 +15,13 @@ public class ResourceCard extends MixedCard {
     public int getPoints(Board board,Coordinates coordinates) {
         return 1;
     }
+    public ItemPattern getPlayPattern() {
+        return null;
+    }
+
+    public Pattern getPointPattern() {
+        return null;
+    }
 
 
 }

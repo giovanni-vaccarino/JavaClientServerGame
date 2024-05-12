@@ -52,4 +52,8 @@ public class ItemPattern implements Pattern{
             default -> 0;
         };
     }
+    public HashMap<Item,Integer> getCost(){
+        return this.cost;
+    }
+
 }

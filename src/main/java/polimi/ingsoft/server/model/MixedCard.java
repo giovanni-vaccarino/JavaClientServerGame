@@ -7,4 +7,6 @@ public abstract class MixedCard extends GameCard {
     }
     public abstract int getPlayability(Board board);
     public abstract int getPoints(Board board, Coordinates coordinates);
+    public abstract ItemPattern getPlayPattern();
+    public abstract Pattern getPointPattern();
 }

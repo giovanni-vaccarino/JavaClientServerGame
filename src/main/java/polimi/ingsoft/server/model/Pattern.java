@@ -5,4 +5,5 @@ import java.util.ArrayList;
 
 public interface Pattern {
     int getMatch(Board board,Coordinates coordinates);
+
 }
