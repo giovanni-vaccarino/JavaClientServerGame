@@ -136,7 +136,7 @@ public class GameState implements Serializable {
     }
 
     public void checkColorAvailability(PlayerColors color) throws ColorAlreadyPickedException {
-        // The != null is if a player hasn't picked a color yet
+        // The != null is to cover the case: if a player hasn't picked a color yet
         boolean isColorPicked = matchController.getPlayerInitialSettings().stream()
                 .map(PlayerInitialSetting::getColor)
                 .anyMatch(playerColor -> playerColor != null && playerColor.equals(color));

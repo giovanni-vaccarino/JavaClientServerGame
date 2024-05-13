@@ -7,6 +7,7 @@ import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.enumerations.Resource;
+import polimi.ingsoft.server.exceptions.ColorAlreadyPickedException;
 import polimi.ingsoft.server.exceptions.InitalChoiceAlreadySetException;
 import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
@@ -106,6 +107,28 @@ class MatchControllerTest {
                 matchController.setPlayerColor("Player1", PlayerColors.GREEN));
         assertThrows(InitalChoiceAlreadySetException.class, () ->
                 matchController.setPlayerColor("Player1", PlayerColors.YELLOW));
+    }
+
+    @Test
+    void testPlayerColorAlreadyPickedException() {
+        //Adding 3 players to the match (requested number of players to start = 3)
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            matchController.addPlayer("Player3");
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+
+        try {
+            matchController.setPlayerColor("Player1", PlayerColors.RED);
+            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
+        } catch (Exception e) {
+            fail("Unexpected exception");
+        }
+
+        assertThrows(ColorAlreadyPickedException.class, () ->
+                matchController.setPlayerColor("Player3", PlayerColors.BLUE));
     }
 
     @Test
