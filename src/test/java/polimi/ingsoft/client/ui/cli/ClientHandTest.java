@@ -143,11 +143,15 @@ class ClientHandTest {
         hand.addCard(c);
         //hand.addCard(d);
         hand.print();
-        System.out.print("\n\n");
+        System.out.print("\n\n\n");
         hand.flip(0);
         hand.flip(1);
         hand.flip(2);
         hand.print();
-        System.out.println(hand.getIsFlipped());
+        System.out.print("\n\n\n");
+        hand.flip(1);
+        hand.flip(2);
+        hand.print();
+
     }
 }
