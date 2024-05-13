@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.Button?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1350.0" styleClass="gamePage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polimi.ingsoft.client.ui.gui.GamePageController">
     <children>
@@ -15,10 +14,10 @@
         <AnchorPane layoutX="10.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css">
             <children>
                 <StackPane alignment="CENTER" layoutX="0.0" layoutY="14.0" prefHeight="360" prefWidth="200" styleClass="plateauScore" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
-                <ImageView fx:id="blueScoreImg"/>
-                <ImageView fx:id="greenScoreImg"/>
-                <ImageView fx:id="redScoreImg"/>
-                <ImageView fx:id="yellowScoreImg"/>
+                <ImageView fx:id="blueScoreImg" />
+                <ImageView fx:id="greenScoreImg" />
+                <ImageView fx:id="redScoreImg" />
+                <ImageView fx:id="yellowScoreImg" />
             </children>
         </AnchorPane>
 
@@ -126,33 +125,35 @@
       </GridPane>
 
         <!-- Board arrows -->
-        <StackPane layoutX="765.0" layoutY="695.0" prefWidth="540" prefHeight="100" alignment="CENTER">
+        <StackPane alignment="CENTER" layoutX="960.0" layoutY="686.0" prefHeight="100" prefWidth="120.0">
             <children>
-                <ImageView fx:id="arrowS"/>
+                <ImageView fx:id="arrowS" />
             </children>
         </StackPane>
-        <StackPane layoutX="765.0" layoutY="155.0" prefWidth="540" prefHeight="100" alignment="CENTER">
+        <StackPane alignment="CENTER" layoutX="960.0" layoutY="155.0" prefHeight="100" prefWidth="120.0">
             <children>
-                <ImageView fx:id="arrowN"/>
+                <ImageView fx:id="arrowN" />
             </children>
         </StackPane>
-        <StackPane layoutX="725.0" layoutY="425.0" prefWidth="540" prefHeight="100" alignment="CENTER_LEFT">
+        <StackPane alignment="CENTER_LEFT" layoutX="725.0" layoutY="425.0" prefHeight="100" prefWidth="120.0">
             <children>
-                <ImageView fx:id="arrowO"/>
+                <ImageView fx:id="arrowO" />
             </children>
         </StackPane>
-        <StackPane layoutX="800.0" layoutY="425.0" prefWidth="540" prefHeight="100" alignment="CENTER_RIGHT">
+        <StackPane alignment="CENTER_RIGHT" layoutX="1222.0" layoutY="425.0" prefHeight="100" prefWidth="120.0">
             <children>
-                <ImageView fx:id="arrowE"/>
+                <ImageView fx:id="arrowE" />
             </children>
         </StackPane>
 
         <!-- Buttons for Other Players Board -->
         <GridPane fx:id="otherBoards" layoutX="780.0" layoutY="50.0" prefHeight="150.0" prefWidth="510.0" stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" halignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" halignment="CENTER"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" halignment="CENTER"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+
             </columnConstraints>
 
             <rowConstraints>

@@ -7,6 +7,14 @@ import javafx.scene.layout.GridPane;
 public class GridPaneUtils {
 
     public GridPaneUtils() {}
+
+    public static void eraseGridPane(GridPane gridPane, int rowNum, int colNum) {
+        for (int c=0; c<colNum; c++){
+            for (int r=0; r<rowNum; r++){
+                removeImageViewIfExists(gridPane,r,c);
+            }
+        }
+    }
     public static void removeImageViewIfExists(GridPane gridPane, int row, int col) {
         Node node = getNodeFromGridPane(gridPane, row, col);
         if (node != null && node instanceof ImageView) {

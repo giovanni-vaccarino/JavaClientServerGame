@@ -1,6 +1,5 @@
 package polimi.ingsoft.client.ui.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -18,11 +17,11 @@ import javafx.scene.image.ImageView;
 import java.util.*;
 
 /*TO FIX:
-- sistema il fondo della board (si fissano le carte)
-- aggiungi struttura dati per posizioni possibili in cui mettere la carta (con annessi metodi setter e getter)
-- aggiungi metodi collegati ai bottoni per la board di ogni giocatore (inizializza la board position con resetBoard() )
-- aggiungi mapping carta oggetto - path carta
-- aggiungi metodi setter e getter
+- fix score on board method (mettere pioli sulla carta iniziale)
+- add a variable to track score of each player (Hashmap<Nickname,Score>) --> link it to the color for the scoreBoard
+- definire setter per metodi qui sopra
+- diminuire dimensioni celle freccie per non ostacolare il tocco sulle carte
+- carica board altri giocatori e testa il funzionamento (non solo su main player)
  */
 
 public class GamePageController implements Initializable{
@@ -49,10 +48,15 @@ public class GamePageController implements Initializable{
     @FXML private ImageView yellowScoreImg;
 
     private List<Integer> score;
-    private HashMap<String,Coordinates> boardCoordinates;
-    private HashMap<Integer,String> boardOrder;
+    private HashMap <String, String> nicknameColor;
+    private HashMap<String, HashMap<String,Coordinates> > boardCoordinates;
+    private HashMap<String, HashMap<Integer,String> > boardOrder;
+    private String boardNickname; // board <=> nickname
+    private String myName;
 
     private ImageView[][] boardAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
+
+    private List<Coordinates> possibleCoordintes;
 
     private int CenterBoardX;
     private int CenterBoardY;
@@ -73,12 +77,7 @@ public class GamePageController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Initial Card
-        //ImageView initialCardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg"));
-        //placeCard(2,4, board, initialCardImg);
-
-        // Free places on Board
-        //possibleOptions();
+        // !!! CREATE HERE ALL THE OBJs -- Hashmap<>(), ... !!!
 
         // Personal cards
         placeCardHandler(0,0, personalDeck);
@@ -114,25 +113,38 @@ public class GamePageController implements Initializable{
         placeCardHandler(0,1, coveredDrawableDeck4);
         placeCardHandler(0,2, coveredDrawableDeck4);
 
+        // Set nickname-->color
+        nicknameColor = new HashMap<>();
+        setNicknameColor("Nico", "Blue");
+        setNicknameColor("Andre", "Green");
+        setNicknameColor("Gio", "Red");
+        setNicknameColor("Simon", "Yellow");
+
         // Board load
         CenterBoardX = 2;
         CenterBoardY = 4;
         boardCoordinates = new HashMap<>();
         boardOrder = new HashMap<>();
-        Coordinates coordinates = new Coordinates(0,0);
+        setNumTable();
+        setBoardNickname("Nico");
+        boardAppo = new ImageView[colNum][rowNum];
+
+        // Free places on Board
+        //Example:
+        possibleCoordintes =new ArrayList<>();
+        setPossibleOptions(0,2);
+        setPossibleOptions(-1,-1);
+
+        // Loading cards Example
         String initialCardPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg";
         String cardPath = "polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg";
-        boardCoordinates.put(initialCardPath,coordinates);
-        boardOrder.put(0,initialCardPath);
-        Coordinates coordinates2 = new Coordinates(1,1);
-        boardCoordinates.put(cardPath,coordinates2);
-        boardOrder.put(1,cardPath);
-        setNumTable();
-        boardAppo = new ImageView[colNum][rowNum];
-        loadEntireBoard();
+        setBoardCoordinatesOrder(0,0,initialCardPath,0);
+        setBoardCoordinatesOrder(1,1,cardPath,1);
+
+        setMyName("Nico");
 
         // Set other Player's Boards
-        List<String> playerList = Arrays.asList("Andre", "Gio", "Simon");
+        List<String> playerList = Arrays.asList("Nico","Andre", "Gio", "Simon");
         otherBoards(playerList);
 
         // Set arrows
@@ -143,41 +155,119 @@ public class GamePageController implements Initializable{
 
         // Set score positions
         score = new ArrayList<>();
-        score.add(16);
-        score.add(17);
-        score.add(16);
-        score.add(18);
+        List<Integer> s = new ArrayList<>();
+        s.add(16);
+        s.add(4);
+        s.add(16);
+        s.add(18);
+        setScore(s);
         placeScore();
 
-        // Make position editable (only for board)
-        for (Node node : board.getChildren()) {
-            // Attach a mouse click event handler to each cell
-            node.setOnMouseClicked(event -> {
-                System.out.println(board.getChildren());
-                int y = GridPane.getRowIndex(node);
-                int x = GridPane.getColumnIndex(node);
+        loadEntireBoard();
+    }
+    public void setNicknameColor(String nickname, String color){
+        this.nicknameColor.put(nickname,color);
+    }
 
-                placeCardHandler(x, y, board);
-            });
+    public void setMyName(String n){
+        this.myName=n;
+    }
+
+    public void setScore(List<Integer> s){
+        if(s.size()<=4) {
+            this.score = s;
         }
     }
+
+    public void setBoardCoordinatesOrder(Integer x, Integer y, String cardPath, int order){
+        Coordinates coordinates = new Coordinates(x,y);
+
+        if(boardCoordinates.containsKey(boardNickname)){
+            boardCoordinates.get(boardNickname);
+
+            if(boardCoordinates.get(boardNickname) != null){
+                boardCoordinates.get(boardNickname).put(cardPath,coordinates);
+            }else {
+                // ... crea oggetto Hashmap in quella board
+            }
+        }else {
+            HashMap<String, Coordinates> cardPlace = new HashMap<>();
+            cardPlace.put(cardPath, coordinates);
+            boardCoordinates.put(boardNickname, cardPlace);
+        }
+
+        if(boardOrder.containsKey(boardNickname)){
+            boardOrder.get(boardNickname);
+
+            if(boardOrder.get(boardNickname) != null){
+                boardOrder.get(boardNickname).put(order, cardPath);
+            }else {
+                // ... crea oggetto Hashmap in quella board
+            }
+        }else {
+            HashMap<Integer, String> cardOrder = new HashMap<>();
+            cardOrder.put(order, cardPath);
+            boardOrder.put(boardNickname, cardOrder);
+        }
+    }
+
 
     public void setCenterBoardX(int x){
         this.CenterBoardX=x;
     }
 
-
     public void setCenterBoardY(int y){
         this.CenterBoardY=y;
     }
 
+    public void setBoardNickname(String n){
+        this.boardNickname=n;
+    }
+
+    public void setPossibleOptions(int x, int y){
+
+        possibleCoordintes.add(new Coordinates(x,y));
+
+        // margins:
+        /*coloredCell(0,0);
+        coloredCell(4,8);*/
+    }
+
+    public void coloredCell(int x, int y){
+        /*Region cellBackground = new Region();
+        cellBackground.setStyle("-fx-background-color: #d64917;");
+
+        // Set the background to only one cell (row 1, column 1)
+        GridPane.setRowIndex(cellBackground, y);
+        GridPane.setColumnIndex(cellBackground, x);
+
+        // Add the background to the GridPane
+        board.getChildren().add(cellBackground);*/
+
+        // TO COLOR BOARD FREE POSITIONS
+
+        ImageView possiblePosition = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/possiblePosition.png"));
+
+        possiblePosition.setFitWidth(140);
+        possiblePosition.setFitHeight(100);
+
+        possiblePosition.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+
+        // Add the ImageView to the specific cell in the GridPane
+        board.add(possiblePosition, x, y);
+    }
+
     public void resetCenterBoard(){
-        this.CenterBoardX = 2;
-        this.CenterBoardY = 4;
+
+        setCenterBoardX(2);
+        setCenterBoardY(4);
+
+        /*this.CenterBoardX = 2;
+        this.CenterBoardY = 4;*/
     }
 
     public void otherBoards(List<String> playerList) {
-
+        // Add buttons for other players
         for (int col = 0; col < playerList.size(); col++) {
             Button button = new Button(playerList.get(col));
             button.getStyleClass().add("buttonRegular"); // Add CSS style class
@@ -185,39 +275,48 @@ public class GamePageController implements Initializable{
             button.setOnAction(event -> {
                 // Handle button click, you can implement actions here
                 System.out.println("Button clicked for player: " + playerList.get(finalCol));
+                setBoardNickname(playerList.get(finalCol));
+                resetCenterBoard();
+                loadEntireBoard();
             });
             //GridPane.setHalignment(button, HPos.CENTER);
             otherBoards.add(button, col, 0);
         }
     }
 
-    public void loadEntireBoard(){ // x,y coefficenti di traslazione
+    public void loadEntireBoard(){
 
         Coordinates coordinates = new Coordinates(0,0);
         GridPaneUtils gridPaneUtils = new GridPaneUtils();
         boolean breakLoop = false;
-        Integer z = 0,i = 0, j=0;
+        Integer z = 0,i = 0, j=0; // z for order
         String imagePath;
 
+        //System.out.println(colNum);
+        //System.out.println(rowNum);
+
         // Erase previous board
-        for (int c=0; c<colNum; c++){
-            for (int r=0; r<rowNum; r++){
-                gridPaneUtils.removeImageViewIfExists(board,c,r);
-            }
-        }
+        gridPaneUtils.eraseGridPane(board, rowNum, colNum);
 
         while (!breakLoop) {
-            System.out.println("dentro while");
-            imagePath= boardOrder.get(z);
+
+            if(!boardOrder.containsKey(boardNickname)){
+                gridPaneUtils.eraseGridPane(board, rowNum, colNum);
+                break;
+            }
+
+            // order --> imagePath --> coordinates
+
+            imagePath= boardOrder.get(boardNickname).get(z);
 
             // From board to table reference system
-            coordinates.setX(boardCoordinates.get(imagePath).getX());
-            coordinates.setY(-boardCoordinates.get(imagePath).getY()); // different SI
-            coordinates.addX(CenterBoardX);
-            coordinates.addY(CenterBoardY);
+            coordinates.setX(boardCoordinates.get(boardNickname).get(imagePath).getX());
+            coordinates.setY(-boardCoordinates.get(boardNickname).get(imagePath).getY()); // different SI
+            coordinates.addX(CenterBoardX); // x = xCentro + xCoordinate
+            coordinates.addY(CenterBoardY); // y = yCentro - xCoordinate
 
-            System.out.println(coordinates.getX());
-            System.out.println(coordinates.getY());
+            //System.out.println(coordinates.getX());
+            //System.out.println(coordinates.getY());
 
             if(coordinates.getX()>=0 && coordinates.getX()<colNum
                     && coordinates.getY()>=0 && coordinates.getY()<rowNum){
@@ -240,12 +339,74 @@ public class GamePageController implements Initializable{
 
             z++;
 
-            if (boardOrder.get(z) == null) {
+            if (boardOrder.get(boardNickname).get(z) == null) {
                 breakLoop = true;
             }
         }
+
+        if(Objects.equals(myName, boardNickname)){
+            // Load possible options
+
+            for (Coordinates c : possibleCoordintes) {
+                //System.out.println(c.getX());
+                //System.out.println(c.getY());
+
+                int xc = CenterBoardX + c.getX();
+                int yc = CenterBoardY -c.getY();
+
+                if(xc>=0 && xc<colNum && yc>=0 && yc<rowNum) {
+
+                    coloredCell(xc,yc);
+
+                    // Make position editable (only for board)
+                    for (Node node : board.getChildren()) {
+                        int y = GridPane.getRowIndex(node);
+                        int x = GridPane.getColumnIndex(node);
+
+                        if (x==(CenterBoardX + c.getX()) && y == (CenterBoardY -c.getY())) {
+
+                            node.setOnMouseClicked(event -> {
+                                // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
+                                placeCardHandler(x, y, board);
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        //scoreOnBoard();
     }
 
+    public void scoreOnBoard(){
+        if(nicknameColor.containsKey(boardNickname)){
+            String color = nicknameColor.get(boardNickname);
+            String img_path = "";
+
+            if(color.toLowerCase().equals("red")){
+                img_path = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
+            } else if (color.toLowerCase().equals("blue")) {
+                img_path = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
+            } else if (color.toLowerCase().equals("green")) {
+                img_path = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
+            } else if (color.toLowerCase().equals("yellow")) {
+                img_path = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
+            }
+
+            ImageView scoreImg = new ImageView(new Image(img_path));
+
+            scoreImg.setFitWidth(29);
+            scoreImg.setFitHeight(29);
+
+            scoreImg.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+
+            scoreImg.setLayoutX(80);
+            scoreImg.setLayoutX(50);
+
+            // Add the ImageView to the specific cell in the GridPane
+            board.add(scoreImg, CenterBoardX, CenterBoardY);
+        }
+    }
     public void placeScore(){
         /*
         1.blue
@@ -498,41 +659,6 @@ public class GamePageController implements Initializable{
                 moveBoardHandler_S();
             }
         });
-    }
-
-    public void possibleOptions(){
-        // LINK TO THE AVAILABLE PLACES
-
-        // margins:
-        //coloredCell(0,0);
-        //coloredCell(4,8);
-
-        coloredCell(3,5);
-        coloredCell(3,3);
-    }
-
-    public void coloredCell(int x, int y){
-        /*Region cellBackground = new Region();
-        cellBackground.setStyle("-fx-background-color: #d64917;");
-
-        // Set the background to only one cell (row 1, column 1)
-        GridPane.setRowIndex(cellBackground, y);
-        GridPane.setColumnIndex(cellBackground, x);
-
-        // Add the background to the GridPane
-        board.getChildren().add(cellBackground);*/
-
-        // TO COLOR BOARD FREE POSITIONS
-
-        ImageView possiblePosition = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/possiblePosition.png"));
-
-        possiblePosition.setFitWidth(140);
-        possiblePosition.setFitHeight(100);
-
-        possiblePosition.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-
-        // Add the ImageView to the specific cell in the GridPane
-        board.add(possiblePosition, x, y);
     }
 
     public void placeCardHandler(int x,int y, GridPane gridPane){
