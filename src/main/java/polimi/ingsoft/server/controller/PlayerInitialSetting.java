@@ -21,10 +21,26 @@ public class PlayerInitialSetting {
 
     private QuestCard questCard;
 
+    private QuestCard firstChoosableQuestCard;
+
+    private QuestCard secondChoosableQuestCard;
+
     private PlayerColors color;
 
     public PlayerInitialSetting(String nickname){
         this.nickname = nickname;
+    }
+
+    public PlayerInitialSetting(String nickname,
+                                PlayerHand<MixedCard> playerHand,
+                                QuestCard firstQuestCard,
+                                QuestCard secondQuestCard,
+                                InitialCard initialCard){
+        this.nickname = nickname;
+        this.playerHand = playerHand;
+        this.firstChoosableQuestCard = firstQuestCard;
+        this.secondChoosableQuestCard = secondQuestCard;
+        this.initialCard = initialCard;
     }
 
     public void setIsInitialFaceUp(boolean isInitialFaceUp) {

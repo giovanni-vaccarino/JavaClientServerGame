@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.exceptions.*;
+import polimi.ingsoft.server.factories.PlayerInitialSettingFactory;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.factories.PlayerFactory;
@@ -74,9 +75,10 @@ public class MatchController implements Serializable {
             throw new MatchAlreadyFullException();
         }
 
-        //TODO Retrieve from Public Board 1 initial card, 2 resource cards and 1 gold card
-        //     and then change the PlayerInitialSetting constructor
-        playerInitialSettings.add(new PlayerInitialSetting(nickname));
+        // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
+        PlayerInitialSetting playerInitialSetting = PlayerInitialSettingFactory.createPlayerInitialSetting(this.publicBoard, nickname);
+
+        playerInitialSettings.add(playerInitialSetting);
 
         gameState.updateState();
     }
@@ -140,6 +142,7 @@ public class MatchController implements Serializable {
 
     public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         switch(deckType){
+            //TODO Change to TYPE_HAND_CARD.RESOURCE and TYPE_HAND_CARD.GOLD when network is updated
             case "Resource"-> {
                 return this.drawResourceCard(player, slot);
             }

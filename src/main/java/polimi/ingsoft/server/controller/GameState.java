@@ -38,13 +38,15 @@ public class GameState implements Serializable {
         this.requestedNumPlayers = requestedNumPlayers;
     }
 
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return matchController.getPlayers().get(currentPlayerIndex);
     }
 
     private List<String> getPlayersNick(){
         return this.matchController.getNamePlayers();
     }
+
+    public Integer getFirstPlayerIndex(){return this.firstPlayerIndex;}
 
     public GAME_PHASE getGamePhase(){return this.gamePhase;}
 
@@ -66,6 +68,7 @@ public class GameState implements Serializable {
                     this.matchController.initializePlayers();
                     this.setFirstPlayer();
                     this.gamePhase = GAME_PHASE.PLAY;
+                    this.currentTurnStep = TURN_STEP.DRAW;
                 }
             }
 
