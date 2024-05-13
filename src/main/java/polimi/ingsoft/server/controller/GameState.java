@@ -1,16 +1,16 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.exceptions.InitalChoiceAlreadySetException;
+import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
-import polimi.ingsoft.server.exceptions.WrongGamePhaseException;
-import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
-import polimi.ingsoft.server.exceptions.WrongStepException;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.List;
 
 public class GameState implements Serializable {
     private volatile MatchController matchController;
@@ -133,6 +133,17 @@ public class GameState implements Serializable {
         if (GAME_PHASE.INITIALIZATION != phase) throw new WrongGamePhaseException();
         if (this.currentInitialStep != step) throw new WrongStepException();
         if (this.playerStepCheck.contains(player)) throw new InitalChoiceAlreadySetException(step);
+    }
+
+    public void checkColorAvailability(PlayerColors color) throws ColorAlreadyPickedException {
+        // The != null is to cover the case: if a player hasn't picked a color yet
+        boolean isColorPicked = matchController.getPlayerInitialSettings().stream()
+                .map(PlayerInitialSetting::getColor)
+                .anyMatch(playerColor -> playerColor != null && playerColor.equals(color));
+
+        if (isColorPicked) {
+            throw new ColorAlreadyPickedException(color);
+        }
     }
 
     private boolean isLastRound() {

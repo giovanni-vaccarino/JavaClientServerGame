@@ -6,12 +6,11 @@ import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.factories.PlayerFactory;
 import polimi.ingsoft.server.model.*;
 
+import java.awt.*;
 import java.io.PrintStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class MatchController implements Serializable {
@@ -50,6 +49,8 @@ public class MatchController implements Serializable {
         return matchId;
     }
 
+    public GameState getGameState(){return this.gameState;}
+
     public List<Player> getPlayers(){
         return players;
     }
@@ -80,7 +81,7 @@ public class MatchController implements Serializable {
         gameState.updateState();
     }
 
-    public void initializePlayers(){
+    public void initializePlayers() {
         this.players = this.players.isEmpty() ?
                 this.playerInitialSettings.stream()
                         .map(PlayerFactory::createPlayer)
@@ -89,7 +90,8 @@ public class MatchController implements Serializable {
                 this.players;
     }
 
-    public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
+    public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
+        gameState.checkColorAvailability(color);
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
@@ -110,7 +112,7 @@ public class MatchController implements Serializable {
     }
 
     public void setQuestCard(String playerNickname, QuestCard questCard) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
-        gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
+        gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.QUEST_CARD);
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
 
