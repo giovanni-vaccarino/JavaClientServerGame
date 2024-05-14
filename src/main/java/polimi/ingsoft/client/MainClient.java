@@ -28,6 +28,8 @@ public class MainClient {
         try {
             Client client = createClient(protocol);
             client.run();
+            client.getUi().showWelcomeScreen();
+
             while (true) { }
         } catch (IOException ignored) { }
     }

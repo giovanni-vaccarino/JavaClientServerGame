@@ -36,6 +36,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     public abstract void run();
 
+    public UI getUi(){return this.ui;}
+
     public void showNicknameUpdate(boolean result) throws IOException {
         ui.updateNickname(result);
     }

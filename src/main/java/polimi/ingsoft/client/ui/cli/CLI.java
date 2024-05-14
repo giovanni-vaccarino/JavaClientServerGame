@@ -26,9 +26,6 @@ public class CLI extends UI {
         this.in = in;
         this.out = out;
         this.client = client;
-        try {
-            showWelcomeScreen();
-        } catch (IOException e) {}
     }
 
     private void run() {

@@ -33,7 +33,7 @@ public class SocketClient extends Client {
     }
 
     @Override
-    protected VirtualServer getServer() {
+    public VirtualServer getServer() {
         return server;
     }
 
