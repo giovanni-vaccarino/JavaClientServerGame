@@ -17,11 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class MatchControllerTest {
     private MatchController matchController;
 
-    private PublicBoard publicBoard;
-
     @BeforeEach
     void setUp() {
-        publicBoard = PublicBoardFactory.createPublicBoard();
+        PublicBoard publicBoard = PublicBoardFactory.createPublicBoard();
         matchController = new MatchController(System.out, 1, 3, publicBoard, null);
     }
 

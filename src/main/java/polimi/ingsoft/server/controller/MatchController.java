@@ -24,7 +24,7 @@ public class MatchController implements Serializable {
 
     private List<Player> players = new ArrayList<>();
 
-    private List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
+    private final List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
 
     private final PublicBoard publicBoard;
 

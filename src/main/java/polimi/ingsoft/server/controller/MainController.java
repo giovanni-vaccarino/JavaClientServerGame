@@ -27,9 +27,19 @@ public class MainController {
         return true;
     }
 
+    public List<Integer> getMatches(){
+        Set<Integer> keys = this.matches.keySet();
+        return new ArrayList<>(keys);
+    }
+
+    public MatchController getMatch(int matchId){
+        return this.matches.get(matchId);
+    }
+
     public Integer createMatch(Integer requiredNumPlayers){
         int matchId = matches.keySet().size() + 1;
 
+        //TODO Validate requiredNumPlayers
         MatchController match = MatchFactory.createMatch(logger, matchId, requiredNumPlayers);
         matches.put(matchId, match);
 
@@ -52,21 +62,14 @@ public class MainController {
         } catch (MatchAlreadyFullException exception){
             //TODO Handle correctly the exception
             logger.println(exception);
+            return false;
         }
 
         return true;
     }
 
+    //TODO add only if deciding to implement the AF
     public void reJoinMatch(Integer lobbyId, String nickname){
 
-    }
-
-    public List<Integer> getMatches(){
-        Set<Integer> keys = this.matches.keySet();
-        return new ArrayList<>(keys);
-    }
-
-    public MatchController getMatch(int matchId){
-        return this.matches.get(matchId);
     }
 }
