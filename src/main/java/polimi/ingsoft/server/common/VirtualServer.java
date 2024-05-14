@@ -18,10 +18,4 @@ public interface VirtualServer extends Remote {
     void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException;
 
     void reJoinMatch(Integer matchId, String nickname) throws IOException;
-
-    void addMessage(int matchId, String message) throws IOException;
-
-    void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws IOException;
-
-    void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException;
 }
