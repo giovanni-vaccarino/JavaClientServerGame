@@ -21,14 +21,13 @@ public class MainClient {
     private static final int rmiServerPort = 1234;
     private static final String rmiServerName = "MatchManagerServer";
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ProtocolChoiceCLI protocolChoiceCLI = new ProtocolChoiceCLI(scanner, printStream);
         Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
 
-        try (
-            Client client = createClient(protocol)
-        ) {
-            client.getUI();
+        try {
+            Client client = createClient(protocol);
+            client.run();
             while (true) { }
         } catch (IOException ignored) { }
     }

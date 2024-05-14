@@ -12,14 +12,14 @@ import java.util.List;
 public interface VirtualView extends Remote {
     void showNicknameUpdate(boolean result) throws IOException;
     void showJoinMatchResult(Boolean joinResult, List<String> players) throws  IOException;
-    void showUpdateMatchesList(List<Integer> matches) throws RemoteException, IOException;
-    void showUpdateMatchJoin(Boolean success) throws IOException, RemoteException;
-    void showUpdateMatchCreate(MatchController match) throws IOException, RemoteException;
-    void showUpdateChat(Message message) throws IOException, RemoteException;
+    void showUpdateMatchesList(List<Integer> matches) throws IOException;
+    void showUpdateMatchJoin(Boolean success) throws IOException;
+    void showUpdateMatchCreate(MatchController match) throws IOException;
+    void showUpdateChat(Message message) throws IOException;
 
-    void showUpdatePublicBoard() throws IOException, RemoteException;
+    void showUpdatePublicBoard() throws IOException;
 
-    void showUpdateBoard() throws IOException, RemoteException;
+    void showUpdateBoard() throws IOException;
 
-    void reportError(String details) throws IOException, RemoteException;
+    void reportError(String details) throws IOException;
 }

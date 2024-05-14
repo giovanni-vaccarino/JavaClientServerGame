@@ -22,16 +22,13 @@ public class CLI extends UI {
     private MatchController match;
     private String nickname;
 
-    public CLI(Scanner in, PrintStream out, Client client) throws RemoteException {
+    public CLI(Scanner in, PrintStream out, Client client) {
         this.in = in;
         this.out = out;
         this.client = client;
-        client.run();
         try {
             showWelcomeScreen();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e) {}
     }
 
     private void run() {
@@ -58,7 +55,7 @@ public class CLI extends UI {
             out.printf("%d. Match number %d%n", ++i, match);
     }
 
-    public void updateNickname(boolean result) throws IOException {
+    public void updateNickname(boolean result) {
         if (result) {
             out.println(MESSAGES.NICKNAME_UPDATED.getValue());
             this.run();
