@@ -96,6 +96,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             }
 
             case MATCH_JOIN_REQUEST -> {
+                logger.println("RMI: Received join match request");
                 VirtualView client = (VirtualView) args[0];
                 Integer matchId = (Integer) args[1];
                 String nick = (String) args[2];
@@ -126,12 +127,17 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     }
 
     @Override
-    public void connect(VirtualView client, String nickname) throws RemoteException {
+    public void connect(VirtualView client) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.CONNECT, new Object[]{client, nickname}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.CONNECT, new Object[]{client}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    @Override
+    public void setNickname(String nickname) throws IOException {
+
     }
 
     @Override

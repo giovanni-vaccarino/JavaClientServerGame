@@ -10,13 +10,19 @@ import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.List;
 
 public class ServerProxy implements VirtualServer {
     private final ObjectOutputStream out;
 
     public ServerProxy(ObjectOutputStream out) {
         this.out = out;
+    }
+
+    @Override
+    public void setNickname(String nickname) throws IOException {
+        SocketMessage message = new SocketMessage(MessageCodes.SET_NICKNAME_REQUEST, nickname);
+        out.writeObject(message);
+        out.flush();
     }
 
     @Override
@@ -36,7 +42,7 @@ public class ServerProxy implements VirtualServer {
     @Override
     public void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException {
         SocketMessage message = new SocketMessage(
-                MessageCodes.MATCH_CREATE_REQUEST,
+                MessageCodes.MATCH_JOIN_REQUEST,
                 new SocketMessage.IdAndNickname(matchId, nickname)
         );
         out.writeObject(message);

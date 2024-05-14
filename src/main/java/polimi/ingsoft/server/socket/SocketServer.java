@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -44,6 +43,30 @@ public class SocketServer implements ConnectionsClient {
             server.close();
         } catch (IOException ignored) { }
         executor.shutdown();
+    }
+
+    public void addClient(VirtualView client, String stub) {
+        clients.put(stub, client);
+    }
+
+    public boolean setNicknameForClient(String stub, String nickname) {
+        synchronized (this.clients) {
+            if (clients.containsKey(nickname)) {
+                return false;
+            }
+            VirtualView client = clients.get(stub);
+            clients.remove(stub);
+            clients.put(nickname, client);
+            return true;
+        }
+    }
+
+    public void singleUpdateNickname(VirtualView client, boolean result) {
+        synchronized (this.clients) {
+            try {
+                client.showNicknameUpdate(result);
+            } catch (IOException ignore) { }
+        }
     }
 
     public void singleUpdateMatchesList(VirtualView client, List<Integer> matches) {

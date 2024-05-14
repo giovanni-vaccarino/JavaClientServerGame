@@ -2,7 +2,6 @@ package polimi.ingsoft.client;
 
 import polimi.ingsoft.client.rmi.RmiClient;
 import polimi.ingsoft.client.ui.UIType;
-import polimi.ingsoft.client.ui.cli.NickChoiceCLI;
 import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
 import polimi.ingsoft.client.ui.cli.Protocols;
 import polimi.ingsoft.client.socket.SocketClient;
@@ -23,34 +22,28 @@ public class MainClient {
     private static final String rmiServerName = "MatchManagerServer";
 
     public static void main(String[] args) throws Exception {
-        //TODO Add validation of nickname
-        NickChoiceCLI nickChoiceCLI = new NickChoiceCLI(scanner, printStream);
-        String nickname = nickChoiceCLI.runChooseNickRoutine();
-
         ProtocolChoiceCLI protocolChoiceCLI = new ProtocolChoiceCLI(scanner, printStream);
         Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
 
         try (
-            Client client = createClient(protocol, nickname)
+            Client client = createClient(protocol)
         ) {
-
-            client.getUI().showWelcomeScreen();
+            client.getUI();
             while (true) { }
         } catch (IOException ignored) { }
     }
     
-    private static Client createClient(Protocols protocol, String nickname) throws IOException {
+    private static Client createClient(Protocols protocol) throws IOException {
         if (protocol == Protocols.RMI)
-            return createRmiClient(nickname);
+            return createRmiClient();
         else
             return createSocketClient();
     }
 
-
-    private static Client createRmiClient(String nickname){
-        try{
-            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner, nickname);
-        }catch (RemoteException | NotBoundException exception){
+    private static Client createRmiClient() {
+        try {
+            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner);
+        } catch (RemoteException | NotBoundException exception) {
             System.out.println(exception);
             return null;
         }

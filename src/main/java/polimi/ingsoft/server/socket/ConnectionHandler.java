@@ -23,6 +23,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     private final SocketServer server;
 
     private final PrintStream logger;
+    private String nickname = getRandomNickname();
 
     public ConnectionHandler(Socket socket, MainController controller, SocketServer server, PrintStream logger) throws IOException {
         this.socket = socket;
@@ -32,6 +33,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.view = new ClientProxy(out);
         this.logger = logger;
+        this.server.addClient(this, nickname);
     }
 
     @Override
@@ -47,18 +49,19 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
                 // Read message and perform action
                 switch (type) {
-                    case CONNECT -> {
+                    case CONNECT -> this.server.clients.put(nickname, this);
+                    case SET_NICKNAME_REQUEST -> {
                         String nickname = (String) payload;
-                        this.server.clients.put(nickname, this);
+                        boolean result = this.server.setNicknameForClient(this.nickname, nickname);
+                        this.nickname = nickname;
+                        this.server.singleUpdateNickname(this, result);
                     }
                     case MATCHES_LIST_REQUEST -> {
                         List<Integer> matches = controller.getMatches();
                         this.server.singleUpdateMatchesList(this, matches);
                     }
                     case MATCH_JOIN_REQUEST -> {
-                        SocketMessage.IdAndNickname idAndNickname = (SocketMessage.IdAndNickname) payload;
-                        int id = idAndNickname.id;
-                        String nickname = idAndNickname.nickname;
+                        int id = (Integer) payload;
                         Boolean success = controller.joinMatch(id, nickname);
                         this.server.singleUpdateMatchJoin(this, success);
                         // TODO Send LOBBY_PLAYER_JOINED_UPDATE to other players in lobby
@@ -81,6 +84,14 @@ public class ConnectionHandler implements Runnable, VirtualView {
             socket.close();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void showNicknameUpdate(boolean result) throws IOException {
+        logger.println("SOCKET: Sending nickname update: " + result);
+        synchronized (this.view) {
+            this.view.showNicknameUpdate(result);
         }
     }
 
@@ -149,5 +160,20 @@ public class ConnectionHandler implements Runnable, VirtualView {
                 this.view.reportError(details);
             } catch (IOException ignore) { }
         }
+    }
+
+    static String getRandomNickname() {
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        StringBuilder sb = new StringBuilder(10);
+
+        for (int i = 0; i < 10; i++) {
+            int index = (int)(AlphaNumericString.length() * Math.random());
+            sb.append(AlphaNumericString.charAt(index));
+        }
+
+        return sb.toString();
     }
 }

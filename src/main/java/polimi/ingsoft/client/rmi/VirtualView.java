@@ -9,7 +9,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public interface VirtualView extends Remote{
+public interface VirtualView extends Remote {
+    void showNicknameUpdate(boolean result) throws IOException;
     void showJoinMatchResult(Boolean joinResult, List<String> players) throws  IOException;
     void showUpdateMatchesList(List<Integer> matches) throws RemoteException, IOException;
     void showUpdateMatchJoin(Boolean success) throws IOException, RemoteException;
