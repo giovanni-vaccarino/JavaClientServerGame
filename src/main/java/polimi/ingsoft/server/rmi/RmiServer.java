@@ -91,6 +91,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             }
 
             case "joinMatch" -> {
+                logger.println("RMI: Received join match request");
                 VirtualView client = (VirtualView) args[0];
                 int matchId = (Integer) args[1];
                 String nick = (String) args[2];

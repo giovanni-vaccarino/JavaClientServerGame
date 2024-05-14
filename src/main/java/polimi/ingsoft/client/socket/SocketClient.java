@@ -34,17 +34,17 @@ public class SocketClient implements Client {
             int port,
             UIType uiType,
             PrintStream printStream,
-            Scanner scanner
+            InputStream inputStream
     ) throws IOException {
         socket = new Socket(hostName, port);
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
         server = new ServerProxy(out);
         if (uiType == UIType.CLI)
-            ui = new CLI(scanner, printStream, this);
+            ui = new CLI(inputStream, printStream, this);
         else
             // TODO create GUI here
-            ui = new CLI(scanner, printStream, this);
+            ui = new CLI(inputStream, printStream, this);
     }
 
     public void run() {
