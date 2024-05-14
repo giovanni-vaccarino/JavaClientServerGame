@@ -33,17 +33,17 @@ public class SocketClient implements Client {
             int port,
             UIType uiType,
             PrintStream printStream,
-            InputStream inputStream
+            Scanner scanner
     ) throws IOException {
         socket = new Socket(hostName, port);
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
         server = new ServerProxy(out);
         if (uiType == UIType.CLI)
-            ui = new CLI(inputStream, printStream, this);
+            ui = new CLI(scanner, printStream, this);
         else
             // TODO create GUI here
-            ui = new CLI(inputStream, printStream, this);
+            ui = new CLI(scanner, printStream, this);
     }
 
     public void run() {
@@ -63,6 +63,10 @@ public class SocketClient implements Client {
             Object payload = item.payload;
             // Read message and perform action
             switch (type) {
+                case SET_NICKNAME_UPDATE -> {
+                    Boolean result = (Boolean) payload;
+                    this.showNicknameUpdate(result);
+                }
                 case MATCHES_LIST_UPDATE -> {
                     List<Integer> matches = (List<Integer>) payload;
                     this.showUpdateMatchesList(matches);
@@ -88,24 +92,30 @@ public class SocketClient implements Client {
     }
 
     @Override
+    public void showNicknameUpdate(boolean result) throws IOException {
+        ui.updateNickname(result);
+    }
+
+    @Override
     public void showJoinMatchResult(Boolean joinResult, List<String> players) throws IOException {
 
     }
 
     @Override
     public void showUpdateMatchesList(List<Integer> matches) throws IOException {
-        System.out.println("Got update: MATCHES LIST: " + matches);
-        ui.showMatchesList(matches);
+        // System.out.println("Got update: MATCHES LIST: " + matches);
+        ui.updateMatchesList(matches);
     }
 
     @Override
     public void showUpdateMatchJoin(Boolean success) throws IOException {
-        System.out.println("Got update: MATCH JOIN: " + success);
+        // System.out.println("Got update: MATCH JOIN: " + success);
     }
 
     @Override
     public void showUpdateMatchCreate(MatchController match) throws IOException {
-        System.out.println("Got update: MATCH CREATE: " + match.getMatchId());
+        // System.out.println("Got update: MATCH CREATE: " + match.getMatchId());
+        ui.showMatchCreate(match);
     }
 
     @Override
@@ -166,6 +176,11 @@ public class SocketClient implements Client {
     @Override
     public UI getUI() {
         return ui;
+    }
+
+    @Override
+    public void setNickname(String nickname) throws IOException {
+        server.setNickname(nickname);
     }
 
     @Override

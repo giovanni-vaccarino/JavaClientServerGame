@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
 public interface Client extends Remote, AutoCloseable, VirtualView {
     void run() throws RemoteException;
     UI getUI() throws RemoteException;
+    void setNickname(String nickname) throws IOException;
     void clientJoinMatch(Integer matchId, String nickname) throws RemoteException;
 
     void getMatches(VirtualView client) throws IOException;

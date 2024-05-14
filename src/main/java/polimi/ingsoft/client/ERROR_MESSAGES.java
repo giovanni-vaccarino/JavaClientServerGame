@@ -5,7 +5,9 @@ public enum ERROR_MESSAGES {
     PROTOCOL_NUMBER_OUT_OF_BOUND("Protocol does not exist"),
     MATCH_NUMBER_OUT_OF_BOUND("Match does not exist"),
     NICKNAME_NOT_AVAILABLE("Nickname is not available"),
-    UNABLE_TO_JOIN_MATCH("Unable to join match");
+    UNKNOWN_COMMAND("Unknown command"),
+    UNABLE_TO_JOIN_MATCH("Unable to join match"),
+    UNABLE_TO_CREATE_MATCH("Unable to create match");
 
     private final String value;
 

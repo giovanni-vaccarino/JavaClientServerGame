@@ -188,12 +188,17 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     }
 
     @Override
-    public void connect(VirtualView client, String nickname) throws RemoteException {
+    public void connect(VirtualView client) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall("connect", new Object[]{client, nickname}));
+            methodQueue.put(new RmiMethodCall("connect", new Object[]{client}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    @Override
+    public void setNickname(String nickname) throws IOException {
+
     }
 
     @Override

@@ -21,7 +21,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class RmiClient extends UnicastRemoteObject implements Client {
     private final VirtualServerInterface server;
 
@@ -32,19 +31,17 @@ public class RmiClient extends UnicastRemoteObject implements Client {
                      Integer rmiServerPort,
                      UIType ui,
                      PrintStream printStream,
-                     Scanner scanner,
-                     String nickname) throws RemoteException, NotBoundException{
+                     Scanner scanner) throws RemoteException, NotBoundException{
         Registry registry = LocateRegistry.getRegistry(rmiServerHostName, rmiServerPort);
         VirtualServerInterface rmiServer = (VirtualServerInterface) registry.lookup(rmiServerName);
         this.server = rmiServer;
-        this.server.connect(this, nickname);
+        this.server.connect(this);
         if (ui == UIType.CLI){
             this.ui = new CLI(scanner, printStream, this);
         } else{
             // TODO create GUI here
             this.ui = new CLI(scanner, printStream, this);
         }
-
     }
 
     @Override
@@ -58,12 +55,26 @@ public class RmiClient extends UnicastRemoteObject implements Client {
     }
 
     @Override
+    public void setNickname(String nickname) throws RemoteException {
+        try {
+            server.setNickname(nickname);
+        } catch (IOException exception) {
+
+        }
+    }
+
+    @Override
     public void clientJoinMatch(Integer matchId, String nickname) throws RemoteException {
         try {
             server.joinMatch(this, matchId, nickname);
         } catch (IOException exception){
 
         }
+    }
+
+    @Override
+    public void showNicknameUpdate(boolean result) throws IOException {
+        ui.updateNickname(result);
     }
 
     @Override
@@ -84,7 +95,7 @@ public class RmiClient extends UnicastRemoteObject implements Client {
         System.out.println("Got update: MATCHES LIST: " + matches);
             new Thread(()->{
                 try {
-                    ui.showMatchesList(matches);
+                    ui.updateMatchesList(matches);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

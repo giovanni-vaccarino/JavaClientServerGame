@@ -2,6 +2,8 @@ package polimi.ingsoft.server.socket.protocol;
 
 public enum MessageCodes {
     CONNECT,
+    SET_NICKNAME_REQUEST,
+    SET_NICKNAME_UPDATE,
     MATCHES_LIST_REQUEST,
     MATCHES_LIST_UPDATE,
     MATCH_JOIN_REQUEST,
