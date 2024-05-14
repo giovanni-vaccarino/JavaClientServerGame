@@ -115,9 +115,11 @@ public class SocketServer implements ConnectionsClient {
     public void broadcastUpdateBoard() {
         synchronized (this.clients) {
             for (var client : this.clients.values()) {
+                /*
                 try {
                     client.showUpdateBoard();
                 } catch (IOException ignored) { }
+                */
             }
         }
     }

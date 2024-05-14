@@ -1,9 +1,14 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.Message;
+import polimi.ingsoft.server.model.PlayedCard;
+import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
@@ -145,12 +150,24 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateBoard() {
+    public void showMatchControllerServerStub(VirtualMatchController controller) throws IOException {
+
+    }
+
+    @Override
+    public void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException {
+        /*
         synchronized (this.view) {
             try {
                 this.view.showUpdateBoard();
             } catch (IOException ignore) { }
         }
+        */
+    }
+
+    @Override
+    public void showUpdateGameState(GameState gameState) throws IOException {
+
     }
 
     @Override

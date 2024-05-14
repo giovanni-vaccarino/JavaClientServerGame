@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
@@ -17,13 +18,18 @@ import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class RmiServer implements VirtualServerInterface, ConnectionsClient {
-    final MainController mainController;
+    private final MainController mainController;
+
+    private final Map<Integer, VirtualMatchController> matchControllerServer = new HashMap<>();
 
     private final PrintStream logger;
 
@@ -76,6 +82,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
             case MATCH_CREATE_REQUEST -> {
                 Integer matchId = this.addMatch((Integer) args[0]);
+                MatchController matchController = mainController.getMatch(matchId);
                 List<Integer> listMatches = this.listMatches();
 
                 // Creating a new list for the players
@@ -83,7 +90,12 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     matchNotificationList.put(matchId, new ArrayList<>());
                 }
 
-                // TODO Do a blocking queue also for this?
+
+                // Creating the MatchControllerRmiServer
+                VirtualMatchController stubController = this.createMatchControllerServer(matchController, matchNotificationList.get(matchId), this.logger);
+
+                matchControllerServer.put(matchId, stubController);
+
                 synchronized (this.clients) {
                     for (var client : this.clients.values()) {
                         try {
@@ -93,6 +105,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                         }
                     }
                 }
+                //TODO Join the first client
             }
 
             case MATCH_JOIN_REQUEST -> {
@@ -101,24 +114,20 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 Integer matchId = (Integer) args[1];
                 String nick = (String) args[2];
 
-                Boolean joinResult = this.enterMatch(matchId, nick);
-
-                //Adding the client to the match notification list
-                synchronized (matchNotificationList){
-                    matchNotificationList.get(matchId).add(client);
-                }
+                this.enterMatch(matchId, nick);
 
                 MatchController match = this.mainController.getMatch(matchId);
                 List<String> players = match.getNamePlayers();
 
-                // TODO put the notification to the client
-                if (joinResult) {
-                    try {
-                        client.showJoinMatchResult(joinResult, players);
-                    } catch (IOException exception) {
+                try {
+                    client.showJoinMatchResult(true, players);
 
+                    //Adding the client to the match notification list
+                    synchronized (matchNotificationList){
+                        matchNotificationList.get(matchId).add(client);
                     }
-                } else {
+                    client.showMatchControllerServerStub(matchControllerServer.get(matchId));
+                } catch (IOException exception) {
                     //client.reportJoinMatchError();
                 }
             }
@@ -190,45 +199,21 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
         return this.mainController.joinMatch(matchId, nickname);
     }
 
-    private Boolean writeMessage(Integer matchId, String message){
-        MatchController matchController = mainController.getMatch(matchId);
-        if (matchController != null) {
-            matchController.writeMessage(message);
-            return true;
-        }
-
-        return false;
-    }
-
-    private Boolean takeCard(Integer matchId, Player player, String deckType, PlaceInPublicBoard.Slots slot){
-        MatchController matchController = mainController.getMatch(matchId);
-        if (matchController != null) {
-            try{
-                matchController.drawCard(player, deckType, slot);
-                return true;
-            } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception){
-                //TODO Add Exception Handler
-            }
-        }
-
-        return false;
-    }
-
     private List<VirtualView> getPlayersToNotify(Integer matchId){
         return matchNotificationList.get(matchId);
     }
 
-    private Boolean addBoardCard(Integer matchId, Player player, MixedCard card, Coordinates coordinates, Boolean isFacingUp){
-        MatchController matchController = mainController.getMatch(matchId);
-        if (matchController != null) {
-            try{
-                matchController.placeCard(player, card, coordinates, isFacingUp);
-                return true;
-            } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception){
-                //TODO Add Exception Handler
-            }
-        }
+    private VirtualMatchController createMatchControllerServer(MatchController matchController, List<VirtualView> clients, PrintStream logger){
+        try {
+            RmiMatchControllerServer matchControllerRmiServer = new RmiMatchControllerServer(matchController, clients, logger);
+            VirtualMatchController stub = (VirtualMatchController) UnicastRemoteObject.exportObject(matchControllerRmiServer, 0);
 
-        return false;
+            logger.println("RmiServer: RMI MatchController Server is running");
+
+            return stub;
+        } catch (RemoteException e) {
+            logger.println("RmiServer: Error occurred while starting RMI MatchController server:" + e.getMessage());
+            return null;
+        }
     }
 }

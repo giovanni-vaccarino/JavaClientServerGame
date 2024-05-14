@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.rmi;
 
 
+import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
@@ -23,7 +24,8 @@ public interface VirtualView extends Remote {
 
     void showUpdatePublicBoard() throws IOException;
 
-    void showUpdateBoard() throws IOException;
+    void showMatchControllerServerStub(VirtualMatchController controller) throws IOException;
+
     void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException;
 
     void showUpdateGameState(GameState gameState) throws IOException;

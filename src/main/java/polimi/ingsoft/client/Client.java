@@ -4,12 +4,11 @@ import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.CLI;
+import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.common.VirtualServer;
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.Message;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
+import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -34,6 +33,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     protected abstract VirtualServer getServer();
+
     public abstract void run();
 
     public void showNicknameUpdate(boolean result) throws IOException {
@@ -57,9 +57,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     public void showUpdatePublicBoard() throws IOException {
 
     }
-    public void showUpdateBoard() throws IOException {
 
-    }
     public void reportError(String details) throws IOException {
 
     }
@@ -85,14 +83,29 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     public void addMessage(int matchId, String message) throws IOException {
-        getServer().addMessage(matchId, message);
+        //getServer().addMessage(matchId, message);
     }
 
     public void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-        getServer().drawCard(matchId, playerName, deckType, slot);
+        //getServer().drawCard(matchId, playerName, deckType, slot);
     }
 
     public void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
-        getServer().placeCard(matchId, playerName, card, coordinates, facingUp);
+        //getServer().placeCard(matchId, playerName, card, coordinates, facingUp);
+    }
+
+    @Override
+    public void showMatchControllerServerStub(VirtualMatchController controller) throws IOException{
+
+    }
+
+    @Override
+    public void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException{
+
+    }
+
+    @Override
+    public void showUpdateGameState(GameState gameState) throws IOException{
+
     }
 }

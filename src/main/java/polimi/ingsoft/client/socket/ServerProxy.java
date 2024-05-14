@@ -1,17 +1,20 @@
 package polimi.ingsoft.client.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
+import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.rmi.RemoteException;
 
-public class ServerProxy implements VirtualServer {
+public class ServerProxy implements VirtualServer, VirtualMatchController {
     private final ObjectOutputStream out;
 
     public ServerProxy(ObjectOutputStream out) {
@@ -55,17 +58,22 @@ public class ServerProxy implements VirtualServer {
     }
 
     @Override
-    public void addMessage(int matchId, String message) throws IOException {
+    public void sendMessage(Player player, String message) throws RemoteException {
 
     }
 
     @Override
-    public void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
+    public void sendPrivateMessage(Player player, String message) throws RemoteException {
 
     }
 
     @Override
-    public void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
+    public void drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
+
+    }
+
+    @Override
+    public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException {
 
     }
 }

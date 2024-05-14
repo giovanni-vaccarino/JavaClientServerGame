@@ -2,7 +2,6 @@ package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
-import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.exceptions.WrongGamePhaseException;
 import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
@@ -11,23 +10,26 @@ import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class MatchControllerRmiServer implements VirtualMatchController {
+public class RmiMatchControllerServer implements VirtualMatchController {
 
     private final MatchController matchController;
 
     private final List<VirtualView> clients;
 
+    private final PrintStream logger;
+
     private final BlockingQueue<RmiMethodCall> methodQueue = new LinkedBlockingQueue<>();
 
-    public MatchControllerRmiServer(MatchController mainController, List<VirtualView> clients) {
+    public RmiMatchControllerServer(MatchController mainController, List<VirtualView> clients, PrintStream logger) {
         this.matchController = mainController;
         this.clients = clients;
+        this.logger = logger;
         this.methodWorkerThread.start();
     }
 
@@ -103,7 +105,7 @@ public class MatchControllerRmiServer implements VirtualMatchController {
                     synchronized (this.clients){
                         for(var client : clients){
                             client.showUpdateBoard(player, coordinates, playedCard);
-                            //client.showUpdateGameState();
+                            client.showUpdateGameState(matchController.getGameState());
                         }
                     }
                 } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception ){
