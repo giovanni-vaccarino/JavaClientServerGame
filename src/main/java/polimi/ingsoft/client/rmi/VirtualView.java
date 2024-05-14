@@ -23,10 +23,10 @@ public interface VirtualView extends Remote {
 
     void showUpdatePublicBoard() throws IOException;
 
+    void showUpdateBoard() throws IOException;
     void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException;
 
     void showUpdateGameState(GameState gameState) throws IOException;
 
-    void reportError(String details) throws IOException, RemoteException;
-
+    void reportError(String details) throws IOException;
 }
