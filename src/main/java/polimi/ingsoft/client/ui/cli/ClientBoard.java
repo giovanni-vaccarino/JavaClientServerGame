@@ -48,7 +48,7 @@ public class ClientBoard {
                 getCardAtRespective(-2, 0) != null)) System.out.print(UPLEFTARROW);
         else System.out.print(" ");
         if (getCardAtRespective(-1, -1) != null &&
-                getCardAtRespective(-2, -2) != null) System.out.print("        |");
+                getCardAtRespective(-2, -2) != null) System.out.print("         |");
         else System.out.print("         ");
         for (int i = 0; i < 14; i++) System.out.print(" ");
         if (getCardAtRespective(0, 2) != null) System.out.print("|");
@@ -108,46 +108,51 @@ public class ClientBoard {
     }
 
     public String printUpLeftCorner(PlayedCard card, int count) {
-        String pre="",color;
+        String pre = "", color;
+        CornerSpace corner;
+        switch (count) {
+            case 0, 1:
+                pre = " ";
+                break;
+            case 2:
+                if (getCardAtRespective(-2, -2) == null) pre = " ";
+                else pre = "_";
+                break;
+        }
         if (getCardAtRespective(-2, -2) == null ||
                 getCardAtRespective(-2, -2).getOrder() < card.getOrder()) {//caso in cui l'angolo in alto a sx non sia coperto
-                switch(count){
-                    case 0,1:
-                        pre=" ";
-                        break;
+            corner = card.getUpLeftCorner();
+            if (corner == null) return defineColor(card) + "          ";
+        } else{
+            corner = getCardAtRespective(-2, -2).getBottomRightCorner();
+            if (corner == null)return defineColor(getCardAtRespective(-2,-2)) + "          ";
+        }
+            if (corner.isEmpty()) return pre+YELLOW + "          ";
+            else {
+                color = switch (corner.getItems().getFirst()) {
+                    case Resource.LEAF -> GREEN;
+                    case Resource.WOLF -> BLUE;
+                    case Resource.BUTTERFLY -> PURPLE;
+                    case Resource.MUSHROOM -> RED;
+                    default -> YELLOW;
+                };
+                pre = pre + color;
+                switch (count) {
+                    case 0:
+                        return pre + BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡";
+                    case 1:
+                        switch (corner.getItems().getFirst()) {
+                            case FEATHER -> pre = pre + BLACKTEXT + "|FEATHER |";
+                            case SCROLL -> pre = pre + BLACKTEXT + "| SCROLL |";
+                            case POTION -> pre = pre + BLACKTEXT + "| POTION |";
+                            default -> pre = pre + BLACKTEXT + "|        |";
+                        }
+                        return pre;
                     case 2:
-                        if(getCardAtRespective(-2, -2) == null)pre=" ";
-                        else pre="_";
-                        break;
+                        return pre + BLACKTEXT + "!________!";
                 }
-                if(card.getUpLeftCorner()==null)System.out.print(defineColor(card)+"          ");
-                else if(card.getUpLeftCorner().isEmpty())System.out.print(YELLOW+"          ");
-                else {
-                    color=switch(card.getUpLeftCorner().getItems().getFirst()){
-                        case Resource.LEAF ->GREEN;
-                        case Resource.WOLF -> BLUE;
-                        case Resource.BUTTERFLY -> PURPLE;
-                        case Resource.MUSHROOM -> RED;
-                        default->YELLOW;
-                    };
-                    pre=pre+color;
-                    switch (count) {
-                        case 0:
-                            return pre+BLACKTEXT+"¡‾‾‾‾‾‾‾‾¡";
-                        case 1:
-                            switch(card.getUpLeftCorner().getItems().getFirst()){
-                                    case FEATHER -> pre=pre+BLACKTEXT+"|FEATHER |";
-                                    case SCROLL -> pre=pre+BLACKTEXT+"| SCROLL |";
-                                    case POTION -> pre=pre+BLACKTEXT+"| POTION |";
-                                    default -> pre=pre+BLACKTEXT+"|        |";
-                                }
-                                return pre;
-                        case 2:
-                            return pre+BLACKTEXT+"!________!";
-                    }
 
-                }
-        }else return "";
+            }
         return "";
     }
 
