@@ -1,15 +1,17 @@
 package polimi.ingsoft.server.rmi;
 
+import polimi.ingsoft.server.socket.protocol.MessageCodes;
+
 public class RmiMethodCall {
-    private String methodName;
+    private MessageCodes methodName;
     private Object[] args;
 
-    public RmiMethodCall(String methodName, Object[] args) {
+    public RmiMethodCall(MessageCodes methodName, Object[] args) {
         this.methodName = methodName;
         this.args = args;
     }
 
-    public String getMethodName() {
+    public MessageCodes getMethodName() {
         return methodName;
     }
 

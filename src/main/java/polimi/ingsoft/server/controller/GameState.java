@@ -79,6 +79,7 @@ public class GameState implements Serializable {
             case GAME_PHASE.LAST_ROUND -> {
                 if(this.turnNumber == this.endRound){
                     this.gamePhase = GAME_PHASE.END;
+                    //TODO this.calculateFinalScore();
                 }
             }
 

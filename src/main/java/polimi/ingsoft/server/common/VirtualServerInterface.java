@@ -19,10 +19,4 @@ public interface VirtualServerInterface extends Remote, VirtualServer {
 
     void reJoinMatch(Integer matchId, String nickname) throws RemoteException;
 
-    void addMessage(int matchId, String message) throws RemoteException;
-
-    void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException;
-
-    void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException;
-
 }
