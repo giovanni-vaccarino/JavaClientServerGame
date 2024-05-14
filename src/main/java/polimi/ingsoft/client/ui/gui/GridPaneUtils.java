@@ -14,6 +14,17 @@ public class GridPaneUtils {
                 removeImageViewIfExists(gridPane,r,c);
             }
         }
+        // For multiple img:
+        for (int c=0; c<colNum; c++){
+            for (int r=0; r<rowNum; r++){
+                removeImageViewIfExists(gridPane,r,c);
+            }
+        }
+        for (int c=0; c<colNum; c++){
+            for (int r=0; r<rowNum; r++){
+                removeImageViewIfExists(gridPane,r,c);
+            }
+        }
     }
     public static void removeImageViewIfExists(GridPane gridPane, int row, int col) {
         Node node = getNodeFromGridPane(gridPane, row, col);

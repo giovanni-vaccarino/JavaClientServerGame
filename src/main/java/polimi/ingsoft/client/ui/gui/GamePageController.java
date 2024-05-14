@@ -1,3 +1,4 @@
+
 package polimi.ingsoft.client.ui.gui;
 
 import javafx.fxml.FXML;
@@ -18,8 +19,6 @@ import java.util.*;
 
 /*TO FIX:
 - fix score on board method (mettere pioli sulla carta iniziale)
-- add a variable to track score of each player (Hashmap<Nickname,Score>) --> link it to the color for the scoreBoard
-- definire setter per metodi qui sopra
 - diminuire dimensioni celle freccie per non ostacolare il tocco sulle carte
 - carica board altri giocatori e testa il funzionamento (non solo su main player)
  */
@@ -53,6 +52,7 @@ public class GamePageController implements Initializable{
     private HashMap<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
     private String myName;
+    private String firstPlayer;
 
     private ImageView[][] boardAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
 
@@ -142,6 +142,7 @@ public class GamePageController implements Initializable{
         setBoardCoordinatesOrder(1,1,cardPath,1);
 
         setMyName("Nico");
+        setFirstPlayer("Nico");
 
         // Set other Player's Boards
         List<String> playerList = Arrays.asList("Nico","Andre", "Gio", "Simon");
@@ -171,6 +172,10 @@ public class GamePageController implements Initializable{
 
     public void setMyName(String n){
         this.myName=n;
+    }
+
+    public void setFirstPlayer(String n){
+        this.firstPlayer=n;
     }
 
     public void setScore(List<Integer> s){
@@ -375,11 +380,14 @@ public class GamePageController implements Initializable{
             }
         }
 
-        //scoreOnBoard();
+        scoreOnBoard();
     }
 
     public void scoreOnBoard(){
-        if(nicknameColor.containsKey(boardNickname)){
+        if(nicknameColor.containsKey(boardNickname) &&
+                CenterBoardX>=0 && CenterBoardX<5 &&
+                CenterBoardY>=0 && CenterBoardY<9){
+
             String color = nicknameColor.get(boardNickname);
             String img_path = "";
 
@@ -400,11 +408,29 @@ public class GamePageController implements Initializable{
 
             scoreImg.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
 
-            scoreImg.setLayoutX(80);
-            scoreImg.setLayoutX(50);
+            scoreImg.setTranslateX(45);
+            scoreImg.setTranslateY(35);
 
             // Add the ImageView to the specific cell in the GridPane
             board.add(scoreImg, CenterBoardX, CenterBoardY);
+
+            if(boardNickname.equals(firstPlayer)){
+                img_path = "/polimi/ingsoft/demo/graphics/img/score/blackScore.png";
+
+                scoreImg = new ImageView(new Image(img_path));
+
+                scoreImg.setFitWidth(29);
+                scoreImg.setFitHeight(29);
+
+                scoreImg.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+
+                scoreImg.setTranslateX(65);
+                scoreImg.setTranslateY(35);
+
+
+                // Add the ImageView to the specific cell in the GridPane
+                board.add(scoreImg, CenterBoardX, CenterBoardY);
+            }
         }
     }
     public void placeScore(){
@@ -666,6 +692,10 @@ public class GamePageController implements Initializable{
         placeCard(x,y,gridPane,cardImg);
     }
 
+    public void placeCardBoard(int x, int y, ImageView imageView){
+        placeCard(x,y,board,imageView);
+    }
+
     public void placeCard(int x, int y, GridPane gridPane, ImageView imageView){
 
         imageView.setFitWidth(140);
@@ -690,19 +720,19 @@ public class GamePageController implements Initializable{
     }*/
 
     public void moveBoardHandler_N(){
-        moveBoard(0,2);
+        moveBoard(0,-2);
     }
 
     public void moveBoardHandler_E(){
-        moveBoard(2,0);
-    }
-
-    public void moveBoardHandler_O(){
         moveBoard(-2,0);
     }
 
+    public void moveBoardHandler_O(){
+        moveBoard(2,0);
+    }
+
     public void moveBoardHandler_S(){
-        moveBoard(0,-2);
+        moveBoard(0,2);
     }
 
     public void moveBoard(int x, int y){
