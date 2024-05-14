@@ -14,8 +14,8 @@ public class QuestCard extends Card implements Drawable, ConditionalPointsCard {
         return pattern.getMatch(board,new Coordinates(0,0))*super.getScore();
     }
     @Override
-    public Pattern getPlayPattern() {
+    public Pattern getPointPattern() {
         return pattern;
     }
-    public Pattern getPointPattern(){return null;}
+    public ItemPattern getPlayPattern(){return null;}
 }

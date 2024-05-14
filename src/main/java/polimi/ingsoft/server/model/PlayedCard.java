@@ -26,6 +26,9 @@ public class PlayedCard {
     public Face getFace(){
         return facingUp ? card.getFront() : card.getBack();
     }
+    public int getScore(){
+        return facingUp? 0:card.getScore();
+    }
     public void setUpRight(){
         this.upRight=false;
     }
@@ -37,6 +40,10 @@ public class PlayedCard {
     }
     public void setDownLeft() {
         this.downLeft = false;
+    }
+
+    public int getOrder() {
+        return order;
     }
 
     public GameCard getCard() {
@@ -81,10 +88,6 @@ public class PlayedCard {
 
     public CenterSpace getCenter(){
         return card.getFront().getCenter();
-    }
-
-    public int getOrder(){
-        return this.order;
     }
 
 }

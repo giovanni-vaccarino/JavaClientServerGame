@@ -22,6 +22,6 @@ public class ResourceCard extends MixedCard {
     public Pattern getPointPattern() {
         return null;
     }
-
+    public int getMatches(Board board){return 1;}
 
 }

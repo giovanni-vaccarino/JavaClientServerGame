@@ -3,6 +3,6 @@ package polimi.ingsoft.server.model;
 public interface ConditionalPointsCard {
 
     int getMatches(Board board);
-    Pattern getPlayPattern();
+    ItemPattern getPlayPattern();
     Pattern getPointPattern();
 }

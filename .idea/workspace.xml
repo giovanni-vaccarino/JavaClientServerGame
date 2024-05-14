@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="further testing on clienthand">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/CLI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/ClientBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/ClientBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/MixedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/MixedCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ResourceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ResourceCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/client/ui/cli/ClientBoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/client/ui/cli/ClientBoardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +67,8 @@
     &quot;JUnit.BoardTest.add.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.BoardTest.check.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientBoardTest.printBoard.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientHandTest.print.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CoordinatesTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CoordinatesTest.upLeft.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CornerSpaceTest.getItems.executor&quot;: &quot;Run&quot;,
@@ -110,34 +119,34 @@
       <recent name="polimi.ingsoft" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino">
-    <configuration name="BoardTest.add" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ClientBoardTest.printBoard">
+    <configuration name="ClientBoardTest.printBoard" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.model.*" />
+          <option name="PATTERN" value="polimi.ingsoft.client.ui.cli.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="polimi.ingsoft.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.model.BoardTest" />
-      <option name="METHOD_NAME" value="add" />
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.client.ui.cli" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.client.ui.cli.ClientBoardTest" />
+      <option name="METHOD_NAME" value="printBoard" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="QuestCardTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientHandTest.print" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="polimi.ingsoft.server.model.*" />
+          <option name="PATTERN" value="polimi.ingsoft.client.ui.cli.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="polimi.ingsoft.server.model" />
-      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.server.model.QuestCardTest" />
-      <option name="METHOD_NAME" value="test" />
+      <option name="PACKAGE_NAME" value="polimi.ingsoft.client.ui.cli" />
+      <option name="MAIN_CLASS_NAME" value="polimi.ingsoft.client.ui.cli.ClientHandTest" />
+      <option name="METHOD_NAME" value="print" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -176,19 +185,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.ClientBoardTest.printBoard" />
+      <item itemvalue="JUnit.ClientHandTest.print" />
       <item itemvalue="JUnit.ingsoft in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
-      <item itemvalue="JUnit.QuestCardTest.test" />
       <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
-      <item itemvalue="JUnit.BoardTest.add" />
       <item itemvalue="JUnit.SchemePatternTest.getMatch" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ClientBoardTest.printBoard" />
+        <item itemvalue="JUnit.ClientHandTest.print" />
         <item itemvalue="JUnit.java in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
         <item itemvalue="JUnit.ingsoft in ing-sw-2024-Zacchi-Vigano-Vacis-Vaccarino" />
         <item itemvalue="JUnit.SchemePatternTest.getMatch" />
-        <item itemvalue="JUnit.QuestCardTest.test" />
-        <item itemvalue="JUnit.BoardTest.add" />
       </list>
     </recent_temporary>
   </component>
@@ -245,6 +254,10 @@
       <workItem from="1715250561600" duration="98000" />
       <workItem from="1715322917725" duration="329000" />
       <workItem from="1715339108897" duration="162000" />
+      <workItem from="1715595688072" duration="201000" />
+      <workItem from="1715668457520" duration="92000" />
+      <workItem from="1715686849601" duration="12278000" />
+      <workItem from="1715706335312" duration="3529000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -534,6 +547,17 @@
     <MESSAGE value="major update on goldcard and resourcecard classes: now avaiable new method getpoints which returns the number of matches for pointpattern in goldcard and resourcecard classes &#10;new pattern type cornerpattern&#10;&#10;this will need a lot of fixing" />
     <MESSAGE value="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards" />
     <option name="LAST_COMMIT_MESSAGE" value="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/ClientBoard.java</url>
+          <line>162</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

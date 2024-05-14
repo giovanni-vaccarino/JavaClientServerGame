@@ -2,7 +2,7 @@ package polimi.ingsoft.server.model;
 
 import java.util.HashMap;
 
-public class GoldCard extends MixedCard implements ConditionalPointsCard {
+public class GoldCard extends MixedCard {
     ItemPattern playPattern;
     Pattern pointPattern;
     public GoldCard(String iD,Face front, Face back, ItemPattern playPattern,Pattern pointPattern,int score) {
