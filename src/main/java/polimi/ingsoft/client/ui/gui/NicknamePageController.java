@@ -1,27 +1,32 @@
 package polimi.ingsoft.client.ui.gui;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class WaitingPageController {
+public class NicknamePageController {
     private Stage stage;
+    private String nickname;
+    @FXML
+    private TextField nicknameInput;
 
     // Default constructor
-    public WaitingPageController() {}
+    public NicknamePageController() {}
 
     // Constructor with stage parameter
-    public WaitingPageController(Stage stage) {
+    public NicknamePageController(Stage stage) {
         this.stage = stage;
     }
     public void start() throws Exception {
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/WaitingPage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/NicknamePage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -46,34 +51,39 @@ public class WaitingPageController {
         stage.getScene().setRoot(root);
     }
 
-    public void cancelNewGame(ActionEvent actionEvent) throws IOException {
+    public void nextPage(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        if(!nicknameInput.getText().trim().equals("")) { // DEFINISCI E CAMBIA CON FUNZIONE VALIDATION_NAME
+            setNickname();
 
-        StartingPageController startingPageController = new StartingPageController(stage);
-        try {
-            startingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            StartingPageController startingPageController = new StartingPageController(stage);
+            try {
+                startingPageController.start();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }else{
+            nicknameInput.setStyle("-fx-background-color: #d34813;");// ADD ERROR WINDOWS
         }
     }
 
-    public void startGame(ActionEvent actionEvent) throws IOException {
+    public void setNickname() {
+        nickname = nicknameInput.getText().trim();
+        System.out.println(nickname);
+    }
+
+    public void backPage(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        ColorPageController colorPageController = new ColorPageController(stage);
+        ConnectionPageController connectionPageController = new ConnectionPageController(stage);
         try {
-            colorPageController.start();
+            connectionPageController.start(false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        /*GamePageController gamePageController = new GamePageController(stage);
-        try {
-            gamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
     }
 }

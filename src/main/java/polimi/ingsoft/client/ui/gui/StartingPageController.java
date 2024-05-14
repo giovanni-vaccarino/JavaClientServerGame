@@ -68,11 +68,18 @@ public class StartingPageController {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        ConnectionPageController connectionPageController = new ConnectionPageController(stage);
+        NicknamePageController nicknamePageController = new NicknamePageController(stage);
+        try {
+            nicknamePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        /*ConnectionPageController connectionPageController = new ConnectionPageController(stage);
         try {
             connectionPageController.start(false);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }

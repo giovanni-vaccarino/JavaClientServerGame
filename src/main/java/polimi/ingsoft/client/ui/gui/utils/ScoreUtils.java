@@ -1,4 +1,4 @@
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.utils;
 
 public class ScoreUtils {
     public int GetXFromScore(int s){

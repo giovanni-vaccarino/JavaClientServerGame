@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
 
 import java.util.*;
 

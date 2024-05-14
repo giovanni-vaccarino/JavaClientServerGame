@@ -1,4 +1,4 @@
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.utils;
 
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;

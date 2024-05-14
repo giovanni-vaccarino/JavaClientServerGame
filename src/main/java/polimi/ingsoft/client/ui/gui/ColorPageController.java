@@ -1,16 +1,13 @@
 package polimi.ingsoft.client.ui.gui;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,43 +15,43 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class JoinGamePageController implements Initializable {
+public class ColorPageController implements Initializable {
     private Stage stage;
-    private String game;
+    private String color;
     private boolean selected;
     @FXML
-    SplitMenuButton gameList;
+    SplitMenuButton colorList;
 
     // Default constructor
-    public JoinGamePageController() {}
+    public ColorPageController() {}
 
     // Constructor with stage parameter
-    public JoinGamePageController(Stage stage) {
+    public ColorPageController(Stage stage) {
         this.stage = stage;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<String> items = List.of("Game 1", "Game 2", "Game 3"); // CALL MODEL
-        resetGame();
+        List<String> items = List.of("Red", "Green", "Blue"); // CALL MODEL
+        resetColor();
         setGameList(items);
     }
-    public void resetGame(){
-        setGame("Games");
+    public void resetColor(){
+        setColor("Select color");
         selected = false;
-        gameList.setStyle("-fx-background-color: white;");
+        colorList.setStyle("-fx-background-color: white;");
     }
-    public void setGame(String s){
-        game=String.valueOf(s);
-        gameList.setText(game);
+    public void setColor(String s){
+        color=String.valueOf(s);
+        colorList.setText(color);
     }
 
-    public void setGameList(List<String> games) {
-        gameList.getItems().clear();
-        for (String game : games) {
-            MenuItem menuItem = new MenuItem(game);
-            menuItem.setOnAction(e -> handleMenuItemAction(game));
-            gameList.getItems().add(menuItem);
+    public void setGameList(List<String> colors) {
+        colorList.getItems().clear();
+        for (String color : colors) {
+            MenuItem menuItem = new MenuItem(color);
+            menuItem.setOnAction(e -> handleMenuItemAction(color));
+            colorList.getItems().add(menuItem);
         }
     }
 
@@ -62,36 +59,44 @@ public class JoinGamePageController implements Initializable {
         if(!selected){
             selected = true;
         }
-        setGame(s);
+        if(s.toLowerCase().equals("red")){
+            colorList.setStyle("-fx-background-color: red;");
+        } else if (s.toLowerCase().equals("blue")) {
+            colorList.setStyle("-fx-background-color: blue;");
+        } else if (s.toLowerCase().equals("green")) {
+            colorList.setStyle("-fx-background-color: green;");
+        } else if (s.toLowerCase().equals("yellow")) {
+            colorList.setStyle("-fx-background-color: yellow;");
+        }
+
+        setColor(s);
     }
 
-    public void refreshGames(){
-        resetGame();
-        List<String> items = List.of("Game 1", "Game 2");  // REFRESH LIST
+    public void refreshColors(){
+        resetColor();
+        List<String> items = List.of("Red", "Green");  // REFRESH LIST
         setGameList(items);
     }
-
     public void nextPage(ActionEvent actionEvent) throws IOException {
 
         if(selected){
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            WaitingPageController waitingPageController = new WaitingPageController(stage);
+            ColorWaitingPageController colorWaitingPageController = new ColorWaitingPageController(stage);
             try {
-                waitingPageController.start();
+                colorWaitingPageController.start();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }else{
-            gameList.setStyle("-fx-background-color: #d34813;");
-            gameList.setText("Select a game");// ADD ERROR WINDOWS
+            colorList.setStyle("-fx-background-color: #d34813;");
+            colorList.setText("Select another color");// ADD ERROR WINDOWS
         }
     }
-
     public void start() throws Exception {
 
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/JoinGamePage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ColorPage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -99,7 +104,7 @@ public class JoinGamePageController implements Initializable {
         //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
 
-        // Load CSS file - DO I NEED THIS?
+        // Load CSS file
         URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
@@ -108,20 +113,6 @@ public class JoinGamePageController implements Initializable {
             System.out.println("CSS file not found");
         }
         stage.getScene().setRoot(root);
-
-
-    }
-
-    public void backPage(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        StartingPageController startingPageController = new StartingPageController(stage);
-        try {
-            startingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
 

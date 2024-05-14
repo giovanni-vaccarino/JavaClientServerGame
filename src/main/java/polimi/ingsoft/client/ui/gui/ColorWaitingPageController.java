@@ -9,19 +9,19 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class WaitingPageController {
+public class ColorWaitingPageController {
     private Stage stage;
 
     // Default constructor
-    public WaitingPageController() {}
+    public ColorWaitingPageController() {}
 
     // Constructor with stage parameter
-    public WaitingPageController(Stage stage) {
+    public ColorWaitingPageController(Stage stage) {
         this.stage = stage;
     }
     public void start() throws Exception {
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/WaitingPage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ColorWaitingPage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -46,34 +46,15 @@ public class WaitingPageController {
         stage.getScene().setRoot(root);
     }
 
-    public void cancelNewGame(ActionEvent actionEvent) throws IOException {
+    public void nextPage(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        StartingPageController startingPageController = new StartingPageController(stage);
+        InitialCardPageController initialCardPageController = new InitialCardPageController(stage);
         try {
-            startingPageController.start();
+            initialCardPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void startGame(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        ColorPageController colorPageController = new ColorPageController(stage);
-        try {
-            colorPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        /*GamePageController gamePageController = new GamePageController(stage);
-        try {
-            gamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
     }
 }
