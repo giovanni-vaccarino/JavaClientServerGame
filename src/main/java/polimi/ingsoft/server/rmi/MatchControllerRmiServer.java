@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -103,13 +102,14 @@ public class MatchControllerRmiServer implements VirtualMatchController {
 
                     synchronized (this.clients){
                         for(var client : clients){
-                            //client.showUpdateBoard(player, coordinates, playedCard);
+                            client.showUpdateBoard(player, coordinates, playedCard);
                             //client.showUpdateGameState();
                         }
                     }
-                } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception){
-                    //TODO Add Exception Handler
+                } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception ){
                     //client.reportErrorPlace();
+                } catch (IOException exception){
+                    //TODO Add Exception Handler
                 }
             }
 
