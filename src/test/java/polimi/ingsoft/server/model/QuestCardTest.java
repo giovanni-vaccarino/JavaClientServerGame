@@ -11,8 +11,8 @@ class QuestCardTest {
  public void test(){
      HashMap< Item,Integer>cost=new HashMap<>();
         ArrayList<Link> links=new ArrayList<>();
-     QuestCard card=new QuestCard(new ItemPattern(cost),0);
-     card=new QuestCard(new SchemePattern(links),0);
+     QuestCard card=new QuestCard("lol",new ItemPattern(cost),0);
+     card=new QuestCard("lol",new SchemePattern(links),0);
 
  }
 }

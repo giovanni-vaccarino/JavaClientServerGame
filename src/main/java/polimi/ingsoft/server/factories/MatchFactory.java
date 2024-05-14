@@ -15,3 +15,4 @@ public class MatchFactory {
         return new MatchController(out, matchId, requestedNumPlayers, publicBoard, chatController);
     }
 }
+

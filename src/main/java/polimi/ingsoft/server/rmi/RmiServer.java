@@ -1,11 +1,12 @@
 package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.Player;
+import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.exceptions.WrongGamePhaseException;
 import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
 import polimi.ingsoft.server.exceptions.WrongStepException;
 import polimi.ingsoft.server.model.Coordinates;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     final MainController mainController;
@@ -46,9 +46,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
         }
     });
 
-    // connect, getMatches
 
-    //TODO Fix the casting
     private void executeMethod(RmiMethodCall methodCall) {
         String methodName = methodCall.getMethodName();
         Object[] args = methodCall.getArgs();
@@ -56,7 +54,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
         switch (methodName) {
             case "connect" -> {
-                this.addClient((VirtualView) args[0]);
+                this.addClient((VirtualView) args[0], (String) args[1]);
                 // TODO put the notification to the client
             }
 
@@ -64,6 +62,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 List<Integer> matches = this.listMatches();
 
                 VirtualView client = (VirtualView) args[0];
+
                 //TODO Ensure that the client has already done connect
                 synchronized (client) {
                     try {
@@ -75,12 +74,17 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             }
 
             case "createMatch" -> {
-                this.addMatch((Integer) args[0]);
+                Integer matchId = this.addMatch((Integer) args[0]);
                 List<Integer> listMatches = this.listMatches();
-                // TODO put the notification for clients connected with socket
-                // TODO Do a blocking queue also for this
+
+                // Creating a new list for the players
+                synchronized (matchNotificationList){
+                    matchNotificationList.put(matchId, new ArrayList<>());
+                }
+
+                // TODO Do a blocking queue also for this?
                 synchronized (this.clients) {
-                    for (var client : this.clients) {
+                    for (var client : this.clients.values()) {
                         try {
                             client.showUpdateMatchesList(listMatches);
                         } catch (IOException exception) {
@@ -93,12 +97,18 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             case "joinMatch" -> {
                 logger.println("RMI: Received join match request");
                 VirtualView client = (VirtualView) args[0];
-                int matchId = (Integer) args[1];
+                Integer matchId = (Integer) args[1];
                 String nick = (String) args[2];
 
                 Boolean joinResult = this.enterMatch(matchId, nick);
+
+                //Adding the client to the match notification list
+                synchronized (matchNotificationList){
+                    matchNotificationList.get(matchId).add(client);
+                }
+
                 MatchController match = this.mainController.getMatch(matchId);
-                List<Player> players = match.getPlayers();
+                List<String> players = match.getNamePlayers();
 
                 // TODO put the notification to the client
                 if (joinResult) {
@@ -113,47 +123,62 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             }
 
             case "addMessage" -> {
-                Boolean addMessageResult = this.writeMessage((Integer) args[0], (String) args[1]);
-                // TODO get of the clients to notify
+                Integer matchId = (Integer) args[0];
+                String message = (String) args[1];
+
+                Boolean addMessageResult = this.writeMessage(matchId, message);
+
+                List<VirtualView> clientsToNotify = this.getPlayersToNotify(matchId);
 
                 // TODO notification to the clients
                 if (addMessageResult) {
-                    // another blocking queue for the client chat updates?
-                    // for each client in the game
-                    //client.showUpdateChat();
+                    synchronized (clientsToNotify){
+                        // another blocking queue for the client chat updates?
+                        //client.showUpdateChat();
+                    }
                 } else {
                     //client.reportUpdateChatError();
                 }
             }
 
             case "drawCard" -> {
-                Boolean addDrawResult = this.takeCard((Integer) args[0],
+                Integer matchId = (Integer) args[0];
+                Boolean addDrawResult = this.takeCard(matchId,
                         (Player) args[1],
                         (String) args[2],
                         (PlaceInPublicBoard.Slots) args[3]);
-                // TODO get of the clients to notify
+
+                List<VirtualView> clientsToNotify = this.getPlayersToNotify(matchId);
 
                 // TODO put the notification to the client
                 if (addDrawResult) {
-                    //for each client in the game
-                    //client.showUpdateDraw();
+                    synchronized (clientsToNotify){
+                        for(var client : clientsToNotify){
+                            //client.showUpdateDraw();
+                        }
+                    }
                 } else {
                     //client.reportErrorDraw();
                 }
             }
 
             case "placeCard" -> {
-                Boolean placeCardResult = this.addBoardCard((Integer) args[0],
+                Integer matchId = (Integer) args[0];
+                Boolean placeCardResult = this.addBoardCard(matchId,
                         (Player) args[1],
                         (MixedCard) args[2],
                         (Coordinates) args[3],
                         (Boolean) args[4]);
-                // TODO get of the clients to notify
+
+                List<VirtualView> clientsToNotify = this.getPlayersToNotify(matchId);
 
                 // TODO put the notification to the client
                 if (placeCardResult) {
-                    //for each client in the game
-                    //client.showUpdatePlace();
+                    synchronized (clientsToNotify){
+                        for(var client : clientsToNotify){
+                            //client.showUpdateDraw();
+                        }
+                    }
                 } else {
                     //client.reportErrorPlace();
                 }
@@ -163,9 +188,9 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     }
 
     @Override
-    public void connect(VirtualView client) throws RemoteException {
+    public void connect(VirtualView client, String nickname) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall("connect", new Object[]{client}));
+            methodQueue.put(new RmiMethodCall("connect", new Object[]{client, nickname}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -230,9 +255,9 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
         }
     }
 
-    private void addClient(VirtualView client){
+    private void addClient(VirtualView client, String nickname){
         synchronized (this.clients){
-            this.clients.add(client);
+            this.clients.put(nickname, client);
         }
     }
 
@@ -264,12 +289,16 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             try{
                 matchController.drawCard(player, deckType, slot);
                 return true;
-            } catch (WrongStepException | WrongPlayerForCurrentTurnException exception){
+            } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception){
                 //TODO Add Exception Handler
             }
         }
 
         return false;
+    }
+
+    private List<VirtualView> getPlayersToNotify(Integer matchId){
+        return matchNotificationList.get(matchId);
     }
 
     private Boolean addBoardCard(Integer matchId, Player player, MixedCard card, Coordinates coordinates, Boolean isFacingUp){
@@ -278,7 +307,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             try{
                 matchController.placeCard(player, card, coordinates, isFacingUp);
                 return true;
-            } catch (WrongStepException | WrongPlayerForCurrentTurnException exception){
+            } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception){
                 //TODO Add Exception Handler
             }
         }

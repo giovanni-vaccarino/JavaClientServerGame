@@ -13,7 +13,7 @@ public class ItemPattern implements Pattern{
     }
 
     @Override
-    public int getMatch(Board board) {
+    public int getMatch(Board board,Coordinates coordinates) {
         int count=0;
         if(board.getFeathers()>=cost.get(Object.FEATHER) &&
             board.getButterflies()>=cost.get(Resource.BUTTERFLY) &&
@@ -52,4 +52,8 @@ public class ItemPattern implements Pattern{
             default -> 0;
         };
     }
+    public HashMap<Item,Integer> getCost(){
+        return this.cost;
+    }
+
 }

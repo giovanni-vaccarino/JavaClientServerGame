@@ -38,9 +38,9 @@ public class SchemePattern implements Pattern{
         return count;
         }
     @Override
-    public int getMatch(Board board){
+    public int getMatch(Board board,Coordinates coordinates){
         HashMap<Coordinates, Boolean> visited=new HashMap<Coordinates,Boolean>(),used=new HashMap<Coordinates,Boolean>();
         return this.getMatch(used,true,visited,board,0,0,new Coordinates(0,0));
     }
-
+    public ArrayList<Link> getOrder(){return this.order;}
 }

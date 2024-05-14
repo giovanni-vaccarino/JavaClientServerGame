@@ -36,7 +36,6 @@ public class SocketServer implements ConnectionsClient {
                 try {
                     Socket socket = server.accept();
                     ConnectionHandler handler = new ConnectionHandler(socket, controller, this, logger);
-                    clients.add(handler);
                     executor.submit(handler);
                 } catch (IOException e) {
                     break;
@@ -58,7 +57,7 @@ public class SocketServer implements ConnectionsClient {
 
     public void broadcastUpdateMatchesList(List<Integer> matches) throws IOException {
         synchronized (this.clients) {
-            for (var client : this.clients) {
+            for (var client : this.clients.values()) {
                 client.showUpdateMatchesList(matches);
             }
         }
@@ -82,7 +81,7 @@ public class SocketServer implements ConnectionsClient {
 
     public void broadcastUpdatePublicBoard() {
         synchronized (this.clients) {
-            for (var client : this.clients) {
+            for (var client : this.clients.values()) {
                 try {
                     client.showUpdatePublicBoard();
                 } catch (IOException ignored) { }
@@ -92,7 +91,7 @@ public class SocketServer implements ConnectionsClient {
 
     public void broadcastUpdateBoard() {
         synchronized (this.clients) {
-            for (var client : this.clients) {
+            for (var client : this.clients.values()) {
                 try {
                     client.showUpdateBoard();
                 } catch (IOException ignored) { }
@@ -102,7 +101,7 @@ public class SocketServer implements ConnectionsClient {
 
     public void broadcastUpdateChat(Message message) {
         synchronized (this.clients) {
-            for (var client : this.clients) {
+            for (var client : this.clients.values()) {
                 try {
                     client.showUpdateChat(message);
                 } catch (IOException ignored) { }

@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Message;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -20,7 +19,7 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showJoinMatchResult(Boolean joinResult, List<Player> players) throws IOException {
+    public void showJoinMatchResult(Boolean joinResult, List<String> players) throws IOException {
 
     }
 

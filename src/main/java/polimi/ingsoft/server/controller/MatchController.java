@@ -1,28 +1,30 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.Player;
-import polimi.ingsoft.server.enumerations.GAME_PHASE;
-import polimi.ingsoft.server.enumerations.TURN_STEP;
-import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
-import polimi.ingsoft.server.exceptions.WrongStepException;
+import polimi.ingsoft.server.exceptions.*;
+import polimi.ingsoft.server.factories.PlayerInitialSettingFactory;
+import polimi.ingsoft.server.model.Player;
+import polimi.ingsoft.server.enumerations.*;
+import polimi.ingsoft.server.factories.PlayerFactory;
 import polimi.ingsoft.server.model.*;
 
+import java.awt.*;
 import java.io.PrintStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MatchController implements Serializable {
 
     private final Integer requestedNumPlayers;
 
-    private TURN_STEP currentStep;
-
-    private GAME_PHASE gamePhase;
-    private int currentPlayerIndex;
+    private final GameState gameState;
 
     final ChatController chatController;
-    private ArrayList<Player> players = new ArrayList<>();
+
+    private List<Player> players = new ArrayList<>();
+
+    private final List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
 
     private final PublicBoard publicBoard;
 
@@ -36,84 +38,140 @@ public class MatchController implements Serializable {
                            PublicBoard publicBoard,
                            ChatController chatController
     ) {
-        // Aggiungere validazione stato partita a validateMove (inizio, durante, fine partita)
         this.requestedNumPlayers = requestedNumPlayers;
         this.chatController = chatController;
         this.logger = logger;
         this.matchId = matchId;
         this.publicBoard = publicBoard;
-        this.gamePhase = GAME_PHASE.PRESTART;
+        this.gameState = new GameState(this, requestedNumPlayers);
     }
 
     public int getMatchId() {
         return matchId;
     }
 
-    public void addPlayer(String nickname) {
-        // TODO player factory
-        // Separare creazione player da inizializzazione player hand
-        Player player = new Player(new PlayerHand<>(), nickname);
-        players.add(player);
-
-        if(players.size() == requestedNumPlayers){
-            this.gamePhase = GAME_PHASE.PLAY;
-        }
-    }
+    public GameState getGameState(){return this.gameState;}
 
     public List<Player> getPlayers(){
         return players;
     }
 
-    private Player getCurrentPlayer() {
-        return players.get(currentPlayerIndex);
+    public List<PlayerInitialSetting> getPlayerInitialSettings(){return playerInitialSettings;}
+
+    public List<String> getNamePlayers(){
+        return playerInitialSettings.stream().
+                map(PlayerInitialSetting::getNickname).
+                toList();
     }
 
-    private void goToNextPlayer() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        currentStep = TURN_STEP.DRAW;
+    private Optional<PlayerInitialSetting> getPlayerByNickname(String nickname) {
+        return playerInitialSettings.stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst();
     }
 
-    private boolean isLastRound() {
-        return false;
+    public void addPlayer(String nickname) throws MatchAlreadyFullException {
+        if(playerInitialSettings.size() == requestedNumPlayers){
+            throw new MatchAlreadyFullException();
+        }
+
+        // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
+        PlayerInitialSetting playerInitialSetting = PlayerInitialSettingFactory.createPlayerInitialSetting(this.publicBoard, nickname);
+
+        playerInitialSettings.add(playerInitialSetting);
+
+        gameState.updateState();
     }
 
-    private void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        if (gamePhase != GAME_PHASE.PLAY) throw new WrongStepException();//TODO Add exception for wrong game phase
-        if (player != getCurrentPlayer()) throw new WrongPlayerForCurrentTurnException();
-        if (currentStep != move) throw new WrongStepException();
+    public void initializePlayers() {
+        this.players = this.players.isEmpty() ?
+                this.playerInitialSettings.stream()
+                        .map(PlayerFactory::createPlayer)
+                        .collect(Collectors.toList())
+                :
+                this.players;
     }
 
-    private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        validateMove(player, TURN_STEP.DRAW);
-        currentStep = TURN_STEP.PLACE;
+    public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
+        gameState.checkColorAvailability(color);
+        gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
+
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+
+        playerInitialSetting.ifPresent(player-> player.setColor(color));
+
+        gameState.updateInitialStep(playerNickname);
+    }
+
+    public void setFaceInitialCard(String playerNickname, Boolean isFaceUp) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
+        gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
+
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+
+        playerInitialSetting.ifPresent(player-> player.setIsInitialFaceUp(isFaceUp));
+
+        gameState.updateInitialStep(playerNickname);
+    }
+
+    public void setQuestCard(String playerNickname, QuestCard questCard) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
+        gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.QUEST_CARD);
+
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+
+        playerInitialSetting.ifPresent(player-> player.setQuestCard(questCard));
+
+        gameState.updateInitialStep(playerNickname);
+    }
+
+    public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+        gameState.validateMove(player, TURN_STEP.PLACE);
+        Board board = player.getBoard();
+        boolean isAdded = board.add(coordinates, card, facingUp);
+
+        if(isAdded && card.getPlayability(board) > 0){
+            board.updatePoints(card.getPoints(board,coordinates)*card.getScore(facingUp));
+        }
+        else{
+            //TODO
+        }
+
+        //TODO Ensures what should go first(goToNextPlayer or updateState)
+        gameState.goToNextPlayer();
+        gameState.updateState();
+    }
+
+    public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+        switch(deckType){
+            //TODO Change to TYPE_HAND_CARD.RESOURCE and TYPE_HAND_CARD.GOLD when network is updated
+            case "Resource"-> {
+                return this.drawResourceCard(player, slot);
+            }
+
+            case "Gold" -> {
+                return this.drawGoldCard(player, slot);
+            }
+        }
+
+        return null;
+    }
+
+    private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+        gameState.validateMove(player, TURN_STEP.DRAW);
+
+        gameState.updateTurnStep();
+
         return publicBoard.getResource(slot);
     }
 
-    private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        validateMove(player, TURN_STEP.DRAW);
-        currentStep = TURN_STEP.PLACE;
-        return publicBoard.getGold(slot);
-    }
+    private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+        gameState.validateMove(player, TURN_STEP.DRAW);
 
-    public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        validateMove(player, TURN_STEP.PLACE);
-        player.getBoard().add(coordinates, card, facingUp);
-        goToNextPlayer();
+        gameState.updateTurnStep();
+
+        return publicBoard.getGold(slot);
     }
 
     public Message writeMessage(String message){
         return this.chatController.writeMessage(message);
-    }
-
-    public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException {
-        switch(deckType){
-            case "Resource":
-                return this.drawResourceCard(player, slot);
-
-            case "Gold":
-                return this.drawGoldCard(player, slot);
-        }
-
-        return null;
     }
 }

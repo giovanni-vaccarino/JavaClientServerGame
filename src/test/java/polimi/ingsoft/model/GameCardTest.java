@@ -31,7 +31,7 @@ class GameCardTest {
         back3=new CornerSpace(h);
         back4=new CornerSpace(i);
         back=new Face(back1,back2,back3,back4,center);
-        t=new GameCard(front,back,score);
+        //t=new GameCard(front,back,score);
     }
 
     @Test

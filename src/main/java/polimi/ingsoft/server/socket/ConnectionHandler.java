@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.Player;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Message;
@@ -48,7 +47,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
                 // Read message and perform action
                 switch (type) {
-                    case CONNECT -> { }
+                    case CONNECT -> {
+                        String nickname = (String) payload;
+                        this.server.clients.put(nickname, this);
+                    }
                     case MATCHES_LIST_REQUEST -> {
                         List<Integer> matches = controller.getMatches();
                         this.server.singleUpdateMatchesList(this, matches);
@@ -83,7 +85,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showJoinMatchResult(Boolean joinResult, List<Player> players) throws IOException {
+    public void showJoinMatchResult(Boolean joinResult, List<String> players) throws IOException {
 
     }
 

@@ -38,7 +38,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         list.add(Resource.BUTTERFLY);
         bottomright=new CornerSpace(list);
         Face back=new Face(upleft,upright,bottomleft,bottomright);
-        initial= new InitialCard(front,back,0);
+        initial= new InitialCard("lol",front,back,0);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
@@ -60,7 +60,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         list.add(Resource.BUTTERFLY);
         bottomright=new CornerSpace(list);
         back=new Face(null,upright,bottomleft,bottomright);
-        res1=new ResourceCard(front,back,0);
+        res1=new ResourceCard("lol",front,back,0);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
@@ -86,7 +86,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         bottomright=new CornerSpace(list);
         back=new Face(upleft,upright,null,bottomright);
 
-        res2=new ResourceCard(front,back,0);
+        res2=new ResourceCard("lol",front,back,0);
 
 
 
@@ -114,7 +114,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         bottomright=new CornerSpace(list);
         back=new Face(null,upright,bottomleft,bottomright);
 
-        res3=new ResourceCard(front,back,1);
+        res3=new ResourceCard("lol",front,back,1);
 
 
         list=new ArrayList<>();
@@ -141,7 +141,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         bottomright=new CornerSpace(list);
         back=new Face(null,upright,bottomleft,bottomright);
 
-        res4=new ResourceCard(front,back,1);
+        res4=new ResourceCard("lol",front,back,1);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
@@ -167,7 +167,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         bottomright=new CornerSpace(list);
         back=new Face(null,upright,bottomleft,bottomright);
 
-        res5=new ResourceCard(front,back,0);
+        res5=new ResourceCard("lol",front,back,0);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
@@ -193,7 +193,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         bottomright=new CornerSpace(list);
         back=new Face(null,upright,bottomleft,bottomright);
 
-        res6=new ResourceCard(front,back,0);
+        res6=new ResourceCard("lol",front,back,0);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
@@ -219,7 +219,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         bottomright=new CornerSpace(list);
         back=new Face(upleft,null,bottomleft,bottomright);
 
-        res7=new ResourceCard(front,back,0);
+        res7=new ResourceCard("lol",front,back,0);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
@@ -245,7 +245,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         bottomright=new CornerSpace(list);
         back=new Face(upleft,upright,null,bottomright);
 
-        res8=new ResourceCard(front,back,0);
+        res8=new ResourceCard("lol",front,back,0);
     }
     @Test
     void add() {

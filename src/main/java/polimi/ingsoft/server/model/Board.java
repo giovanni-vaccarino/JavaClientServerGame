@@ -7,9 +7,10 @@ import java.util.HashMap;
 
 // TODO refactor
 public class Board implements Serializable {
+    private int score;
     private final HashMap<Coordinates, PlayedCard> cards;
     private HashMap<Item,Integer> resources;
-    public Board(GameCard initialcard,boolean isFaceUp){
+    public Board(GameCard initialCard,boolean isFaceUp){
         this.cards=new HashMap<Coordinates,PlayedCard>();
         resources=new HashMap<Item,Integer>();
         resources.put(Resource.WOLF,0);
@@ -19,16 +20,16 @@ public class Board implements Serializable {
         resources.put(Object.SCROLL,0);
         resources.put(Object.POTION,0);
         resources.put(Object.FEATHER,0);
-        this.add(new Coordinates(0,0),initialcard,isFaceUp);
+        this.add(new Coordinates(0,0),initialCard,isFaceUp);
+        this.score=0;
     }
     public PlayedCard getCard(Coordinates coordinates){
         return cards.get(coordinates);
     }
 
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
-
         if(this.check(position)) {
-            this.cards.put(position, new PlayedCard(card, facingUp));
+            this.cards.put(position, new PlayedCard(card, facingUp,cards.size()+1));
             if (cards.containsKey(position.downRight())){
                 cards.get(position.downRight()).setUpLeft();
                 if(!cards.get(position.downRight()).getFace().getUpLeft().getItems().isEmpty()&&
@@ -75,6 +76,12 @@ public class Board implements Serializable {
         if(cards.containsKey(position.downLeft()) && !cards.get(position.downLeft()).isFreeUpRight())return verify;
         return !verify;
     }
+    public void updatePoints(int points){
+        score=score+points;
+    }
+
+    public Integer getScore(){return this.score;}
+
     public boolean isNotBlocked(){
         Coordinates coordinates=new Coordinates(0,0);
         HashMap<Coordinates,Boolean> visited=new HashMap<Coordinates, Boolean>();
@@ -93,6 +100,7 @@ public class Board implements Serializable {
         if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
         return a||cards.get(coordinates).isFreeUpRight()||cards.get(coordinates).isFreeUpLeft()||cards.get(coordinates).isFreeDownRight()||cards.get(coordinates).isFreeDownLeft();
     }
+    public int getNumCards(){return this.cards.size();}
     public int getWolfs(){
         return resources.get(Resource.WOLF);
     }

@@ -1,5 +1,7 @@
 package polimi.ingsoft.server.controller;
 
+import com.sun.tools.jconsole.JConsoleContext;
+import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.factories.MatchFactory;
 
 import java.io.PrintStream;
@@ -13,7 +15,6 @@ public class MainController {
 
     public MainController(PrintStream logger) {
         this.matches = new HashMap<>();
-        this.matches.put(1, MatchFactory.createMatch(logger, 1, 3));
         this.logger = logger;
     }
 
@@ -26,9 +27,19 @@ public class MainController {
         return true;
     }
 
+    public List<Integer> getMatches(){
+        Set<Integer> keys = this.matches.keySet();
+        return new ArrayList<>(keys);
+    }
+
+    public MatchController getMatch(int matchId){
+        return this.matches.get(matchId);
+    }
+
     public Integer createMatch(Integer requiredNumPlayers){
         int matchId = matches.keySet().size() + 1;
 
+        //TODO Validate requiredNumPlayers
         MatchController match = MatchFactory.createMatch(logger, matchId, requiredNumPlayers);
         matches.put(matchId, match);
 
@@ -37,7 +48,6 @@ public class MainController {
 
     public Boolean joinMatch(Integer matchId, String nickname) {
         if(!matchExists(matchId)){
-            //Lobby not found
             return false;
         }
 
@@ -46,20 +56,20 @@ public class MainController {
             //Lobby already full
             return false;
         }
-        match.addPlayer(nickname);
+
+        try{
+            match.addPlayer(nickname);
+        } catch (MatchAlreadyFullException exception){
+            //TODO Handle correctly the exception
+            logger.println(exception);
+            return false;
+        }
+
         return true;
     }
 
+    //TODO add only if deciding to implement the AF
     public void reJoinMatch(Integer lobbyId, String nickname){
 
-    }
-
-    public List<Integer> getMatches(){
-        Set<Integer> keys = this.matches.keySet();
-        return new ArrayList<>(keys);
-    }
-
-    public MatchController getMatch(int matchId){
-        return this.matches.get(matchId);
     }
 }

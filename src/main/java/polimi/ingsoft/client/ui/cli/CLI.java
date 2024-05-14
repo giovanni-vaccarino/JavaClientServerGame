@@ -3,12 +3,15 @@ package polimi.ingsoft.client.ui.cli;
 import polimi.ingsoft.client.Client;
 import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.server.Player;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class CLI extends UI {
     enum CurrentPage {
@@ -18,7 +21,7 @@ public class CLI extends UI {
     private final SafeScanner in;
     private final PrintStream out;
     private final Client client;
-    public CLI(InputStream in, PrintStream out, Client client) throws RemoteException {
+    public CLI(Scanner in, PrintStream out, Client client) throws RemoteException {
         this.in = new SafeScanner(in, out);
         this.out = out;
         this.client = client;
@@ -58,8 +61,6 @@ public class CLI extends UI {
                                         requestedNumPlayers -> {
                                             try {
                                                 client.createMatch(requestedNumPlayers);
-                                                // TODO evaluate if we can remove first param
-                                                client.joinMatch(client, matches.size(), nickname);
                                             } catch (IOException ignored) { }
                                             currentPage = CurrentPage.LOBBY;
                                         }

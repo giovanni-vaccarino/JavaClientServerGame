@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface VirtualServerInterface extends Remote, VirtualServer {
-    void connect(VirtualView client) throws RemoteException;
+    void connect(VirtualView client, String nickname) throws RemoteException;
     void getMatches(VirtualView client) throws RemoteException;
 
     void createMatch(Integer requiredNumPlayers) throws RemoteException;
