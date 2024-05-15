@@ -1,163 +1,42 @@
 package polimi.ingsoft.client.rmi;
 
 import polimi.ingsoft.client.Client;
-import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
-import polimi.ingsoft.client.ui.cli.CLI;
+import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.common.VirtualServerInterface;
-import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.Message;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-
-import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.List;
 import java.util.Scanner;
 
-
-public class RmiClient extends UnicastRemoteObject implements Client {
+public class RmiClient extends Client {
     private final VirtualServerInterface server;
-
-    private final UI ui;
 
     public RmiClient(String rmiServerHostName,
                      String rmiServerName,
                      Integer rmiServerPort,
                      UIType ui,
                      PrintStream printStream,
-                     Scanner scanner,
-                     String nickname) throws RemoteException, NotBoundException{
+                     Scanner scanner
+    ) throws RemoteException, NotBoundException {
+        super(ui, printStream, scanner);
         Registry registry = LocateRegistry.getRegistry(rmiServerHostName, rmiServerPort);
-        VirtualServerInterface rmiServer = (VirtualServerInterface) registry.lookup(rmiServerName);
-        this.server = rmiServer;
-        this.server.connect(this, nickname);
-        if (ui == UIType.CLI){
-            this.ui = new CLI(scanner, printStream, this);
-        } else{
-            // TODO create GUI here
-            this.ui = new CLI(scanner, printStream, this);
-        }
-
+        this.server = (VirtualServerInterface) registry.lookup(rmiServerName);
     }
 
     @Override
-    public void run() throws RemoteException {
-
+    protected VirtualServer getServer() {
+        return server;
     }
 
     @Override
-    public UI getUI() {
-        return this.ui;
-    }
-
-    @Override
-    public void clientJoinMatch(Integer matchId, String nickname) throws RemoteException {
+    public void run() {
         try {
-            server.joinMatch(this, matchId, nickname);
-        } catch (IOException exception){
-
+            this.server.connect(this);
+        } catch (RemoteException e) {
+            // TODO handle
         }
-    }
-
-    @Override
-    public void showJoinMatchResult(Boolean joinResult, List<String> players) throws IOException {
-
-        if (joinResult){
-            System.out.println("Successfully joined the match. Waiting for the required players to start... ");
-            System.out.println("Players in lobby: ");
-            for(var name : players){
-                System.out.println(name);
-            }
-        }
-    }
-
-    @Override
-    public void showUpdateMatchesList(List<Integer> matches) throws RemoteException {
-        //TODO Add a queue of updates, and in another thread update
-        System.out.println("Got update: MATCHES LIST: " + matches);
-            new Thread(()->{
-                try {
-                    ui.showMatchesList(matches);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-    }
-
-    @Override
-    public void showUpdateMatchJoin(Boolean success) throws RemoteException {
-
-    }
-
-    @Override
-    public void showUpdateMatchCreate(MatchController match) throws RemoteException {
-
-    }
-
-    @Override
-    public void showUpdateChat(Message message) throws RemoteException {
-
-    }
-
-    @Override
-    public void showUpdatePublicBoard() throws RemoteException {
-
-    }
-
-    @Override
-    public void showUpdateBoard() throws RemoteException {
-
-    }
-
-    @Override
-    public void reportError(String details) throws RemoteException {
-
-    }
-
-    @Override
-    public void close() throws Exception {
-
-    }
-
-    @Override
-    public void getMatches(VirtualView client) throws IOException {
-        server.getMatches(client);
-    }
-
-    @Override
-    public void createMatch(Integer requiredNumPlayers) throws IOException {
-        server.createMatch(requiredNumPlayers);
-    }
-
-    @Override
-    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException {
-        server.joinMatch(client, matchId, nickname);
-    }
-
-    @Override
-    public void reJoinMatch(Integer matchId, String nickname) throws IOException {
-
-    }
-
-    @Override
-    public void addMessage(int matchId, String message) throws IOException {
-
-    }
-
-    @Override
-    public void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-
-    }
-
-    @Override
-    public void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
-
     }
 }

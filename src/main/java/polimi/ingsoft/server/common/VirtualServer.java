@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface VirtualServer extends Remote {
+    void setNickname(String nickname) throws IOException;
     void getMatches(VirtualView client) throws IOException;
 
     void createMatch(Integer requiredNumPlayers) throws IOException;
@@ -18,10 +19,4 @@ public interface VirtualServer extends Remote {
     void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException;
 
     void reJoinMatch(Integer matchId, String nickname) throws IOException;
-
-    void addMessage(int matchId, String message) throws IOException;
-
-    void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws IOException;
-
-    void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException;
 }

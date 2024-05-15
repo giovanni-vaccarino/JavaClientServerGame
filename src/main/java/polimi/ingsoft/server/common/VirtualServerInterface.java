@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface VirtualServerInterface extends Remote, VirtualServer {
-    void connect(VirtualView client, String nickname) throws RemoteException;
+    void connect(VirtualView client) throws RemoteException;
     void getMatches(VirtualView client) throws RemoteException;
 
     void createMatch(Integer requiredNumPlayers) throws RemoteException;
@@ -18,11 +18,5 @@ public interface VirtualServerInterface extends Remote, VirtualServer {
     void joinMatch(VirtualView client, Integer matchId, String nickname) throws RemoteException;
 
     void reJoinMatch(Integer matchId, String nickname) throws RemoteException;
-
-    void addMessage(int matchId, String message) throws RemoteException;
-
-    void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException;
-
-    void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException;
 
 }
