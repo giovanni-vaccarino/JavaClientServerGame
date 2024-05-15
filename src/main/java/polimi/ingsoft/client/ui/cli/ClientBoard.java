@@ -4,6 +4,7 @@ import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
 //EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
+import javax.swing.*;
 import java.util.HashMap;
 
 import static polimi.ingsoft.server.enumerations.Object.*;
@@ -28,6 +29,7 @@ public class ClientBoard {
     public static final String YELLOW = "\u001B[43m";
     public static final String BLACKTEXT = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
+    public static final String WHITETEXT = "\u001B[37m";
 
     public ClientBoard(PlayedCard initial) {
         this.board = new HashMap<>();
@@ -47,13 +49,11 @@ public class ClientBoard {
                 getCardAtRespective(0, 2) != null ||
                 getCardAtRespective(-2, 0) != null)) System.out.print(UPLEFTARROW);
         else System.out.print(" ");
-        if (getCardAtRespective(-1, -1) != null &&
-                getCardAtRespective(-2, -2) != null) System.out.print("         |");
+        if (getCardAtRespective(-2, -2) != null) System.out.print("         |");
         else System.out.print("         ");
         for (int i = 0; i < 14; i++) System.out.print(" ");
-        if (getCardAtRespective(0, 2) != null) System.out.print("|");
-        else System.out.print(" ");
-        System.out.print("                ");
+        if (getCardAtRespective(0, 2) != null) System.out.print("|                ");
+        else System.out.print("                 ");
         if (getCardAtRespective(0, 2) != null ||
                 getCardAtRespective(-1, 3) != null ||
                 getCardAtRespective(1, 3) != null) System.out.print(UPARROW);
@@ -75,9 +75,9 @@ public class ClientBoard {
 
         do {
             PlayedCard card = getCardAtRespective(-1, -1);
-            if (card != null) {
+            if (card != null||getCardAtRespective(-2,-2)!=null || getCardAtRespective(0,2)!=null||getCardAtRespective(-2,0)!=null) {
                 color = defineColor(card);
-                System.out.print(printUpLeftCorner(card, count));
+                System.out.print(printLeftUpLeftCorner(card, count));
                 System.out.print(printFirstCenterRow(card, color, actualCoordinates.sum(new Coordinates(-1, -1))));
             } else {
                 System.out.print(RESET);
@@ -107,7 +107,7 @@ public class ClientBoard {
         return board.get(actualCoordinates.sum(new Coordinates(x, y)));
     }
 
-    public String printUpLeftCorner(PlayedCard card, int count) {
+    public String printLeftUpLeftCorner(PlayedCard card, int count) {
         String pre = "", color;
         CornerSpace corner;
         switch (count) {
@@ -119,11 +119,17 @@ public class ClientBoard {
                 else pre = "_";
                 break;
         }
-        if (getCardAtRespective(-2, -2) == null ||
-                getCardAtRespective(-2, -2).getOrder() < card.getOrder()) {//caso in cui l'angolo in alto a sx non sia coperto
+           //carta 22si carta 11si   //carta 22si carta11 no
+        if (getCardAtRespective(-2, -2) == null && card!=null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                ||( getCardAtRespective(-2, -2) != null && card!=null&&
+                getCardAtRespective(-2, -2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
+
             if (corner == null) return defineColor(card) + "          ";
-        } else{
+        } else if(card==null&& getCardAtRespective(-2, -2) == null){//carta 22 no carta 11 no
+            return RESET+"          ";
+        }
+        else{//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(-2, -2).getBottomRightCorner();
             if (corner == null)return defineColor(getCardAtRespective(-2,-2)) + "          ";
         }
@@ -141,13 +147,7 @@ public class ClientBoard {
                     case 0:
                         return pre + BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡";
                     case 1:
-                        switch (corner.getItems().getFirst()) {
-                            case FEATHER -> pre = pre + BLACKTEXT + "|FEATHER |";
-                            case SCROLL -> pre = pre + BLACKTEXT + "| SCROLL |";
-                            case POTION -> pre = pre + BLACKTEXT + "| POTION |";
-                            default -> pre = pre + BLACKTEXT + "|        |";
-                        }
-                        return pre;
+                        return pre+printObject(corner.getItems().getFirst());
                     case 2:
                         return pre + BLACKTEXT + "!________!";
                 }
@@ -175,6 +175,7 @@ public class ClientBoard {
 //    }
 
     public String printFirstCenterRow(PlayedCard card, String actualColor, Coordinates actualCoordinates) {
+        if(card==null)return RESET+"              ";
         if (card.isFacingUp() || card.getScore() == 0 || actualCoordinates.equals(new Coordinates(0, 0))) {
             return actualColor + "              ";
         } else {
@@ -199,7 +200,8 @@ public class ClientBoard {
     }
 
     public String defineColor(PlayedCard card) {
-        return switch (card.getColor()) {
+
+        return card==null? "":switch (card.getColor()) {
             case Resource.BUTTERFLY -> PURPLE;
             case Resource.LEAF -> GREEN;
             case Resource.MUSHROOM -> RED;
