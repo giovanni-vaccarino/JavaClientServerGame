@@ -13,6 +13,7 @@ import polimi.ingsoft.server.exceptions.WrongStepException;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.MixedCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
+import polimi.ingsoft.server.socket.ConnectionHandler;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 
 import java.io.IOException;
@@ -61,17 +62,29 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
         switch (methodName) {
             case CONNECT -> {
-                this.addClient((VirtualView) args[0], (String) args[1]);
-                // TODO put the notification to the client
+                this.addClient((VirtualView) args[0], ConnectionHandler.getRandomNickname());
+            }
+
+            case SET_NICKNAME_REQUEST -> {
+                VirtualView client = (VirtualView) args[0];
+                String nickname = (String) args[1];
+                boolean result = this.setNicknameForClient(client, nickname);
+
+                synchronized (this.clients){
+                    try {
+                        client.showNicknameUpdate(result);
+                    } catch (IOException ignore) {
+
+                    }
+                }
             }
 
             case MATCHES_LIST_REQUEST -> {
+                VirtualView client = (VirtualView) args[0];
                 List<Integer> matches = this.listMatches();
 
-                VirtualView client = (VirtualView) args[0];
-
                 //TODO Ensure that the client has already done connect
-                synchronized (client) {
+                synchronized (this.clients) {
                     try {
                         client.showUpdateMatchesList(matches);
                     } catch (IOException exception) {
@@ -145,8 +158,12 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     }
 
     @Override
-    public void setNickname(String nickname) throws IOException {
-
+    public void setNickname(VirtualView client, String nickname) throws IOException {
+        try {
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_NICKNAME_REQUEST, new Object[]{client, nickname}));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override
@@ -197,6 +214,23 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
     private Boolean enterMatch(Integer matchId, String nickname){
         return this.mainController.joinMatch(matchId, nickname);
+    }
+
+    private Boolean setNicknameForClient(VirtualView client, String nickname){
+        synchronized (this.clients) {
+            if (clients.containsKey(nickname)) {
+                return false;
+            }
+
+            clients.entrySet().stream()
+                    .filter(entry -> entry.getValue().equals(client))
+                    .map(Map.Entry::getKey)
+                    .findFirst()
+                    .ifPresent(clients::remove);
+
+            clients.put(nickname, client);
+            return true;
+        }
     }
 
     private List<VirtualView> getPlayersToNotify(Integer matchId){

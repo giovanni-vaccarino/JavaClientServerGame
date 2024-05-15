@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface VirtualServer extends Remote {
-    void setNickname(String nickname) throws IOException;
+    void setNickname(VirtualView client, String nickname) throws IOException;
     void getMatches(VirtualView client) throws IOException;
 
     void createMatch(Integer requiredNumPlayers) throws IOException;

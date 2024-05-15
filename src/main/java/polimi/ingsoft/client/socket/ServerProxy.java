@@ -22,7 +22,7 @@ public class ServerProxy implements VirtualServer, VirtualMatchController {
     }
 
     @Override
-    public void setNickname(String nickname) throws IOException {
+    public void setNickname(VirtualView client, String nickname) throws IOException {
         SocketMessage message = new SocketMessage(MessageCodes.SET_NICKNAME_REQUEST, nickname);
         out.writeObject(message);
         out.flush();

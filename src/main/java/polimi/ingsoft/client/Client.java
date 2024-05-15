@@ -38,34 +38,48 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     public UI getUi(){return this.ui;}
 
+    @Override
     public void showNicknameUpdate(boolean result) throws IOException {
         ui.updateNickname(result);
     }
+
+    @Override
     public void showJoinMatchResult(Boolean joinResult, List<String> players) throws  IOException {
 
     }
+
+    @Override
     public void showUpdateMatchesList(List<Integer> matches) throws IOException {
         ui.updateMatchesList(matches);
     }
+
+    @Override
     public void showUpdateMatchJoin(Boolean success) throws IOException {
 
     }
+
+    @Override
     public void showUpdateMatchCreate(MatchController match) throws IOException {
         ui.showMatchCreate(match);
     }
+
+    @Override
     public void showUpdateChat(Message message) throws IOException {
 
     }
+
+    @Override
     public void showUpdatePublicBoard() throws IOException {
 
     }
 
+    @Override
     public void reportError(String details) throws IOException {
 
     }
 
     public void setNickname(String nickname) throws IOException {
-        getServer().setNickname(nickname);
+        getServer().setNickname(this, nickname);
     }
 
     public void getMatches(VirtualView client) throws IOException {
