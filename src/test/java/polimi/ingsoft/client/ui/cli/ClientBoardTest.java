@@ -260,8 +260,8 @@ class ClientBoardTest {
 
     @Test
     void printBoard() {
-        board.put(new Coordinates(-1,-1),new PlayedCard(res1,false,2));
-        board.put(new Coordinates(-2,-2),new PlayedCard(res2,false,1));
+        board.put(new Coordinates(-1,-1),new PlayedCard(res1,true,2));
+        board.put(new Coordinates(1,1),new PlayedCard(res2,false,1));
         board.printBoard();
     }
 }
