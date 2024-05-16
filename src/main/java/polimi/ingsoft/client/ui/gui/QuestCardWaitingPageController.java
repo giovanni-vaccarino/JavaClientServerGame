@@ -9,19 +9,19 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class InitialCardWaitingPageController {
+public class QuestCardWaitingPageController {
     private Stage stage;
 
     // Default constructor
-    public InitialCardWaitingPageController() {}
+    public QuestCardWaitingPageController() {}
 
     // Constructor with stage parameter
-    public InitialCardWaitingPageController(Stage stage) {
+    public QuestCardWaitingPageController(Stage stage) {
         this.stage = stage;
     }
     public void start() throws Exception {
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/InitialCardWaitingPage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/QuestCardWaitingPage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -50,18 +50,11 @@ public class InitialCardWaitingPageController {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        QuestCardPageController questCardPageController = new QuestCardPageController(stage);
-        try {
-            questCardPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        /*GamePageController gamePageController = new GamePageController(stage);
+        GamePageController gamePageController = new GamePageController(stage);
         try {
             gamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
 }
