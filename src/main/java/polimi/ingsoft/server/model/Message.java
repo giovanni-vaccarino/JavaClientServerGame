@@ -3,10 +3,10 @@ package polimi.ingsoft.server.model;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 
 public class Message {
-    private final PlayerColors sender;
+    private final String sender;
     private final String text;
 
-    public Message(PlayerColors sender, String text){
+    public Message(String sender, String text){
         this.sender = sender;
         this.text = text;
     }
@@ -15,7 +15,7 @@ public class Message {
         return this.text;
     }
 
-    public PlayerColors getSender() {
+    public String getSender() {
         return sender;
     }
 

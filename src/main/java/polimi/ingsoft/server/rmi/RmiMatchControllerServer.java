@@ -3,9 +3,8 @@ package polimi.ingsoft.server.rmi;
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.exceptions.WrongGamePhaseException;
-import polimi.ingsoft.server.exceptions.WrongPlayerForCurrentTurnException;
-import polimi.ingsoft.server.exceptions.WrongStepException;
+import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 
@@ -50,12 +49,90 @@ public class RmiMatchControllerServer implements VirtualMatchController {
         Object[] args = methodCall.getArgs();
 
         switch (methodName) {
+            case SET_COLOR_REQUEST -> {
+                String player = (String) args[0];
+                PlayerColors color = (PlayerColors) args[1];
+
+                try{
+                    matchController.setPlayerColor(player, color);
+
+                    synchronized (this.clients){
+                        for(var client : this.clients){
+                            /*
+                            TODO retrieve clientToUpdate
+                            if(client == clientToUpdate){
+                                client.showUpdateColor();
+                            }
+                            */
+                            client.showUpdateGameState(matchController.getGameState());
+                        }
+                    }
+                } catch (WrongGamePhaseException | WrongStepException | InitalChoiceAlreadySetException | ColorAlreadyPickedException exception){
+                    //TODO handle exception
+                    //client.reportError()
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            case SET_INITIAL_REQUEST -> {
+                String player = (String) args[0];
+                Boolean isFaceUp = (Boolean) args[1];
+
+                try{
+                    matchController.setFaceInitialCard(player, isFaceUp);
+
+                    synchronized (this.clients){
+                        for(var client : this.clients){
+                            /*
+                            TODO retrieve clientToUpdate
+                            if(client == clientToUpdate){
+                                client.showUpdateColor();
+                            }
+                            */
+                            client.showUpdateGameState(matchController.getGameState());
+                        }
+                    }
+                } catch (WrongGamePhaseException | WrongStepException | InitalChoiceAlreadySetException exception){
+                    //TODO handle exception
+                    //client.reportError()
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            case SET_QUEST_REQUEST -> {
+                String player = (String) args[0];
+                QuestCard questCard = (QuestCard) args[1];
+
+                try{
+                    matchController.setQuestCard(player, questCard);
+
+                    synchronized (this.clients){
+                        for(var client : this.clients){
+                            /*
+                            TODO retrieve clientToUpdate
+                            if(client == clientToUpdate){
+                                client.showUpdateColor();
+                            }
+                            */
+                            client.showUpdateGameState(matchController.getGameState());
+                        }
+                    }
+                } catch (WrongGamePhaseException | WrongStepException | InitalChoiceAlreadySetException exception){
+                    //TODO handle exception
+                    //client.reportError()
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
             case MATCH_SEND_MESSAGE_REQUEST -> {
                 Player player = (Player) args[0];
                 String message = (String) args[1];
 
                 try{
-                    this.writeMessage(player, message);
+                    matchController.writeMessage(player.getNickname(), message);
 
                     synchronized (this.clients){
                         for(var client : this.clients){
@@ -75,17 +152,24 @@ public class RmiMatchControllerServer implements VirtualMatchController {
                 PlaceInPublicBoard.Slots slot = (PlaceInPublicBoard.Slots) args[2];
 
                 try{
-                    MixedCard drawedCard = this.takeCard(player, deckType, slot);
+                    MixedCard drawedCard = matchController.drawCard(player, deckType, slot);
 
                     synchronized (this.clients){
                         for(var client : this.clients){
-                            //client.showUpdateDraw();
-                            //client.showUpdateGameState();
+                            /*
+                            TODO retrieve clientToUpdate
+                            if(client == clientToUpdate){
+                                client.showUpdateDraw(drawedCard);
+                            }
+                            */
+                            client.showUpdateGameState(matchController.getGameState());
                         }
                     }
                 } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception){
                     //TODO Add Exception Handler
                     //client.reportErrorDraw();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
 
@@ -97,24 +181,57 @@ public class RmiMatchControllerServer implements VirtualMatchController {
 
                 try{
                     // Add the card to the player board
-                    this.addBoardCard(player, card, coordinates, isFacingUp);
+                    matchController.placeCard(player, card, coordinates, isFacingUp);
 
                     // Get of the played card
                     PlayedCard playedCard = player.getBoard().getCard(coordinates);
 
                     synchronized (this.clients){
-                        for(var client : clients){
+                        for(var client : this.clients){
+                            /*
+                            TODO retrieve clientToUpdate
+                            if(client == clientToUpdate){
+                                client.showUpdatePlayerHand();
+                            }
+                            */
                             client.showUpdateBoard(player, coordinates, playedCard);
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
                 } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception ){
                     //client.reportErrorPlace();
-                } catch (IOException exception){
-                    //TODO Add Exception Handler
+                } catch (IOException e){
+                    throw new RuntimeException(e);
                 }
             }
 
+        }
+    }
+
+    @Override
+    public void setColor(String nickname,PlayerColors color) throws RemoteException {
+        try {
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_COLOR_REQUEST, new Object[]{color}));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    @Override
+    public void setFaceInitialCard(String nickname,Boolean isFaceUp) throws RemoteException {
+        try {
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_INITIAL_REQUEST, new Object[]{isFaceUp}));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    @Override
+    public void setQuestCard(String nickname, QuestCard questCard) throws RemoteException {
+        try {
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_QUEST_REQUEST, new Object[]{questCard}));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -148,17 +265,5 @@ public class RmiMatchControllerServer implements VirtualMatchController {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    private void writeMessage(Player player, String message){
-        matchController.writeMessage(message);
-    }
-
-    private MixedCard takeCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongGamePhaseException, WrongPlayerForCurrentTurnException, WrongStepException {
-        return matchController.drawCard(player, deckType, slot);
-    }
-
-    private void addBoardCard(Player player, MixedCard card, Coordinates coordinates, Boolean isFacingUp) throws WrongGamePhaseException, WrongPlayerForCurrentTurnException, WrongStepException {
-        matchController.placeCard(player, card, coordinates, isFacingUp);
     }
 }
