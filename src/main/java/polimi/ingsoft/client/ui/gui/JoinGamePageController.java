@@ -65,6 +65,7 @@ public class JoinGamePageController implements Initializable {
     private void handleMenuItemAction(String s) {
         if(!selected){
             selected = true;
+            errButton.setVisible(false);
         }
         setGame(s);
     }

@@ -66,6 +66,7 @@ public class ColorPageController implements Initializable {
 
     private void handleMenuItemAction(String s) {
         String url="";
+        errButton.setVisible(false);
 
         if(!selected){
             selected = true;
