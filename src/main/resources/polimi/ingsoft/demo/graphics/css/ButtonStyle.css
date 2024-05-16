@@ -46,3 +46,13 @@
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
 }
+
+.errorPane {
+    -fx-font-size: 35px;
+    -fx-background-color: #da4d17;
+    -fx-background-radius: 10;
+    -fx-border-color: b6da9f;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
+}

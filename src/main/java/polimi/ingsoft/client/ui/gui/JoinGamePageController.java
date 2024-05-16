@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
@@ -24,6 +25,8 @@ public class JoinGamePageController implements Initializable {
     private boolean selected;
     @FXML
     SplitMenuButton gameList;
+    @FXML
+    Button errButton;
 
     // Default constructor
     public JoinGamePageController() {}
@@ -35,6 +38,7 @@ public class JoinGamePageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        errButton.setVisible(false);
         List<String> items = List.of("Game 1", "Game 2", "Game 3"); // CALL MODEL
         resetGame();
         setGameList(items);
@@ -85,6 +89,7 @@ public class JoinGamePageController implements Initializable {
         }else{
             gameList.setStyle("-fx-background-color: #d34813;");
             gameList.setText("Select a game");// ADD ERROR WINDOWS
+            errButton.setVisible(true);
         }
     }
 
