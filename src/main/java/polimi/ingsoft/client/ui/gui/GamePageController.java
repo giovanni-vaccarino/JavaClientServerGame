@@ -1,6 +1,7 @@
 
 package polimi.ingsoft.client.ui.gui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -9,8 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -48,6 +51,9 @@ public class GamePageController implements Initializable{
     @FXML private ImageView redScoreImg;
     @FXML private ImageView yellowScoreImg;
 
+    @FXML private Button chatControl;
+    @FXML private StackPane chatPane;
+
     private List<Integer> score;
     private HashMap <String, PlayerColors> nicknameColor;
     private HashMap<String, HashMap<String,Coordinates> > boardCoordinates;
@@ -80,6 +86,9 @@ public class GamePageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // !!! CREATE HERE ALL THE OBJs -- Hashmap<>(), ... !!!
+
+        // Chat
+        createChat();
 
         // Personal cards
         placeCardHandler(0,0, personalDeck);
@@ -167,6 +176,43 @@ public class GamePageController implements Initializable{
         placeScore();
 
         loadEntireBoard();
+
+
+
+        // TO CHOOSE A CARD TO PLACE ON THE BOARD
+
+        for (Node node : personalDeck.getChildren()) {
+            int y = GridPane.getRowIndex(node);
+            int x = GridPane.getColumnIndex(node);
+
+            node.setOnMouseClicked(event -> {
+                // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
+                System.out.println(x);
+                System.out.println(y);
+            });
+        }
+
+        for (Node node : visibleDrawableDeck.getChildren()) {
+            int y = GridPane.getRowIndex(node);
+            int x = GridPane.getColumnIndex(node);
+
+            node.setOnMouseClicked(event -> {
+                // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
+                System.out.println(x);
+                System.out.println(y);
+            });
+        }
+
+        for (Node node : coveredDrawableDeck1.getChildren()) {
+            int y = GridPane.getRowIndex(node);
+            int x = GridPane.getColumnIndex(node);
+
+            node.setOnMouseClicked(event -> {
+                // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
+                System.out.println(x);
+                System.out.println(y);
+            });
+        }
     }
     public void setNicknameColor(String nickname, PlayerColors color){
         this.nicknameColor.put(nickname,color);
@@ -747,6 +793,20 @@ public class GamePageController implements Initializable{
         this.CenterBoardY += -y;
         loadEntireBoard();
     }
+
+    public void createChat(){
+
+    }
+
+    public void chatMove(ActionEvent actionEvent) throws IOException {
+        if(chatPane.isVisible()){
+            chatControl.setTranslateX(0);
+        }else{
+            chatControl.setTranslateX(-650);
+        }
+        chatPane.setVisible(!chatPane.isVisible());
+    }
+
     public void start() throws Exception {
         // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/GamePage.fxml");
