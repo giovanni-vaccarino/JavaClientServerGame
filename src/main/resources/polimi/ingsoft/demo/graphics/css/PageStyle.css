@@ -16,3 +16,11 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
+
+.chat{
+    -fx-background-color: #dfd7b0;
+    -fx-background-radius: 10;
+    -fx-border-color: #705f16;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+}

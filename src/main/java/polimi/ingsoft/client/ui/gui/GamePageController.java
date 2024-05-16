@@ -1,6 +1,8 @@
 
 package polimi.ingsoft.client.ui.gui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +10,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -19,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
 import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.model.Chat;
 
 import java.util.*;
 
@@ -53,6 +57,7 @@ public class GamePageController implements Initializable{
 
     @FXML private Button chatControl;
     @FXML private StackPane chatPane;
+    @FXML private ListView chatList;
 
     private List<Integer> score;
     private HashMap <String, PlayerColors> nicknameColor;
@@ -88,7 +93,8 @@ public class GamePageController implements Initializable{
         // !!! CREATE HERE ALL THE OBJs -- Hashmap<>(), ... !!!
 
         // Chat
-        createChat();
+        List<String> chat = List.of("chat 1", "chat 2");
+        setChatList(chat);
 
         // Personal cards
         placeCardHandler(0,0, personalDeck);
@@ -213,6 +219,24 @@ public class GamePageController implements Initializable{
                 System.out.println(y);
             });
         }
+    }
+
+    public void setChatList(List<String> chat){
+        // Create an observable list to hold the chat messages
+        ObservableList<String> items = FXCollections.observableArrayList(chat);
+
+        // Set the observable list to the ListView
+        chatList.setItems(items);
+
+        // Set width and height
+        chatList.setPrefWidth(100); // Set your preferred width
+        chatList.setPrefHeight(500); // Set your preferred height
+
+        // Set text color
+        chatList.setStyle("-fx-text-fill: black;"); // Set your preferred text color
+
+        // Set font
+        chatList.setStyle("-fx-font-family: 'Old English Text MT'; -fx-font-size: 40px;");
     }
     public void setNicknameColor(String nickname, PlayerColors color){
         this.nicknameColor.put(nickname,color);
@@ -794,9 +818,6 @@ public class GamePageController implements Initializable{
         loadEntireBoard();
     }
 
-    public void createChat(){
-
-    }
 
     public void chatMove(ActionEvent actionEvent) throws IOException {
         if(chatPane.isVisible()){
