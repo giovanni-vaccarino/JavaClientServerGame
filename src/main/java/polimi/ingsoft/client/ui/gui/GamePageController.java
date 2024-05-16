@@ -15,6 +15,7 @@ import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
+import polimi.ingsoft.server.enumerations.PlayerColors;
 
 import java.util.*;
 
@@ -48,7 +49,7 @@ public class GamePageController implements Initializable{
     @FXML private ImageView yellowScoreImg;
 
     private List<Integer> score;
-    private HashMap <String, String> nicknameColor;
+    private HashMap <String, PlayerColors> nicknameColor;
     private HashMap<String, HashMap<String,Coordinates> > boardCoordinates;
     private HashMap<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
@@ -116,10 +117,10 @@ public class GamePageController implements Initializable{
 
         // Set nickname-->color
         nicknameColor = new HashMap<>();
-        setNicknameColor("Nico", "Blue");
-        setNicknameColor("Andre", "Green");
-        setNicknameColor("Gio", "Red");
-        setNicknameColor("Simon", "Yellow");
+        setNicknameColor("Nico", PlayerColors.BLUE);
+        setNicknameColor("Andre", PlayerColors.GREEN);
+        setNicknameColor("Gio", PlayerColors.RED);
+        setNicknameColor("Simon", PlayerColors.YELLOW);
 
         // Board load
         CenterBoardX = 2;
@@ -167,7 +168,7 @@ public class GamePageController implements Initializable{
 
         loadEntireBoard();
     }
-    public void setNicknameColor(String nickname, String color){
+    public void setNicknameColor(String nickname, PlayerColors color){
         this.nicknameColor.put(nickname,color);
     }
 
@@ -389,17 +390,22 @@ public class GamePageController implements Initializable{
                 CenterBoardX>=0 && CenterBoardX<5 &&
                 CenterBoardY>=0 && CenterBoardY<9){
 
-            String color = nicknameColor.get(boardNickname);
+            PlayerColors color = nicknameColor.get(boardNickname);
             String img_path = "";
 
-            if(color.toLowerCase().equals("red")){
-                img_path = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
-            } else if (color.toLowerCase().equals("blue")) {
-                img_path = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
-            } else if (color.toLowerCase().equals("green")) {
-                img_path = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
-            } else if (color.toLowerCase().equals("yellow")) {
-                img_path = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
+            switch (color){
+                case PlayerColors.RED:
+                    img_path = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
+                    break;
+                case PlayerColors.BLUE:
+                    img_path = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
+                    break;
+                case PlayerColors.GREEN:
+                    img_path = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
+                    break;
+                case PlayerColors.YELLOW:
+                    img_path = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
+                    break;
             }
 
             ImageView scoreImg = new ImageView(new Image(img_path));

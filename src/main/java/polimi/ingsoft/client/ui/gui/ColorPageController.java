@@ -12,6 +12,7 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import polimi.ingsoft.server.enumerations.PlayerColors;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,54 +41,60 @@ public class ColorPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         errButton.setVisible(false);
-        List<String> items = List.of("Red", "Green", "Blue"); // CALL MODEL
+        List<PlayerColors> items = List.of(PlayerColors.RED,PlayerColors.BLUE,PlayerColors.GREEN); // CALL MODEL
         resetColor();
         setGameList(items);
     }
     public void resetColor(){
-        setColor("Select color");
+        setColorText("Select color");
         selected = false;
         colorList.setStyle("-fx-background-color: white;");
         colorSelected.setVisible(false);
     }
-    public void setColor(String s){
+    public void setColorText(String s){
         color=String.valueOf(s);
         colorList.setText(color);
     }
 
-    public void setGameList(List<String> colors) {
+    public void setGameList(List<PlayerColors> colors) {
         colorList.getItems().clear();
-        for (String color : colors) {
-            MenuItem menuItem = new MenuItem(color);
+        for (PlayerColors color : colors) {
+            MenuItem menuItem = new MenuItem(color.toString().toLowerCase());
             menuItem.setOnAction(e -> handleMenuItemAction(color));
             colorList.getItems().add(menuItem);
         }
     }
 
-    private void handleMenuItemAction(String s) {
+    private void handleMenuItemAction(PlayerColors s) {
+        System.out.println(s.toString().toLowerCase());
         String url="";
         errButton.setVisible(false);
 
         if(!selected){
             selected = true;
         }
-        if(s.toLowerCase().equals("red")){
-            colorList.setStyle("-fx-background-color: red;");
-            url = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
-        } else if (s.toLowerCase().equals("blue")) {
-            colorList.setStyle("-fx-background-color: blue;");
-            url = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
-        } else if (s.toLowerCase().equals("green")) {
-            colorList.setStyle("-fx-background-color: green;");
-            url = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
-        } else if (s.toLowerCase().equals("yellow")) {
-            colorList.setStyle("-fx-background-color: yellow;");
-            url = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
+
+        switch (s){
+            case RED:
+                colorList.setStyle("-fx-background-color: red;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
+                break;
+            case BLUE:
+                colorList.setStyle("-fx-background-color: blue;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
+                break;
+            case GREEN:
+                colorList.setStyle("-fx-background-color: green;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
+                break;
+            case YELLOW:
+                colorList.setStyle("-fx-background-color: yellow;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
         }
 
         placeColor(url);
 
-        setColor(s);
+        setColorText(s.toString().toLowerCase());
     }
 
     public void placeColor(String imageUrl){
@@ -102,9 +109,9 @@ public class ColorPageController implements Initializable {
         colorSelected.setImage(image);
     }
 
-    public void refreshColors(){
+    public void refreshColors(){ // tasto update
         resetColor();
-        List<String> items = List.of("Red", "Green");  // REFRESH LIST
+        List<PlayerColors> items = List.of(PlayerColors.RED,PlayerColors.BLUE,PlayerColors.GREEN); // REFRESH LIST -- CALL MODEL
         setGameList(items);
     }
     public void nextPage(ActionEvent actionEvent) throws IOException {
@@ -120,7 +127,7 @@ public class ColorPageController implements Initializable {
             }
         }else{
             colorList.setStyle("-fx-background-color: #d34813;");
-            colorList.setText("Select another color");// ADD ERROR WINDOWS
+            setColorText("Select another color");
             errButton.setVisible(true);
         }
     }
