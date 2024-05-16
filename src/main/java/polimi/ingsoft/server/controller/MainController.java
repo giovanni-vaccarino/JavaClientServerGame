@@ -11,6 +11,8 @@ import java.util.*;
 public class MainController {
 
     private final Map<Integer, MatchController> matches;
+
+    private Integer idMatch = 1;
     private final PrintStream logger;
 
     public MainController(PrintStream logger) {
@@ -37,7 +39,8 @@ public class MainController {
     }
 
     public Integer createMatch(Integer requiredNumPlayers){
-        int matchId = matches.keySet().size() + 1;
+        int matchId = this.idMatch;
+        idMatch += 1;
 
         //TODO Validate requiredNumPlayers
         MatchController match = MatchFactory.createMatch(logger, matchId, requiredNumPlayers);
