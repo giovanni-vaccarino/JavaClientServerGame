@@ -42,7 +42,7 @@ public class ClientBoard {
     }
 
     public void printBoard() {
-        int count = 0,row=0;
+        int count = 0, row = 0;
         String color = "";
         System.out.print(RESET);
         if ((getCardAtRespective(-2, -2) != null ||
@@ -70,7 +70,7 @@ public class ClientBoard {
                 getCardAtRespective(0, 2) != null ||
                 getCardAtRespective(2, 0) != null) System.out.print(UPRIGHTARROW);
         else System.out.print(" ");
-        System.out.print(RESET+"\n");
+        System.out.print(RESET + "\n");
 
 
         do {
@@ -78,8 +78,8 @@ public class ClientBoard {
             if (card != null || getCardAtRespective(-2, -2) != null || getCardAtRespective(0, 2) != null) {
                 color = defineColor(card);
                 System.out.print(printLeftUpLeftCorner(card, count));
-                System.out.print(printCenterRow(row,card, color));
-                System.out.print(printLeftUpRightCorner(card,count));
+                System.out.print(printCenterRow(row, card, color));
+                System.out.print(printLeftUpRightCorner(card, count));
             } else {
                 System.out.print(RESET);
                 for (int i = 0; i < 34; i++) System.out.print(" ");
@@ -88,20 +88,20 @@ public class ClientBoard {
             for (int i = 0; i < 14; i++) System.out.print(" ");
 
             card = getCardAtRespective(1, 1);
-            if (card != null||getCardAtRespective(2,2)!=null || getCardAtRespective(0,2)!=null) {
+            if (card != null || getCardAtRespective(2, 2) != null || getCardAtRespective(0, 2) != null) {
                 color = defineColor(card);
                 System.out.print(printRightUpLeftCorner(card, count));
-                System.out.print(printCenterRow(row,card, color));
-                System.out.print(printRightUpRightCorner(card,count));
-            }else {
+                System.out.print(printCenterRow(row, card, color));
+                System.out.print(printRightUpRightCorner(card, count));
+            } else {
                 System.out.print(RESET);
                 for (int i = 0; i < 33; i++) System.out.print(" ");
             }
-            if(count==2&&getCardAtRespective(2,2)!=null)System.out.print(RESET+"_");
-            else System.out.print(RESET+" ");
+            if (count == 2 && getCardAtRespective(2, 2) != null) System.out.print(RESET + "_");
+            else System.out.print(RESET + " ");
             count++;
             row++;
-            System.out.print(RESET+"\n");
+            System.out.print(RESET + "\n");
         } while (count < 3);
 
     }
@@ -110,7 +110,7 @@ public class ClientBoard {
         return board.get(actualCoordinates.sum(new Coordinates(x, y)));
     }
 
-    private String printRightUpLeftCorner(PlayedCard card,int count){
+    private String printRightUpLeftCorner(PlayedCard card, int count) {
         CornerSpace corner;
         if (getCardAtRespective(0, 2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
                 || (getCardAtRespective(0, 2) != null && card != null &&
@@ -126,7 +126,7 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
-    private String printRightUpRightCorner(PlayedCard card,int count){
+    private String printRightUpRightCorner(PlayedCard card, int count) {
         CornerSpace corner;
         if (getCardAtRespective(2, 2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
                 || (getCardAtRespective(2, 2) != null && card != null &&
@@ -143,7 +143,7 @@ public class ClientBoard {
     }
 
 
-    private String printLeftUpRightCorner(PlayedCard card,int count){
+    private String printLeftUpRightCorner(PlayedCard card, int count) {
         CornerSpace corner;
         if (getCardAtRespective(0, 2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
                 || (getCardAtRespective(0, 2) != null && card != null &&
@@ -155,7 +155,7 @@ public class ClientBoard {
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(0, 2).getBottomLeftCorner();
             if (corner == null) return defineColor(getCardAtRespective(0, 2)) + "          ";
-            }
+        }
         return printCorner("", corner, count);
     }
 
@@ -177,12 +177,12 @@ public class ClientBoard {
                 || (getCardAtRespective(-2, -2) != null && card != null &&
                 getCardAtRespective(-2, -2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return pre + defineColor(card) + "          ";
         } else if (card == null && getCardAtRespective(-2, -2) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(-2, -2).getBottomRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(-2, -2)) + "          ";
+            if (corner == null) return pre + defineColor(getCardAtRespective(-2, -2)) + "          ";
         }
         return printCorner(pre, corner, count);
     }
@@ -229,9 +229,9 @@ public class ClientBoard {
 //        System.out.print(color + "!________!" + RESET + "__________");
 //    }
 
-    private String printCenterRow(int row,PlayedCard card, String actualColor ) {
+    private String printCenterRow(int row, PlayedCard card, String actualColor) {
         if (card == null) return RESET + "              ";
-        else if(row==0) {
+        else if (row == 0) {
             if (card.isFacingUp() || card.getScore() == 0) {
                 return actualColor + "              ";
             } else {
@@ -247,8 +247,8 @@ public class ClientBoard {
                             return actualColor + BLACKTEXT + " |" + card.getScore() + "x Scroll|  ";
                     } catch (ClassCastException e) {
                         return actualColor + BLACKTEXT + " |" + card.getScore() + "x Corner|  ";
-                    }catch (NullPointerException f){
-                        return actualColor+BLACKTEXT+"     | "+card.getScore()+"|     ";
+                    } catch (NullPointerException f) {
+                        return actualColor + BLACKTEXT + "     | " + card.getScore() + "|     ";
                     }
                 } catch (ClassCastException e) {
                     return actualColor + "              ";
@@ -273,7 +273,7 @@ public class ClientBoard {
             case SCROLL -> BLACKTEXT + "| SCROLL |";
             case POTION -> BLACKTEXT + "| POTION |";
             case FEATHER -> BLACKTEXT + "|FEATHER |";
-            default -> BLACKTEXT+"|        |";
+            default -> BLACKTEXT + "|        |";
         };
     }
 

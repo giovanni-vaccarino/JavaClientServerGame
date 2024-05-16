@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="further testing on clienthand">
+    <list default="true" id="a0c1a128-e941-4630-9b78-dcdd7878dcba" name="Changes" comment="first rows of board cards now printing properly with correct show of return score&#10;improvement on printcenter method&#10;general improvement of corners' printing management">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/ClientBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/ClientBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ConditionalPointsCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/GoldCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/MixedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/MixedCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/PlayedCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/QuestCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ResourceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/polimi/ingsoft/server/model/ResourceCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/client/ui/cli/ClientBoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/polimi/ingsoft/client/ui/cli/ClientBoardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,7 +251,12 @@
       <workItem from="1715595688072" duration="201000" />
       <workItem from="1715668457520" duration="92000" />
       <workItem from="1715686849601" duration="12278000" />
-      <workItem from="1715706335312" duration="3529000" />
+      <workItem from="1715706335312" duration="4526000" />
+      <workItem from="1715750928120" duration="1777000" />
+      <workItem from="1715755545764" duration="291000" />
+      <workItem from="1715755848788" duration="617000" />
+      <workItem from="1715835822453" duration="3507000" />
+      <workItem from="1715850272928" duration="339000" />
     </task>
     <task id="LOCAL-00001" summary="global package name change">
       <option name="closed" value="true" />
@@ -491,7 +490,39 @@
       <option name="project" value="LOCAL" />
       <updated>1715323233654</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="change in interface conditionalpointscard: now all playable cards implement it&#10;&#10;started implementation of clientboard class and relative methods">
+      <option name="closed" value="true" />
+      <created>1715713892844</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1715713892844</updated>
+    </task>
+    <task id="LOCAL-00031" summary="now printing upright corner and all first row conditions properly">
+      <option name="closed" value="true" />
+      <created>1715714844517</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1715714844517</updated>
+    </task>
+    <task id="LOCAL-00032" summary="now printing upright corner and all first row conditions properly even if central card is null">
+      <option name="closed" value="true" />
+      <created>1715756438684</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1715756438684</updated>
+    </task>
+    <task id="LOCAL-00033" summary="first rows of board cards now printing properly with correct show of return score&#10;improvement on printcenter method&#10;general improvement of corners' printing management">
+      <option name="closed" value="true" />
+      <created>1715839150069</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1715839150069</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -521,10 +552,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="minor change in board's method's name" />
-    <MESSAGE value="it's reported as not pushed yet" />
-    <MESSAGE value="minor update on class Board" />
-    <MESSAGE value="minor update on class Board 2" />
     <MESSAGE value="update con class Board- creator method" />
     <MESSAGE value="equals() and hashcode methods on space and face classes&#10;tests on face,cornerspace and coordinates&#10;tests omitted on enumeration and centerspace classes (enumeration classes don't need it and centerspace is basically the same as cornerspace)&#10;needed update on PlayedCard class--&gt;must return proper arraylist when adding card to board in order to update players' resources" />
     <MESSAGE value="workspace.xml updated" />
@@ -546,15 +573,23 @@
     <MESSAGE value="isblocked method changed to isNOTblocked in board class" />
     <MESSAGE value="major update on goldcard and resourcecard classes: now avaiable new method getpoints which returns the number of matches for pointpattern in goldcard and resourcecard classes &#10;new pattern type cornerpattern&#10;&#10;this will need a lot of fixing" />
     <MESSAGE value="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards" />
-    <option name="LAST_COMMIT_MESSAGE" value="added numcards integer and getter method in board to keep track of the amount of cards on a board&#10;&#10;added order integer and getter method in playedcard to keep track of the order of played cards" />
+    <MESSAGE value="change in interface conditionalpointscard: now all playable cards implement it&#10;&#10;started implementation of clientboard class and relative methods" />
+    <MESSAGE value="now printing upright corner and all first row conditions properly" />
+    <MESSAGE value="now printing upright corner and all first row conditions properly even if central card is null" />
+    <MESSAGE value="first rows of board cards now printing properly with correct show of return score&#10;improvement on printcenter method&#10;general improvement of corners' printing management" />
+    <option name="LAST_COMMIT_MESSAGE" value="first rows of board cards now printing properly with correct show of return score&#10;improvement on printcenter method&#10;general improvement of corners' printing management" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/polimi/ingsoft/client/ui/cli/ClientBoard.java</url>
-          <line>162</line>
-          <option name="timeStamp" value="3" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/polimi/ingsoft/client/ui/cli/ClientHandTest.java</url>
+          <line>139</line>
+          <properties class="polimi.ingsoft.client.ui.cli.ClientHandTest" method="print">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
