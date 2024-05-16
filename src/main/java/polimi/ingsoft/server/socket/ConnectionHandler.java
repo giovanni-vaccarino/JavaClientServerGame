@@ -179,7 +179,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
         }
     }
 
-    static String getRandomNickname() {
+    public static String getRandomNickname() {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
                 + "abcdefghijklmnopqrstuvxyz";
