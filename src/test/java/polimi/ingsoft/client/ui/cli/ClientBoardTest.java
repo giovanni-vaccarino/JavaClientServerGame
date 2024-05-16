@@ -45,16 +45,18 @@ class ClientBoardTest {
         list.add(Resource.BUTTERFLY);
         bottomright=new CornerSpace(list);
         back=new Face(null,upright,bottomleft,bottomright);
-        res1=new ResourceCard("lol",front,back,0);
+        res1=new ResourceCard("lol",front,back,2);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
-        list.add(Object.SCROLL);
+        list.add(Resource.LEAF);
         upleft=new CornerSpace(list);
+        list=new ArrayList<>();
+        list.add(Object.SCROLL);
         upright=new CornerSpace(list);
         bottomleft=new CornerSpace(list);
         bottomright=new CornerSpace(list);
-        list2.add(Resource.BUTTERFLY);
+        list2.add(Resource.MUSHROOM);
         center=new CenterSpace(list2);
         front=new Face(upleft,upright,bottomleft,bottomright,center);
 
@@ -72,7 +74,7 @@ class ClientBoardTest {
         bottomright=new CornerSpace(list);
         back=new Face(upleft,upright,null,bottomright);
 
-        res2=new ResourceCard("lol",front,back,0);
+        res2=new ResourceCard("lol",front,back,2);
 
 
 
@@ -258,8 +260,8 @@ class ClientBoardTest {
 
     @Test
     void printBoard() {
-        board.put(new Coordinates(-1,-1),new PlayedCard(res1,true,2));
-        board.put(new Coordinates(1,1),new PlayedCard(res2,true,1));
+        board.put(new Coordinates(-1,-1),new PlayedCard(res1,false,2));
+        board.put(new Coordinates(1,1),new PlayedCard(res2,false,1));
         board.printBoard();
     }
 }
