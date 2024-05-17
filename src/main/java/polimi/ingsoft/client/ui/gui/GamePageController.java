@@ -10,6 +10,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.util.Callback;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.Chat;
@@ -57,7 +59,8 @@ public class GamePageController implements Initializable{
 
     @FXML private Button chatControl;
     @FXML private StackPane chatPane;
-    @FXML private ListView chatList;
+    @FXML private StackPane chatTextPane;
+
 
     private List<Integer> score;
     private HashMap <String, PlayerColors> nicknameColor;
@@ -221,7 +224,7 @@ public class GamePageController implements Initializable{
         }
     }
 
-    public void setChatList(List<String> chat){
+    /*public void setChatList(List<String> chat){
         // Create an observable list to hold the chat messages
         ObservableList<String> items = FXCollections.observableArrayList(chat);
 
@@ -236,8 +239,14 @@ public class GamePageController implements Initializable{
         chatList.setStyle("-fx-text-fill: black;"); // Set your preferred text color
 
         // Set font
-        chatList.setStyle("-fx-font-family: 'Old English Text MT'; -fx-font-size: 40px;");
+        chatList.setStyle("-fx-font-family: 'Old English Text MT'; -fx-font-size: 20px; -fx-in: red");
+    }*/
+
+    public void setChatList(List<String> chat) {
+
     }
+
+
     public void setNicknameColor(String nickname, PlayerColors color){
         this.nicknameColor.put(nickname,color);
     }
@@ -826,6 +835,7 @@ public class GamePageController implements Initializable{
             chatControl.setTranslateX(-650);
         }
         chatPane.setVisible(!chatPane.isVisible());
+        chatTextPane.setVisible(!chatTextPane.isVisible());
     }
 
     public void start() throws Exception {

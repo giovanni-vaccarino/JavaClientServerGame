@@ -37,6 +37,26 @@
     -fx-font-family: 'Old English Text MT';
 }
 
+.chatSend {
+    -fx-font-size: 25px;
+    -fx-background-color: #da4d17;
+    -fx-background-radius: 10;
+    -fx-border-color: #705f16;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
+}
+
+.chatMovement {
+    -fx-font-size: 25px;
+    -fx-background-color: #dfd7b0;
+    -fx-background-radius: 10;
+    -fx-border-color: #332115;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
+}
+
 .buttonLarge {
     -fx-font-size: 35px;
     -fx-background-color: #705f16;
