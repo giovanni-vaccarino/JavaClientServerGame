@@ -171,7 +171,7 @@ public class MatchController implements Serializable {
         return publicBoard.getGold(slot);
     }
 
-    public Message writeMessage(String message){
-        return this.chatController.writeMessage(message);
+    public Message writeMessage(String playerSender, String message){
+        return this.chatController.writeMessage(playerSender, message);
     }
 }

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MessageTest {
     @Test
     public void shouldCreateMessage() {
-        PlayerColors playerSender = PlayerColors.GREEN;
+        String playerSender = "Gianni";
         String textMessage = "Gianni il cuoco";
 
         Message message = new Message(playerSender, textMessage);
@@ -20,14 +20,14 @@ class MessageTest {
     @Test
     public void shouldGetText() {
         String textMessage = "Gianni il cuoco";
-        Message message = new Message(PlayerColors.BLUE, textMessage);
+        Message message = new Message("Gianni", textMessage);
 
         assertEquals(message.getText(), textMessage);
     }
 
     @Test
     public void shouldGetSender() {
-        PlayerColors playerSender = PlayerColors.RED;
+        String playerSender = "Gianni";
         Message message = new Message(playerSender, "Gianni il cuoco");
 
         assertEquals(message.getSender(), playerSender);
@@ -35,7 +35,7 @@ class MessageTest {
 
     @Test
     public void shouldGetPrintableFormatMessage() {
-        PlayerColors playerSender = PlayerColors.RED;
+        String playerSender = "Gianni";
         String textMessage = "Gianni il cuoco";
         Message message = new Message(playerSender, textMessage);
 

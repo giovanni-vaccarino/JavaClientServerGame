@@ -9,7 +9,7 @@ import java.util.List;
 public class Chat implements Serializable {
     private final ArrayList<Message> messages = new ArrayList<>();
 
-    public Message addMessage(PlayerColors sender, String text) throws NotValidMessageException{
+    public Message addMessage(String sender, String text) throws NotValidMessageException{
         if (sender == null || text == null || text.isEmpty()) {
             throw new NotValidMessageException();
         }
@@ -19,7 +19,6 @@ public class Chat implements Serializable {
         return getLastMessage();
     }
 
-    //Private?
     public Message getLastMessage() {
         return messages.get(messages.size() - 1);
     }

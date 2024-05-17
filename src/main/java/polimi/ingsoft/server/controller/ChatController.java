@@ -9,13 +9,14 @@ import java.util.List;
 
 public class ChatController implements Serializable {
     final Chat gameChat;
+
     public ChatController(){
         this.gameChat = new Chat();
     }
 
-    public Message writeMessage(String message){
+    public Message writeMessage(String sender, String message){
         synchronized (this.gameChat){
-            return this.gameChat.addMessage(PlayerColors.RED, message);
+            return this.gameChat.addMessage(sender, message);
         }
     }
 }

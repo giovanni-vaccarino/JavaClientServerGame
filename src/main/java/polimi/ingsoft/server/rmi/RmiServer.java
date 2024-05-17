@@ -2,6 +2,7 @@ package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.exceptions.NotValidNumPlayersException;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
@@ -94,31 +95,37 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             }
 
             case MATCH_CREATE_REQUEST -> {
-                Integer matchId = this.addMatch((Integer) args[0]);
-                MatchController matchController = mainController.getMatch(matchId);
-                List<Integer> listMatches = this.listMatches();
+                Integer requiredNumPlayers = (Integer) args[0];
+                try{
+                    Integer matchId = this.addMatch(requiredNumPlayers);
+                    MatchController matchController = mainController.getMatch(matchId);
+                    List<Integer> listMatches = this.listMatches();
 
-                // Creating a new list for the players
-                synchronized (matchNotificationList){
-                    matchNotificationList.put(matchId, new ArrayList<>());
-                }
+                    // Creating a new list for the players
+                    synchronized (matchNotificationList){
+                        matchNotificationList.put(matchId, new ArrayList<>());
+                    }
 
+                    // Creating the MatchControllerRmiServer
+                    VirtualMatchController stubController = this.createMatchControllerServer(matchController, matchNotificationList.get(matchId), this.logger);
 
-                // Creating the MatchControllerRmiServer
-                VirtualMatchController stubController = this.createMatchControllerServer(matchController, matchNotificationList.get(matchId), this.logger);
+                    matchControllerServer.put(matchId, stubController);
 
-                matchControllerServer.put(matchId, stubController);
+                    synchronized (this.clients) {
+                        for (var client : this.clients.values()) {
+                            try {
+                                client.showUpdateMatchesList(listMatches);
+                            } catch (IOException exception) {
 
-                synchronized (this.clients) {
-                    for (var client : this.clients.values()) {
-                        try {
-                            client.showUpdateMatchesList(listMatches);
-                        } catch (IOException exception) {
-
+                            }
                         }
                     }
+                    //TODO Join the first client
+                } catch (NotValidNumPlayersException exception){
+                    //TODO
+                    //synchronized(this.clients)
+                    //client.reportError()
                 }
-                //TODO Join the first client
             }
 
             case MATCH_JOIN_REQUEST -> {

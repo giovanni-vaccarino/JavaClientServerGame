@@ -3,10 +3,8 @@ package polimi.ingsoft.client.socket;
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.common.VirtualServer;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-import polimi.ingsoft.server.model.Player;
+import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
@@ -54,6 +52,21 @@ public class ServerProxy implements VirtualServer, VirtualMatchController {
 
     @Override
     public void reJoinMatch(Integer matchId, String nickname) throws IOException {
+
+    }
+
+    @Override
+    public void setColor(String nickname, PlayerColors color) throws RemoteException {
+
+    }
+
+    @Override
+    public void setFaceInitialCard(String nickname, Boolean isFaceUp) throws RemoteException {
+
+    }
+
+    @Override
+    public void setQuestCard(String nickname, QuestCard questCard) throws RemoteException {
 
     }
 
