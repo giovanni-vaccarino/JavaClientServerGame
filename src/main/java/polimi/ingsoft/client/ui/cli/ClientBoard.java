@@ -144,6 +144,7 @@ public class ClientBoard {
             color = defineColor(card);
             System.out.print(printCenterRow(row - 6, card, color));
             card = getCardAtRespective(1, 1);
+            color=defineColor(card);
             System.out.print(printRightBottomLeftCorner(card, count));
             System.out.print(printCenterRow(row, card, color));
             System.out.print(printRightBottomRightCorner(card, count));
@@ -151,7 +152,14 @@ public class ClientBoard {
             row++;
             count++;
         } while (count < 3);
-        row = 2;
+        row = 3;
+        card=getCardAtRespective(0,0);
+        do{
+            System.out.print(RESET+"                        ");
+           printCentralRows(card,row);
+            System.out.print(RESET+"\n");
+           row++;
+        }while(row<6);
     }
 
     private void printCentralRows(PlayedCard card, int row) {
@@ -354,8 +362,9 @@ public class ClientBoard {
         String pre = "";
         Resource resource = null;
         if (card == null) return RESET + "              ";
-        else if (card.isFacingUp() || card.getScore() == 0) return actualColor + "              ";
+        else if (!card.isFacingUp()) return actualColor + "              ";
         else if (row == 0) {
+            if(card.getScore()==0)return actualColor + "              ";
             try {
                 MixedCard newCard = (MixedCard) card.getCard();
                 try {
@@ -411,9 +420,7 @@ public class ClientBoard {
                 case Resource.WOLF -> BLUE + pre;
                 case null -> actualColor + "              ";
             };
-        } else {
-            return RESET+"              ";
-        }
+        } else return printLastRow(card,actualColor);
         return RESET+"              ";
     }
 
