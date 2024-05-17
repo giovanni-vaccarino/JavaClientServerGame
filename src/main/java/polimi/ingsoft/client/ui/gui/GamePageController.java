@@ -12,9 +12,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +27,7 @@ import javafx.util.Callback;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.Chat;
+import polimi.ingsoft.server.model.Message;
 
 import java.util.*;
 
@@ -60,7 +63,16 @@ public class GamePageController implements Initializable{
     @FXML private Button chatControl;
     @FXML private StackPane chatPane;
     @FXML private StackPane chatTextPane;
-
+    @FXML private StackPane chatMessagesPane;
+    @FXML private ListView chatMessages;
+    @FXML private Button chatButton1;
+    @FXML private Button chatButton2;
+    @FXML private Button chatButton3;
+    @FXML private Button chatButton4;
+    @FXML private Line chatLine1;
+    @FXML private Line chatLine2;
+    @FXML private Line chatLine3;
+    @FXML private TextField messageInput;
 
     private List<Integer> score;
     private HashMap <String, PlayerColors> nicknameColor;
@@ -80,10 +92,10 @@ public class GamePageController implements Initializable{
     private int rowNum;
     private int colNum;
 
-    public void setNumTable() {
-        rowNum = board.getRowConstraints().size(); // 9
-        colNum = board.getColumnConstraints().size(); // 5
-    }
+    private HashMap<String, Chat> chatHashMap;
+    private String openedChat;
+    private int chatSelected;
+
 
     public GamePageController() {}
 
@@ -96,8 +108,19 @@ public class GamePageController implements Initializable{
         // !!! CREATE HERE ALL THE OBJs -- Hashmap<>(), ... !!!
 
         // Chat
-        List<String> chat = List.of("chat 1", "chat 2");
-        setChatList(chat);
+        Chat chat1 = new Chat();
+        Chat chat2 = new Chat();
+        Chat chat3 = new Chat();
+        Chat chat4 = new Chat();
+        chat1.addMessage(PlayerColors.RED,"testo");
+        chat2.addMessage(PlayerColors.GREEN,"testo");
+        chat4.addMessage(PlayerColors.BLUE,"simonnnnnnnn");
+        chatHashMap = new HashMap<>();
+        chatHashMap.put("Simon", chat1);
+        chatHashMap.put("Gio", chat2);
+        chatHashMap.put("Andre", chat3);
+        chatHashMap.put("Everyone", chat4);
+        setChatList(chatHashMap.keySet().stream().toList());
 
         // Personal cards
         placeCardHandler(0,0, personalDeck);
@@ -187,7 +210,6 @@ public class GamePageController implements Initializable{
         loadEntireBoard();
 
 
-
         // TO CHOOSE A CARD TO PLACE ON THE BOARD
 
         for (Node node : personalDeck.getChildren()) {
@@ -224,28 +246,45 @@ public class GamePageController implements Initializable{
         }
     }
 
-    /*public void setChatList(List<String> chat){
-        // Create an observable list to hold the chat messages
-        ObservableList<String> items = FXCollections.observableArrayList(chat);
-
-        // Set the observable list to the ListView
-        chatList.setItems(items);
-
-        // Set width and height
-        chatList.setPrefWidth(100); // Set your preferred width
-        chatList.setPrefHeight(500); // Set your preferred height
-
-        // Set text color
-        chatList.setStyle("-fx-text-fill: black;"); // Set your preferred text color
-
-        // Set font
-        chatList.setStyle("-fx-font-family: 'Old English Text MT'; -fx-font-size: 20px; -fx-in: red");
-    }*/
-
-    public void setChatList(List<String> chat) {
-
+    public void setNumTable() {
+        rowNum = board.getRowConstraints().size(); // 9
+        colNum = board.getColumnConstraints().size(); // 5
     }
 
+    public void setChatList(List<String> chat) {
+        if (chat.size()>=1){
+            chatButton1.setText(chat.get(0));
+            chatButton1.setVisible(true);
+            chatButton1.setOnAction(e->{
+                chatSelected = 0;
+                openChat(chat.get(0));
+            });
+        } if (chat.size()>=2){
+            chatButton2.setText(chat.get(1));
+            chatButton2.setVisible(true);
+            chatLine1.setVisible(true);
+            chatButton2.setOnAction(e->{
+                chatSelected = 1;
+                openChat(chat.get(1));
+            });
+        } if (chat.size()>=3){
+            chatButton3.setText(chat.get(2));
+            chatButton3.setVisible(true);
+            chatLine2.setVisible(true);
+            chatButton3.setOnAction(e->{
+                chatSelected = 2;
+                openChat(chat.get(2));
+            });
+        } if (chat.size()>=4){
+            chatButton4.setText(chat.get(3));
+            chatButton4.setVisible(true);
+            chatLine3.setVisible(true);
+            chatButton4.setOnAction(e->{
+                chatSelected = 3;
+                openChat(chat.get(3));
+            });
+        }
+    }
 
     public void setNicknameColor(String nickname, PlayerColors color){
         this.nicknameColor.put(nickname,color);
@@ -836,7 +875,73 @@ public class GamePageController implements Initializable{
         }
         chatPane.setVisible(!chatPane.isVisible());
         chatTextPane.setVisible(!chatTextPane.isVisible());
+        chatMessagesPane.setVisible(!chatMessagesPane.isVisible());
     }
+
+    public void openChat(String nameChat){
+
+        openedChat = nameChat;
+
+        chatButton1.setStyle("-fx-font-weight: normal;");
+        chatButton2.setStyle("-fx-font-weight: normal;");
+        chatButton3.setStyle("-fx-font-weight: normal;");
+        chatButton4.setStyle("-fx-font-weight: normal;");
+
+        switch (chatSelected){
+            case 0:
+                chatButton1.setStyle("-fx-text-fill: red;");
+                break;
+            case 1:
+                chatButton2.setStyle("-fx-text-fill: red;");
+                break;
+            case 2:
+                chatButton3.setStyle("-fx-text-fill: red;");
+                break;
+            case 3:
+                chatButton4.setStyle("-fx-text-fill: red;");
+                break;
+        }
+
+        Chat chat = chatHashMap.get(nameChat);
+        List<Message> messages = chat.getMessages();
+        List<String> messagesString = new ArrayList<>();
+
+        for (Message message : messages){
+            messagesString.add(message.printable());
+        }
+
+        ObservableList<String> items = FXCollections.observableArrayList(messagesString);
+
+        // Set the observable list to the ListView
+        chatMessages.setItems(items);
+
+        // Set a custom cell factory for the ListView
+        chatMessages.setCellFactory(list -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("-fx-background-color: transparent;");
+                } else {
+                    setText(item);
+                    setStyle("-fx-background-color: transparent;");
+                }
+            }
+        });
+
+        // Set the style for the ListView
+        chatMessages.setStyle("-fx-font-family: 'Old English Text MT'; -fx-font-size: 20px; -fx-background-color: transparent;");
+    }
+
+    public void sendMessage(ActionEvent actionEvent) throws IOException {
+        if(messageInput != null){
+            chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName),messageInput.getText());
+            openChat(openedChat);
+            messageInput.setText("");
+        }
+    }
+
 
     public void start() throws Exception {
         // Load FXML file

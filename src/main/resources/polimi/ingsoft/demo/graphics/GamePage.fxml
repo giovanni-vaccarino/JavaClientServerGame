@@ -14,6 +14,8 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.control.ListCell?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1350.0" styleClass="gamePage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polimi.ingsoft.client.ui.gui.GamePageController">
     <children>
 
@@ -172,58 +174,88 @@
         <StackPane layoutX="1265.0" layoutY="680.0" prefWidth="100" prefHeight="65" alignment="CENTER">
             <children>
                 <Button mnemonicParsing="false" text="Chat"
-                        prefWidth="100" prefHeight="50" styleClass="chatMovement"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        prefWidth="100" prefHeight="50" styleClass="chatButtonMovement"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
                         textAlignment="LEFT" fx:id="chatControl" onAction="#chatMove">
                 </Button>
             </children>
         </StackPane>
         <StackPane layoutX="700.0" layoutY="60.0" prefWidth="660" prefHeight="710" alignment="CENTER"
-                   styleClass="chat" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
-                    visible="false" fx:id="chatPane">
+                   styleClass="chatPane" stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
+                   visible="false" fx:id="chatPane">
             <children>
                 <Separator orientation="VERTICAL" translateX="-150" style="-fx-border-color: #705f16"/>
                 <Separator orientation="HORIZONTAL" translateY="286" style="-fx-border-color: #705f16"/>
 
-                <Button mnemonicParsing="false" text="Chat 1"
-                        fx:id="chatButton1"
+                <Button mnemonicParsing="false"
+                        fx:id="chatButton1" visible="false"
                         translateX="-242" translateY="-320"
-                        prefWidth="150" prefHeight="50" styleClass="buttonRegular"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
-                <Button mnemonicParsing="false" text="Chat 2"
+
+                <Line startX="242.0" startY="100.0" visible="false"
+                      endX="300.0" endY="100.0"
+                      translateX="-242" translateY="-285"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="chatLine1"/>
+
+                <Button mnemonicParsing="false" visible="false"
                         fx:id="chatButton2"
                         translateX="-242" translateY="-250"
-                        prefWidth="150" prefHeight="50" styleClass="buttonRegular"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
-                <Button mnemonicParsing="false" text="Chat 3"
+
+                <Line startX="0.0" startY="100.0" visible="false"
+                      endX="58.0" endY="100.0"
+                      translateX="-242" translateY="-215"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="chatLine2"/>
+
+                <Button mnemonicParsing="false" visible="false"
                         fx:id="chatButton3"
                         translateX="-242" translateY="-180"
-                        prefWidth="150" prefHeight="50" styleClass="buttonRegular"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
-                <Button mnemonicParsing="false" text="Chat 4"
+
+                <Line startX="242.0" startY="100.0" visible="false"
+                      endX="300.0" endY="100.0"
+                      translateX="-242" translateY="-135"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="chatLine3"/>
+
+                <Button mnemonicParsing="false"
                         fx:id="chatButton4"
                         translateX="-242" translateY="-100"
-                        prefWidth="150" prefHeight="50" styleClass="buttonRegular"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
 
                 <Button mnemonicParsing="false" text="Send"
                         fx:id="sendMessage"
                         translateX="-242" translateY="320"
-                        prefWidth="100" prefHeight="30" styleClass="chatSend"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
+                        prefWidth="100" prefHeight="30" styleClass="chatButtonSend"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
+                        onAction="#sendMessage">
                 </Button>
+
+
             </children>
+        </StackPane>
+
+        <StackPane layoutX="887.0" layoutY="65.0" prefWidth="461" prefHeight="630" alignment="CENTER"
+                   visible="false" fx:id="chatMessagesPane">
+            <ListView fx:id="chatMessages" style="-fx-background-color: #dfd7b0">
+            </ListView>
         </StackPane>
 
         <StackPane layoutX="887.0" layoutY="705.0" prefWidth="461" prefHeight="60" alignment="CENTER"
                    visible="false" fx:id="chatTextPane">
             <children>
                 <TextField fx:id="messageInput" promptText="Enter here"
-                           styleClass="chatTextBar" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"/>
+                           styleClass="chatTextBar" stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"/>
             </children>
         </StackPane>
 
