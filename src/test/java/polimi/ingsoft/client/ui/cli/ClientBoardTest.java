@@ -8,6 +8,7 @@ import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ClientBoardTest {
     static ClientBoard board;
     static InitialCard a;
+    static GoldCard gold;
     static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
 
     @BeforeAll
@@ -256,12 +258,48 @@ class ClientBoardTest {
 
         a=new InitialCard("lol",front,back,0);
         board=new ClientBoard(new PlayedCard(a,true,0));
+
+        list=new ArrayList<>();
+        list2=new ArrayList<>();
+        list.add(Resource.BUTTERFLY);
+        upleft=new CornerSpace(list);
+        list=new ArrayList<>();
+        upright=new CornerSpace(list);
+        bottomleft=new CornerSpace(list);
+        list.add(Resource.LEAF);
+        bottomright=new CornerSpace(list);
+        list2.add(Resource.WOLF);
+        center=new CenterSpace(list2);
+        front=new Face(upleft,upright,bottomleft,bottomright,center);
+
+        list=new ArrayList<>();
+        list.add(Object.POTION);
+        upleft=new CornerSpace(list);
+        list=new ArrayList<>();
+        list.add(Resource.MUSHROOM);
+        upright=new CornerSpace(list);
+//        list=new ArrayList<>();
+//        list.add(Resource.WOLF);
+//        bottomleft=new CornerSpace(list);
+        list=new ArrayList<>();
+        list.add(Resource.WOLF);
+        bottomright=new CornerSpace(list);
+        back=new Face(upleft,upright,null,bottomright);
+        HashMap<Resource,Integer> cost=new HashMap<>();
+        cost.put(Resource.LEAF,2);
+        cost.put(Resource.WOLF,0);
+        cost.put(Resource.MUSHROOM,0);
+        cost.put(Resource.BUTTERFLY,0);
+        gold=new GoldCard("lol",front,back,new ItemPattern(new HashMap<>(cost)),new CornerPattern(),5);
     }
 
     @Test
     void printBoard() {
-        board.put(new Coordinates(1,1),new PlayedCard(res1,true,2));
-        board.put(new Coordinates(-1,1),new PlayedCard(res2,false,1));
+        board.put(new Coordinates(1,1),new PlayedCard(gold,true,2));
+        board.put(new Coordinates(-1,1),new PlayedCard(gold,false,1));
+        board.put(new Coordinates(-1,-1),new PlayedCard(res1,true,3));
+        board.put(new Coordinates(1,-1),new PlayedCard(res2,false,4));
+        board.put(new Coordinates(-2,0),new PlayedCard(res3,true,5));
         board.printBoard();
     }
 }
