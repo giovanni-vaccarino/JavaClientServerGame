@@ -33,7 +33,7 @@ public class ClientBoard {
 
     public ClientBoard(PlayedCard initial) {
         this.board = new HashMap<>();
-        this.actualCoordinates = new Coordinates(-1, 1);
+        this.actualCoordinates = new Coordinates(0, 0);
         board.put(new Coordinates(0, 0), initial);
     }
 
@@ -84,7 +84,7 @@ public class ClientBoard {
                 System.out.print(printLeftUpRightCorner(card, count));
             } else {
                 System.out.print(RESET);
-                for (int i = 0; i < 34; i++) System.out.print(" ");
+                for (int i = 0; i < 35; i++) System.out.print(" ");
             }
             System.out.print(RESET);
             for (int i = 0; i < 14; i++) System.out.print(" ");
@@ -437,19 +437,20 @@ public class ClientBoard {
     }
 
 
-    private String printLastRow(PlayedCard card, int i, int j, String actualColor){
+    private String printLastRow(PlayedCard card,String actualColor){
+        MixedCard newCard;
         try{
-            MixedCard newCard=(MixedCard) card.getCard();
+            newCard=(MixedCard) card.getCard();
         }catch(ClassCastException e){
             return defineColor(card)+"              ";
         }
         int counter=0;
         String pre,post,output="";
-        if(card.getPlayPattern()!=null){
-            counter+=card.getPlayPattern().getCost().get(Resource.MUSHROOM);
-            counter+=card.getPlayPattern().getCost().get(Resource.WOLF);
-            counter+=card.getPlayPattern().getCost().get(Resource.LEAF);
-            counter+=card.getPlayPattern().getCost().get(Resource.BUTTERFLY);
+        if(newCard.getPlayPattern()!=null){
+            counter+=newCard.getPlayPattern().getCost().get(Resource.MUSHROOM);
+            counter+=newCard.getPlayPattern().getCost().get(Resource.WOLF);
+            counter+=newCard.getPlayPattern().getCost().get(Resource.LEAF);
+            counter+=newCard.getPlayPattern().getCost().get(Resource.BUTTERFLY);
             switch (counter){
                 case 1:
                     pre="     |";
@@ -477,22 +478,22 @@ public class ClientBoard {
             pre=actualColor+pre;
             post=actualColor+post;
             int c=0;
-            while(c<card.getPlayPattern().getCost().get(Resource.MUSHROOM)){
+            while(c<newCard.getPlayPattern().getCost().get(Resource.MUSHROOM)){
                 output=output+RED+" "+actualColor+"|";
                 c++;
             }
             c=0;
-            while(c<card.getPlayPattern().getCost().get(Resource.LEAF)){
+            while(c<newCard.getPlayPattern().getCost().get(Resource.LEAF)){
                 output=output+GREEN+" "+actualColor+"|";
                 c++;
             }
             c=0;
-            while(c<card.getPlayPattern().getCost().get(Resource.WOLF)){
+            while(c<newCard.getPlayPattern().getCost().get(Resource.WOLF)){
                 output=output+BLUE+" "+actualColor+"|";
                 c++;
             }
             c=0;
-            while(c<card.getPlayPattern().getCost().get(Resource.BUTTERFLY)){
+            while(c<newCard.getPlayPattern().getCost().get(Resource.BUTTERFLY)){
                 output=output+PURPLE+" "+actualColor+"|";
                 c++;
             }
