@@ -1,10 +1,13 @@
 package polimi.ingsoft.server.socket;
 
+import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
+import polimi.ingsoft.server.exceptions.MatchNotFoundException;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.Message;
 import polimi.ingsoft.server.model.PlayedCard;
@@ -67,8 +70,13 @@ public class ConnectionHandler implements Runnable, VirtualView {
                     }
                     case MATCH_JOIN_REQUEST -> {
                         int id = (Integer) payload;
-                        Boolean success = controller.joinMatch(id, nickname);
-                        this.server.singleUpdateMatchJoin(this, success);
+                        try{
+                            controller.joinMatch(id, nickname);
+                            this.server.singleUpdateMatchJoin(this, true);
+                        } catch (MatchAlreadyFullException | MatchNotFoundException exception){
+                            //TODO
+                            //client.reportError()
+                        }
                         // TODO Send LOBBY_PLAYER_JOINED_UPDATE to other players in lobby
                     }
                     case MATCH_CREATE_REQUEST -> {
@@ -171,10 +179,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void reportError(String details) {
+    public void reportError(ERROR_MESSAGES errorMessage) {
         synchronized (this.view) {
             try {
-                this.view.reportError(details);
+                this.view.reportError(errorMessage);
             } catch (IOException ignore) { }
         }
     }

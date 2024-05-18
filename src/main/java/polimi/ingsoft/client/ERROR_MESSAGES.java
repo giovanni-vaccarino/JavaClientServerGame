@@ -7,7 +7,11 @@ public enum ERROR_MESSAGES {
     NICKNAME_NOT_AVAILABLE("Nickname is not available"),
     UNKNOWN_COMMAND("Unknown command"),
     UNABLE_TO_JOIN_MATCH("Unable to join match"),
-    UNABLE_TO_CREATE_MATCH("Unable to create match");
+    UNABLE_TO_CREATE_MATCH("Unable to create match"),
+    WRONG_GAME_PHASE("Wrong phase of the game"),
+    WRONG_STEP("Wrong step"),
+    COLOR_ALREADY_PICKED("The color you have selected has been already picked"),
+    INITIAL_SETTING_ALREADY_SET("Initial setting already set");
 
     private final String value;
 

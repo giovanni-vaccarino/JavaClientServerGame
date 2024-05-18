@@ -1,12 +1,11 @@
 package polimi.ingsoft.server.controller;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
+import polimi.ingsoft.server.exceptions.MatchNotFoundException;
 import polimi.ingsoft.server.exceptions.NotValidNumPlayersException;
 import polimi.ingsoft.server.factories.MatchFactory;
 
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.util.*;
 
 public class MainController {
@@ -25,11 +24,6 @@ public class MainController {
         return this.matches.containsKey(matchId);
     }
 
-    private Boolean isJoinable(MatchController match){
-        //TODO
-        return true;
-    }
-
     public List<Integer> getMatches(){
         Set<Integer> keys = this.matches.keySet();
         return new ArrayList<>(keys);
@@ -40,12 +34,11 @@ public class MainController {
     }
 
     public Integer createMatch(Integer requiredNumPlayers) throws NotValidNumPlayersException{
-        int matchId = this.idMatch;
-        idMatch += 1;
-
         if(requiredNumPlayers < 2 || requiredNumPlayers > 4){
             throw new NotValidNumPlayersException();
         }
+        int matchId = this.idMatch;
+        idMatch += 1;
 
         MatchController match = MatchFactory.createMatch(logger, matchId, requiredNumPlayers);
         matches.put(matchId, match);
@@ -53,26 +46,14 @@ public class MainController {
         return matchId;
     }
 
-    public Boolean joinMatch(Integer matchId, String nickname) {
+    public void joinMatch(Integer matchId, String nickname) throws MatchAlreadyFullException, MatchNotFoundException {
         if(!matchExists(matchId)){
-            return false;
+            throw new MatchNotFoundException();
         }
 
         MatchController match = getMatch(matchId);
-        if(!isJoinable(match)){
-            //Lobby already full
-            return false;
-        }
 
-        try{
-            match.addPlayer(nickname);
-        } catch (MatchAlreadyFullException exception){
-            //TODO Handle correctly the exception
-            logger.println(exception);
-            return false;
-        }
-
-        return true;
+        match.addPlayer(nickname);
     }
 
     //TODO add only if deciding to implement the AF

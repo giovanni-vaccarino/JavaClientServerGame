@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.socket;
 
+import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.controller.GameState;
@@ -82,7 +83,7 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void reportError(String details) throws IOException {
+    public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
 
     }
 }

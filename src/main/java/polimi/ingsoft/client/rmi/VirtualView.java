@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.rmi;
 
 
+import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
@@ -30,5 +31,5 @@ public interface VirtualView extends Remote {
 
     void showUpdateGameState(GameState gameState) throws IOException;
 
-    void reportError(String details) throws IOException;
+    void reportError(ERROR_MESSAGES errorMessage) throws IOException;
 }
