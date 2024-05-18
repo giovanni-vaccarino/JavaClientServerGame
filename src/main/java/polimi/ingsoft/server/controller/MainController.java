@@ -1,13 +1,11 @@
 package polimi.ingsoft.server.controller;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.MatchNotFoundException;
 import polimi.ingsoft.server.exceptions.NotValidNumPlayersException;
 import polimi.ingsoft.server.factories.MatchFactory;
 
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.util.*;
 
 public class MainController {
@@ -36,12 +34,11 @@ public class MainController {
     }
 
     public Integer createMatch(Integer requiredNumPlayers) throws NotValidNumPlayersException{
-        int matchId = this.idMatch;
-        idMatch += 1;
-
         if(requiredNumPlayers < 2 || requiredNumPlayers > 4){
             throw new NotValidNumPlayersException();
         }
+        int matchId = this.idMatch;
+        idMatch += 1;
 
         MatchController match = MatchFactory.createMatch(logger, matchId, requiredNumPlayers);
         matches.put(matchId, match);

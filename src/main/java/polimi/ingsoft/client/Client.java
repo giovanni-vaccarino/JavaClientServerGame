@@ -74,7 +74,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void reportError(String details) throws IOException {
+    public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
 
     }
 

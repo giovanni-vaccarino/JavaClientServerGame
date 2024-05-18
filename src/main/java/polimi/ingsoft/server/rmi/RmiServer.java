@@ -1,16 +1,13 @@
 package polimi.ingsoft.server.rmi;
 
+import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.exceptions.*;
-import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import polimi.ingsoft.server.socket.ConnectionHandler;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 
@@ -53,7 +50,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     });
 
 
-    private void executeMethod(RmiMethodCall methodCall) {
+    private void executeMethod(RmiMethodCall methodCall){
         MessageCodes methodName = methodCall.getMethodName();
         Object[] args = methodCall.getArgs();
 
@@ -122,7 +119,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 } catch (NotValidNumPlayersException exception){
                     //TODO
                     //synchronized(this.clients)
-                    //client.reportError()
+                    //client.reportError(ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND);
                 }
             }
 
@@ -132,18 +129,13 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 Integer matchId = (Integer) args[1];
                 String nickname = (String) args[2];
 
-
                 try{
                     this.mainController.joinMatch(matchId, nickname);
-                } catch (MatchAlreadyFullException | MatchNotFoundException exception){
-                    //TODO
-                    //client.reportError()
-                }
 
-                MatchController match = this.mainController.getMatch(matchId);
-                List<String> players = match.getNamePlayers();
+                    MatchController match = this.mainController.getMatch(matchId);
+                    List<String> players = match.getNamePlayers();
 
-                try {
+
                     client.showJoinMatchResult(true, players);
 
                     //Adding the client to the match notification list
@@ -151,8 +143,16 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                         matchNotificationList.get(matchId).add(client);
                     }
                     client.showMatchControllerServerStub(matchControllerServer.get(matchId));
+
+                } catch (MatchAlreadyFullException | MatchNotFoundException exception){
+                    //TODO
+                    try{
+                        client.reportError(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH);
+                    } catch (IOException e){
+                        throw new RuntimeException(e);
+                    }
                 } catch (IOException exception) {
-                    //client.reportJoinMatchError();
+                    throw new RuntimeException(exception);
                 }
             }
 
@@ -229,6 +229,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 return false;
             }
 
+            //Removing the precedent (key, value) of the client
             clients.entrySet().stream()
                     .filter(entry -> entry.getValue().equals(client))
                     .map(Map.Entry::getKey)

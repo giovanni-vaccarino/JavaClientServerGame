@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.rmi;
 
+import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchController;
 import polimi.ingsoft.server.controller.MatchController;
@@ -67,9 +68,15 @@ public class RmiMatchControllerServer implements VirtualMatchController {
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
-                } catch (WrongGamePhaseException | WrongStepException | InitalChoiceAlreadySetException | ColorAlreadyPickedException exception){
+                } catch (WrongGamePhaseException exception){
                     //TODO handle exception
-                    //client.reportError()
+                    //client.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                } catch (WrongStepException exception){
+                    //client.reportError(ERROR_MESSAGES.WRONG_STEP);
+                } catch (ColorAlreadyPickedException exception){
+                    //client.reportError(ERROR_MESSAGES.COLOR_ALREADY_PICKED);
+                } catch (InitalChoiceAlreadySetException exception){
+                    //client.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -93,9 +100,13 @@ public class RmiMatchControllerServer implements VirtualMatchController {
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
-                } catch (WrongGamePhaseException | WrongStepException | InitalChoiceAlreadySetException exception){
+                } catch (WrongGamePhaseException exception){
                     //TODO handle exception
-                    //client.reportError()
+                    //client.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                } catch (WrongStepException exception){
+                    //client.reportError(ERROR_MESSAGES.WRONG_STEP);
+                } catch (InitalChoiceAlreadySetException exception){
+                    //client.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -119,9 +130,13 @@ public class RmiMatchControllerServer implements VirtualMatchController {
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
-                } catch (WrongGamePhaseException | WrongStepException | InitalChoiceAlreadySetException exception){
+                } catch (WrongGamePhaseException exception){
                     //TODO handle exception
-                    //client.reportError()
+                    //client.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                } catch (WrongStepException exception){
+                    //client.reportError(ERROR_MESSAGES.WRONG_STEP);
+                } catch (InitalChoiceAlreadySetException exception){
+                    //client.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
