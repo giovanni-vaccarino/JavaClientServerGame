@@ -299,7 +299,7 @@ class ClientBoardTest {
         board.put(new Coordinates(-1,1),new PlayedCard(gold,false,1));
         board.put(new Coordinates(-1,-1),new PlayedCard(res1,true,3));
         board.put(new Coordinates(1,-1),new PlayedCard(res2,false,4));
-        board.put(new Coordinates(2,0),new PlayedCard(res3,true,5));
+        board.put(new Coordinates(-2,-2),new PlayedCard(res3,true,5));
         board.printBoard();
     }
 }

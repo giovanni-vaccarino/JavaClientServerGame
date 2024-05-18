@@ -49,30 +49,17 @@ public class ClientBoard {
         if (getCardAtRespective(-2, 2) != null ||
                 getCardAtRespective(-3, 3) != null ||
                 getCardAtRespective(-1, 3) != null ||
-                getCardAtRespective(-3, 1) != null) System.out.print(UPLEFTARROW);
-        else System.out.print(" ");
-        if (getCardAtRespective(-2, 2) != null) System.out.print("         |");
-        else System.out.print("         ");
-        for (int i = 0; i < 14; i++) System.out.print(" ");
-        if (getCardAtRespective(0, 2) != null) System.out.print("|                ");
-        else System.out.print("                 ");
+                getCardAtRespective(-3, 1) != null) System.out.print(UPLEFTARROW+"         |              ");
+        else System.out.print("                         ");
         if (getCardAtRespective(0, 2) != null ||
                 getCardAtRespective(-1, 3) != null ||
-                getCardAtRespective(1, 3) != null) System.out.print(UPARROW);
-        else System.out.print(" ");
-        for (int i = 0; i < 15; i++) System.out.print(" ");
-        if (getCardAtRespective(0, 2) != null) System.out.print("|");
-        else System.out.print(" ");
-        for (int i = 0; i < 14; i++) System.out.print(" ");
-
-        if (getCardAtRespective(1, 1) != null
-                && getCardAtRespective(2, 2) != null) System.out.print("|        ");
-        else System.out.print("         ");
+                getCardAtRespective(1, 3) != null) System.out.print("|               "+UPARROW+"                |              ");
+        else System.out.print("                                                ");
         if (getCardAtRespective(2, 2) != null ||
                 getCardAtRespective(3, 3) != null ||
                 getCardAtRespective(1, 3) != null ||
-                getCardAtRespective(3, 1) != null) System.out.print(UPRIGHTARROW);
-        else System.out.print(" ");
+                getCardAtRespective(3, 1) != null) System.out.print("|         "+UPRIGHTARROW);
+        else System.out.print("          ");
         System.out.print(RESET + "\n");
 
 
@@ -160,12 +147,18 @@ public class ClientBoard {
         row = 3;
         card = getCardAtRespective(0, 0);
         do {
-            if (row == 4 && (getCardAtRespective(-2, 0) != null || getCardAtRespective(-3, 1) != null || getCardAtRespective(-3, -1) != null))
+            if (row == 4 &&
+                    (getCardAtRespective(-2, 0) != null ||
+                    getCardAtRespective(-3, 1) != null ||
+                    getCardAtRespective(-3, -1) != null))
                 System.out.print(LEFTARROW);
             else System.out.print(" ");
             System.out.print(RESET + "                       ");
             printCentralRows(card, row);
-            if (row == 4 && getCardAtRespective(2, 0) != null || getCardAtRespective(3, 1) != null || getCardAtRespective(3, -1) != null)
+            if (row == 4 &&
+                    (getCardAtRespective(2, 0) != null ||
+                    getCardAtRespective(3, 1) != null ||
+                    getCardAtRespective(3, -1) != null))
                 System.out.print(RESET + "                        " + RIGHTARROW);
             System.out.print(RESET + "\n");
             row++;
@@ -210,14 +203,13 @@ public class ClientBoard {
             if(count==0&&getCardAtRespective(-2,-2)!=null)System.out.print("‾");
             else System.out.print(" ");
             System.out.print(printBottomLeftBottomLeftCorner(card, count));
-            printCenter(row,card,color);
-            System.out.print(row);
+            System.out.print(printCenter(row,card,color));
             System.out.print(printBottomLeftBottomRightCorner(card, count));
-            System.out.print(RESET+"             ");
+            System.out.print(RESET+"              ");
             card = getCardAtRespective(1, -1);
             color=defineColor(card);
             System.out.print(printBottomRightBottomLeftCorner(card, count));
-            printCenter(row,card,color);
+            System.out.print(printCenter(row,card,color));
             System.out.print(printBottomRightBottomRightCorner(card, count));
             if(count==0&&getCardAtRespective(2,-2)!=null)System.out.print(RESET+"‾");
             else System.out.print(RESET+" ");
@@ -225,6 +217,21 @@ public class ClientBoard {
             row++;
             count++;
         } while (count < 3);
+        if(getCardAtRespective(-2,-2)!=null||
+                getCardAtRespective(-1,-3)!=null||
+                getCardAtRespective(-3,-3)!=null||
+                getCardAtRespective(-3,-1)!=null)System.out.print(DOWNLEFTARROW+"         |");
+        else System.out.print("           ");
+        System.out.print("              ");
+        if(getCardAtRespective(0,-2)!=null||
+                getCardAtRespective(-1,-3)!=null||
+                getCardAtRespective(1,-3)!=null)System.out.print("|               "+DOWNARROW+"                |              ");
+        else System.out.print("                                                ");
+        if(getCardAtRespective(2,-2)!=null||
+                getCardAtRespective(3,-1)!=null||
+                getCardAtRespective(3,-3)!=null||
+                getCardAtRespective(1,-3)!=null)System.out.print("|         "+DOWNRIGHTARROW);
+        else System.out.print("           ");
     }
 
     private String printBottomLeftBottomLeftCorner(PlayedCard card, int count) {
@@ -702,5 +709,63 @@ public class ClientBoard {
         } else return actualColor + "              ";
 
     }
+    public void printBoard(BoardArgument argument) {
+        String error="ERROR: place location not avaiable!";
+        switch (argument) {
+            case UPLEFT:
+                if (getCardAtRespective(-2, 2) != null ||
+                        getCardAtRespective(-3, 3) != null ||
+                        getCardAtRespective(-1, 3) != null ||
+                        getCardAtRespective(-3, 1) != null) actualCoordinates.sum(new Coordinates(-1,1));
 
+                else System.out.print(error);
+                break;
+            case UP:
+                if (getCardAtRespective(0, 2) != null ||
+                        getCardAtRespective(-1, 3) != null ||
+                        getCardAtRespective(1, 3) != null)actualCoordinates.sum(new Coordinates(0,2));
+                else System.out.print(error);
+                break;
+            case UPRIGHT:
+                if (getCardAtRespective(2, 2) != null ||
+                        getCardAtRespective(3, 3) != null ||
+                        getCardAtRespective(1, 3) != null ||
+                        getCardAtRespective(3, 1) != null)actualCoordinates.sum(new Coordinates(1,1));
+                else System.out.print(error);
+                break;
+            case LEFT:
+                if(getCardAtRespective(-2, 0) != null ||
+                        getCardAtRespective(-3, 1) != null ||
+                        getCardAtRespective(-3, -1) != null)actualCoordinates.sum(new Coordinates(-2,0));
+                else System.out.print(error);
+                break;
+            case RIGHT:
+                if(getCardAtRespective(2, 0) != null ||
+                        getCardAtRespective(3, 1) != null ||
+                        getCardAtRespective(3, -1) != null)actualCoordinates.sum(new Coordinates(2,0));
+                else System.out.print(error);
+                break;
+            case DOWNLEFT:
+                if(getCardAtRespective(-2,-2)!=null||
+                        getCardAtRespective(-1,-3)!=null||
+                        getCardAtRespective(-3,-3)!=null||
+                        getCardAtRespective(-3,-1)!=null)actualCoordinates.sum(new Coordinates(-2,-2));
+                else System.out.print(error);
+                break;
+            case DOWN:
+                if(getCardAtRespective(0,-2)!=null||
+                        getCardAtRespective(-1,-3)!=null||
+                        getCardAtRespective(1,-3)!=null)actualCoordinates.sum(new Coordinates(0,-2));
+                else System.out.print(error);
+                break;
+            case DOWNRIGHT:
+                if(getCardAtRespective(2,-2)!=null||
+                        getCardAtRespective(3,-1)!=null||
+                        getCardAtRespective(3,-3)!=null||
+                        getCardAtRespective(1,-3)!=null)actualCoordinates.sum(new Coordinates(2,-2));
+                else System.out.print(error);
+                break;
+        }
+        printBoard();
+    }
 }
