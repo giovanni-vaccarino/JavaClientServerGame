@@ -2,6 +2,7 @@ package polimi.ingsoft.server.controller;
 
 import com.sun.tools.jconsole.JConsoleContext;
 import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
+import polimi.ingsoft.server.exceptions.MatchNotFoundException;
 import polimi.ingsoft.server.exceptions.NotValidNumPlayersException;
 import polimi.ingsoft.server.factories.MatchFactory;
 
@@ -23,11 +24,6 @@ public class MainController {
 
     private Boolean matchExists(Integer matchId){
         return this.matches.containsKey(matchId);
-    }
-
-    private Boolean isJoinable(MatchController match){
-        //TODO
-        return true;
     }
 
     public List<Integer> getMatches(){
@@ -53,26 +49,14 @@ public class MainController {
         return matchId;
     }
 
-    public Boolean joinMatch(Integer matchId, String nickname) {
+    public void joinMatch(Integer matchId, String nickname) throws MatchAlreadyFullException, MatchNotFoundException {
         if(!matchExists(matchId)){
-            return false;
+            throw new MatchNotFoundException();
         }
 
         MatchController match = getMatch(matchId);
-        if(!isJoinable(match)){
-            //Lobby already full
-            return false;
-        }
 
-        try{
-            match.addPlayer(nickname);
-        } catch (MatchAlreadyFullException exception){
-            //TODO Handle correctly the exception
-            logger.println(exception);
-            return false;
-        }
-
-        return true;
+        match.addPlayer(nickname);
     }
 
     //TODO add only if deciding to implement the AF

@@ -17,7 +17,7 @@ class ChatTest {
 
     @Test
     public void shouldAddSingleMessage() {
-        PlayerColors playerSender = PlayerColors.GREEN;
+        String playerSender = "Player1";
         String textMessage = "Gianni il cuoco";
         chat.addMessage(playerSender, textMessage);
 
@@ -29,7 +29,7 @@ class ChatTest {
         int messagesNumber = 20;
         String textMessage = "Gianni la papera";
         for(int i = 0 ; i < messagesNumber ; i++){
-            chat.addMessage(PlayerColors.GREEN, textMessage);
+            chat.addMessage("Player1", textMessage);
         }
 
         assertEquals(messagesNumber, chat.getMessages().size());
@@ -37,7 +37,7 @@ class ChatTest {
 
     @Test
     public void shouldThrowExceptionForEmptyText() {
-        PlayerColors playerSender = PlayerColors.GREEN;
+        String playerSender = "Player1";
         String textMessage = "";
 
         assertThrows(NotValidMessageException.class, () -> chat.addMessage(playerSender, textMessage));
@@ -45,7 +45,7 @@ class ChatTest {
 
     @Test
     public void shouldThrowExceptionForNullText() {
-        PlayerColors playerSender = PlayerColors.GREEN;
+        String playerSender = "Player1";
 
         assertThrows(NotValidMessageException.class, () -> chat.addMessage(playerSender, null));
     }
