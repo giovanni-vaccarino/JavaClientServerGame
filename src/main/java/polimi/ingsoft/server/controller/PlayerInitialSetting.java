@@ -6,6 +6,9 @@ import polimi.ingsoft.server.model.*;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the initial settings for a player in the game.
+ */
 public class PlayerInitialSetting {
 
     private final String nickname;
@@ -31,6 +34,15 @@ public class PlayerInitialSetting {
         this.nickname = nickname;
     }
 
+    /**
+     * Constructs a PlayerInitialSetting with the specified details.
+     *
+     * @param nickname          the nickname of the player
+     * @param playerHand        the initial player hand
+     * @param firstQuestCard    the first choosable quest card
+     * @param secondQuestCard   the second choosable quest card
+     * @param initialCard       the initial card of the player
+     */
     public PlayerInitialSetting(String nickname,
                                 PlayerHand<MixedCard> playerHand,
                                 QuestCard firstQuestCard,

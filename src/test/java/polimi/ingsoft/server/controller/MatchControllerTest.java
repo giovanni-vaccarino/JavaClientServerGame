@@ -20,7 +20,7 @@ class MatchControllerTest {
     @BeforeEach
     void setUp() {
         PublicBoard publicBoard = PublicBoardFactory.createPublicBoard();
-        matchController = new MatchController(System.out, 1, 3, publicBoard, null);
+        matchController = new MatchController(System.out, 1, 3, publicBoard, new ChatController());
     }
 
     @Test
@@ -313,46 +313,7 @@ class MatchControllerTest {
 
     @Test
     void testWrongPlayerForCurrentTurnException() {
-        // Adding 3 players to the match (requested number of players to start = 3)
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            matchController.addPlayer("Player3");
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
-
-        // Selecting the colors
-        try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
-            matchController.setPlayerColor("Player3", PlayerColors.YELLOW);
-        } catch (Exception e) {
-            fail("Unexpected exception");
-        }
-
-        // Selecting the face of the initial card
-        try {
-            matchController.setFaceInitialCard("Player1", true);
-            matchController.setFaceInitialCard("Player2", false);
-            matchController.setFaceInitialCard("Player3", true);
-        } catch (Exception e) {
-            fail("Unexpected exception");
-        }
-
-        HashMap<Item, Integer> questCardFirstPlayerCost = new HashMap<>();
-        questCardFirstPlayerCost.put(Resource.LEAF, 3);
-
-        QuestCard firstQuestCard = new QuestCard("first", new ItemPattern(questCardFirstPlayerCost), 3);
-
-        // Selecting the quest card
-        try {
-            matchController.setQuestCard("Player1", firstQuestCard);
-            matchController.setQuestCard("Player2", firstQuestCard);
-            matchController.setQuestCard("Player3", firstQuestCard);
-        } catch (Exception e) {
-            fail("Unexpected exception");
-        }
+        this.setupInitialPhase();
 
         // Starting the play steps
         assertEquals(GAME_PHASE.PLAY, matchController.getGameState().getGamePhase());
@@ -374,6 +335,31 @@ class MatchControllerTest {
 
     @Test
     void testWrongTurnStepException() {
+        this.setupInitialPhase();
+
+        // Starting the play steps
+        assertEquals(GAME_PHASE.PLAY, matchController.getGameState().getGamePhase());
+        assertEquals(3, matchController.getPlayers().size());
+
+        Player currentPlayer = matchController.getGameState().getCurrentPlayer();
+        MixedCard card = null;
+
+        assertThrows(WrongStepException.class, () ->
+                matchController.placeCard(currentPlayer, card, new Coordinates(1,1), true)
+        );
+    }
+
+    @Test
+    void testSendBroadcastMessage(){
+        this.setupInitialPhase();
+        String sender = matchController.getGameState().getCurrentPlayer().getNickname();
+        String message = "Test Message";
+
+        assertEquals(sender, matchController.writeMessage(sender, message).getSender());
+        assertEquals(message, matchController.writeMessage(sender, message).getText());
+    }
+
+    void setupInitialPhase(){
         // Adding 3 players to the match (requested number of players to start = 3)
         try {
             matchController.addPlayer("Player1");
@@ -414,17 +400,6 @@ class MatchControllerTest {
         } catch (Exception e) {
             fail("Unexpected exception");
         }
-
-        // Starting the play steps
-        assertEquals(GAME_PHASE.PLAY, matchController.getGameState().getGamePhase());
-        assertEquals(3, matchController.getPlayers().size());
-
-        Player currentPlayer = matchController.getGameState().getCurrentPlayer();
-        MixedCard card = null;
-
-        assertThrows(WrongStepException.class, () ->
-                matchController.placeCard(currentPlayer, card, new Coordinates(1,1), true)
-        );
     }
 
 }

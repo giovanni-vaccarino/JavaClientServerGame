@@ -174,15 +174,19 @@ public class RmiMatchControllerServer implements VirtualMatchController {
                             /*
                             TODO retrieve clientToUpdate
                             if(client == clientToUpdate){
-                                client.showUpdateDraw(drawedCard);
+                                client.showUpdatePlayerHand(drawedCard);
                             }
                             */
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
-                } catch (WrongStepException | WrongPlayerForCurrentTurnException | WrongGamePhaseException exception){
-                    //TODO Add Exception Handler
-                    //client.reportErrorDraw();
+                } catch (WrongGamePhaseException exception){
+                    //TODO handle exception
+                    //client.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                } catch (WrongStepException exception){
+                    //client.reportError(ERROR_MESSAGES.WRONG_STEP);
+                } catch (WrongPlayerForCurrentTurnException exception){
+                    //client.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -224,9 +228,9 @@ public class RmiMatchControllerServer implements VirtualMatchController {
     }
 
     @Override
-    public void setColor(String nickname,PlayerColors color) throws RemoteException {
+    public void setColor(String nickname, PlayerColors color) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.SET_COLOR_REQUEST, new Object[]{color}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_COLOR_REQUEST, new Object[]{nickname,color}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -235,7 +239,7 @@ public class RmiMatchControllerServer implements VirtualMatchController {
     @Override
     public void setFaceInitialCard(String nickname,Boolean isFaceUp) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.SET_INITIAL_REQUEST, new Object[]{isFaceUp}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_INITIAL_REQUEST, new Object[]{nickname, isFaceUp}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -244,7 +248,7 @@ public class RmiMatchControllerServer implements VirtualMatchController {
     @Override
     public void setQuestCard(String nickname, QuestCard questCard) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.SET_QUEST_REQUEST, new Object[]{questCard}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_QUEST_REQUEST, new Object[]{nickname, questCard}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
