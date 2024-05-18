@@ -11,7 +11,15 @@ public enum MESSAGES {
     CHOOSE_NUMPLAYERS("Choose how many players should the game have: "),
     JOINING_MATCH("Joining match..."),
     JOINED_MATCH("Succesfully joined match"),
-    CREATED_MATCH("Successfully create match");
+    CREATED_MATCH("Successfully create match"),
+
+
+    /*QUESTI LI HO AGGIUNTI IO ANDRE-SIMO*/
+    CHOOSE_ACTION("COMMAND>"),
+
+    HELPMAIN("HERE'S WHAT YOU CAN DO !\nBOARD:ENDER THE BOARD MENU\nPUBLICBOARD: ENTER THE PUBLICBOARD MENU\nCHAT: ACCESS CHAT MENU!\nMESSAGE: CHAT PRIVATELY WITH A PLAYER\nHELP: PRINT THIS LIST AGAIN!"),
+    HELPBOARD(""),
+    HELPCHAT("");
 
     private final String value;
 

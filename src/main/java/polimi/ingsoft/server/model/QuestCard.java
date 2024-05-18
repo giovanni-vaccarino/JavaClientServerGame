@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class QuestCard extends Card implements Drawable, ConditionalPointsCard {
 
     private final Pattern pattern;
-
+    public int getScore(){
+        return super.getScore();
+    }
     public QuestCard(String iD,Pattern pattern,int points){
         super(points,iD);
         this.pattern=pattern;
