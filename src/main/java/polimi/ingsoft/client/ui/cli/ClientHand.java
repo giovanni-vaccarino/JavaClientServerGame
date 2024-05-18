@@ -154,8 +154,8 @@ public class ClientHand {
                     print = switch (j) {
                         case 1, 4 -> BLACKTEXT + "¡‾‾‾‾‾‾¡";
                         case 2, 5 -> BLACKTEXT + "|      |";
-                        case 3 -> BLACKTEXT + "!      !";
-                        case 6 -> BLACKTEXT + "!______!";
+                        //case 3 -> BLACKTEXT + "!      !";
+                        case 3,6 -> BLACKTEXT + "!______!";
                         default -> print;
                     };
                     break;
@@ -174,14 +174,12 @@ public class ClientHand {
                 default:
                     return actualColor+"              ";
             }
-            switch(resource){
-                case Resource.LEAF: return actualColor+"   "+GREEN+print+actualColor+"   ";
-                case Resource.BUTTERFLY: return actualColor+"   "+PURPLE+print+actualColor+"   ";
-                case Resource.MUSHROOM: return actualColor+"   "+RED+print+actualColor+"   ";
-                case Resource.WOLF: return actualColor+"   "+BLUE+print+actualColor+"   ";
-                default:
-                    return actualColor+"              ";
-                }
+            return switch (resource) {
+                case Resource.LEAF -> actualColor + "   " + GREEN + print + actualColor + "   ";
+                case Resource.BUTTERFLY -> actualColor + "   " + PURPLE + print + actualColor + "   ";
+                case Resource.MUSHROOM -> actualColor + "   " + RED + print + actualColor + "   ";
+                case Resource.WOLF -> actualColor + "   " + BLUE + print + actualColor + "   ";
+            };
         }
     }
     public ArrayList<Boolean>getIsFlipped(){
