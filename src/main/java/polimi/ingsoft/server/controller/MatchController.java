@@ -20,7 +20,7 @@ public class MatchController implements Serializable {
 
     private final GameState gameState;
 
-    final ChatController chatController;
+    private final ChatController chatController;
 
     private List<Player> players = new ArrayList<>();
 

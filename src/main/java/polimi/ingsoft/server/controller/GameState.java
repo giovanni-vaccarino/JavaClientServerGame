@@ -7,11 +7,13 @@ import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
+/**
+ * This class manages the state of the game, including the FSMs of the game
+ */
 public class GameState implements Serializable {
     private volatile MatchController matchController;
     private final Integer requestedNumPlayers;
@@ -32,6 +34,12 @@ public class GameState implements Serializable {
 
     private INITIAL_STEP currentInitialStep;
 
+    /**
+     * Constructs a GameState with the specified matchController and number of players.
+     *
+     * @param matchController     the match controller associated with this game state
+     * @param requestedNumPlayers the number of players requested for the game
+     */
     public GameState(MatchController matchController, Integer requestedNumPlayers) {
         this.gamePhase = GAME_PHASE.WAITING_FOR_PLAYERS;
         this.matchController = matchController;
@@ -54,6 +62,9 @@ public class GameState implements Serializable {
 
     public TURN_STEP getCurrentTurnStep(){return this.currentTurnStep;}
 
+    /**
+     * Updates the game phase
+     */
     public void updateState(){
         switch(gamePhase){
             case GAME_PHASE.WAITING_FOR_PLAYERS -> {
@@ -89,6 +100,11 @@ public class GameState implements Serializable {
         }
     }
 
+    /**
+     * Updates the initial step
+     *
+     * @param playerNickname the nickname of the player
+     */
     public void updateInitialStep(String playerNickname){
         this.playerStepCheck.add(playerNickname);
 
@@ -115,6 +131,9 @@ public class GameState implements Serializable {
         }
     }
 
+    /**
+     * Updates the current turn step.
+     */
     public void updateTurnStep(){
         switch(currentTurnStep){
             case TURN_STEP.DRAW -> {
@@ -127,18 +146,46 @@ public class GameState implements Serializable {
         }
     }
 
+
+    /**
+     * Validates a player's move
+     *
+     * @param player the player making the move
+     * @param move   the move to validate
+     * @throws WrongPlayerForCurrentTurnException if the player is not the current player
+     * @throws WrongStepException                if the move is not allowed in the current step
+     * @throws WrongGamePhaseException           if the move is not allowed in the current game phase
+     */
     public void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         if (gamePhase != GAME_PHASE.PLAY && gamePhase != GAME_PHASE.LAST_ROUND) throw new WrongGamePhaseException();
         if (player != getCurrentPlayer()) throw new WrongPlayerForCurrentTurnException();
         if (currentTurnStep != move) throw new WrongStepException();
     }
 
+
+    /**
+     * Validates a player's initial choice
+     *
+     * @param player the player making the move
+     * @param phase  the game phase
+     * @param step   the initial step
+     * @throws WrongGamePhaseException        if the game phase is not correct
+     * @throws WrongStepException             if the step is not correct
+     * @throws InitalChoiceAlreadySetException if the initial choice has already been set
+     */
     public void validateInitialChoice(String player, GAME_PHASE phase, INITIAL_STEP step) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         if (GAME_PHASE.INITIALIZATION != phase) throw new WrongGamePhaseException();
         if (this.currentInitialStep != step) throw new WrongStepException();
         if (this.playerStepCheck.contains(player)) throw new InitalChoiceAlreadySetException(step);
     }
 
+
+    /**
+     * Checks if a color has already been picked by another player.
+     *
+     * @param color the color to check
+     * @throws ColorAlreadyPickedException if the color is already picked
+     */
     public void checkColorAvailability(PlayerColors color) throws ColorAlreadyPickedException {
         // The != null is to cover the case: if a player hasn't picked a color yet
         boolean isColorPicked = matchController.getPlayerInitialSettings().stream()
@@ -150,11 +197,18 @@ public class GameState implements Serializable {
         }
     }
 
+
+    /**
+     * Checks if it is the last round.
+     *
+     * @return true if it is the last round, false otherwise
+     */
     private boolean isLastRound() {
         return this.matchController.getPlayers().stream()
                 .mapToInt(player -> player.getBoard().getScore())
                 .anyMatch(score -> score >= 20);
     }
+
 
     private void setLastRound(){
         boolean isLastRound = this.isLastRound();
@@ -165,6 +219,10 @@ public class GameState implements Serializable {
         }
     }
 
+
+    /**
+     * Sets the first player randomly.
+     */
     private void setFirstPlayer(){
         Random random = new Random();
 
@@ -172,9 +230,11 @@ public class GameState implements Serializable {
         currentPlayerIndex = firstPlayerIndex;
     }
 
+
     private void updateTurnNumber(){
         this.turnNumber += (currentPlayerIndex == firstPlayerIndex) ? 1 : 0;
     }
+
 
     public void goToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % requestedNumPlayers;
@@ -182,6 +242,7 @@ public class GameState implements Serializable {
         this.updateTurnNumber();
         this.updateTurnStep();
     }
+
 
     private Player getWinner() {
         Optional<Player> winner = this.matchController.getPlayers().stream()

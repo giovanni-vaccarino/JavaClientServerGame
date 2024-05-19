@@ -11,6 +11,7 @@ public enum ERROR_MESSAGES {
     WRONG_GAME_PHASE("Wrong phase of the game"),
     WRONG_STEP("Wrong step"),
     COLOR_ALREADY_PICKED("The color you have selected has been already picked"),
+    WRONG_PLAYER_TURN("It is not your turn"),
     INITIAL_SETTING_ALREADY_SET("Initial setting already set");
 
     private final String value;

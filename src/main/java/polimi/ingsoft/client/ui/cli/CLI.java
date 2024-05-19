@@ -75,7 +75,7 @@ public class CLI extends UI {
                 isValid = true;
             }
             else {
-                out.println(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE.getValue());
+                out.println(ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND.getValue());
             }
         } while (!isValid);
 
