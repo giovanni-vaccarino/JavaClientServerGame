@@ -768,4 +768,7 @@ public class ClientBoard {
         }
         printBoard();
     }
+    public Coordinates getActualCoordinates(){
+        return this.actualCoordinates;
+    }
 }
