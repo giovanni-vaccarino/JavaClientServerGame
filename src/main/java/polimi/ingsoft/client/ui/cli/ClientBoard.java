@@ -710,14 +710,13 @@ public class ClientBoard {
 
     }
     public void printBoard(BoardArgument argument) {
-        String error="ERROR: place location not avaiable!";
+        String error="ERROR: place not avaiable!";
         switch (argument) {
             case UPLEFT:
                 if (getCardAtRespective(-2, 2) != null ||
                         getCardAtRespective(-3, 3) != null ||
                         getCardAtRespective(-1, 3) != null ||
                         getCardAtRespective(-3, 1) != null) actualCoordinates.sum(new Coordinates(-1,1));
-
                 else System.out.print(error);
                 break;
             case UP:
