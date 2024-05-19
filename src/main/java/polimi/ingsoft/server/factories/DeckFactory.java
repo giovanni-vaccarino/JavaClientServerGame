@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
-public class DeckFactory<T extends GameCard> {
+public class DeckFactory {
 private static final String RESOURCE="resourceCards.txt";
     private static final String GOLD="goldCards.txt";
     private static final String QUEST="questCards.txt";
