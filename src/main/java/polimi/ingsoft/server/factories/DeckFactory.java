@@ -1,7 +1,8 @@
 package polimi.ingsoft.server.factories;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import netscape.javascript.JSObject;
-import org.json.JSONObject;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
 
@@ -12,18 +13,31 @@ import java.util.ArrayList;
 
 
 public class DeckFactory<T extends GameCard> {
-private static final String JSON="cards.txt";
-    public ArrayList<T> createDeck() throws FileNotFoundException {
+private static final String RESOURCE="resourceCards.txt";
+    private static final String GOLD="goldCards.txt";
+    private static final String QUEST="questCards.txt";
+    ObjectMapper json;
+    public DeckFactory(){
+        this.json=new ObjectMapper();
+    }
+    public ArrayList<ResourceCard> createResourceDeck() throws JsonProcessingException {
+        ArrayList<ResourceCard> deck=new ArrayList<>();
 
-        String id;
-        int score;
-        Face front,back;
-        Pattern pointPattern;
-        ItemPattern playPattern;
-        CornerSpace upleft,upright,bottomleft,bottomright;
-        CenterSpace center;
-        ArrayList<T> deck=new ArrayList<>();
-        FileInputStream input = new FileInputStream(JSON);
+        json.readValue(RESOURCE,ResourceCard.class);
+
+        return deck;
+    }
+    public ArrayList<GoldCard>createGoldDeck()throws JsonProcessingException {
+        ArrayList<GoldCard> deck=new ArrayList<>();
+
+        json.readValue(RESOURCE,GoldCard.class);
+
+        return deck;
+        }
+    public ArrayList<QuestCard>createQuestDeck()throws JsonProcessingException {
+        ArrayList<QuestCard> deck = new ArrayList<>();
+
+        json.readValue(RESOURCE, GoldCard.class);
 
         return deck;
     }
