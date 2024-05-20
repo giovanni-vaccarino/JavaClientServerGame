@@ -1,0 +1,46 @@
+{
+"ID":"caso",
+"front":{
+    "upLeft":{
+    []
+    },
+    "upRight":{},
+    "bottomLeft":{
+    ["Resource.BUTTERFLY"]
+    },
+    "bottomRight":{},
+    "center":{
+    ["Resource.BUTTERFLY","Resource.WOLF"]
+    }
+},
+back:{
+      "upLeft":{
+         []
+         },
+       "upRight":{},
+         "bottomLeft":{
+         ["Resource.BUTTERFLY"]
+         },
+         "bottomRight":{}
+         },
+"score":1
+}
+
+{
+"front":{
+        "upLeft":{
+                "items":[],"empty":true
+                },
+        "upRight":{
+                "items":[],"empty":true
+                },
+        "bottomLeft":{
+                "items":[],"empty":true
+                 },"bottomRight":{
+"items":[],"empty":true
+},
+"center":{
+"items":["BUTTERFLY"],"empty":false
+}
+},
+"back":{"upLeft":null,"upRight":{"items":["FEATHER"],"empty":false},"bottomLeft":{"items":["WOLF"],"empty":false},"bottomRight":{"items":["BUTTERFLY"],"empty":false},"center":null},"playPattern":null,"pointPattern":null,"id":"lol"}

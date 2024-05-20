@@ -9,6 +9,7 @@ public class Printer {
         this.out = out;
     }
     public void printFromMain(String argument){
+        //System.out.print(MESSAGES.CLS.getValue()); prova per verificare che il cls funzioni
         if (argument.toLowerCase().equals(Arguments.Argument.HELP.getValue())) {
             out.println(MESSAGES.HELPMAIN.getValue());
         }else out.println(MESSAGES.ERROR.getValue());
