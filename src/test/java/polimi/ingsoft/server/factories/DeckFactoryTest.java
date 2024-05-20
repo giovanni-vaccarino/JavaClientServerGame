@@ -12,7 +12,6 @@ class DeckFactoryTest {
 
     @Test
     void createDeck() throws FileNotFoundException {
-        DeckFactory<ResourceCard> cards=new DeckFactory<>();
-        cards.createDeck();
+        DeckFactory cards=new DeckFactory();
     }
 }
