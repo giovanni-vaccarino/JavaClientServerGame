@@ -1,6 +1,6 @@
-package polimi.ingsoft.client;
+package polimi.ingsoft.client.common;
 
-import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.CLI;

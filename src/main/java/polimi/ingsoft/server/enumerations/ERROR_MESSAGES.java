@@ -1,4 +1,4 @@
-package polimi.ingsoft.client;
+package polimi.ingsoft.server.enumerations;
 
 public enum ERROR_MESSAGES {
     PLAYERS_OUT_OF_BOUND("Number of players not accepted. Type a number between 2 and 4"),

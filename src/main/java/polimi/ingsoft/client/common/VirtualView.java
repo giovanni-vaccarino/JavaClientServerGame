@@ -1,7 +1,7 @@
 package polimi.ingsoft.client.common;
 
 
-import polimi.ingsoft.client.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;

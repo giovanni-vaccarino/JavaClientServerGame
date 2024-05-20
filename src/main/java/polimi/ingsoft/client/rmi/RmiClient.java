@@ -1,12 +1,11 @@
 package polimi.ingsoft.client.rmi;
 
-import polimi.ingsoft.client.Client;
+import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.common.VirtualServerInterface;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

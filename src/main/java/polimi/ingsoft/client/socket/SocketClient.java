@@ -1,6 +1,6 @@
 package polimi.ingsoft.client.socket;
 
-import polimi.ingsoft.client.Client;
+import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;

@@ -1,13 +1,12 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.client.Client;
-import polimi.ingsoft.client.ERROR_MESSAGES;
+import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.server.controller.MatchController;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
 

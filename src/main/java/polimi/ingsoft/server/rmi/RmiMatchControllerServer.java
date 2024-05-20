@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.rmi;
 
-import polimi.ingsoft.client.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.MatchController;

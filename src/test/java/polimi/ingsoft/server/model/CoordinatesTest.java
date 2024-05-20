@@ -1,4 +1,4 @@
-package polimi.ingsoft.model;
+package polimi.ingsoft.server.model;
 
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.model.Coordinates;

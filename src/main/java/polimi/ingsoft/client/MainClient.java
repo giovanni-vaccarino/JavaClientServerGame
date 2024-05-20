@@ -1,5 +1,6 @@
 package polimi.ingsoft.client;
 
+import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.rmi.RmiClient;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
