@@ -1,22 +1,18 @@
 package polimi.ingsoft.server.common;
 
-import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
+import polimi.ingsoft.client.common.VirtualView;
 
 import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.util.List;
 
 public interface VirtualServer extends Remote {
     void setNickname(VirtualView client, String nickname) throws IOException;
+
     void getMatches(VirtualView client) throws IOException;
 
-    void createMatch(Integer requiredNumPlayers) throws IOException;
+    void createMatch(String playerNickname, Integer requiredNumPlayers) throws IOException;
 
-    void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException;
+    void joinMatch(String playerNickname, Integer matchId) throws IOException;
 
     void reJoinMatch(Integer matchId, String nickname) throws IOException;
 }

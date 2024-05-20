@@ -1,6 +1,6 @@
 package polimi.ingsoft.client.socket;
 
-import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.enumerations.PlayerColors;
@@ -34,14 +34,14 @@ public class ServerProxy implements VirtualServer, VirtualMatchServer {
     }
 
     @Override
-    public void createMatch(Integer requiredNumPlayers) throws IOException {
+    public void createMatch(String nickname, Integer requiredNumPlayers) throws IOException {
         SocketMessage message = new SocketMessage(MessageCodes.MATCH_CREATE_REQUEST, requiredNumPlayers);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
-    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException {
+    public void joinMatch(String nickname, Integer matchId) throws IOException {
         SocketMessage message = new SocketMessage(
                 MessageCodes.MATCH_JOIN_REQUEST,
                 new SocketMessage.IdAndNickname(matchId, nickname)
@@ -71,22 +71,22 @@ public class ServerProxy implements VirtualServer, VirtualMatchServer {
     }
 
     @Override
-    public void sendMessage(Player player, String message) throws RemoteException {
+    public void sendMessage(String player, String message) throws RemoteException {
 
     }
 
     @Override
-    public void sendPrivateMessage(Player player, String message) throws RemoteException {
+    public void sendPrivateMessage(String player, String message) throws RemoteException {
 
     }
 
     @Override
-    public void drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
+    public void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
 
     }
 
     @Override
-    public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException {
+    public void placeCard(String player, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException {
 
     }
 }

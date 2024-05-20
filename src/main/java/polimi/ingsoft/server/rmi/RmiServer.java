@@ -1,7 +1,7 @@
 package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.ERROR_MESSAGES;
-import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.common.ConnectionsClient;
@@ -89,7 +89,8 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             }
 
             case MATCH_CREATE_REQUEST -> {
-                Integer requiredNumPlayers = (Integer) args[0];
+                String playerNickname = (String) args[0];
+                Integer requiredNumPlayers = (Integer) args[1];
 
                 try{
                     Integer matchId = this.addMatch(requiredNumPlayers);
@@ -124,10 +125,10 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             }
 
             case MATCH_JOIN_REQUEST -> {
-                logger.println("RMI: Received join match request");
-                VirtualView client = (VirtualView) args[0];
+                String playerNickname = (String) args[0];
                 Integer matchId = (Integer) args[1];
                 String nickname = (String) args[2];
+                VirtualView client = clients.get(playerNickname);
 
                 try{
                     this.mainController.joinMatch(matchId, nickname);
@@ -187,18 +188,18 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     }
 
     @Override
-    public void createMatch(Integer requiredNumPlayers) throws RemoteException {
+    public void createMatch(String nickname, Integer requiredNumPlayers) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_CREATE_REQUEST, new Object[]{requiredNumPlayers}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_CREATE_REQUEST, new Object[]{nickname, requiredNumPlayers}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
 
     @Override
-    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws RemoteException {
+    public void joinMatch(String playerNickname, Integer matchId) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_JOIN_REQUEST, new Object[]{client, matchId, nickname}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_JOIN_REQUEST, new Object[]{playerNickname, matchId}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -250,7 +251,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             RmiMatchControllerServer matchControllerRmiServer = new RmiMatchControllerServer(matchController, clients, logger);
             VirtualMatchServer stub = (VirtualMatchServer) UnicastRemoteObject.exportObject(matchControllerRmiServer, 0);
 
-            logger.println("RmiServer: RMI MatchController Server is running");
+            logger.println("RmiServer: New RMI MatchController Server is running");
 
             return stub;
         } catch (RemoteException e) {

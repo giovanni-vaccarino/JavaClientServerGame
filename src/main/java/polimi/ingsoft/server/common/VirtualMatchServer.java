@@ -13,11 +13,11 @@ public interface VirtualMatchServer extends Remote {
 
     void setQuestCard(String nickname, QuestCard questCard) throws RemoteException;
 
-    void sendMessage(Player player, String message) throws RemoteException;
+    void sendMessage(String player, String message) throws RemoteException;
 
-    void sendPrivateMessage(Player player, String message) throws RemoteException;
+    void sendPrivateMessage(String player, String message) throws RemoteException;
 
-    void drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException;
+    void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException;
 
-    void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException;
+    void placeCard(String player, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException;
 }

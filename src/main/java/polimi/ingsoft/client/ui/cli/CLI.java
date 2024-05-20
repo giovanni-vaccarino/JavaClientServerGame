@@ -80,7 +80,7 @@ public class CLI extends UI {
         } while (!isValid);
 
         try {
-            client.createMatch(requestedNumPlayers);
+            client.createMatch(nickname, requestedNumPlayers);
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_CREATE_MATCH.getValue());
         }
@@ -140,7 +140,7 @@ public class CLI extends UI {
     private void joinMatch(Integer matchId) {
         out.println(MESSAGES.JOINING_MATCH.getValue());
         try {
-            client.joinMatch(client, matchId, nickname);
+            client.joinMatch(nickname, matchId);
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }

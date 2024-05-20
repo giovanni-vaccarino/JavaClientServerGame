@@ -64,8 +64,14 @@ public class MatchController implements Serializable {
                 toList();
     }
 
-    private Optional<PlayerInitialSetting> getPlayerByNickname(String nickname) {
+    private Optional<PlayerInitialSetting> getPlayerInitialSettingByNickname(String nickname) {
         return playerInitialSettings.stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst();
+    }
+
+    public Optional<Player> getPlayerByNickname(String nickname) {
+        return players.stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
     }
@@ -96,7 +102,7 @@ public class MatchController implements Serializable {
         gameState.checkColorAvailability(color);
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
 
-        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
 
         playerInitialSetting.ifPresent(player-> player.setColor(color));
 
@@ -106,7 +112,7 @@ public class MatchController implements Serializable {
     public void setFaceInitialCard(String playerNickname, Boolean isFaceUp) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
 
-        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
 
         playerInitialSetting.ifPresent(player-> player.setIsInitialFaceUp(isFaceUp));
 
@@ -116,7 +122,7 @@ public class MatchController implements Serializable {
     public void setQuestCard(String playerNickname, QuestCard questCard) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.QUEST_CARD);
 
-        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
 
         playerInitialSetting.ifPresent(player-> player.setQuestCard(questCard));
 

@@ -1,6 +1,6 @@
 package polimi.ingsoft.client;
 
-import polimi.ingsoft.client.rmi.VirtualView;
+import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.CLI;
@@ -19,6 +19,7 @@ import java.util.Scanner;
 
 public abstract class Client extends UnicastRemoteObject implements VirtualView, Runnable {
     private final UI ui;
+
     public Client(
             UIType uiType,
             PrintStream printStream,
@@ -83,38 +84,6 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     }
 
-    public void setNickname(String nickname) throws IOException {
-        getServer().setNickname(this, nickname);
-    }
-
-    public void getMatches(VirtualView client) throws IOException {
-        getServer().getMatches(client);
-    }
-
-    public void createMatch(Integer requiredNumPlayers) throws IOException {
-        getServer().createMatch(requiredNumPlayers);
-    }
-
-    public void joinMatch(VirtualView client, Integer matchId, String nickname) throws IOException {
-        getServer().joinMatch(client, matchId, nickname);
-    }
-
-    public void reJoinMatch(Integer matchId, String nickname) throws IOException {
-        getServer().reJoinMatch(matchId, nickname);
-    }
-
-    public void addMessage(Player player, String message) throws IOException {
-        getMatchServer().sendMessage(player, message);
-    }
-
-    public void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-        //getServer().drawCard(playerName, deckType, slot);
-    }
-
-    public void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
-        //getServer().placeCard(matchId, playerName, card, coordinates, facingUp);
-    }
-
     @Override
     public void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException{
 
@@ -123,5 +92,37 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException{
 
+    }
+
+    public void setNickname(String nickname) throws IOException {
+        getServer().setNickname(this, nickname);
+    }
+
+    public void getMatches(VirtualView client) throws IOException {
+        getServer().getMatches(client);
+    }
+
+    public void createMatch(String nickname, Integer requiredNumPlayers) throws IOException {
+        getServer().createMatch(nickname, requiredNumPlayers);
+    }
+
+    public void joinMatch(String nickname, Integer matchId) throws IOException {
+        getServer().joinMatch(nickname, matchId);
+    }
+
+    public void reJoinMatch(Integer matchId, String nickname) throws IOException {
+        getServer().reJoinMatch(matchId, nickname);
+    }
+
+    public void addMessage(String nickname, String message) throws IOException {
+        getMatchServer().sendMessage(nickname, message);
+    }
+
+    public void drawCard(String nickname, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
+        getMatchServer().drawCard(nickname, deckType, slot);
+    }
+
+    public void placeCard(String nickname, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
+        getMatchServer().placeCard(nickname, card, coordinates, facingUp);
     }
 }

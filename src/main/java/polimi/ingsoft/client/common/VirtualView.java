@@ -1,4 +1,4 @@
-package polimi.ingsoft.client.rmi;
+package polimi.ingsoft.client.common;
 
 
 import polimi.ingsoft.client.ERROR_MESSAGES;
