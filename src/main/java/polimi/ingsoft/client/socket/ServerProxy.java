@@ -1,7 +1,7 @@
 package polimi.ingsoft.client.socket;
 
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.*;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 
-public class ServerProxy implements VirtualServer, VirtualMatchController {
+public class ServerProxy implements VirtualServer, VirtualMatchServer {
     private final ObjectOutputStream out;
 
     public ServerProxy(ObjectOutputStream out) {

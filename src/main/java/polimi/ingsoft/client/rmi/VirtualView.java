@@ -2,7 +2,7 @@ package polimi.ingsoft.client.rmi;
 
 
 import polimi.ingsoft.client.ERROR_MESSAGES;
-import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
@@ -12,7 +12,6 @@ import polimi.ingsoft.server.model.Player;
 
 import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.List;
 
 public interface VirtualView extends Remote {
@@ -25,11 +24,11 @@ public interface VirtualView extends Remote {
 
     void showUpdatePublicBoard() throws IOException;
 
-    void showMatchControllerServerStub(VirtualMatchController controller) throws IOException;
-
     void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException;
 
     void showUpdateGameState(GameState gameState) throws IOException;
 
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;
+
+    void setMatchControllerServer(VirtualMatchServer matchServer) throws IOException;
 }

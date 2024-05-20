@@ -4,7 +4,7 @@ import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.CLI;
-import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
@@ -33,6 +33,11 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     protected abstract VirtualServer getServer();
+
+    protected abstract VirtualMatchServer getMatchServer();
+
+    @Override
+    public abstract void setMatchControllerServer(VirtualMatchServer controller);
 
     public abstract void run();
 
@@ -98,21 +103,16 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         getServer().reJoinMatch(matchId, nickname);
     }
 
-    public void addMessage(int matchId, String message) throws IOException {
-        //getServer().addMessage(matchId, message);
+    public void addMessage(Player player, String message) throws IOException {
+        getMatchServer().sendMessage(player, message);
     }
 
     public void drawCard(int matchId, String playerName, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-        //getServer().drawCard(matchId, playerName, deckType, slot);
+        //getServer().drawCard(playerName, deckType, slot);
     }
 
     public void placeCard(int matchId, String playerName, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
         //getServer().placeCard(matchId, playerName, card, coordinates, facingUp);
-    }
-
-    @Override
-    public void showMatchControllerServerStub(VirtualMatchController controller) throws IOException{
-
     }
 
     @Override

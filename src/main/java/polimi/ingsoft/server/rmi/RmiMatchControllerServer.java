@@ -1,8 +1,7 @@
 package polimi.ingsoft.server.rmi;
 
-import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.exceptions.*;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class RmiMatchControllerServer implements VirtualMatchController {
+public class RmiMatchControllerServer implements VirtualMatchServer {
 
     private final MatchController matchController;
 
@@ -53,18 +52,16 @@ public class RmiMatchControllerServer implements VirtualMatchController {
             case SET_COLOR_REQUEST -> {
                 String player = (String) args[0];
                 PlayerColors color = (PlayerColors) args[1];
+                VirtualView clientToUpdate = RmiServer.clients.get(player);
 
                 try{
                     matchController.setPlayerColor(player, color);
 
                     synchronized (this.clients){
                         for(var client : this.clients){
-                            /*
-                            TODO retrieve clientToUpdate
                             if(client == clientToUpdate){
-                                client.showUpdateColor();
+                                //client.showUpdateColor();
                             }
-                            */
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
@@ -147,17 +144,16 @@ public class RmiMatchControllerServer implements VirtualMatchController {
                 String message = (String) args[1];
 
                 try{
-                    matchController.writeMessage(player.getNickname(), message);
+                    Message addedMessage = matchController.writeMessage(player.getNickname(), message);
 
                     synchronized (this.clients){
                         for(var client : this.clients){
-                            //client.showUpdateChat();
+                            client.showUpdateChat(addedMessage);
                         }
                     }
 
-                }catch (Exception e){
-                    //client.reportUpdateChatError();
-                    System.out.println(".");
+                }catch (IOException exception){
+                    throw new RuntimeException(exception);
                 }
             }
 

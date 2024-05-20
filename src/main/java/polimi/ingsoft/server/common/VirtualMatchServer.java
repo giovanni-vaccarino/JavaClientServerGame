@@ -1,13 +1,12 @@
 package polimi.ingsoft.server.common;
 
-import polimi.ingsoft.client.rmi.VirtualView;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface VirtualMatchController extends Remote {
+public interface VirtualMatchServer extends Remote {
     void setColor(String nickname, PlayerColors color) throws RemoteException;
 
     void setFaceInitialCard(String nickname, Boolean isFaceUp) throws RemoteException;

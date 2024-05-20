@@ -2,6 +2,7 @@ package polimi.ingsoft.client.socket;
 
 import polimi.ingsoft.client.Client;
 import polimi.ingsoft.client.ui.UIType;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -17,6 +18,8 @@ public class SocketClient extends Client {
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
     private final VirtualServer server;
+
+    private VirtualMatchServer matchServer;
 
     public SocketClient(
             String hostName,
@@ -35,6 +38,16 @@ public class SocketClient extends Client {
     @Override
     public VirtualServer getServer() {
         return server;
+    }
+
+    @Override
+    protected VirtualMatchServer getMatchServer() {
+        return null;
+    }
+
+    @Override
+    public void setMatchControllerServer(VirtualMatchServer controller) {
+        this.matchServer = controller;
     }
 
     public void run() {

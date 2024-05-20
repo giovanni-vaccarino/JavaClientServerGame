@@ -2,7 +2,7 @@ package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.model.Coordinates;
@@ -68,11 +68,6 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showMatchControllerServerStub(VirtualMatchController controller) throws IOException {
-
-    }
-
-    @Override
     public void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException {
 
     }
@@ -84,6 +79,11 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
+
+    }
+
+    @Override
+    public void setMatchControllerServer(VirtualMatchServer matchServer) throws IOException {
 
     }
 }

@@ -2,7 +2,7 @@ package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
@@ -25,7 +25,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     private final MainController mainController;
 
-    private final Map<Integer, VirtualMatchController> matchControllerServer = new HashMap<>();
+    private final Map<Integer, VirtualMatchServer> matchControllerServer = new HashMap<>();
 
     private final PrintStream logger;
 
@@ -102,7 +102,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     }
 
                     // Creating the MatchControllerRmiServer
-                    VirtualMatchController stubController = this.createMatchControllerServer(matchController, matchNotificationList.get(matchId), this.logger);
+                    VirtualMatchServer stubController = this.createMatchControllerServer(matchController, matchNotificationList.get(matchId), this.logger);
 
                     matchControllerServer.put(matchId, stubController);
 
@@ -142,7 +142,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     synchronized (matchNotificationList){
                         matchNotificationList.get(matchId).add(client);
                     }
-                    client.showMatchControllerServerStub(matchControllerServer.get(matchId));
+                    client.setMatchControllerServer(matchControllerServer.get(matchId));
 
                 } catch (MatchAlreadyFullException | MatchNotFoundException exception){
                     //TODO
@@ -245,10 +245,10 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
         return matchNotificationList.get(matchId);
     }
 
-    private VirtualMatchController createMatchControllerServer(MatchController matchController, List<VirtualView> clients, PrintStream logger){
+    private VirtualMatchServer createMatchControllerServer(MatchController matchController, List<VirtualView> clients, PrintStream logger){
         try {
             RmiMatchControllerServer matchControllerRmiServer = new RmiMatchControllerServer(matchController, clients, logger);
-            VirtualMatchController stub = (VirtualMatchController) UnicastRemoteObject.exportObject(matchControllerRmiServer, 0);
+            VirtualMatchServer stub = (VirtualMatchServer) UnicastRemoteObject.exportObject(matchControllerRmiServer, 0);
 
             logger.println("RmiServer: RMI MatchController Server is running");
 

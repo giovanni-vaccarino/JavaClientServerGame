@@ -2,7 +2,7 @@ package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.ERROR_MESSAGES;
 import polimi.ingsoft.client.rmi.VirtualView;
-import polimi.ingsoft.server.common.VirtualMatchController;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
@@ -158,11 +158,6 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showMatchControllerServerStub(VirtualMatchController controller) throws IOException {
-
-    }
-
-    @Override
     public void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException {
         /*
         synchronized (this.view) {
@@ -185,6 +180,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
                 this.view.reportError(errorMessage);
             } catch (IOException ignore) { }
         }
+    }
+
+    @Override
+    public void setMatchControllerServer(VirtualMatchServer matchServer) throws IOException {
+
     }
 
     public static String getRandomNickname() {
