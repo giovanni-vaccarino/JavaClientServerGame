@@ -1,12 +1,11 @@
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.page;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.animation.FadeTransition;
-import javafx.util.Duration;
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -65,19 +64,19 @@ public class HomeController extends Application {
     public void nextPage(Stage stage) throws IOException {
 
         //RIGHT ONE:
-        /*ConnectionPageController connectionController = new ConnectionPageController(stage);
+        ConnectionPageController connectionController = new ConnectionPageController(stage);
         try {
             connectionController.start(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
         //TEST ONE:
-        GamePageController gamePageController = new GamePageController(stage);
+        /*GamePageController gamePageController = new GamePageController(stage);
         try {
             gamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }

@@ -1,4 +1,4 @@
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.page;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

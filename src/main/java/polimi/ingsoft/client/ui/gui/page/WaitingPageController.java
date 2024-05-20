@@ -1,33 +1,27 @@
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.page;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class NicknamePageController {
+public class WaitingPageController {
     private Stage stage;
-    private String nickname;
-    @FXML
-    private TextField nicknameInput;
 
     // Default constructor
-    public NicknamePageController() {}
+    public WaitingPageController() {}
 
     // Constructor with stage parameter
-    public NicknamePageController(Stage stage) {
+    public WaitingPageController(Stage stage) {
         this.stage = stage;
     }
     public void start() throws Exception {
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/NicknamePage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/WaitingPage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -52,40 +46,34 @@ public class NicknamePageController {
         stage.getScene().setRoot(root);
     }
 
-    public void nextPage(ActionEvent actionEvent) throws IOException {
-
-        if(!nicknameInput.getText().trim().equals("")) { // DEFINISCI E CAMBIA CON FUNZIONE VALIDATION_NAME
-            setNickname();
-
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            StartingPageController startingPageController = new StartingPageController(stage);
-            try {
-                startingPageController.start();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-        }else{
-            nicknameInput.setStyle("-fx-background-color: #d34813;");
-
-        }
-    }
-
-    public void setNickname() {
-        nickname = nicknameInput.getText().trim();
-        System.out.println(nickname);
-    }
-
-    public void backPage(ActionEvent actionEvent) throws IOException {
+    public void cancelNewGame(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        ConnectionPageController connectionPageController = new ConnectionPageController(stage);
+        StartingPageController startingPageController = new StartingPageController(stage);
         try {
-            connectionPageController.start(false);
+            startingPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void startGame(ActionEvent actionEvent) throws IOException {
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        ColorPageController colorPageController = new ColorPageController(stage);
+        try {
+            colorPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        /*GamePageController gamePageController = new GamePageController(stage);
+        try {
+            gamePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }*/
     }
 }

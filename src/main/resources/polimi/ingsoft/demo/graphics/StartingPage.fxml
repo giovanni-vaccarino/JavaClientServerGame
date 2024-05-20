@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <AnchorPane styleClass="initialPage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="polimi.ingsoft.client.ui.gui.StartingPageController"
+            fx:controller="polimi.ingsoft.client.ui.gui.page.StartingPageController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="800.0" prefWidth="1350.0"
 >

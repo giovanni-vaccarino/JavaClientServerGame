@@ -1,4 +1,4 @@
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.page;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -9,19 +9,19 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class QuestCardWaitingPageController {
+public class ColorWaitingPageController {
     private Stage stage;
 
     // Default constructor
-    public QuestCardWaitingPageController() {}
+    public ColorWaitingPageController() {}
 
     // Constructor with stage parameter
-    public QuestCardWaitingPageController(Stage stage) {
+    public ColorWaitingPageController(Stage stage) {
         this.stage = stage;
     }
     public void start() throws Exception {
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/QuestCardWaitingPage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ColorWaitingPage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
@@ -50,9 +50,9 @@ public class QuestCardWaitingPageController {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        GamePageController gamePageController = new GamePageController(stage);
+        InitialCardPageController initialCardPageController = new InitialCardPageController(stage);
         try {
-            gamePageController.start();
+            initialCardPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

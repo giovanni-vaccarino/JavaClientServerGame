@@ -1,33 +1,46 @@
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.page;
 
+import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 
-public class StartingPageController {
+import static polimi.ingsoft.client.ui.UIType.GUI;
+
+
+public class ConnectionPageController{
     private Stage stage;
 
     // Default constructor
-    public StartingPageController() {}
+    public ConnectionPageController() {}
 
     // Constructor with stage parameter
-    public StartingPageController(Stage stage) {
+    public ConnectionPageController(Stage stage) {
         this.stage = stage;
     }
-    public void start() throws Exception {
+
+    // transition to set the FadeTransition or not
+    public void start(boolean transition) throws Exception {
         // Load FXML file
-        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/StartingPage.fxml");
+        URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ConnectionPage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
         }
         //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
+
+        if(transition){
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
+            fadeTransition.setFromValue(0.0);
+            fadeTransition.setToValue(1.0);
+            fadeTransition.play();
+        }
 
         // Load CSS file
         URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
@@ -37,34 +50,25 @@ public class StartingPageController {
         } else {
             System.out.println("CSS file not found");
         }
+
         stage.getScene().setRoot(root);
     }
 
-    public void newGame(ActionEvent actionEvent) throws IOException {
+    public void nextPageRMI(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        NewGamePageController newGamePageController = new NewGamePageController(stage);
+
+
+        NicknamePageController nicknamePageController = new NicknamePageController(stage);
         try {
-            newGamePageController.start();
+            nicknamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void joinGame(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        JoinGamePageController joinGamePageController = new JoinGamePageController(stage);
-        try {
-            joinGamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void backPage(ActionEvent actionEvent) throws IOException {
+    public void nextPageSocket(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
@@ -74,12 +78,5 @@ public class StartingPageController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        /*ConnectionPageController connectionPageController = new ConnectionPageController(stage);
-        try {
-            connectionPageController.start(false);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
     }
 }

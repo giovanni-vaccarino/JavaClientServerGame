@@ -1,5 +1,5 @@
 
-package polimi.ingsoft.client.ui.gui;
+package polimi.ingsoft.client.ui.gui.page;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +24,7 @@ import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
+import polimi.ingsoft.client.ui.gui.Coordinates;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
 import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.Chat;
@@ -76,7 +77,7 @@ public class GamePageController implements Initializable{
 
     private List<Integer> score;
     private HashMap <String, PlayerColors> nicknameColor;
-    private HashMap<String, HashMap<String,Coordinates> > boardCoordinates;
+    private HashMap<String, HashMap<String, Coordinates> > boardCoordinates;
     private HashMap<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
     private String myName;
