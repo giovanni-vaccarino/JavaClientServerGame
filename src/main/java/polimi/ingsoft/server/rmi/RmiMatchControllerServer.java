@@ -77,7 +77,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 }
             }
 
-            case SET_INITIAL_REQUEST -> {
+            case SET_INITIAL_CARD_REQUEST -> {
                 String player = (String) args[0];
                 Boolean isFaceUp = (Boolean) args[1];
                 VirtualView clientToUpdate = RmiServer.clients.get(player);
@@ -104,7 +104,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 }
             }
 
-            case SET_QUEST_REQUEST -> {
+            case SET_QUEST_CARD_REQUEST -> {
                 String player = (String) args[0];
                 QuestCard questCard = (QuestCard) args[1];
                 VirtualView clientToUpdate = RmiServer.clients.get(player);
@@ -224,9 +224,9 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
     }
 
     @Override
-    public void setFaceInitialCard(String nickname,Boolean isFaceUp) throws RemoteException {
+    public void setIsInitialCardFacingUp(String nickname,Boolean isFaceUp) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.SET_INITIAL_REQUEST, new Object[]{nickname, isFaceUp}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_INITIAL_CARD_REQUEST, new Object[]{nickname, isFaceUp}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -235,7 +235,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
     @Override
     public void setQuestCard(String nickname, QuestCard questCard) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.SET_QUEST_REQUEST, new Object[]{nickname, questCard}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.SET_QUEST_CARD_REQUEST, new Object[]{nickname, questCard}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

@@ -8,7 +8,9 @@ import java.rmi.Remote;
 
 public interface VirtualMatchServer extends Remote {
     void setColor(String nickname, PlayerColor color) throws IOException;
+
     void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException;
+
     void setQuestCard(String nickname, QuestCard questCard) throws IOException;
 
     void sendMessage(String player, String message) throws IOException;
