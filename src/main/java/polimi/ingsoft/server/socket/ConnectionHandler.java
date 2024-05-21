@@ -19,6 +19,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionHandler implements Runnable, VirtualView {
@@ -84,6 +85,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 this.matchController = matchController;
                                 List<String> nicknames = matchController.getNamePlayers();
                                 this.server.lobbyUpdatePlayerJoin(nicknames);
+                                //Adding the client to the match notification list
+                                synchronized (this.server.matchNotificationList){
+                                    this.server.matchNotificationList.get(id).add(this);
+                                }
                             } catch (MatchAlreadyFullException exception) {
                                 this.reportError(ERROR_MESSAGES.MATCH_IS_ALREADY_FULL);
                             } catch (MatchNotFoundException exception) {
@@ -96,6 +101,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             this.server.singleUpdateMatchCreate(this, id);
                             List<Integer> matches = controller.getMatches();
                             this.server.broadcastUpdateMatchesList(matches);
+                            // Creating a new list for the players
+                            synchronized (this.server.matchNotificationList){
+                                this.server.matchNotificationList.put(id, new ArrayList<>());
+                            }
                             // It is client's responsibility to join the match right after
                         }
                         case SET_COLOR_REQUEST -> {

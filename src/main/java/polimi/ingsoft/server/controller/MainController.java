@@ -74,7 +74,7 @@ public class MainController {
      * @return the ID of the newly created match
      * @throws NotValidNumPlayersException if the number of players is not valid (< 2 or > 4)
      */
-    public Integer createMatch(Integer requiredNumPlayers) throws NotValidNumPlayersException{
+    public synchronized Integer createMatch(Integer requiredNumPlayers) throws NotValidNumPlayersException{
         if(requiredNumPlayers < 2 || requiredNumPlayers > 4){
             throw new NotValidNumPlayersException();
         }
@@ -96,7 +96,7 @@ public class MainController {
      * @throws MatchAlreadyFullException if the match is already full
      * @throws MatchNotFoundException    if the match is not found
      */
-    public void joinMatch(Integer matchId, String nickname) throws MatchAlreadyFullException, MatchNotFoundException {
+    public synchronized void joinMatch(Integer matchId, String nickname) throws MatchAlreadyFullException, MatchNotFoundException {
         System.out.println("CONTROLLER: match exists result with id " + matchId + " " + matchExists(matchId));
         if(!matchExists(matchId)){
             throw new MatchNotFoundException();

@@ -135,7 +135,7 @@ public class MatchController implements Serializable {
      * @param nickname the nickname of the player to add
      * @throws MatchAlreadyFullException if the match is already full
      */
-    public void addPlayer(String nickname) throws MatchAlreadyFullException {
+    public synchronized void addPlayer(String nickname) throws MatchAlreadyFullException {
         if(playerInitialSettings.size() == requestedNumPlayers){
             throw new MatchAlreadyFullException();
         }
@@ -173,7 +173,7 @@ public class MatchController implements Serializable {
      * @throws InitalChoiceAlreadySetException if the initial choice is already set
      * @throws ColorAlreadyPickedException    if the color is already picked by another player
      */
-    public void setPlayerColor(String playerNickname, PlayerColor color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
+    public synchronized void setPlayerColor(String playerNickname, PlayerColor color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
         gameState.checkColorAvailability(color);
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
 
@@ -194,7 +194,7 @@ public class MatchController implements Serializable {
      * @throws WrongStepException             if the game is not in the correct step
      * @throws InitalChoiceAlreadySetException if the initial choice is already set
      */
-    public void setFaceInitialCard(String playerNickname, Boolean isFaceUp) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
+    public synchronized void setFaceInitialCard(String playerNickname, Boolean isFaceUp) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
@@ -214,7 +214,7 @@ public class MatchController implements Serializable {
      * @throws WrongStepException             if the game is not in the correct step
      * @throws InitalChoiceAlreadySetException if the initial choice is already set
      */
-    public void setQuestCard(String playerNickname, QuestCard questCard) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
+    public synchronized void setQuestCard(String playerNickname, QuestCard questCard) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.QUEST_CARD);
 
         Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
@@ -236,7 +236,7 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
         boolean isAdded = board.add(coordinates, card, facingUp);
@@ -265,7 +265,7 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public synchronized MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         switch(deckType){
             //TODO Change to TYPE_HAND_CARD.RESOURCE and TYPE_HAND_CARD.GOLD when network is updated
             case "Resource"-> {
@@ -326,7 +326,7 @@ public class MatchController implements Serializable {
      * @param message      the message to send
      * @return the added message
      */
-    public Message writeMessage(String playerSender, String message){
+    public synchronized Message writeMessage(String playerSender, String message){
         return this.chatController.writeMessage(playerSender, message);
     }
 }
