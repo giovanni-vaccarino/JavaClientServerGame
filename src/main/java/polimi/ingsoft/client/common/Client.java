@@ -1,5 +1,6 @@
 package polimi.ingsoft.client.common;
 
+import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
@@ -30,8 +31,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         if (uiType == UIType.CLI)
             ui = new CLI(scanner, printStream, this);
         else
-            // TODO create GUI here
-            ui = new CLI(scanner, printStream, this);
+            ui = new GUI();
     }
 
     protected abstract VirtualServer getServer();
