@@ -92,6 +92,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             case MATCH_CREATE_REQUEST -> {
                 String playerNickname = (String) args[0];
                 Integer requiredNumPlayers = (Integer) args[1];
+                VirtualView clientToUpdate = this.clients.get(playerNickname);
 
                 try{
                     Integer matchId = this.addMatch(requiredNumPlayers);
@@ -111,6 +112,9 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     synchronized (this.clients) {
                         for (var client : this.clients.values()) {
                             try {
+                                if(client.equals(clientToUpdate)){
+                                    client.showUpdateMatchCreate(matchId);
+                                }
                                 client.showUpdateMatchesList(listMatches);
                             } catch (IOException exception) {
 

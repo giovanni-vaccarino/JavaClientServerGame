@@ -11,5 +11,5 @@ public abstract class UI {
     public abstract void updateMatchesList(List<Integer> matches);
     public abstract void showUpdateMatchJoin();
     public abstract void updatePlayersInLobby(List<String> nicknames);
-    public abstract void showMatchCreate(MatchController match);
+    public abstract void showMatchCreate(Integer matchId);
 }

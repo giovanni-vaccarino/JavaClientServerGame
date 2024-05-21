@@ -3,7 +3,6 @@ package polimi.ingsoft.client.ui.cli;
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.server.controller.MatchController;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -17,8 +16,8 @@ public class CLI extends UI {
     private final Scanner in;
     private final PrintStream out;
     private final Client client;
-    private List<Integer> matches;
-    private MatchController match;
+    private List<Integer> matchIds;
+    private Integer matchId;
     private String nickname;
 
     public CLI(Scanner in, PrintStream out, Client client) {
@@ -47,7 +46,7 @@ public class CLI extends UI {
 
     private void showMatchesList() {
         int i = 0;
-        for (Integer match : matches)
+        for (Integer match : matchIds)
             out.printf("%d. Match number %d%n", ++i, match);
     }
 
@@ -96,7 +95,7 @@ public class CLI extends UI {
             out.print(MESSAGES.CHOOSE_MATCH.getValue());
             matchId = in.nextInt();
             in.nextLine();
-            if (matches.contains(matchId)) {
+            if (matchIds.contains(matchId)) {
                 isValid = true;
             } else {
                 out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
@@ -125,7 +124,7 @@ public class CLI extends UI {
     }
 
     public void updateMatchesList(List<Integer> matches) {
-        this.matches = matches;
+        this.matchIds = matches;
     }
 
     @Override
@@ -141,11 +140,11 @@ public class CLI extends UI {
     }
 
     @Override
-    public void showMatchCreate(MatchController match) {
-        this.match = match;
-        this.matches.add(match.getMatchId());
+    public void showMatchCreate(Integer matchId) {
+        this.matchId = matchId;
+        this.matchIds.add(matchId);
         out.println(MESSAGES.CREATED_MATCH.getValue());
-        joinMatch(match.getMatchId());
+        joinMatch(matchId);
     }
 
     private void joinMatch(Integer matchId) {

@@ -66,8 +66,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdateMatchCreate(MatchController match) throws IOException {
-        ui.showMatchCreate(match);
+    public void showUpdateMatchCreate(Integer matchId) throws IOException {
+        ui.showMatchCreate(matchId);
     }
 
     @Override

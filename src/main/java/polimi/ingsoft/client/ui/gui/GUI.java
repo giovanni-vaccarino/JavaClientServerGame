@@ -1,5 +1,6 @@
 package polimi.ingsoft.client.ui.gui;
 
+import javafx.css.Match;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.Connection;
@@ -35,7 +36,7 @@ public class GUI extends UI {
     }
 
     @Override
-    public void showMatchCreate(MatchController match) {
+    public void showMatchCreate(Integer matchId) {
 
     }
 }

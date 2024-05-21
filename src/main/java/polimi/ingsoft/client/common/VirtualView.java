@@ -17,7 +17,7 @@ public interface VirtualView extends Remote {
     void showUpdateMatchesList(List<Integer> matches) throws IOException;
     void showUpdateMatchJoin() throws IOException;
     void showUpdateLobbyPlayers(List<String> players) throws IOException;
-    void showUpdateMatchCreate(MatchController match) throws IOException;
+    void showUpdateMatchCreate(Integer matchId) throws IOException;
     void showUpdateChat(Message message) throws IOException;
     void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException;
     void showUpdateGameState(GameState gameState) throws IOException;
