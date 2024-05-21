@@ -4,7 +4,7 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -52,7 +52,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
         switch (methodName) {
             case SET_COLOR_REQUEST -> {
                 String player = (String) args[0];
-                PlayerColors color = (PlayerColors) args[1];
+                PlayerColor color = (PlayerColor) args[1];
                 VirtualView clientToUpdate = RmiServer.clients.get(player);
 
                 try{
@@ -215,7 +215,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
     }
 
     @Override
-    public void setColor(String nickname, PlayerColors color) throws RemoteException {
+    public void setColor(String nickname, PlayerColor color) throws RemoteException {
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.SET_COLOR_REQUEST, new Object[]{nickname,color}));
         } catch (InterruptedException e) {

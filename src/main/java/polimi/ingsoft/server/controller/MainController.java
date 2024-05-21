@@ -47,11 +47,14 @@ public class MainController {
     }
 
     public void joinMatch(Integer matchId, String nickname) throws MatchAlreadyFullException, MatchNotFoundException {
+        System.out.println("CONTROLLER: match exists result with id " + matchId + " " + matchExists(matchId));
         if(!matchExists(matchId)){
             throw new MatchNotFoundException();
         }
 
         MatchController match = getMatch(matchId);
+
+        System.out.println("CONTROLLER: match " + match);
 
         match.addPlayer(nickname);
     }

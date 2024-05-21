@@ -8,6 +8,7 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
@@ -50,18 +51,18 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showJoinMatchResult(Boolean joinResult, List<String> players) throws  IOException {
-
-    }
-
-    @Override
     public void showUpdateMatchesList(List<Integer> matches) throws IOException {
         ui.updateMatchesList(matches);
     }
 
     @Override
-    public void showUpdateMatchJoin(Boolean success) throws IOException {
+    public void showUpdateMatchJoin() throws IOException {
+        ui.showUpdateMatchJoin();
+    }
 
+    @Override
+    public void showUpdateLobbyPlayers(List<String> players) throws IOException {
+        ui.updatePlayersInLobby(players);
     }
 
     @Override
@@ -70,27 +71,37 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdateChat(Message message) throws IOException {
-
-    }
-
-    @Override
-    public void showUpdatePublicBoard() throws IOException {
-
-    }
-
-    @Override
-    public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
-
-    }
-
-    @Override
-    public void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException{
+    public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException {
 
     }
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException{
+
+    }
+
+    @Override
+    public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException {
+
+    }
+
+    @Override
+    public void showUpdatePublicBoard(PublicBoard publicBoard) throws IOException {
+
+    }
+
+    @Override
+    public void showUpdateBoard(String nickname, Board board) throws IOException{
+
+    }
+
+    @Override
+    public void showUpdateChat(Message message) throws IOException {
+
+    }
+
+    @Override
+    public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
 
     }
 

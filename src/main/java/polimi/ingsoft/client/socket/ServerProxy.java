@@ -1,18 +1,14 @@
 package polimi.ingsoft.client.socket;
 
 import polimi.ingsoft.client.common.VirtualView;
-import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
-import polimi.ingsoft.server.enumerations.PlayerColors;
-import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.rmi.RemoteException;
 
-public class ServerProxy implements VirtualServer, VirtualMatchServer {
+public class ServerProxy implements VirtualServer {
     private final ObjectOutputStream out;
 
     public ServerProxy(ObjectOutputStream out) {
@@ -44,7 +40,7 @@ public class ServerProxy implements VirtualServer, VirtualMatchServer {
     public void joinMatch(String nickname, Integer matchId) throws IOException {
         SocketMessage message = new SocketMessage(
                 MessageCodes.MATCH_JOIN_REQUEST,
-                new SocketMessage.IdAndNickname(matchId, nickname)
+                matchId
         );
         out.writeObject(message);
         out.flush();
@@ -52,41 +48,6 @@ public class ServerProxy implements VirtualServer, VirtualMatchServer {
 
     @Override
     public void reJoinMatch(Integer matchId, String nickname) throws IOException {
-
-    }
-
-    @Override
-    public void setColor(String nickname, PlayerColors color) throws RemoteException {
-
-    }
-
-    @Override
-    public void setFaceInitialCard(String nickname, Boolean isFaceUp) throws RemoteException {
-
-    }
-
-    @Override
-    public void setQuestCard(String nickname, QuestCard questCard) throws RemoteException {
-
-    }
-
-    @Override
-    public void sendMessage(String player, String message) throws RemoteException {
-
-    }
-
-    @Override
-    public void sendPrivateMessage(String player, String message) throws RemoteException {
-
-    }
-
-    @Override
-    public void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
-
-    }
-
-    @Override
-    public void placeCard(String player, MixedCard card, Coordinates coordinates, boolean facingUp) throws RemoteException {
 
     }
 }

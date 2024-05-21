@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.enumerations;
 
-public enum PlayerColors {
+public enum PlayerColor {
     RED, YELLOW, BLUE, GREEN;
     String describe;
 

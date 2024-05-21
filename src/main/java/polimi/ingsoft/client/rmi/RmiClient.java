@@ -41,8 +41,8 @@ public class RmiClient extends Client {
     }
 
     @Override
-    public void setMatchControllerServer(VirtualMatchServer controller) {
-        this.matchServer = controller;
+    public void setMatchControllerServer(VirtualMatchServer server) {
+        this.matchServer = server;
     }
 
     @Override

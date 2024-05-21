@@ -129,6 +129,18 @@ public class CLI extends UI {
     }
 
     @Override
+    public void showUpdateMatchJoin() {
+        out.println(MESSAGES.JOINED_MATCH.getValue());
+    }
+
+    @Override
+    public void updatePlayersInLobby(List<String> nicknames) {
+        out.println(MESSAGES.PLAYERS_IN_LOBBY.getValue());
+        for (var nickname : nicknames)
+            out.println(nickname);
+    }
+
+    @Override
     public void showMatchCreate(MatchController match) {
         this.match = match;
         this.matches.add(match.getMatchId());

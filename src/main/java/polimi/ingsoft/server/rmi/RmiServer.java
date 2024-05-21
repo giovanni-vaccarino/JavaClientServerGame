@@ -2,6 +2,7 @@ package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.common.Utils;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.common.ConnectionsClient;
@@ -57,7 +58,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
         switch (methodName) {
             case CONNECT -> {
-                this.addClient((VirtualView) args[0], ConnectionHandler.getRandomNickname());
+                this.addClient((VirtualView) args[0], Utils.getRandomNickname());
             }
 
             case SET_NICKNAME_REQUEST -> {
@@ -136,8 +137,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     MatchController match = this.mainController.getMatch(matchId);
                     List<String> players = match.getNamePlayers();
 
-
-                    client.showJoinMatchResult(true, players);
+                    client.showUpdateMatchJoin();
 
                     //Adding the client to the match notification list
                     synchronized (matchNotificationList){

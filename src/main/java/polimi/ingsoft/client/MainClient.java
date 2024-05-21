@@ -32,7 +32,9 @@ public class MainClient {
             client.getUi().showWelcomeScreen();
 
             while (true) { }
-        } catch (IOException ignored) { }
+        } catch (IOException e) {
+            printStream.println("Error: " + e.getMessage());
+        }
     }
     
     private static Client createClient(Protocols protocol) throws IOException {

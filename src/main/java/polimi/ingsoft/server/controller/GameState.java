@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
@@ -186,7 +186,7 @@ public class GameState implements Serializable {
      * @param color the color to check
      * @throws ColorAlreadyPickedException if the color is already picked
      */
-    public void checkColorAvailability(PlayerColors color) throws ColorAlreadyPickedException {
+    public void checkColorAvailability(PlayerColor color) throws ColorAlreadyPickedException {
         // The != null is to cover the case: if a player hasn't picked a color yet
         boolean isColorPicked = matchController.getPlayerInitialSettings().stream()
                 .map(PlayerInitialSetting::getColor)

@@ -1,6 +1,5 @@
 package polimi.ingsoft.server.controller;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.enumerations.*;
@@ -9,7 +8,6 @@ import polimi.ingsoft.server.factories.PublicBoardFactory;
 import polimi.ingsoft.server.model.*;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,18 +63,18 @@ class MatchControllerTest {
         }
 
         try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
-            matchController.setPlayerColor("Player3", PlayerColors.YELLOW);
+            matchController.setPlayerColor("Player1", PlayerColor.RED);
+            matchController.setPlayerColor("Player2", PlayerColor.BLUE);
+            matchController.setPlayerColor("Player3", PlayerColor.YELLOW);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
 
         assertEquals(INITIAL_STEP.FACE_INITIAL, matchController.getGameState().getCurrentInitialStep());
 
-        assertEquals(PlayerColors.RED, matchController.getPlayerInitialSettings().get(0).getColor());
-        assertEquals(PlayerColors.BLUE, matchController.getPlayerInitialSettings().get(1).getColor());
-        assertEquals(PlayerColors.YELLOW, matchController.getPlayerInitialSettings().get(2).getColor());
+        assertEquals(PlayerColor.RED, matchController.getPlayerInitialSettings().get(0).getColor());
+        assertEquals(PlayerColor.BLUE, matchController.getPlayerInitialSettings().get(1).getColor());
+        assertEquals(PlayerColor.YELLOW, matchController.getPlayerInitialSettings().get(2).getColor());
     }
 
     @Test
@@ -91,16 +89,16 @@ class MatchControllerTest {
         }
 
         try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
+            matchController.setPlayerColor("Player1", PlayerColor.RED);
+            matchController.setPlayerColor("Player2", PlayerColor.BLUE);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
 
         assertThrows(InitalChoiceAlreadySetException.class, () ->
-                matchController.setPlayerColor("Player1", PlayerColors.GREEN));
+                matchController.setPlayerColor("Player1", PlayerColor.GREEN));
         assertThrows(InitalChoiceAlreadySetException.class, () ->
-                matchController.setPlayerColor("Player1", PlayerColors.YELLOW));
+                matchController.setPlayerColor("Player1", PlayerColor.YELLOW));
     }
 
     @Test
@@ -115,14 +113,14 @@ class MatchControllerTest {
         }
 
         try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
+            matchController.setPlayerColor("Player1", PlayerColor.RED);
+            matchController.setPlayerColor("Player2", PlayerColor.BLUE);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
 
         assertThrows(ColorAlreadyPickedException.class, () ->
-                matchController.setPlayerColor("Player3", PlayerColors.BLUE));
+                matchController.setPlayerColor("Player3", PlayerColor.BLUE));
     }
 
     @Test
@@ -138,9 +136,9 @@ class MatchControllerTest {
 
         //Selecting the colors
         try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
-            matchController.setPlayerColor("Player3", PlayerColors.YELLOW);
+            matchController.setPlayerColor("Player1", PlayerColor.RED);
+            matchController.setPlayerColor("Player2", PlayerColor.BLUE);
+            matchController.setPlayerColor("Player3", PlayerColor.YELLOW);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
@@ -171,9 +169,9 @@ class MatchControllerTest {
 
         //Selecting the colors
         try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
-            matchController.setPlayerColor("Player3", PlayerColors.YELLOW);
+            matchController.setPlayerColor("Player1", PlayerColor.RED);
+            matchController.setPlayerColor("Player2", PlayerColor.BLUE);
+            matchController.setPlayerColor("Player3", PlayerColor.YELLOW);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
@@ -224,9 +222,9 @@ class MatchControllerTest {
 
         //Selecting the colors
         try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
-            matchController.setPlayerColor("Player3", PlayerColors.YELLOW);
+            matchController.setPlayerColor("Player1", PlayerColor.RED);
+            matchController.setPlayerColor("Player2", PlayerColor.BLUE);
+            matchController.setPlayerColor("Player3", PlayerColor.YELLOW);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
@@ -371,9 +369,9 @@ class MatchControllerTest {
 
         // Selecting the colors
         try {
-            matchController.setPlayerColor("Player1", PlayerColors.RED);
-            matchController.setPlayerColor("Player2", PlayerColors.BLUE);
-            matchController.setPlayerColor("Player3", PlayerColors.YELLOW);
+            matchController.setPlayerColor("Player1", PlayerColor.RED);
+            matchController.setPlayerColor("Player2", PlayerColor.BLUE);
+            matchController.setPlayerColor("Player3", PlayerColor.YELLOW);
         } catch (Exception e) {
             fail("Unexpected exception");
         }

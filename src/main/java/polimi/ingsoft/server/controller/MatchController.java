@@ -7,7 +7,6 @@ import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.factories.PlayerFactory;
 import polimi.ingsoft.server.model.*;
 
-import java.awt.*;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.*;
@@ -15,6 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MatchController implements Serializable {
+
+    public Integer getRequestedNumPlayers() {
+        return requestedNumPlayers;
+    }
 
     private final Integer requestedNumPlayers;
 
@@ -25,6 +28,10 @@ public class MatchController implements Serializable {
     private List<Player> players = new ArrayList<>();
 
     private final List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
+
+    public PublicBoard getPublicBoard() {
+        return publicBoard;
+    }
 
     private final PublicBoard publicBoard;
 
@@ -64,7 +71,7 @@ public class MatchController implements Serializable {
                 toList();
     }
 
-    private Optional<PlayerInitialSetting> getPlayerInitialSettingByNickname(String nickname) {
+    public Optional<PlayerInitialSetting> getPlayerInitialSettingByNickname(String nickname) {
         return playerInitialSettings.stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
@@ -98,7 +105,7 @@ public class MatchController implements Serializable {
                 this.players;
     }
 
-    public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
+    public void setPlayerColor(String playerNickname, PlayerColor color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
         gameState.checkColorAvailability(color);
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
 

@@ -1,17 +1,16 @@
 package polimi.ingsoft.server.socket;
 
-import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.common.Utils;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
-import polimi.ingsoft.server.exceptions.MatchNotFoundException;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.Message;
-import polimi.ingsoft.server.model.PlayedCard;
-import polimi.ingsoft.server.model.Player;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.exceptions.*;
+import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
@@ -25,13 +24,14 @@ import java.util.List;
 public class ConnectionHandler implements Runnable, VirtualView {
     private final Socket socket;
     private final MainController controller;
+    private MatchController matchController = null;
     private final VirtualView view;
     private final ObjectInputStream in;
     private final ObjectOutputStream out;
     private final SocketServer server;
 
     private final PrintStream logger;
-    private String nickname = getRandomNickname();
+    private String nickname = Utils.getRandomNickname();
 
     public ConnectionHandler(Socket socket, MainController controller, SocketServer server, PrintStream logger) throws IOException {
         this.socket = socket;
@@ -56,38 +56,192 @@ public class ConnectionHandler implements Runnable, VirtualView {
                 logger.println("SOCKET: And payload: " + payload);
 
                 // Read message and perform action
-                switch (type) {
-                    case CONNECT -> this.server.clients.put(nickname, this);
-                    case SET_NICKNAME_REQUEST -> {
-                        String nickname = (String) payload;
-                        boolean result = this.server.setNicknameForClient(this.nickname, nickname);
-                        this.nickname = nickname;
-                        this.server.singleUpdateNickname(this, result);
-                    }
-                    case MATCHES_LIST_REQUEST -> {
-                        List<Integer> matches = controller.getMatches();
-                        this.server.singleUpdateMatchesList(this, matches);
-                    }
-                    case MATCH_JOIN_REQUEST -> {
-                        int id = (Integer) payload;
-                        try{
-                            controller.joinMatch(id, nickname);
-                            this.server.singleUpdateMatchJoin(this, true);
-                        } catch (MatchAlreadyFullException | MatchNotFoundException exception){
-                            //TODO
-                            //client.reportError()
+                try {
+                    switch (type) {
+                        case CONNECT -> {
+                            this.addClient();
                         }
-                        // TODO Send LOBBY_PLAYER_JOINED_UPDATE to other players in lobby
+                        case SET_NICKNAME_REQUEST -> {
+                            String nickname = (String) payload;
+                            boolean result = this.server.setNicknameForClient(this.nickname, nickname);
+                            this.nickname = nickname;
+                            this.server.singleUpdateNickname(this, result);
+                        }
+                        case MATCHES_LIST_REQUEST -> {
+                            List<Integer> matches = controller.getMatches();
+                            this.server.singleUpdateMatchesList(this, matches);
+                        }
+                        case MATCH_JOIN_REQUEST -> {
+                            int id = (Integer) payload;
+                            try {
+                                controller.joinMatch(id, nickname);
+                                this.server.singleUpdateMatchJoin(this);
+
+                                MatchController matchController = controller.getMatch(id);
+                                // Set match controller for usage later
+                                this.matchController = matchController;
+                                List<String> nicknames = matchController.getNamePlayers();
+                                this.server.lobbyUpdatePlayerJoin(nicknames);
+                            } catch (MatchAlreadyFullException exception) {
+                                this.reportError(ERROR_MESSAGES.MATCH_IS_ALREADY_FULL);
+                            } catch (MatchNotFoundException exception) {
+                                this.reportError(ERROR_MESSAGES.MATCH_DOES_NOT_EXIST);
+                            }
+                        }
+                        case MATCH_CREATE_REQUEST -> {
+                            int numberForPlayers = (int) payload;
+                            int id = controller.createMatch(numberForPlayers);
+                            MatchController matchController = controller.getMatch(id);
+                            this.server.singleUpdateMatchCreate(this, matchController);
+                            List<Integer> matches = controller.getMatches();
+                            this.server.broadcastUpdateMatchesList(matches);
+                            // It is client's responsibility to join the match right after
+                        }
+                        case SET_COLOR_REQUEST -> {
+                            PlayerColor color = (PlayerColor) payload;
+
+                            try {
+                                matchController.setPlayerColor(nickname, color);
+                                PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
+                                );
+                                this.server.singleUpdateInitialSettings(
+                                        this,
+                                        color,
+                                        settings.getIsInitialFaceUp(),
+                                        settings.getQuestCard()
+                                );
+                            } catch (NullPointerException exception) {
+                                this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
+                            } catch (WrongGamePhaseException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                            } catch (WrongStepException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_STEP);
+                            } catch (ColorAlreadyPickedException exception) {
+                                this.reportError(ERROR_MESSAGES.COLOR_ALREADY_PICKED);
+                            } catch (InitalChoiceAlreadySetException exception) {
+                                this.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                            }
+                        }
+                        case SET_INITIAL_CARD_REQUEST -> {
+                            Boolean isInitialCardFacingUp = (Boolean) payload;
+
+                            try {
+                                matchController.setFaceInitialCard(nickname, isInitialCardFacingUp);
+                                PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
+                                );
+                                this.server.singleUpdateInitialSettings(
+                                        this,
+                                        settings.getColor(),
+                                        isInitialCardFacingUp,
+                                        settings.getQuestCard()
+                                );
+                            } catch (NullPointerException exception) {
+                                this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
+                            } catch (WrongGamePhaseException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                            } catch (WrongStepException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_STEP);
+                            } catch (InitalChoiceAlreadySetException exception) {
+                                this.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                            }
+                        }
+                        case SET_QUEST_CARD_REQUEST -> {
+                            QuestCard questCard = (QuestCard) payload;
+
+                            try {
+                                matchController.setQuestCard(nickname, questCard);
+                                PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
+                                );
+                                this.server.singleUpdateInitialSettings(
+                                        this,
+                                        settings.getColor(),
+                                        settings.getIsInitialFaceUp(),
+                                        questCard
+                                );
+                            } catch (NullPointerException exception) {
+                                this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
+                            } catch (WrongGamePhaseException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                            } catch (WrongStepException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_STEP);
+                            } catch (InitalChoiceAlreadySetException exception) {
+                                this.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                            }
+                        }
+                        case MATCH_DRAW_REQUEST -> {
+                            SocketMessage.DrawCardPayload drawCardPayload = (SocketMessage.DrawCardPayload) payload;
+                            String deckType = drawCardPayload.deckType();
+                            PlaceInPublicBoard.Slots slot = drawCardPayload.slot();
+
+                            Player player = matchController.getPlayerByNickname(nickname)
+                                    .orElse(null);
+
+                            try {
+                                MixedCard card = matchController.drawCard(player, deckType, slot);
+                                player.addToHand(card);
+                                this.server.singleUpdatePlayerHand(this, player.getHand());
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
+                                );
+                                this.server.matchUpdatePublicBoard(
+                                        matchController.getMatchId(),
+                                        matchController.getPublicBoard()
+                                );
+                            } catch (NullPointerException exception) {
+                                this.reportError(ERROR_MESSAGES.UNKNOWN_ERROR);
+                            } catch (WrongGamePhaseException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                            } catch (WrongStepException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_STEP);
+                            } catch (WrongPlayerForCurrentTurnException exception) {
+                                this.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                            }
+                        }
+                        case MATCH_PLACE_REQUEST -> {
+                            SocketMessage.PlaceCardPayload placeCardPayload = (SocketMessage.PlaceCardPayload) payload;
+                            MixedCard card = placeCardPayload.card();
+                            Coordinates coordinates = placeCardPayload.coordinates();
+                            Boolean isFacingUp = placeCardPayload.isFacingUp();
+
+                            Player player = matchController.getPlayerByNickname(nickname)
+                                    .orElse(null);
+
+                            try {
+                                matchController.placeCard(player, card, coordinates, isFacingUp);
+                                this.server.singleUpdatePlayerHand(this, player.getHand());
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
+                                );
+                                this.server.matchUpdatePlayerBoard(
+                                        matchController.getMatchId(),
+                                        nickname,
+                                        player.getBoard()
+                                );
+                            } catch (NullPointerException exception) {
+                                this.reportError(ERROR_MESSAGES.UNKNOWN_ERROR);
+                            } catch (WrongGamePhaseException exception){
+                                this.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                            } catch (WrongStepException exception){
+                                this.reportError(ERROR_MESSAGES.WRONG_STEP);
+                            } catch (WrongPlayerForCurrentTurnException exception){
+                                this.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                            }
+                        }
+                        default -> System.err.println("[INVALID MESSAGE]");
                     }
-                    case MATCH_CREATE_REQUEST -> {
-                        int numberForPlayers = (int) payload;
-                        int id = controller.createMatch(numberForPlayers);
-                        MatchController matchController = controller.getMatch(id);
-                        this.server.singleUpdateMatchCreate(this, matchController);
-                        List<Integer> matches = controller.getMatches();
-                        this.server.broadcastUpdateMatchesList(matches);
-                    }
-                    default -> System.err.println("[INVALID MESSAGE]");
+                } catch (ClassCastException exception) {
+                    this.reportError(ERROR_MESSAGES.UNKNOWN_COMMAND);
                 }
             }
 
@@ -100,6 +254,12 @@ public class ConnectionHandler implements Runnable, VirtualView {
         }
     }
 
+    public void addClient() {
+        synchronized (this.server.clients) {
+            this.server.clients.put(nickname, this);
+        }
+    }
+
     @Override
     public void showNicknameUpdate(boolean result) throws IOException {
         logger.println("SOCKET: Sending nickname update: " + result);
@@ -109,8 +269,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showJoinMatchResult(Boolean joinResult, List<String> players) throws IOException {
-
+    public void showUpdateLobbyPlayers(List<String> players) throws IOException {
+        logger.println("SOCKET: Sending lobby player updates: " + players);
+        synchronized (this.view) {
+            this.view.showUpdateLobbyPlayers(players);
+        }
     }
 
     @Override
@@ -122,11 +285,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateMatchJoin(Boolean success) {
-        logger.println("SOCKET: Sending match join update: " + success);
+    public void showUpdateMatchJoin() {
+        logger.println("SOCKET: Sending match join update");
         synchronized (this.view) {
             try {
-                this.view.showUpdateMatchJoin(success);
+                this.view.showUpdateMatchJoin();
             } catch (IOException ignore) { }
         }
     }
@@ -149,28 +312,48 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdatePublicBoard() {
+    public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException {
         synchronized (this.view) {
             try {
-                this.view.showUpdatePublicBoard();
+                this.view.showUpdateInitialSettings(color, isFacingUp, questCard);
             } catch (IOException ignore) { }
         }
     }
 
     @Override
-    public void showUpdateBoard(Player player, Coordinates coordinates, PlayedCard playedCard) throws IOException {
-        /*
+    public void showUpdateGameState(GameState gameState) {
         synchronized (this.view) {
             try {
-                this.view.showUpdateBoard();
+                this.view.showUpdateGameState(gameState);
             } catch (IOException ignore) { }
         }
-        */
     }
 
     @Override
-    public void showUpdateGameState(GameState gameState) throws IOException {
+    public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException {
+        synchronized (this.view) {
+            try {
+                this.view.showUpdatePlayerHand(playerHand);
+            } catch (IOException ignore) { }
+        }
+    }
 
+    @Override
+    public void showUpdatePublicBoard(PublicBoard publicBoard) {
+        synchronized (this.view) {
+            try {
+                this.view.showUpdatePublicBoard(publicBoard);
+            } catch (IOException ignore) { }
+        }
+    }
+
+    @Override
+    public void showUpdateBoard(String nickname, Board board) throws IOException {
+        synchronized (this.view) {
+            try {
+                this.view.showUpdateBoard(nickname, board);
+            } catch (IOException ignore) { }
+        }
     }
 
     @Override
@@ -183,22 +366,5 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void setMatchControllerServer(VirtualMatchServer matchServer) throws IOException {
-
-    }
-
-    public static String getRandomNickname() {
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        StringBuilder sb = new StringBuilder(10);
-
-        for (int i = 0; i < 10; i++) {
-            int index = (int)(AlphaNumericString.length() * Math.random());
-            sb.append(AlphaNumericString.charAt(index));
-        }
-
-        return sb.toString();
-    }
+    public void setMatchControllerServer(VirtualMatchServer matchServer) { }
 }

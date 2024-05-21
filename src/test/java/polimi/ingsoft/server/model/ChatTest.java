@@ -2,7 +2,6 @@ package polimi.ingsoft.server.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.exceptions.NotValidMessageException;
 
 import static org.junit.jupiter.api.Assertions.*;

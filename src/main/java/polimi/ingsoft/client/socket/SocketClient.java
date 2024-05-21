@@ -4,7 +4,10 @@ import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
@@ -33,6 +36,7 @@ public class SocketClient extends Client {
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
         server = new ServerProxy(out);
+        matchServer = new MatchServerProxy(out);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class SocketClient extends Client {
 
     @Override
     protected VirtualMatchServer getMatchServer() {
-        return null;
+        return matchServer;
     }
 
     @Override
@@ -76,12 +80,40 @@ public class SocketClient extends Client {
                     this.showUpdateMatchesList(matches);
                 }
                 case MATCH_JOIN_UPDATE -> {
-                    Boolean success = (Boolean) payload;
-                    this.showUpdateMatchJoin(success);
+                    this.showUpdateMatchJoin();
                 }
                 case MATCH_CREATE_UPDATE -> {
                     MatchController match = (MatchController) payload;
                     this.showUpdateMatchCreate(match);
+                }
+                case LOBBY_PLAYERS_UPDATE -> {
+                    List<String> nicknames = (List<String>) payload;
+                    this.showUpdateLobbyPlayers(nicknames);
+                }
+                case SET_INITIAL_SETTINGS_UPDATE -> {
+                    SocketMessage.InitialSettings initialSettings = (SocketMessage.InitialSettings) payload;
+                    PlayerColor color = initialSettings.color();
+                    Boolean isInitialCardFacingUp = initialSettings.isInitialCardFacingUp();
+                    QuestCard questCard = initialSettings.questCard();
+                    this.showUpdateInitialSettings(color, isInitialCardFacingUp, questCard);
+                }
+                case MATCH_GAME_STATE_UPDATE -> {
+                    GameState gameState = (GameState) payload;
+                    this.showUpdateGameState(gameState);
+                }
+                case MATCH_PUBLIC_BOARD_UPDATE -> {
+                    PublicBoard publicBoard = (PublicBoard) payload;
+                    this.showUpdatePublicBoard(publicBoard);
+                }
+                case MATCH_BOARD_UPDATE -> {
+                    SocketMessage.NicknameAndBoard nicknameAndBoard = (SocketMessage.NicknameAndBoard) payload;
+                    String nickname = nicknameAndBoard.nickname();
+                    Board board = nicknameAndBoard.board();
+                    this.showUpdateBoard(nickname, board);
+                }
+                case MATCH_PLAYER_HAND_UPDATE -> {
+                    PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) payload;
+                    this.showUpdatePlayerHand(playerHand);
                 }
                 default -> System.err.println("[INVALID MESSAGE]");
             }
