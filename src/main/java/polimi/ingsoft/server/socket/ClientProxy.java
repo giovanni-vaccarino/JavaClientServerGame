@@ -103,10 +103,10 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdateBoard(String nickname, Board board) throws IOException {
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException {
         SocketMessage message = new SocketMessage(
                 MessageCodes.MATCH_BOARD_UPDATE,
-                new SocketMessage.NicknameAndBoard(nickname, board)
+                new SocketMessage.BoardUpdatePayload(nickname, coordinates, playedCard)
         );
         out.writeObject(message);
         out.flush();

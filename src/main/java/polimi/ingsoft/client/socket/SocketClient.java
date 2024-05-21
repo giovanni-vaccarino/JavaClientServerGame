@@ -106,10 +106,11 @@ public class SocketClient extends Client {
                     this.showUpdatePublicBoard(publicBoard);
                 }
                 case MATCH_BOARD_UPDATE -> {
-                    SocketMessage.NicknameAndBoard nicknameAndBoard = (SocketMessage.NicknameAndBoard) payload;
-                    String nickname = nicknameAndBoard.nickname();
-                    Board board = nicknameAndBoard.board();
-                    this.showUpdateBoard(nickname, board);
+                    SocketMessage.BoardUpdatePayload boardUpdatePayload = (SocketMessage.BoardUpdatePayload) payload;
+                    String nickname = boardUpdatePayload.nickname();
+                    Coordinates coordinates = boardUpdatePayload.coordinates();
+                    PlayedCard playedCard = boardUpdatePayload.playedCard();
+                    this.showUpdateBoard(nickname, coordinates, playedCard);
                 }
                 case MATCH_PLAYER_HAND_UPDATE -> {
                     PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) payload;

@@ -23,7 +23,7 @@ public interface VirtualView extends Remote {
     void showUpdateGameState(GameState gameState) throws IOException;
     void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException;
     void showUpdatePublicBoard(PublicBoard publicBoard) throws IOException;
-    void showUpdateBoard(String nickname, Board board) throws IOException;
+    void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException;
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;
     void setMatchControllerServer(VirtualMatchServer server) throws IOException;
 }

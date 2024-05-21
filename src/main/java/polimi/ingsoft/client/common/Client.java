@@ -91,7 +91,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdateBoard(String nickname, Board board) throws IOException{
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException{
 
     }
 

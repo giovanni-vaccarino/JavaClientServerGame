@@ -218,6 +218,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
                             try {
                                 matchController.placeCard(player, card, coordinates, isFacingUp);
+                                PlayedCard playedCard = player.getBoard().getCard(coordinates);
                                 this.server.singleUpdatePlayerHand(this, player.getHand());
                                 this.server.matchUpdateGameState(
                                         matchController.getMatchId(),
@@ -226,7 +227,8 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 this.server.matchUpdatePlayerBoard(
                                         matchController.getMatchId(),
                                         nickname,
-                                        player.getBoard()
+                                        coordinates,
+                                        playedCard
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.UNKNOWN_ERROR);
@@ -238,7 +240,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 this.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
                             }
                         }
-                        default -> System.err.println("[INVALID MESSAGE]");
+                        default -> {
+                            logger.println("SOCKET: [INVALID MESSAGE]");
+                            this.reportError(ERROR_MESSAGES.UNKNOWN_COMMAND);
+                        }
                     }
                 } catch (ClassCastException exception) {
                     this.reportError(ERROR_MESSAGES.UNKNOWN_COMMAND);
@@ -348,10 +353,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateBoard(String nickname, Board board) throws IOException {
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException {
         synchronized (this.view) {
             try {
-                this.view.showUpdateBoard(nickname, board);
+                this.view.showUpdateBoard(nickname, coordinates, playedCard);
             } catch (IOException ignore) { }
         }
     }

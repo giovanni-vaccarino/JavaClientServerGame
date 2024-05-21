@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class SocketMessage implements Serializable {
     public record DrawCardPayload(String deckType, PlaceInPublicBoard.Slots slot) implements Serializable { }
     public record PlaceCardPayload(MixedCard card, Coordinates coordinates, Boolean isFacingUp) implements Serializable { }
-    public record NicknameAndBoard(String nickname, Board board) implements Serializable { }
+    public record BoardUpdatePayload(String nickname, Coordinates coordinates, PlayedCard playedCard) implements Serializable { }
     public record InitialSettings(PlayerColor color, Boolean isInitialCardFacingUp, QuestCard questCard) implements Serializable { }
 
     public SocketMessage(MessageCodes type, Serializable payload) {
