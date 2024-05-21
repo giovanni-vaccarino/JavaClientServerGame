@@ -43,7 +43,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             try {
                 RmiMethodCall methodCall = methodQueue.take();
                 executeMethod(methodCall);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | IOException e) {
                 Thread.currentThread().interrupt();
                 break;
             }
@@ -51,7 +51,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
     });
 
 
-    private void executeMethod(RmiMethodCall methodCall){
+    private void executeMethod(RmiMethodCall methodCall) throws IOException {
         MessageCodes methodName = methodCall.getMethodName();
         Object[] args = methodCall.getArgs();
 
@@ -64,13 +64,16 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             case SET_NICKNAME_REQUEST -> {
                 VirtualView client = (VirtualView) args[0];
                 String nickname = (String) args[1];
-                boolean result = this.setNicknameForClient(client, nickname);
 
-                synchronized (this.clients){
-                    try {
-                        client.showNicknameUpdate(result);
-                    } catch (IOException ignore) {
+                try{
+                    this.setNicknameForClient(client, nickname);
 
+                    synchronized (this.clients){
+                        client.showNicknameUpdate();
+                    }
+                } catch (NicknameNotAvailableException exception){
+                    synchronized (this.clients){
+                        client.reportError(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE);
                     }
                 }
             }
@@ -79,13 +82,8 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 VirtualView client = (VirtualView) args[0];
                 List<Integer> matches = this.listMatches();
 
-                //TODO Ensure that the client has already done connect
                 synchronized (this.clients) {
-                    try {
-                        client.showUpdateMatchesList(matches);
-                    } catch (IOException exception) {
-
-                    }
+                    client.showUpdateMatchesList(matches);
                 }
             }
 
@@ -111,21 +109,17 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
                     synchronized (this.clients) {
                         for (var client : this.clients.values()) {
-                            try {
-                                if(client.equals(clientToUpdate)){
-                                    client.showUpdateMatchCreate(matchId);
-                                }
-                                client.showUpdateMatchesList(listMatches);
-                            } catch (IOException exception) {
-
+                            if(client.equals(clientToUpdate)){
+                                client.showUpdateMatchCreate(matchId);
                             }
+                            client.showUpdateMatchesList(listMatches);
                         }
                     }
-                    //TODO Join the first client
+
                 } catch (NotValidNumPlayersException exception){
-                    //TODO
-                    //synchronized(this.clients)
-                    //client.reportError(ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND);
+                    }
                 }
             }
 
@@ -133,7 +127,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 String playerNickname = (String) args[0];
                 Integer matchId = (Integer) args[1];
                 String nickname = (String) args[2];
-                VirtualView client = clients.get(playerNickname);
+                VirtualView clientToUpdate = clients.get(playerNickname);
 
                 try{
                     this.mainController.joinMatch(matchId, nickname);
@@ -141,23 +135,19 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     MatchController match = this.mainController.getMatch(matchId);
                     List<String> players = match.getNamePlayers();
 
-                    client.showUpdateMatchJoin();
-
                     //Adding the client to the match notification list
                     synchronized (matchNotificationList){
-                        matchNotificationList.get(matchId).add(client);
+                        matchNotificationList.get(matchId).add(clientToUpdate);
                     }
-                    client.setMatchControllerServer(matchControllerServer.get(matchId));
 
-                } catch (MatchAlreadyFullException | MatchNotFoundException exception){
-                    //TODO
-                    try{
-                        client.reportError(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH);
-                    } catch (IOException e){
-                        throw new RuntimeException(e);
+                    synchronized (this.clients){
+                        clientToUpdate.showUpdateMatchJoin();
+                        clientToUpdate.setMatchControllerServer(matchControllerServer.get(matchId));
                     }
-                } catch (IOException exception) {
-                    throw new RuntimeException(exception);
+                } catch (MatchAlreadyFullException | MatchNotFoundException exception){
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH);
+                    }
                 }
             }
 
@@ -228,10 +218,10 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
         return this.mainController.createMatch(requiredNumPlayers);
     }
 
-    private Boolean setNicknameForClient(VirtualView client, String nickname){
+    private Boolean setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
         synchronized (this.clients) {
             if (clients.containsKey(nickname)) {
-                return false;
+                throw new NicknameNotAvailableException();
             }
 
             //Removing the precedent (key, value) of the client
