@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<?import javafx.scene.control.ProgressBar?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="800.0" prefWidth="1350.0" style="-fx-background-image: url('polimi/ingsoft/demo/graphics/img/background/home.jpg');
+            -fx-background-size: cover; -fx-background-position: center center;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="polimi.ingsoft.client.ui.gui.page.HomeController"
+>
+
+    <!--<children>
+      <Button id="start" layoutX="-8.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="720.0"
+              prefWidth="1250.0" text="Start" textAlignment="CENTER" visible="true" onAction="#onClickBeginButton"
+              />
+   </children>-->
+</AnchorPane>

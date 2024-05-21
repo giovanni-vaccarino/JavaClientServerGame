@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.control.ListCell?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1350.0" styleClass="gamePage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polimi.ingsoft.client.ui.gui.page.GamePageController">
+    <children>
+
+        <!-- Score Board -->
+        <AnchorPane layoutX="10.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css">
+            <children>
+                <StackPane alignment="CENTER" layoutX="0.0" layoutY="14.0" prefHeight="360" prefWidth="200" styleClass="plateauScore" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css" />
+                <ImageView fx:id="blueScoreImg" />
+                <ImageView fx:id="greenScoreImg" />
+                <ImageView fx:id="redScoreImg" />
+                <ImageView fx:id="yellowScoreImg" />
+            </children>
+        </AnchorPane>
+
+        <!-- Covered Drawable Deck(s) - lev4 -->
+        <GridPane fx:id="coveredDrawableDeck4" layoutX="226.0" layoutY="99.0" prefHeight="390.0" prefWidth="150.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+
+        <!-- Covered Drawable Deck(s) - lev3 -->
+        <GridPane fx:id="coveredDrawableDeck3" layoutX="222.0" layoutY="95.0" prefHeight="390.0" prefWidth="150.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+
+        <!-- Covered Drawable Deck(s) - lev2 -->
+        <GridPane fx:id="coveredDrawableDeck2" layoutX="218.0" layoutY="91.0" prefHeight="390.0" prefWidth="150.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+
+        <!-- Covered Drawable Deck(s) - lev1 -->
+        <GridPane fx:id="coveredDrawableDeck1" layoutX="214.0" layoutY="87.0" prefHeight="390.0" prefWidth="150.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+
+        <!-- Visible Drawable Deck(s) -->
+        <GridPane fx:id="visibleDrawableDeck" layoutX="376.0" layoutY="99.0" prefHeight="390.0" prefWidth="300.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+
+        <!-- Personal deck -->
+        <GridPane fx:id="personalDeck" layoutX="51.0" layoutY="520.0" prefHeight="248.0" prefWidth="620.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+
+        <!-- BOARD -->
+        <GridPane fx:id="board" layoutX="750.0" layoutY="200.0" prefHeight="550.0" prefWidth="540.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+
+        <!-- Board arrows -->
+        <StackPane alignment="CENTER" layoutX="960.0" layoutY="686.0" prefHeight="100" prefWidth="120.0">
+            <children>
+                <ImageView fx:id="arrowS" />
+            </children>
+        </StackPane>
+        <StackPane alignment="CENTER" layoutX="960.0" layoutY="155.0" prefHeight="100" prefWidth="120.0">
+            <children>
+                <ImageView fx:id="arrowN" />
+            </children>
+        </StackPane>
+        <StackPane alignment="CENTER_LEFT" layoutX="725.0" layoutY="425.0" prefHeight="100" prefWidth="120.0">
+            <children>
+                <ImageView fx:id="arrowO" />
+            </children>
+        </StackPane>
+        <StackPane alignment="CENTER_RIGHT" layoutX="1222.0" layoutY="425.0" prefHeight="100" prefWidth="120.0">
+            <children>
+                <ImageView fx:id="arrowE" />
+            </children>
+        </StackPane>
+
+        <!-- Buttons for Other Players Board -->
+        <GridPane fx:id="otherBoards" layoutX="780.0" layoutY="50.0" prefHeight="150.0" prefWidth="510.0" stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+
+        <!-- Chat -->
+        <StackPane layoutX="1265.0" layoutY="680.0" prefWidth="100" prefHeight="65" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="Chat"
+                        prefWidth="100" prefHeight="50" styleClass="chatButtonMovement"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
+                        textAlignment="LEFT" fx:id="chatControl" onAction="#chatMove">
+                </Button>
+            </children>
+        </StackPane>
+        <StackPane layoutX="700.0" layoutY="60.0" prefWidth="660" prefHeight="710" alignment="CENTER"
+                   styleClass="chatPane" stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
+                   visible="false" fx:id="chatPane">
+            <children>
+                <Separator orientation="VERTICAL" translateX="-150" style="-fx-border-color: #705f16"/>
+                <Separator orientation="HORIZONTAL" translateY="286" style="-fx-border-color: #705f16"/>
+
+                <Button mnemonicParsing="false"
+                        fx:id="chatButton1" visible="false"
+                        translateX="-242" translateY="-320"
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
+                </Button>
+
+                <Line startX="242.0" startY="100.0" visible="false"
+                      endX="300.0" endY="100.0"
+                      translateX="-242" translateY="-285"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="chatLine1"/>
+
+                <Button mnemonicParsing="false" visible="false"
+                        fx:id="chatButton2"
+                        translateX="-242" translateY="-250"
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
+                </Button>
+
+                <Line startX="0.0" startY="100.0" visible="false"
+                      endX="58.0" endY="100.0"
+                      translateX="-242" translateY="-215"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="chatLine2"/>
+
+                <Button mnemonicParsing="false" visible="false"
+                        fx:id="chatButton3"
+                        translateX="-242" translateY="-180"
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
+                </Button>
+
+                <Line startX="242.0" startY="100.0" visible="false"
+                      endX="300.0" endY="100.0"
+                      translateX="-242" translateY="-135"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="chatLine3"/>
+
+                <Button mnemonicParsing="false"
+                        fx:id="chatButton4"
+                        translateX="-242" translateY="-100"
+                        prefWidth="150" prefHeight="50" styleClass="chatButtonList"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
+                </Button>
+
+                <Button mnemonicParsing="false" text="Send"
+                        fx:id="sendMessage"
+                        translateX="-242" translateY="320"
+                        prefWidth="100" prefHeight="30" styleClass="chatButtonSend"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
+                        onAction="#sendMessage">
+                </Button>
+
+
+            </children>
+        </StackPane>
+
+        <StackPane layoutX="887.0" layoutY="65.0" prefWidth="461" prefHeight="630" alignment="CENTER"
+                   visible="false" fx:id="chatMessagesPane">
+            <ListView fx:id="chatMessages" style="-fx-background-color: #dfd7b0">
+            </ListView>
+        </StackPane>
+
+        <StackPane layoutX="887.0" layoutY="705.0" prefWidth="461" prefHeight="60" alignment="CENTER"
+                   visible="false" fx:id="chatTextPane">
+            <children>
+                <TextField fx:id="messageInput" promptText="Enter here"
+                           styleClass="chatTextBar" stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"/>
+            </children>
+        </StackPane>
+
+    </children>
+</AnchorPane>
