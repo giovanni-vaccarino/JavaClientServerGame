@@ -198,7 +198,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                                 //client.showUpdatePlayerHand();
                             }
 
-                            client.showUpdateBoard(player, coordinates, playedCard);
+                            client.showUpdateBoard(playerNickname, coordinates, playedCard);
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
