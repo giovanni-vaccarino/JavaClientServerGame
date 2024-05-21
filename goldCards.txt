@@ -1,0 +1,8 @@
+
+{"score":2,
+"front":{"upLeft":{"items":[],"empty":true},"upRight":{"items":[],"empty":true},"bottomLeft":{"items":[],"empty":true},"bottomRight":{"items":[],"empty":true},"center":{"items":["BUTTERFLY"],"empty":false}},
+"back":{"upLeft":null,"upRight":{"items":["FEATHER"],"empty":false},"bottomLeft":{"items":["WOLF"],"empty":false},"bottomRight":{"items":["BUTTERFLY"],"empty":false},"center":null},
+"playPattern":{"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":1,"LEAF":2,"SCROLL":0}},
+"pointPattern":{"cost":"Corner"},
+"id":"lol"
+}

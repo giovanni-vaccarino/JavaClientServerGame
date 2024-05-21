@@ -9,6 +9,7 @@ import polimi.ingsoft.server.model.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -56,9 +57,17 @@ private static final String RESOURCE="resourceCards.txt";
         list.add(Resource.BUTTERFLY);
         bottomright=new CornerSpace(list);
         back=new Face(null,upright,bottomleft,bottomright);
-        ResourceCard res1=new ResourceCard("lol",front,back,2);
+        HashMap<Item,Integer> cost=new HashMap<>();
+        cost.put(Resource.WOLF,1);
+        cost.put(Resource.LEAF,2);
+        cost.put(Resource.MUSHROOM,0);
+        cost.put(Resource.BUTTERFLY,0);
+        cost.put(Object.FEATHER,0);
+        cost.put(Object.POTION,0);
+        cost.put(Object.SCROLL,0);
+        GoldCard gold=new GoldCard("lol",front,back,new ItemPattern(cost),new CornerPattern(),2);
         //System.out.print(a.getID());
-        out.print(cardCreator.writeValueAsString(res1));
+        out.print(cardCreator.writeValueAsString(gold));
         return deck;
     }
     public ArrayList<GoldCard>createGoldDeck()throws JsonProcessingException {
