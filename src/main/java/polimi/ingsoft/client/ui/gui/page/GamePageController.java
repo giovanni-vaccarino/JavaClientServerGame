@@ -26,7 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import polimi.ingsoft.client.ui.gui.Coordinates;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
-import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.Chat;
 import polimi.ingsoft.server.model.Message;
 
@@ -76,7 +76,7 @@ public class GamePageController implements Initializable{
     @FXML private TextField messageInput;
 
     private List<Integer> score;
-    private HashMap <String, PlayerColors> nicknameColor;
+    private HashMap <String, PlayerColor> nicknameColor;
     private HashMap<String, HashMap<String, Coordinates> > boardCoordinates;
     private HashMap<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
@@ -113,9 +113,9 @@ public class GamePageController implements Initializable{
         Chat chat2 = new Chat();
         Chat chat3 = new Chat();
         Chat chat4 = new Chat();
-        chat1.addMessage(PlayerColors.RED,"testo");
-        chat2.addMessage(PlayerColors.GREEN,"testo");
-        chat4.addMessage(PlayerColors.BLUE,"simonnnnnnnn");
+        chat1.addMessage(PlayerColor.RED.toString(),"testo");
+        chat2.addMessage(PlayerColor.GREEN.toString(),"testo");
+        chat4.addMessage(PlayerColor.BLUE.toString(),"simonnnnnnnn");
         chatHashMap = new HashMap<>();
         chatHashMap.put("Simon", chat1);
         chatHashMap.put("Gio", chat2);
@@ -159,10 +159,10 @@ public class GamePageController implements Initializable{
 
         // Set nickname-->color
         nicknameColor = new HashMap<>();
-        setNicknameColor("Nico", PlayerColors.BLUE);
-        setNicknameColor("Andre", PlayerColors.GREEN);
-        setNicknameColor("Gio", PlayerColors.RED);
-        setNicknameColor("Simon", PlayerColors.YELLOW);
+        setNicknameColor("Nico", PlayerColor.BLUE);
+        setNicknameColor("Andre", PlayerColor.GREEN);
+        setNicknameColor("Gio", PlayerColor.RED);
+        setNicknameColor("Simon", PlayerColor.YELLOW);
 
         // Board load
         CenterBoardX = 2;
@@ -287,7 +287,7 @@ public class GamePageController implements Initializable{
         }
     }
 
-    public void setNicknameColor(String nickname, PlayerColors color){
+    public void setNicknameColor(String nickname, PlayerColor color){
         this.nicknameColor.put(nickname,color);
     }
 
@@ -509,20 +509,20 @@ public class GamePageController implements Initializable{
                 CenterBoardX>=0 && CenterBoardX<5 &&
                 CenterBoardY>=0 && CenterBoardY<9){
 
-            PlayerColors color = nicknameColor.get(boardNickname);
+            PlayerColor color = nicknameColor.get(boardNickname);
             String img_path = "";
 
             switch (color){
-                case PlayerColors.RED:
+                case PlayerColor.RED:
                     img_path = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
                     break;
-                case PlayerColors.BLUE:
+                case PlayerColor.BLUE:
                     img_path = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
                     break;
-                case PlayerColors.GREEN:
+                case PlayerColor.GREEN:
                     img_path = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
                     break;
-                case PlayerColors.YELLOW:
+                case PlayerColor.YELLOW:
                     img_path = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
                     break;
             }
@@ -937,7 +937,7 @@ public class GamePageController implements Initializable{
 
     public void sendMessage(ActionEvent actionEvent) throws IOException {
         if(messageInput != null){
-            chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName),messageInput.getText());
+            chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName).toString(),messageInput.getText());
             openChat(openedChat);
             messageInput.setText("");
         }

@@ -12,7 +12,7 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,7 +41,7 @@ public class ColorPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         errButton.setVisible(false);
-        List<PlayerColors> items = List.of(PlayerColors.RED,PlayerColors.BLUE,PlayerColors.GREEN); // CALL MODEL
+        List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN); // CALL MODEL
         resetColor();
         setGameList(items);
     }
@@ -56,16 +56,16 @@ public class ColorPageController implements Initializable {
         colorList.setText(color);
     }
 
-    public void setGameList(List<PlayerColors> colors) {
+    public void setGameList(List<PlayerColor> colors) {
         colorList.getItems().clear();
-        for (PlayerColors color : colors) {
+        for (PlayerColor color : colors) {
             MenuItem menuItem = new MenuItem(color.toString().toLowerCase());
             menuItem.setOnAction(e -> handleMenuItemAction(color));
             colorList.getItems().add(menuItem);
         }
     }
 
-    private void handleMenuItemAction(PlayerColors s) {
+    private void handleMenuItemAction(PlayerColor s) {
         System.out.println(s.toString().toLowerCase());
         String url="";
         errButton.setVisible(false);
@@ -111,7 +111,7 @@ public class ColorPageController implements Initializable {
 
     public void refreshColors(){ // tasto update
         resetColor();
-        List<PlayerColors> items = List.of(PlayerColors.RED,PlayerColors.BLUE,PlayerColors.GREEN); // REFRESH LIST -- CALL MODEL
+        List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN); // REFRESH LIST -- CALL MODEL
         setGameList(items);
     }
     public void nextPage(ActionEvent actionEvent) throws IOException {
