@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.Connection;
 
 import java.io.IOException;
@@ -14,7 +15,27 @@ public class GUI extends UI {
     }
 
     @Override
-    public void showMatchesList(List<Integer> matches) throws IOException {
+    public void updateNickname(boolean result) {
+
+    }
+
+    @Override
+    public void updateMatchesList(List<Integer> matches) {
+
+    }
+
+    @Override
+    public void showUpdateMatchJoin() {
+
+    }
+
+    @Override
+    public void updatePlayersInLobby(List<String> nicknames) {
+
+    }
+
+    @Override
+    public void showMatchCreate(MatchController match) {
 
     }
 }
