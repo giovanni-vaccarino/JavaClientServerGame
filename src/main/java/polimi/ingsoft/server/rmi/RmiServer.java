@@ -156,6 +156,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
     @Override
     public void connect(VirtualView client) throws RemoteException {
+        logger.println("RMI: Nuovo client in arrivo");
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.CONNECT, new Object[]{client}));
         } catch (InterruptedException e) {
@@ -165,6 +166,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
     @Override
     public void setNickname(VirtualView client, String nickname) throws IOException {
+        logger.println("RMI: Nickname nuovo: " + nickname);
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.SET_NICKNAME_REQUEST, new Object[]{client, nickname}));
         } catch (InterruptedException e) {

@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +17,7 @@ public class NicknamePageController {
     private String nickname;
     @FXML
     private TextField nicknameInput;
+    private static GUI gui;
 
     // Default constructor
     public NicknamePageController() {}
@@ -23,6 +25,11 @@ public class NicknamePageController {
     // Constructor with stage parameter
     public NicknamePageController(Stage stage) {
         this.stage = stage;
+    }
+
+    public NicknamePageController(Stage stage, GUI guiTmp) {
+        this.stage = stage;
+        this.gui = guiTmp;
     }
     public void start() throws Exception {
         // Load FXML file
@@ -51,36 +58,37 @@ public class NicknamePageController {
         stage.getScene().setRoot(root);
     }
 
-    public void nextPage(ActionEvent actionEvent) throws IOException {
+    public void validateNickname(ActionEvent actionEvent) throws IOException {
 
-        if(!nicknameInput.getText().trim().equals("")) { // DEFINISCI E CAMBIA CON FUNZIONE VALIDATION_NAME
-            setNickname();
+        //stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        setNickname();
 
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            StartingPageController startingPageController = new StartingPageController(stage);
-            try {
-                startingPageController.start();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
+        /*if(validated) {
         }else{
             nicknameInput.setStyle("-fx-background-color: #d34813;");
-
-        }
+        }*/
     }
 
     public void setNickname() {
         nickname = nicknameInput.getText().trim();
-        System.out.println(nickname);
+        gui.setNickname(nickname);
+    }
+
+    public void nextPage(){
+
+        StartingPageController startingPageController = new StartingPageController(stage);
+        try {
+            startingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void backPage(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        ConnectionPageController connectionPageController = new ConnectionPageController(stage);
+        ConnectionPageController connectionPageController = new ConnectionPageController(stage, gui);
         try {
             connectionPageController.start(false);
         } catch (Exception e) {

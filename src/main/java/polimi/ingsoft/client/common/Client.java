@@ -31,7 +31,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         if (uiType == UIType.CLI)
             ui = new CLI(scanner, printStream, this);
         else
-            ui = new GUI();
+            ui = new GUI(this);
+
     }
 
     protected abstract VirtualServer getServer();

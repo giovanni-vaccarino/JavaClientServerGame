@@ -38,7 +38,7 @@
                 <Button mnemonicParsing="false" text="Continue"
                         prefWidth="150" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        onAction="#nextPage">
+                        onAction="#validateNickname">
                 </Button>
             </children>
         </StackPane>
