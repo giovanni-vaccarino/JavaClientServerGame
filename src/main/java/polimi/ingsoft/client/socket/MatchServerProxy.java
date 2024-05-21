@@ -18,10 +18,30 @@ public class MatchServerProxy implements VirtualMatchServer {
     }
 
     @Override
-    public void setInitialSettings(String nickname, PlayerColor color, Boolean isInitialCardFacingUp, QuestCard questCard) throws IOException {
+    public void setColor(String nickname, PlayerColor color) throws IOException {
         SocketMessage message = new SocketMessage(
-                MessageCodes.SET_INITIAL_SETTINGS_REQUEST,
-                new SocketMessage.InitialSettings(color, isInitialCardFacingUp, questCard)
+                MessageCodes.SET_COLOR_REQUEST,
+                color
+        );
+        out.writeObject(message);
+        out.flush();
+    }
+
+    @Override
+    public void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException {
+        SocketMessage message = new SocketMessage(
+                MessageCodes.SET_INITIAL_CARD_REQUEST,
+                isInitialCardFacingUp
+        );
+        out.writeObject(message);
+        out.flush();
+    }
+
+    @Override
+    public void setQuestCard(String nickname, QuestCard questCard) throws IOException {
+        SocketMessage message = new SocketMessage(
+                MessageCodes.SET_QUEST_CARD_REQUEST,
+                questCard
         );
         out.writeObject(message);
         out.flush();

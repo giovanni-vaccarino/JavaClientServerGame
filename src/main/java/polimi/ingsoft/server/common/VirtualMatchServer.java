@@ -5,10 +5,11 @@ import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 public interface VirtualMatchServer extends Remote {
-    void setInitialSettings(String nickname, PlayerColor color, Boolean isInitialCardFacingUp, QuestCard questCard) throws IOException;
+    void setColor(String nickname, PlayerColor color) throws IOException;
+    void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException;
+    void setQuestCard(String nickname, QuestCard questCard) throws IOException;
 
     void sendMessage(String player, String message) throws IOException;
 
