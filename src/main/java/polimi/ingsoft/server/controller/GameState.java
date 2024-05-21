@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.enumerations.PlayerColors;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
@@ -15,7 +15,12 @@ import java.util.List;
  * This class manages the state of the game, including the FSMs of the game
  */
 public class GameState implements Serializable {
-    private volatile MatchController matchController;
+    /**
+     * The match controller associated with this game state.
+     * Declared transient to avoid serialization and network transmission.
+     */
+    private transient MatchController matchController;
+
     private final Integer requestedNumPlayers;
 
     private int currentPlayerIndex;
@@ -26,6 +31,9 @@ public class GameState implements Serializable {
 
     private int endRound;
 
+    /**
+     * List of players that have already made their initial choice.
+     */
     private List<String> playerStepCheck = new ArrayList<>();
 
     private GAME_PHASE gamePhase;
@@ -46,20 +54,56 @@ public class GameState implements Serializable {
         this.requestedNumPlayers = requestedNumPlayers;
     }
 
+
+    /**
+     * Returns the player that needs to make the move.
+     *
+     * @return the current player
+     */
     public Player getCurrentPlayer() {
         return matchController.getPlayers().get(currentPlayerIndex);
     }
 
+
+    /**
+     * Returns the list of player nicknames.
+     *
+     * @return the list of player nicknames
+     */
     private List<String> getPlayersNick(){
         return this.matchController.getNamePlayers();
     }
 
+
+    /**
+     * Returns the index of the first player.
+     *
+     * @return the index of the first player
+     */
     public Integer getFirstPlayerIndex(){return this.firstPlayerIndex;}
 
+
+    /**
+     * Returns the current game phase.
+     *
+     * @return the current game phase
+     */
     public GAME_PHASE getGamePhase(){return this.gamePhase;}
 
+
+    /**
+     * Returns the current initial step.
+     *
+     * @return the current initial step
+     */
     public INITIAL_STEP getCurrentInitialStep(){return this.currentInitialStep;}
 
+
+    /**
+     * Returns the current turn step.
+     *
+     * @return the current turn step
+     */
     public TURN_STEP getCurrentTurnStep(){return this.currentTurnStep;}
 
     /**
@@ -186,7 +230,7 @@ public class GameState implements Serializable {
      * @param color the color to check
      * @throws ColorAlreadyPickedException if the color is already picked
      */
-    public void checkColorAvailability(PlayerColors color) throws ColorAlreadyPickedException {
+    public void checkColorAvailability(PlayerColor color) throws ColorAlreadyPickedException {
         // The != null is to cover the case: if a player hasn't picked a color yet
         boolean isColorPicked = matchController.getPlayerInitialSettings().stream()
                 .map(PlayerInitialSetting::getColor)
@@ -210,6 +254,9 @@ public class GameState implements Serializable {
     }
 
 
+    /**
+     * Sets the game to the last round if the condition is met.
+     */
     private void setLastRound(){
         boolean isLastRound = this.isLastRound();
 
@@ -231,11 +278,17 @@ public class GameState implements Serializable {
     }
 
 
+    /**
+     * Updates the turn number.
+     */
     private void updateTurnNumber(){
         this.turnNumber += (currentPlayerIndex == firstPlayerIndex) ? 1 : 0;
     }
 
 
+    /**
+     * Advances to the next player.
+     */
     public void goToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % requestedNumPlayers;
 
@@ -244,6 +297,11 @@ public class GameState implements Serializable {
     }
 
 
+    /**
+     * Determines the winner of the game.
+     *
+     * @return the player with the highest score, or null if no players are present
+     */
     private Player getWinner() {
         Optional<Player> winner = this.matchController.getPlayers().stream()
                 .max(Comparator.comparingInt(player -> player.getBoard().getScore()));

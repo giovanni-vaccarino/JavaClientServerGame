@@ -1,16 +1,14 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.enumerations.PlayerColors;
 import polimi.ingsoft.server.model.Chat;
 import polimi.ingsoft.server.model.Message;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class ChatController implements Serializable {
     private final Chat gameChat;
 
-    public ChatController(){
+    public ChatController() {
         this.gameChat = new Chat();
     }
 

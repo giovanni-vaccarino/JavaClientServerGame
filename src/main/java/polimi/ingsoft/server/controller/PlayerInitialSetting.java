@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.enumerations.PlayerColors;
-import polimi.ingsoft.server.enumerations.Resource;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class PlayerInitialSetting {
 
     private QuestCard secondChoosableQuestCard;
 
-    private PlayerColors color;
+    private PlayerColor color;
 
     public PlayerInitialSetting(String nickname){
         this.nickname = nickname;
@@ -63,7 +62,7 @@ public class PlayerInitialSetting {
         this.questCard = questCard;
     }
 
-    public void setColor(PlayerColors color){
+    public void setColor(PlayerColor color){
         this.color = color;
     }
 
@@ -71,7 +70,7 @@ public class PlayerInitialSetting {
         return this.nickname;
     }
 
-    public PlayerColors getColor(){
+    public PlayerColor getColor(){
         return this.color;
     }
 

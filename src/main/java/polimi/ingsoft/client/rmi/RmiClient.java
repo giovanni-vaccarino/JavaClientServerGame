@@ -1,9 +1,11 @@
 package polimi.ingsoft.client.rmi;
 
-import polimi.ingsoft.client.Client;
+import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UIType;
+import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.common.VirtualServerInterface;
+
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -13,6 +15,8 @@ import java.util.Scanner;
 
 public class RmiClient extends Client {
     private final VirtualServerInterface server;
+
+    private VirtualMatchServer matchServer;
 
     public RmiClient(String rmiServerHostName,
                      String rmiServerName,
@@ -29,6 +33,16 @@ public class RmiClient extends Client {
     @Override
     protected VirtualServer getServer() {
         return server;
+    }
+
+    @Override
+    protected VirtualMatchServer getMatchServer() {
+        return matchServer;
+    }
+
+    @Override
+    public void setMatchControllerServer(VirtualMatchServer server) {
+        this.matchServer = server;
     }
 
     @Override

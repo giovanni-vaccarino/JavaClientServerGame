@@ -11,6 +11,7 @@ public enum MESSAGES {
     CHOOSE_NUMPLAYERS("Choose how many players should the game have: "),
     JOINING_MATCH("Joining match..."),
     JOINED_MATCH("Succesfully joined match"),
+    PLAYERS_IN_LOBBY("Players waiting in lobby: "),
     CREATED_MATCH("Successfully create match"),
 
 

@@ -1,5 +1,6 @@
 package polimi.ingsoft.client;
 
+import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.rmi.RmiClient;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
@@ -31,7 +32,9 @@ public class MainClient {
             client.getUi().showWelcomeScreen();
 
             while (true) { }
-        } catch (IOException ignored) { }
+        } catch (IOException e) {
+            printStream.println("Error: " + e.getMessage());
+        }
     }
     
     private static Client createClient(Protocols protocol) throws IOException {

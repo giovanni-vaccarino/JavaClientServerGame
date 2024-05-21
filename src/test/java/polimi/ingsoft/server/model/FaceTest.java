@@ -1,4 +1,4 @@
-package polimi.ingsoft.model;
+package polimi.ingsoft.server.model;
 
 import polimi.ingsoft.server.enumerations.Resource;
 import org.junit.jupiter.api.BeforeAll;

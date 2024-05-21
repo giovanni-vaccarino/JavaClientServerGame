@@ -14,7 +14,15 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * The MatchController class manages the state and behavior of a single match.
+ */
 public class MatchController implements Serializable {
+
+    public Integer getRequestedNumPlayers() {
+        return requestedNumPlayers;
+    }
 
     private final Integer requestedNumPlayers;
 
@@ -26,12 +34,26 @@ public class MatchController implements Serializable {
 
     private final List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
 
+    public PublicBoard getPublicBoard() {
+        return publicBoard;
+    }
+
     private final PublicBoard publicBoard;
 
     protected transient final PrintStream logger;
 
     protected final int matchId;
 
+
+    /**
+     * Constructs a MatchController with the specified parameters.
+     *
+     * @param logger              the logger to be used for logging information
+     * @param matchId             the ID of this match
+     * @param requestedNumPlayers the number of players requested for this match
+     * @param publicBoard         the public board for this match
+     * @param chatController      the chat controller for this match
+     */
     public MatchController(PrintStream logger,
                            int matchId,
                            int requestedNumPlayers,
@@ -46,30 +68,73 @@ public class MatchController implements Serializable {
         this.gameState = new GameState(this, requestedNumPlayers);
     }
 
+
+    /**
+     * Returns the ID of this match.
+     *
+     * @return the match ID
+     */
     public int getMatchId() {
         return matchId;
     }
 
+
+    /**
+     * Returns the game state associated with this match.
+     *
+     * @return the game state
+     */
     public GameState getGameState(){return this.gameState;}
 
+
+    /**
+     * Returns the list of players in this match.
+     *
+     * @return the list of players
+     */
     public List<Player> getPlayers(){
         return players;
     }
 
+
+    /**
+     * Returns the list of initial settings for the players in this match.
+     *
+     * @return the list of initial settings
+     */
     public List<PlayerInitialSetting> getPlayerInitialSettings(){return playerInitialSettings;}
 
+
+    /**
+     * Returns the nicknames of the players in this match.
+     *
+     * @return a list of player nicknames
+     */
     public List<String> getNamePlayers(){
         return playerInitialSettings.stream().
                 map(PlayerInitialSetting::getNickname).
                 toList();
     }
 
-    private Optional<PlayerInitialSetting> getPlayerByNickname(String nickname) {
+    public Optional<PlayerInitialSetting> getPlayerInitialSettingByNickname(String nickname) {
         return playerInitialSettings.stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
     }
 
+    public Optional<Player> getPlayerByNickname(String nickname) {
+        return players.stream()
+                .filter(player -> player.getNickname().equals(nickname))
+                .findFirst();
+    }
+
+
+    /**
+     * Adds a player to this match.
+     *
+     * @param nickname the nickname of the player to add
+     * @throws MatchAlreadyFullException if the match is already full
+     */
     public void addPlayer(String nickname) throws MatchAlreadyFullException {
         if(playerInitialSettings.size() == requestedNumPlayers){
             throw new MatchAlreadyFullException();
@@ -83,6 +148,11 @@ public class MatchController implements Serializable {
         gameState.updateState();
     }
 
+
+    /**
+     * Initializes the players for this match, using the information collected in PlayerInitialSetting.
+     * The initialization of the players can be done only once.
+     */
     public void initializePlayers() {
         this.players = this.players.isEmpty() ?
                 this.playerInitialSettings.stream()
@@ -92,37 +162,80 @@ public class MatchController implements Serializable {
                 this.players;
     }
 
-    public void setPlayerColor(String playerNickname, PlayerColors color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
+
+    /**
+     * Sets the color for a player.
+     *
+     * @param playerNickname the nickname of the player
+     * @param color          the color to set
+     * @throws WrongGamePhaseException        if the game is not in the correct phase
+     * @throws WrongStepException             if the game is not in the correct step
+     * @throws InitalChoiceAlreadySetException if the initial choice is already set
+     * @throws ColorAlreadyPickedException    if the color is already picked by another player
+     */
+    public void setPlayerColor(String playerNickname, PlayerColor color) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException, ColorAlreadyPickedException{
         gameState.checkColorAvailability(color);
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.COLOR);
 
-        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
 
         playerInitialSetting.ifPresent(player-> player.setColor(color));
 
         gameState.updateInitialStep(playerNickname);
     }
 
+
+    /**
+     * Sets the initial face-up card status for a player.
+     *
+     * @param playerNickname the nickname of the player
+     * @param isFaceUp       the face-up status to set
+     * @throws WrongGamePhaseException        if the game is not in the correct phase
+     * @throws WrongStepException             if the game is not in the correct step
+     * @throws InitalChoiceAlreadySetException if the initial choice is already set
+     */
     public void setFaceInitialCard(String playerNickname, Boolean isFaceUp) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.FACE_INITIAL);
 
-        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
 
         playerInitialSetting.ifPresent(player-> player.setIsInitialFaceUp(isFaceUp));
 
         gameState.updateInitialStep(playerNickname);
     }
 
+
+    /**
+     * Sets the quest card for a player.
+     *
+     * @param playerNickname the nickname of the player
+     * @param questCard      the quest card to set
+     * @throws WrongGamePhaseException        if the game is not in the correct phase
+     * @throws WrongStepException             if the game is not in the correct step
+     * @throws InitalChoiceAlreadySetException if the initial choice is already set
+     */
     public void setQuestCard(String playerNickname, QuestCard questCard) throws WrongGamePhaseException, WrongStepException, InitalChoiceAlreadySetException {
         gameState.validateInitialChoice(playerNickname, GAME_PHASE.INITIALIZATION, INITIAL_STEP.QUEST_CARD);
 
-        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerByNickname(playerNickname);
+        Optional<PlayerInitialSetting> playerInitialSetting = this.getPlayerInitialSettingByNickname(playerNickname);
 
         playerInitialSetting.ifPresent(player-> player.setQuestCard(questCard));
 
         gameState.updateInitialStep(playerNickname);
     }
 
+
+    /**
+     * Places a card on the board for a player.
+     *
+     * @param player      the player placing the card
+     * @param card        the card to place
+     * @param coordinates the coordinates to place the card
+     * @param facingUp    the facing-up status of the card
+     * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
+     * @throws WrongStepException                 if the game is not in the correct step
+     * @throws WrongGamePhaseException            if the game is not in the correct phase
+     */
     public void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
@@ -140,6 +253,18 @@ public class MatchController implements Serializable {
         gameState.updateState();
     }
 
+
+    /**
+     * Draws a card from the specified deck type for a player.
+     *
+     * @param player   the player drawing the card
+     * @param deckType the type of deck to draw from
+     * @param slot     the slot from which to draw the card
+     * @return the drawn card
+     * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
+     * @throws WrongStepException                 if the game is not in the correct step
+     * @throws WrongGamePhaseException            if the game is not in the correct phase
+     */
     public MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         switch(deckType){
             //TODO Change to TYPE_HAND_CARD.RESOURCE and TYPE_HAND_CARD.GOLD when network is updated
@@ -155,6 +280,17 @@ public class MatchController implements Serializable {
         return null;
     }
 
+
+    /**
+     * Draws a resource card from the specified slot for a player.
+     *
+     * @param player the player drawing the card
+     * @param slot   the slot from which to draw the card
+     * @return the drawn resource card
+     * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
+     * @throws WrongStepException                 if the game is not in the correct step
+     * @throws WrongGamePhaseException            if the game is not in the correct phase
+     */
     private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.DRAW);
 
@@ -163,6 +299,17 @@ public class MatchController implements Serializable {
         return publicBoard.getResource(slot);
     }
 
+
+    /**
+     * Draws a gold card from the specified slot for a player.
+     *
+     * @param player the player drawing the card
+     * @param slot   the slot from which to draw the card
+     * @return the drawn gold card
+     * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
+     * @throws WrongStepException                 if the game is not in the correct step
+     * @throws WrongGamePhaseException            if the game is not in the correct phase
+     */
     private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.DRAW);
 
@@ -171,6 +318,14 @@ public class MatchController implements Serializable {
         return publicBoard.getGold(slot);
     }
 
+
+    /**
+     * Adds a message in the chat.
+     *
+     * @param playerSender the nickname of the player sending the message
+     * @param message      the message to send
+     * @return the added message
+     */
     public Message writeMessage(String playerSender, String message){
         return this.chatController.writeMessage(playerSender, message);
     }

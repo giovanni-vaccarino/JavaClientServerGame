@@ -1,6 +1,6 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.client.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.PrintStream;
 import java.util.Scanner;

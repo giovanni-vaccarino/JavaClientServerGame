@@ -1,13 +1,12 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.client.Client;
-import polimi.ingsoft.client.ERROR_MESSAGES;
+import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.server.controller.MatchController;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -80,7 +79,7 @@ public class CLI extends UI {
         } while (!isValid);
 
         try {
-            client.createMatch(requestedNumPlayers);
+            client.createMatch(nickname, requestedNumPlayers);
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_CREATE_MATCH.getValue());
         }
@@ -130,6 +129,18 @@ public class CLI extends UI {
     }
 
     @Override
+    public void showUpdateMatchJoin() {
+        out.println(MESSAGES.JOINED_MATCH.getValue());
+    }
+
+    @Override
+    public void updatePlayersInLobby(List<String> nicknames) {
+        out.println(MESSAGES.PLAYERS_IN_LOBBY.getValue());
+        for (var nickname : nicknames)
+            out.println(nickname);
+    }
+
+    @Override
     public void showMatchCreate(MatchController match) {
         this.match = match;
         this.matches.add(match.getMatchId());
@@ -140,7 +151,7 @@ public class CLI extends UI {
     private void joinMatch(Integer matchId) {
         out.println(MESSAGES.JOINING_MATCH.getValue());
         try {
-            client.joinMatch(client, matchId, nickname);
+            client.joinMatch(nickname, matchId);
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }

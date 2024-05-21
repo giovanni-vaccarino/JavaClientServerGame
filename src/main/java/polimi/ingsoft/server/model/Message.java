@@ -1,7 +1,5 @@
 package polimi.ingsoft.server.model;
 
-import polimi.ingsoft.server.enumerations.PlayerColors;
-
 public class Message {
     private final String sender;
     private final String text;

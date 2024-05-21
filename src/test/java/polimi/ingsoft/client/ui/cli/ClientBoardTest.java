@@ -2,7 +2,6 @@ package polimi.ingsoft.client.ui.cli;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.client.Client;
 import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
@@ -10,8 +9,6 @@ import polimi.ingsoft.server.model.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ClientBoardTest {
     static ClientBoard board;
