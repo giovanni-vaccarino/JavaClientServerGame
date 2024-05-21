@@ -83,8 +83,8 @@ public class SocketClient extends Client {
                     this.showUpdateMatchJoin();
                 }
                 case MATCH_CREATE_UPDATE -> {
-                    MatchController match = (MatchController) payload;
-                    this.showUpdateMatchCreate(match);
+                    Integer matchId = (Integer) payload;
+                    this.showUpdateMatchCreate(matchId);
                 }
                 case LOBBY_PLAYERS_UPDATE -> {
                     List<String> nicknames = (List<String>) payload;

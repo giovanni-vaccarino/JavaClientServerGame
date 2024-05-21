@@ -91,8 +91,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
                         case MATCH_CREATE_REQUEST -> {
                             int numberForPlayers = (int) payload;
                             int id = controller.createMatch(numberForPlayers);
-                            MatchController matchController = controller.getMatch(id);
-                            this.server.singleUpdateMatchCreate(this, matchController);
+                            this.server.singleUpdateMatchCreate(this, id);
                             List<Integer> matches = controller.getMatches();
                             this.server.broadcastUpdateMatchesList(matches);
                             // It is client's responsibility to join the match right after
@@ -300,10 +299,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateMatchCreate(MatchController match) throws IOException {
-        logger.println("SOCKET: Sending match create update: " + match);
+    public void showUpdateMatchCreate(Integer matchId) throws IOException {
+        logger.println("SOCKET: Sending match create update: " + matchId);
         synchronized (this.view) {
-            this.view.showUpdateMatchCreate(match);
+            this.view.showUpdateMatchCreate(matchId);
         }
     }
 

@@ -95,10 +95,10 @@ public class SocketServer implements ConnectionsClient {
         }
     }
 
-    public void singleUpdateMatchCreate(VirtualView client, MatchController match) throws IOException {
+    public void singleUpdateMatchCreate(VirtualView client, Integer matchId) throws IOException {
         // TODO fixare e usare granularità sul singolo client
         synchronized (this.clients) {
-            client.showUpdateMatchCreate(match);
+            client.showUpdateMatchCreate(matchId);
         }
     }
 

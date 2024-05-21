@@ -51,8 +51,8 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdateMatchCreate(MatchController match) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.MATCH_CREATE_UPDATE, match);
+    public void showUpdateMatchCreate(Integer matchId) throws IOException {
+        SocketMessage message = new SocketMessage(MessageCodes.MATCH_CREATE_UPDATE, matchId);
         out.writeObject(message);
         out.flush();
     }
