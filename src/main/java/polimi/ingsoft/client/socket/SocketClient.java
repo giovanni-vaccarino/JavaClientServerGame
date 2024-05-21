@@ -72,8 +72,7 @@ public class SocketClient extends Client {
             // Read message and perform action
             switch (type) {
                 case SET_NICKNAME_UPDATE -> {
-                    Boolean result = (Boolean) payload;
-                    this.showNicknameUpdate(result);
+                    this.showNicknameUpdate();
                 }
                 case MATCHES_LIST_UPDATE -> {
                     List<Integer> matches = (List<Integer>) payload;

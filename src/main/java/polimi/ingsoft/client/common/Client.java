@@ -46,8 +46,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     public UI getUi(){return this.ui;}
 
     @Override
-    public void showNicknameUpdate(boolean result) throws IOException {
-        ui.updateNickname(result);
+    public void showNicknameUpdate() throws IOException {
+        ui.updateNickname();
     }
 
     @Override

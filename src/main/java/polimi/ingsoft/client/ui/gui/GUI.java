@@ -16,7 +16,7 @@ public class GUI extends UI {
     }
 
     @Override
-    public void updateNickname(boolean result) {
+    public void updateNickname() {
 
     }
 

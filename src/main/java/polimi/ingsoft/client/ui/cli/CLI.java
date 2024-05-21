@@ -50,14 +50,9 @@ public class CLI extends UI {
             out.printf("%d. Match number %d%n", ++i, match);
     }
 
-    public void updateNickname(boolean result) {
-        if (result) {
-            out.println(MESSAGES.NICKNAME_UPDATED.getValue());
-            this.run();
-        }else {
-            out.println(MESSAGES.UNABLE_TO_UPDATE_NICKNAME.getValue());
-            runSetNickname();
-        }
+    public void updateNickname() {
+        out.println(MESSAGES.NICKNAME_UPDATED.getValue());
+        this.run();
     }
 
     private void runCreateMatch() {

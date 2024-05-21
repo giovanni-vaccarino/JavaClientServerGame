@@ -58,14 +58,16 @@ public class ConnectionHandler implements Runnable, VirtualView {
                 // Read message and perform action
                 try {
                     switch (type) {
-                        case CONNECT -> {
-                            this.addClient();
-                        }
+                        case CONNECT -> this.addClient();
                         case SET_NICKNAME_REQUEST -> {
                             String nickname = (String) payload;
-                            boolean result = this.server.setNicknameForClient(this.nickname, nickname);
+                            try {
+                                this.server.setNicknameForClient(this.nickname, nickname);
+                            } catch (NicknameNotAvailableException exception) {
+                                this.reportError(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE);
+                            }
                             this.nickname = nickname;
-                            this.server.singleUpdateNickname(this, result);
+                            this.server.singleUpdateNickname(this);
                         }
                         case MATCHES_LIST_REQUEST -> {
                             List<Integer> matches = controller.getMatches();
@@ -265,10 +267,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showNicknameUpdate(boolean result) throws IOException {
-        logger.println("SOCKET: Sending nickname update: " + result);
+    public void showNicknameUpdate() throws IOException {
+        logger.println("SOCKET: Sending nickname update");
         synchronized (this.view) {
-            this.view.showNicknameUpdate(result);
+            this.view.showNicknameUpdate();
         }
     }
 
@@ -316,7 +318,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException {
+    public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) {
         synchronized (this.view) {
             try {
                 this.view.showUpdateInitialSettings(color, isFacingUp, questCard);
@@ -334,7 +336,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException {
+    public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) {
         synchronized (this.view) {
             try {
                 this.view.showUpdatePlayerHand(playerHand);
@@ -352,7 +354,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException {
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) {
         synchronized (this.view) {
             try {
                 this.view.showUpdateBoard(nickname, coordinates, playedCard);

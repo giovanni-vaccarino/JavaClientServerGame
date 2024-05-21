@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class UI {
     public abstract void showWelcomeScreen() throws IOException;
-    public abstract void updateNickname(boolean result);
+    public abstract void updateNickname();
     public abstract void updateMatchesList(List<Integer> matches);
     public abstract void showUpdateMatchJoin();
     public abstract void updatePlayersInLobby(List<String> nicknames);

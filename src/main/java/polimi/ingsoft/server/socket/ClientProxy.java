@@ -23,8 +23,8 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showNicknameUpdate(boolean result) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.SET_NICKNAME_UPDATE, result);
+    public void showNicknameUpdate() throws IOException {
+        SocketMessage message = new SocketMessage(MessageCodes.SET_NICKNAME_UPDATE, null);
         out.writeObject(message);
         out.flush();
     }

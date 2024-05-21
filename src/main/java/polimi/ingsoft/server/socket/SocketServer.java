@@ -6,6 +6,7 @@ import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.exceptions.NicknameNotAvailableException;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
@@ -58,22 +59,21 @@ public class SocketServer implements ConnectionsClient {
         clients.put(stub, client);
     }
 
-    public boolean setNicknameForClient(String stub, String nickname) {
+    public void setNicknameForClient(String stub, String nickname) throws NicknameNotAvailableException {
         synchronized (this.clients) {
             if (clients.containsKey(nickname)) {
-                return false;
+                throw new NicknameNotAvailableException();
             }
             VirtualView client = clients.get(stub);
             clients.remove(stub);
             clients.put(nickname, client);
-            return true;
         }
     }
 
-    public void singleUpdateNickname(VirtualView client, boolean result) {
+    public void singleUpdateNickname(VirtualView client) {
         synchronized (this.clients) {
             try {
-                client.showNicknameUpdate(result);
+                client.showNicknameUpdate();
             } catch (IOException ignore) { }
         }
     }

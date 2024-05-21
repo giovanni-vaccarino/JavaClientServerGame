@@ -13,7 +13,7 @@ import java.rmi.Remote;
 import java.util.List;
 
 public interface VirtualView extends Remote {
-    void showNicknameUpdate(boolean result) throws IOException;
+    void showNicknameUpdate() throws IOException;
     void showUpdateMatchesList(List<Integer> matches) throws IOException;
     void showUpdateMatchJoin() throws IOException;
     void showUpdateLobbyPlayers(List<String> players) throws IOException;
