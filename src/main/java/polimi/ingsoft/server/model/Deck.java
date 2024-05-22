@@ -8,13 +8,14 @@ public class Deck<T extends Drawable> extends CardCollection<T> {
 
     public Deck(ArrayList<T> cards){
         this.cards=cards;
+        super.shuffle();
     }
     public Deck(){
     }
 
     public T draw(){
         if (!this.cards.isEmpty()) {
-            return this.cards.remove(0);
+            return this.cards.removeFirst();
         } else return null;
     }
 }

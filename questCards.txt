@@ -1,0 +1,144 @@
+{
+"score":2,
+"pointPattern":{
+	"order":[{"color":"MUSHROOM","posFromBegin":{"x":0,"y":0}},
+		{"color":"MUSHROOM","posFromBegin":{"x":-1,"y":-1}},
+		{"color":"MUSHROOM","posFromBegin":{"x":-2,"y":-2}}]
+	},
+"playPattern":null,
+"id":"QuestCard1"
+}
+{
+"score":2,
+"pointPattern":{
+	"order":[{"color":"LEAF","posFromBegin":{"x":0,"y":0}},
+		{"color":"LEAF","posFromBegin":{"x":1,"y":-1}},
+		{"color":"LEAF","posFromBegin":{"x":2,"y":-2}}]
+	},
+"playPattern":null,
+"id":"QuestCard2"
+}
+{
+"score":2,
+"pointPattern":{
+	"order":[{"color":"WOLF","posFromBegin":{"x":0,"y":0}},
+		{"color":"WOLF","posFromBegin":{"x":-1,"y":-1}},
+		{"color":"WOLF","posFromBegin":{"x":-2,"y":-2}}]
+	},
+"playPattern":null,
+"id":"QuestCard3"
+}
+{
+"score":2,
+"pointPattern":{
+	"order":[{"color":"BUTTERFLY","posFromBegin":{"x":0,"y":0}},
+		{"color":"BUTTERFLY","posFromBegin":{"x":1,"y":-1}},
+		{"color":"BUTTERFLY","posFromBegin":{"x":2,"y":-2}}]
+	},
+"playPattern":null,
+"id":"QuestCard4"
+}
+{
+"score":3,
+"pointPattern":{
+	"order":[{"color":"MUSHROOM","posFromBegin":{"x":0,"y":0}},
+		{"color":"MUSHROOM","posFromBegin":{"x":0,"y":-2}},
+		{"color":"LEAF","posFromBegin":{"x":1,"y":-3}}]
+	},
+"playPattern":null,
+"id":"QuestCard5"
+}
+{
+"score":3,
+"pointPattern":{
+	"order":[{"color":"LEAF","posFromBegin":{"x":0,"y":0}},
+		{"color":"LEAF","posFromBegin":{"x":0,"y":-2}},
+		{"color":"BUTTERFLY","posFromBegin":{"x":-1,"y":-3}}]
+	},
+"playPattern":null,
+"id":"QuestCard6"
+}
+{
+"score":3,
+"pointPattern":{
+	"order":[{"color":"WOLF,"posFromBegin":{"x":0,"y":0}},
+		{"color":"WOLF","posFromBegin":{"x":0,"y":2}},
+		{"color":"MUSHROOM","posFromBegin":{"x":1,"y":3}}]
+	},
+"playPattern":null,
+"id":"QuestCard7"
+}
+{
+"score":3,
+"pointPattern":{
+	"order":[{"color":"BUTTERFLY","posFromBegin":{"x":0,"y":0}},
+		{"color":"BUTTERFLY","posFromBegin":{"x":0,"y":2}},
+		{"color":"WOLF","posFromBegin":{"x":-1,"y":3}}]
+	},
+"playPattern":null,
+"id":"QuestCard8"
+}
+{
+"score":2,
+"pointPattern":{
+	"cost":{"FEATHER":0,"POTION":0,"MUSHROOM":3,"SCROLL":0,"WOLF":0,"BUTTERFLY":0,"LEAF":0}
+	},
+"playPattern":null,
+"id":"QuestCard9"
+}
+{
+"score":2,
+"pointPattern":{
+	"cost":{"FEATHER":0,"POTION":0,"MUSHROOM":0,"SCROLL":0,"WOLF":0,"BUTTERFLY":0,"LEAF":3}
+	},
+"playPattern":null,
+"id":"QuestCard10"
+}
+{
+"score":2,
+"pointPattern":{
+	"cost":{"FEATHER":0,"POTION":0,"MUSHROOM":0,"SCROLL":0,"WOLF":3,"BUTTERFLY":0,"LEAF":0}
+	},
+"playPattern":null,
+"id":"QuestCard11"
+}
+{
+"score":2,
+"pointPattern":{
+	"cost":{"FEATHER":0,"POTION":0,"MUSHROOM":0,"SCROLL":0,"WOLF":0,"BUTTERFLY":3,"LEAF":0}
+	},
+"playPattern":null,
+"id":"QuestCard12"
+}
+{
+"score":3,
+"pointPattern":{
+	"cost":{"FEATHER":1,"POTION":1,"MUSHROOM":0,"SCROLL":1,"WOLF":0,"BUTTERFLY":0,"LEAF":0}
+	},
+"playPattern":null,
+"id":"QuestCard13"
+}
+{
+"score":2,
+"pointPattern":{
+	"cost":{"FEATHER":0,"POTION":0,"MUSHROOM":0,"SCROLL":2,"WOLF":0,"BUTTERFLY":0,"LEAF":0}
+	},
+"playPattern":null,
+"id":"QuestCard14"
+}
+{
+"score":2,
+"pointPattern":{
+	"cost":{"FEATHER":0,"POTION":2,"MUSHROOM":0,"SCROLL":0,"WOLF":0,"BUTTERFLY":0,"LEAF":0}
+	},
+"playPattern":null,
+"id":"QuestCard15"
+}
+{
+"score":2,
+"pointPattern":{
+	"cost":{"FEATHER":2,"POTION":0,"MUSHROOM":0,"SCROLL":0,"WOLF":0,"BUTTERFLY":0,"LEAF":0}
+	},
+"playPattern":null,
+"id":"QuestCard16"
+}
