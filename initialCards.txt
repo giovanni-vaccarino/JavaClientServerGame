@@ -1,0 +1,108 @@
+{
+"score":0,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":["LEAF"],"empty":false},
+	"bottomLeft":{"items":["BUTTERFLY"],"empty":false},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["MUSHROOM"],"empty":false},
+	"upRight":{"items":["LEAF"],"empty":false},
+	"bottomLeft":{"items":["BUTTERFLY"],"empty":false},
+	"bottomRight":{"items":["WOLF"],"empty":false},
+	"center":null
+	},
+"id":"InitialCard1"
+}
+{
+"score":0,
+"front":{
+	"upLeft":{"items":["WOLF"],"empty":false},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":["MUSHROOM"],"empty":false},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["LEAF"],"empty":false},
+	"upRight":{"items":["WOLF"],"empty":false},
+	"bottomLeft":{"items":["MUSHROOM"],"empty":false},
+	"bottomRight":{"items":["BUTTERFLY"],"empty":false},
+	"center":null
+	},
+"id":"InitialCard2"
+}
+{
+"score":0,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF","MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["BUTTERFLY"],"empty":false},
+	"upRight":{"items":["WOLF"],"empty":false},
+	"bottomLeft":{"items":["MUSHROOM"],"empty":false},
+	"bottomRight":{"items":["LEAF"],"empty":false},
+	"center":null
+	},
+"id":"InitialCard3"
+}
+{
+"score":0,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF","BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["LEAF"],"empty":false},
+	"upRight":{"items":["BUTTERFLY"],"empty":false},
+	"bottomLeft":{"items":["WOLF"],"empty":false},
+	"bottomRight":{"items":["MUSHROOM"],"empty":false},
+	"center":null
+	},
+"id":"InitialCard4"
+}
+{
+"score":0,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":{"items":["WOLF","BUTTERFLY","LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["BUTTERFLY"],"empty":false},
+	"upRight":{"items":["MUSHROOM"],"empty":false},
+	"bottomLeft":{"items":["LEAF"],"empty":false},
+	"bottomRight":{"items":["WOLF"],"empty":false},
+	"center":null
+	},
+"id":"InitialCard5"
+}
+{
+"score":0,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":{"items":["LEAF","WOLF","MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["MUSHROOM"],"empty":false},
+	"upRight":{"items":["WOLF"],"empty":false},
+	"bottomLeft":{"items":["LEAF"],"empty":false},
+	"bottomRight":{"items":["BUTTERFLY"],"empty":false},
+	"center":null
+	},
+"id":"InitialCard6"
+}
