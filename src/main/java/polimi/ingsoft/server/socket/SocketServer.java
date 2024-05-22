@@ -62,6 +62,7 @@ public class SocketServer implements ConnectionsClient {
     public void setNicknameForClient(String stub, String nickname) throws NicknameNotAvailableException {
         synchronized (this.clients) {
             if (clients.containsKey(nickname)) {
+                logger.println("SOCKET: Nickname not available");
                 throw new NicknameNotAvailableException();
             }
             VirtualView client = clients.get(stub);

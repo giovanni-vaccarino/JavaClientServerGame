@@ -69,10 +69,12 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     this.setNicknameForClient(client, nickname);
 
                     synchronized (this.clients){
+                        System.out.println("Nickname available");
                         client.showNicknameUpdate();
                     }
                 } catch (NicknameNotAvailableException exception){
                     synchronized (this.clients){
+                        System.out.println("Nickname not available");
                         client.reportError(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE);
                     }
                 }
@@ -195,7 +197,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
     @Override
     public void joinMatch(String playerNickname, Integer matchId) throws RemoteException {
-        logger.println("RMI: Nuova richiesta match da: " + playerNickname + " con matchId: "+matchId);
+        logger.println("RMI: Nuova richiesta join match da: " + playerNickname + " con matchId: "+matchId);
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_JOIN_REQUEST, new Object[]{playerNickname, matchId}));
         } catch (InterruptedException e) {
@@ -222,7 +224,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
         return this.mainController.createMatch(requiredNumPlayers);
     }
 
-    private Boolean setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
+    private void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
         synchronized (this.clients) {
             if (clients.containsKey(nickname)) {
                 throw new NicknameNotAvailableException();
@@ -236,7 +238,6 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     .ifPresent(clients::remove);
 
             clients.put(nickname, client);
-            return true;
         }
     }
 
