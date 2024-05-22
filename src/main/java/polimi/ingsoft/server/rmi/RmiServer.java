@@ -126,11 +126,11 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
             case MATCH_JOIN_REQUEST -> {
                 String playerNickname = (String) args[0];
                 Integer matchId = (Integer) args[1];
-                String nickname = (String) args[2];
+                System.out.println("MATCH ID" + matchId);
                 VirtualView clientToUpdate = clients.get(playerNickname);
 
                 try{
-                    this.mainController.joinMatch(matchId, nickname);
+                    this.mainController.joinMatch(matchId, playerNickname);
 
                     MatchController match = this.mainController.getMatch(matchId);
                     List<String> players = match.getNamePlayers();
@@ -185,6 +185,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
     @Override
     public void createMatch(String nickname, Integer requiredNumPlayers) throws RemoteException {
+        logger.println("RMI: Nuova richiesta match da: " + nickname + " con NumPlayers: "+requiredNumPlayers);
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_CREATE_REQUEST, new Object[]{nickname, requiredNumPlayers}));
         } catch (InterruptedException e) {
@@ -194,6 +195,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
     @Override
     public void joinMatch(String playerNickname, Integer matchId) throws RemoteException {
+        logger.println("RMI: Nuova richiesta match da: " + playerNickname + " con matchId: "+matchId);
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_JOIN_REQUEST, new Object[]{playerNickname, matchId}));
         } catch (InterruptedException e) {

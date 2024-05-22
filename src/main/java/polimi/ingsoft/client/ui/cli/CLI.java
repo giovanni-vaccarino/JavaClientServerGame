@@ -142,6 +142,11 @@ public class CLI extends UI {
         joinMatch(matchId);
     }
 
+    @Override
+    public void reportError(ERROR_MESSAGES errorMessage) {
+
+    }
+
     private void joinMatch(Integer matchId) {
         out.println(MESSAGES.JOINING_MATCH.getValue());
         try {

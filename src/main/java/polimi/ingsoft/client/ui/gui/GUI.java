@@ -1,37 +1,35 @@
 package polimi.ingsoft.client.ui.gui;
 
-import javafx.css.Match;
-import javafx.stage.Stage;
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.client.ui.gui.page.ConnectionPageController;
+import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
-import polimi.ingsoft.client.ui.gui.page.NicknamePageController;
-import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.enumerations.Connection;
-import polimi.ingsoft.server.socket.ConnectionHandler;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GUI extends UI{
 
     private HomeController homeController;
     private Client client;
+    private String nickname;
+    private Integer matchId;
 
     public GUI(Client client){
         this.client=client;
+        GUIsingleton.getInstance().setGui(this);
     }
 
     @Override
     public void showWelcomeScreen() throws IOException {
-        homeController = new HomeController(this);
+        homeController = new HomeController();
         homeController.main(new String[]{});
     }
 
     public void setNickname(String nickname){
         try {
+            this.nickname=nickname;
             client.setNickname(nickname);
         } catch (IOException ignored) {
         }
@@ -39,16 +37,28 @@ public class GUI extends UI{
 
     @Override
     public void updateNickname() {
-        GUIpages.getInstance().getNicknamePageController().nextPage();
+        GUIsingleton.getInstance().getNicknamePageController().nextPage();
     }
 
     @Override
-    public void updateMatchesList(List<Integer> matches) {
+    public void reportError(ERROR_MESSAGES errorMessage) {
+        GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
+    }
 
+    public void createMatch(int numPlayers){
+        try {
+            client.createMatch(nickname,numPlayers);
+        } catch (IOException ignore) {
+        }
     }
 
     @Override
     public void showUpdateMatchJoin() {
+        GUIsingleton.getInstance().getNewGamePageController().nextPage();
+    }
+
+    @Override
+    public void updateMatchesList(List<Integer> matches) {
 
     }
 
@@ -59,7 +69,13 @@ public class GUI extends UI{
 
     @Override
     public void showMatchCreate(Integer matchId) {
-
+        this.matchId = matchId;
+        try {
+            client.joinMatch(nickname,matchId);
+        } catch (IOException ignore) {
+        }
     }
+
+
 
 }

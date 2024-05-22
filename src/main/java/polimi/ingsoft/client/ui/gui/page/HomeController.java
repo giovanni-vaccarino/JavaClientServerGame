@@ -11,7 +11,7 @@ import java.net.URL;
 
 import javafx.application.Platform;
 import polimi.ingsoft.client.ui.gui.GUI;
-import polimi.ingsoft.client.ui.gui.GUIpages;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,12 +22,9 @@ public class HomeController extends Application {
     private ConnectionPageController connectionController;
 
     public HomeController() {
-        // Default constructor
+        gui = GUIsingleton.getInstance().getGui();
     }
 
-    public HomeController(GUI gui){
-        this.gui = gui;
-    }
     public static void main(String[] args){
         launch(args);
     }
@@ -75,8 +72,8 @@ public class HomeController extends Application {
     public void nextPage(Stage stage) throws IOException {
 
         //RIGHT ONE:
-        connectionController = new ConnectionPageController(stage, gui);
-        GUIpages.getInstance().setConnectionPageController(connectionController);
+        connectionController = new ConnectionPageController(stage);
+        GUIsingleton.getInstance().setConnectionPageController(connectionController);
         try {
             connectionController.start(true);
         } catch (Exception e) {

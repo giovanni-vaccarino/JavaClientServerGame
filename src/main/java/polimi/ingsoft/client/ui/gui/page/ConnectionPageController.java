@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import polimi.ingsoft.client.ui.gui.GUI;
-import polimi.ingsoft.client.ui.gui.GUIpages;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,10 +24,7 @@ public class ConnectionPageController{
     }
     public ConnectionPageController(Stage stage) {
         this.stage = stage;
-    }
-    public ConnectionPageController(Stage stage, GUI guiTmp) {
-        this.stage = stage;
-        this.gui = guiTmp;
+        this.gui = GUIsingleton.getInstance().getGui();
     }
 
     // transition to set the FadeTransition or not
@@ -64,8 +61,8 @@ public class ConnectionPageController{
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        nicknamePageController = new NicknamePageController(stage,gui);
-        GUIpages.getInstance().setNicknamePageController(nicknamePageController);
+        nicknamePageController = new NicknamePageController(stage);
+        GUIsingleton.getInstance().setNicknamePageController(nicknamePageController);
         try {
             nicknamePageController.start();
         } catch (Exception e) {
@@ -77,8 +74,8 @@ public class ConnectionPageController{
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        nicknamePageController = new NicknamePageController(stage,gui);
-        GUIpages.getInstance().setNicknamePageController(nicknamePageController);
+        nicknamePageController = new NicknamePageController(stage);
+        GUIsingleton.getInstance().setNicknamePageController(nicknamePageController);
 
         try {
             nicknamePageController.start();

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.page.JoinGamePageController;
 import polimi.ingsoft.client.ui.gui.page.NewGamePageController;
 import polimi.ingsoft.client.ui.gui.page.NicknamePageController;
@@ -48,6 +49,7 @@ public class StartingPageController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         NewGamePageController newGamePageController = new NewGamePageController(stage);
+        GUIsingleton.getInstance().setNewGamePageController(newGamePageController);
         try {
             newGamePageController.start();
         } catch (Exception e) {

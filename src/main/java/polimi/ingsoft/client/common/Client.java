@@ -103,7 +103,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
-
+        ui.reportError(errorMessage);
     }
 
     public void setNickname(String nickname) throws IOException {

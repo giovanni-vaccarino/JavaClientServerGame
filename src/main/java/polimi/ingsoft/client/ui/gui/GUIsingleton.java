@@ -1,22 +1,24 @@
 package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.ui.gui.page.ConnectionPageController;
-import polimi.ingsoft.client.ui.gui.page.HomeController;
+import polimi.ingsoft.client.ui.gui.page.NewGamePageController;
 import polimi.ingsoft.client.ui.gui.page.NicknamePageController;
 
-public class GUIpages {
-    private static GUIpages instance;
+public class GUIsingleton {
+    private static GUIsingleton instance;
 
     private ConnectionPageController connectionPageController;
     private NicknamePageController nicknamePageController;
+    private NewGamePageController newGamePageController;
+    private GUI gui;
 
-    private GUIpages() {
+    private GUIsingleton() {
         // Private constructor to prevent instantiation
     }
 
-    public static GUIpages getInstance() {
+    public static GUIsingleton getInstance() {
         if (instance == null) {
-            instance = new GUIpages();
+            instance = new GUIsingleton();
         }
         return instance;
     }
@@ -35,5 +37,21 @@ public class GUIpages {
 
     public void setNicknamePageController(NicknamePageController nicknamePageController) {
         this.nicknamePageController = nicknamePageController;
+    }
+
+    public GUI getGui(){
+        return gui;
+    }
+
+    public void setGui(GUI gui){
+        this.gui=gui;
+    }
+
+    public NewGamePageController getNewGamePageController(){
+        return newGamePageController;
+    }
+
+    public void setNewGamePageController(NewGamePageController newGamePageController){
+        this.newGamePageController=newGamePageController;
     }
 }

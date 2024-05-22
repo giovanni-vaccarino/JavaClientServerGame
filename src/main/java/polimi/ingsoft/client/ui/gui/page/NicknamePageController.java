@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,14 +24,9 @@ public class NicknamePageController {
     // Default constructor
     public NicknamePageController() {}
 
-    // Constructor with stage parameter
     public NicknamePageController(Stage stage) {
         this.stage = stage;
-    }
-
-    public NicknamePageController(Stage stage, GUI guiTmp) {
-        this.stage = stage;
-        this.gui = guiTmp;
+        this.gui = GUIsingleton.getInstance().getGui();
     }
     public void start() throws Exception {
         // Load FXML file
@@ -60,18 +57,17 @@ public class NicknamePageController {
 
     public void validateNickname(ActionEvent actionEvent) throws IOException {
 
-        //stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         setNickname();
-
-        /*if(validated) {
-        }else{
-            nicknameInput.setStyle("-fx-background-color: #d34813;");
-        }*/
     }
 
     public void setNickname() {
         nickname = nicknameInput.getText().trim();
         gui.setNickname(nickname);
+    }
+
+    public void showError(ERROR_MESSAGES errorMessage){
+        nicknameInput.setStyle("-fx-background-color: #d34813;");
+        nicknameInput.setText(errorMessage.getValue());
     }
 
     public void nextPage(){
@@ -88,7 +84,7 @@ public class NicknamePageController {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-        ConnectionPageController connectionPageController = new ConnectionPageController(stage, gui);
+        ConnectionPageController connectionPageController = new ConnectionPageController(stage);
         try {
             connectionPageController.start(false);
         } catch (Exception e) {

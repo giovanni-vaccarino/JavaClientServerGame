@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.control.RadioButton;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +16,7 @@ import java.net.URL;
 public class NewGamePageController {
     private Stage stage;
     private int numberPlayers;
+    private GUI gui;
 
     @FXML
     private RadioButton twoPlayersRadioButton;
@@ -30,6 +33,7 @@ public class NewGamePageController {
     // Constructor with stage parameter
     public NewGamePageController(Stage stage) {
         this.stage = stage;
+        this.gui = GUIsingleton.getInstance().getGui();
     }
 
     public void start() throws Exception {
@@ -80,17 +84,18 @@ public class NewGamePageController {
             numberPlayers=4;
         }
 
+        GUIsingleton.getInstance().getGui().createMatch(numberPlayers); // do not use this.gui
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+    }
 
+    public void nextPage(){
         WaitingPageController waitingPageController = new WaitingPageController(stage);
         try {
             waitingPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println(numberPlayers);
     }
 }
 
