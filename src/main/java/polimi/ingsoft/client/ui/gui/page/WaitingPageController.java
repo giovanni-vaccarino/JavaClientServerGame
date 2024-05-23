@@ -53,28 +53,24 @@ public class WaitingPageController {
 
     public void cancelNewGame(ActionEvent actionEvent) throws IOException {
 
-        StartingPageController startingPageController = new StartingPageController();
+        /*StartingPageController startingPageController = new StartingPageController();
         try {
             startingPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     public void startGame(ActionEvent actionEvent) throws IOException {
+        nextPage();
+    }
 
+    public void nextPage(){
         ColorPageController colorPageController = new ColorPageController(getStage());
         try {
             colorPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        /*GamePageController gamePageController = new GamePageController(stage);
-        try {
-            gamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
     }
 }
