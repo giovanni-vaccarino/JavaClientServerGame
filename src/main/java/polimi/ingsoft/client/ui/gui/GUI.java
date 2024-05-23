@@ -37,7 +37,6 @@ public class GUI extends UI{
 
     @Override
     public void updateNickname() {
-        GUIsingleton.getInstance().getNicknamePageController().showError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
         GUIsingleton.getInstance().getNicknamePageController().nextPage();
     }
 

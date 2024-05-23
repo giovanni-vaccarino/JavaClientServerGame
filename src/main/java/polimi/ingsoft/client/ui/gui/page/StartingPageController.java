@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.page.JoinGamePageController;
 import polimi.ingsoft.client.ui.gui.page.NewGamePageController;
@@ -14,15 +15,18 @@ import java.io.IOException;
 import java.net.URL;
 
 public class StartingPageController {
-    private Stage stage;
 
     // Default constructor
-    public StartingPageController() {}
+    public StartingPageController() {GUIsingleton.getInstance().setStartingPageController(this);}
 
-    // Constructor with stage parameter
-    public StartingPageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
     }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
+    }
+
     public void start() throws Exception {
         // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/StartingPage.fxml");
@@ -41,15 +45,12 @@ public class StartingPageController {
         } else {
             System.out.println("CSS file not found");
         }
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void newGame(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        NewGamePageController newGamePageController = new NewGamePageController(stage);
-        GUIsingleton.getInstance().setNewGamePageController(newGamePageController);
+        NewGamePageController newGamePageController = new NewGamePageController();
         try {
             newGamePageController.start();
         } catch (Exception e) {
@@ -59,32 +60,11 @@ public class StartingPageController {
 
     public void joinGame(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        JoinGamePageController joinGamePageController = new JoinGamePageController(stage);
+        JoinGamePageController joinGamePageController = new JoinGamePageController();
         try {
             joinGamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void backPage(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        NicknamePageController nicknamePageController = new NicknamePageController(stage);
-        try {
-            nicknamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        /*ConnectionPageController connectionPageController = new ConnectionPageController(stage);
-        try {
-            connectionPageController.start(false);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
     }
 }

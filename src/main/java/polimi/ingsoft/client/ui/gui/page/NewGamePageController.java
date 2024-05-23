@@ -14,9 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class NewGamePageController {
-    private Stage stage;
     private int numberPlayers;
-    private GUI gui;
 
     @FXML
     private RadioButton twoPlayersRadioButton;
@@ -27,15 +25,15 @@ public class NewGamePageController {
     @FXML
     private RadioButton fourPlayersRadioButton;
 
-    // Default constructor
-    public NewGamePageController() {}
+    public NewGamePageController() {GUIsingleton.getInstance().setNewGamePageController(this);}
 
-    // Constructor with stage parameter
-    public NewGamePageController(Stage stage) {
-        this.stage = stage;
-        this.gui = GUIsingleton.getInstance().getGui();
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
     }
 
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
+    }
     public void start() throws Exception {
 
         // Load FXML file
@@ -55,14 +53,12 @@ public class NewGamePageController {
         } else {
             System.out.println("CSS file not found");
         }
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void backPage(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        StartingPageController startingPageController = new StartingPageController(stage);
+        StartingPageController startingPageController = new StartingPageController();
         try {
             startingPageController.start();
         } catch (Exception e) {
@@ -85,12 +81,10 @@ public class NewGamePageController {
         }
 
         GUIsingleton.getInstance().getGui().createMatch(numberPlayers); // do not use this.gui
-
-        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
     }
 
     public void nextPage(){
-        WaitingPageController waitingPageController = new WaitingPageController(stage);
+        WaitingPageController waitingPageController = new WaitingPageController(getStage());
         try {
             waitingPageController.start();
         } catch (Exception e) {

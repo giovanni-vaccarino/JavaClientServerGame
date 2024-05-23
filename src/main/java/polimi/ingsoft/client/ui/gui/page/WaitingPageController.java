@@ -48,9 +48,7 @@ public class WaitingPageController {
 
     public void cancelNewGame(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        StartingPageController startingPageController = new StartingPageController(stage);
+        StartingPageController startingPageController = new StartingPageController();
         try {
             startingPageController.start();
         } catch (Exception e) {

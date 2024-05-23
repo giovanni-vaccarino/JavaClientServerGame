@@ -74,8 +74,7 @@ public class HomeController extends Application {
     public void nextPage(Stage stage) throws IOException {
 
         //RIGHT ONE:
-        connectionController = new ConnectionPageController(stage);
-        GUIsingleton.getInstance().setConnectionPageController(connectionController);
+        connectionController = new ConnectionPageController();
         try {
             connectionController.start(true);
         } catch (Exception e) {

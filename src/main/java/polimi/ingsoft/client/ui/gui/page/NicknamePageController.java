@@ -3,8 +3,10 @@ package polimi.ingsoft.client.ui.gui.page;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
@@ -13,21 +15,32 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
-public class NicknamePageController {
-    private Stage stage;
+public class NicknamePageController implements Initializable {
     private String nickname;
     @FXML
     private TextField nicknameInput;
-    private static GUI gui;
+    @FXML
+    Button errButton;
 
-    // Default constructor
-    public NicknamePageController() {}
-
-    public NicknamePageController(Stage stage) {
-        //this.stage = stage;
-        this.gui = GUIsingleton.getInstance().getGui();
+    public NicknamePageController() {
+        GUIsingleton.getInstance().setNicknamePageController(this);
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        errButton.setVisible(false);
+    }
+
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
+    }
+
     public void start() throws Exception {
         // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/NicknamePage.fxml");
@@ -52,7 +65,7 @@ public class NicknamePageController {
             System.out.println("CSS file not found");
         }
 
-        GUIsingleton.getInstance().getStage().getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void validateNickname(ActionEvent actionEvent) throws IOException {
@@ -61,37 +74,22 @@ public class NicknamePageController {
 
     public void setNickname() {
         nickname = nicknameInput.getText().trim();
-        GUIsingleton.getInstance().setNicknamePageController(this);
-        gui.setNickname(nickname);
+        getGui().setNickname(nickname);
     }
 
-    public void showError(ERROR_MESSAGES errorMessage){
-        if(nickname == null){
-            System.out.println("Errore nick null");
-        }else{
-            System.out.println(nickname);
-        }
-        nicknameInput.setStyle("-fx-background-color: #d34813;");
-        nicknameInput.setText(errorMessage.getValue());
+    public void showError(ERROR_MESSAGES errorMessage) {
+        //nicknameInput.setStyle("-fx-background-color: #d34813;");
+        //nicknameInput.setText(errorMessage.getValue());
+        errButton.setVisible(true);
     }
+
 
     public void nextPage(){
+        errButton.setVisible(false);
 
-        StartingPageController startingPageController = new StartingPageController(GUIsingleton.getInstance().getStage());
+        StartingPageController startingPageController = new StartingPageController();
         try {
             startingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void backPage(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        ConnectionPageController connectionPageController = new ConnectionPageController(stage);
-        try {
-            connectionPageController.start(false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
