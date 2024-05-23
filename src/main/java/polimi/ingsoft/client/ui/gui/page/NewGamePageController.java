@@ -69,14 +69,20 @@ public class NewGamePageController {
     public void setNumberPlayers(ActionEvent actionEvent) {
         if(twoPlayersRadioButton.isSelected()){
 
+            threePlayersRadioButton.setVisible(false);
+            fourPlayersRadioButton.setVisible(false);
             numberPlayers=2;
 
         } else if (threePlayersRadioButton.isSelected()) {
 
+            twoPlayersRadioButton.setVisible(false);
+            fourPlayersRadioButton.setVisible(false);
             numberPlayers=3;
 
         } else if (fourPlayersRadioButton.isSelected()) {
 
+            threePlayersRadioButton.setVisible(false);
+            twoPlayersRadioButton.setVisible(false);
             numberPlayers=4;
         }
 

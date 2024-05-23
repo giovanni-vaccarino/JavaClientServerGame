@@ -17,10 +17,10 @@
 >
     <children>
 
-        <StackPane layoutX="1100.0" layoutY="40.0" prefWidth="200" prefHeight="120" alignment="CENTER">
+        <StackPane layoutX="1000.0" layoutY="40.0" prefWidth="300" prefHeight="120" alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Error!"
-                        prefWidth="200" prefHeight="120" styleClass="errorPane"
+                <Button mnemonicParsing="false" text="Not available!"
+                        prefWidth="300" prefHeight="120" styleClass="errorPane"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         fx:id="errButton">
                 </Button>

@@ -162,7 +162,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
                 } catch (MatchAlreadyFullException | MatchNotFoundException exception){
                     synchronized (this.clients){
-                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR, new Object[]{ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH});
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR, new Object[]{ERROR_MESSAGES.MATCH_IS_ALREADY_FULL});
                         clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 }

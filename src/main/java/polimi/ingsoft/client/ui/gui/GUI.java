@@ -2,7 +2,9 @@ package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
+import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
@@ -15,7 +17,8 @@ public class GUI extends UI{
     private Client client;
     private String nickname;
     private Integer matchId;
-    private List<String> matchList;
+    private List<Integer> matchList;
+    private CLIENT_STATE clientState;
 
     public GUI(Client client){
         this.client=client;
@@ -44,12 +47,28 @@ public class GUI extends UI{
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) {
-        GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
+        switch (errorMessage){
+            case NICKNAME_NOT_AVAILABLE -> {
+                GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
+            }
+            case MATCH_IS_ALREADY_FULL -> {
+                GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);
+            }
+        }
     }
 
     public void createMatch(int numPlayers){
         try {
+            clientState = CLIENT_STATE.NEWGAME;
             client.createMatch(nickname,numPlayers);
+        } catch (IOException ignore) {
+        }
+    }
+
+    public void joinMatch(Integer matchId) {
+        try {
+            clientState = CLIENT_STATE.JOINGAME;
+            client.joinMatch(nickname, matchId);
         } catch (IOException ignore) {
         }
     }
@@ -61,20 +80,25 @@ public class GUI extends UI{
         }
     }
 
-    public List<String> getMatchList(){
+    public List<Integer> getMatchList(){
         return matchList;
     }
 
     @Override
     public void showUpdateMatchJoin() {
-        GUIsingleton.getInstance().getNewGamePageController().nextPage();
+        switch (clientState){
+            case NEWGAME:
+                GUIsingleton.getInstance().getNewGamePageController().nextPage();
+                break;
+            case JOINGAME:
+                GUIsingleton.getInstance().getJoinGamePageController().nextPage();
+                break;
+        }
     }
 
     @Override
     public void updateMatchesList(List<Integer> matches) {
-        matchList = matches.stream()
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+        matchList = matches;
     }
 
     @Override
