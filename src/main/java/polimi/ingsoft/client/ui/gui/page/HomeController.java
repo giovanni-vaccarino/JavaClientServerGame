@@ -42,6 +42,8 @@ public class HomeController extends Application {
         stage.setScene(new Scene(root));
         stage.show();
 
+        GUIsingleton.getInstance().setStage(stage);
+
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             int secondsPassed = 0;

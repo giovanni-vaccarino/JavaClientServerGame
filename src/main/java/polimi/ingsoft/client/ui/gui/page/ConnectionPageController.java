@@ -62,7 +62,7 @@ public class ConnectionPageController{
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         nicknamePageController = new NicknamePageController(stage);
-        GUIsingleton.getInstance().setNicknamePageController(nicknamePageController);
+
         try {
             nicknamePageController.start();
         } catch (Exception e) {
@@ -75,7 +75,6 @@ public class ConnectionPageController{
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         nicknamePageController = new NicknamePageController(stage);
-        GUIsingleton.getInstance().setNicknamePageController(nicknamePageController);
 
         try {
             nicknamePageController.start();

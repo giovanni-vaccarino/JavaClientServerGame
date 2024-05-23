@@ -24,7 +24,7 @@ public class GUI extends UI{
     @Override
     public void showWelcomeScreen() throws IOException {
         homeController = new HomeController();
-        homeController.main(new String[]{});
+        HomeController.main(new String[]{});
     }
 
     public void setNickname(String nickname){
@@ -37,6 +37,7 @@ public class GUI extends UI{
 
     @Override
     public void updateNickname() {
+        GUIsingleton.getInstance().getNicknamePageController().showError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
         GUIsingleton.getInstance().getNicknamePageController().nextPage();
     }
 

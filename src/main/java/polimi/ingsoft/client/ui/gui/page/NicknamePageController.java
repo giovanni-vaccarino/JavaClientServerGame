@@ -25,7 +25,7 @@ public class NicknamePageController {
     public NicknamePageController() {}
 
     public NicknamePageController(Stage stage) {
-        this.stage = stage;
+        //this.stage = stage;
         this.gui = GUIsingleton.getInstance().getGui();
     }
     public void start() throws Exception {
@@ -52,27 +52,32 @@ public class NicknamePageController {
             System.out.println("CSS file not found");
         }
 
-        stage.getScene().setRoot(root);
+        GUIsingleton.getInstance().getStage().getScene().setRoot(root);
     }
 
     public void validateNickname(ActionEvent actionEvent) throws IOException {
-
         setNickname();
     }
 
     public void setNickname() {
         nickname = nicknameInput.getText().trim();
+        GUIsingleton.getInstance().setNicknamePageController(this);
         gui.setNickname(nickname);
     }
 
     public void showError(ERROR_MESSAGES errorMessage){
+        if(nickname == null){
+            System.out.println("Errore nick null");
+        }else{
+            System.out.println(nickname);
+        }
         nicknameInput.setStyle("-fx-background-color: #d34813;");
         nicknameInput.setText(errorMessage.getValue());
     }
 
     public void nextPage(){
 
-        StartingPageController startingPageController = new StartingPageController(stage);
+        StartingPageController startingPageController = new StartingPageController(GUIsingleton.getInstance().getStage());
         try {
             startingPageController.start();
         } catch (Exception e) {
