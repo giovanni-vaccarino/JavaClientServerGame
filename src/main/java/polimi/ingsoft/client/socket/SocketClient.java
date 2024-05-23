@@ -126,14 +126,14 @@ public class SocketClient extends Client {
                     NetworkMessage.BroadcastMessagePayload broadcastMessagePayload = (NetworkMessage.BroadcastMessagePayload) payload;
                     String sender = broadcastMessagePayload.sender();
                     String message = broadcastMessagePayload.message();
-
+                    this.showUpdateBroadcastChat(sender, message);
                 }
                 case MATCH_PRIVATE_MESSAGE_UPDATE -> {
                     NetworkMessage.PrivateMessagePayload privateMessagePayload = (NetworkMessage.PrivateMessagePayload) payload;
                     String sender = privateMessagePayload.sender();
                     String recipient = privateMessagePayload.receiver();
                     String message = privateMessagePayload.message();
-
+                    this.showUpdatePrivateChat(sender, recipient, message);
                 }
                 case ERROR -> {
                     ERROR_MESSAGES errorMessage= (ERROR_MESSAGES) payload;
