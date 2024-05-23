@@ -2,7 +2,9 @@ package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 
-public class RmiMethodCall {
+import java.io.Serializable;
+
+public class RmiMethodCall implements Serializable {
     private MessageCodes methodName;
     private Object[] args;
 
