@@ -23,6 +23,7 @@ public class GUI extends UI{
 
     @Override
     public void showWelcomeScreen() throws IOException {
+        client.getMatches(this.client);
         homeController = new HomeController();
         HomeController.main(new String[]{});
     }
