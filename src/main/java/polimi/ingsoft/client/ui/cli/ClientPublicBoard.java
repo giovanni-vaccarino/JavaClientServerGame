@@ -268,11 +268,7 @@ public class ClientPublicBoard {
         int row = 1;
         QuestCard card;
         System.out.print(YELLOW + "                                  " + RESET + "     ");
-        card = questCards.getFirst();
-        System.out.print(YELLOW + BLACKTEXT + "               | " + card.getScore() + "|               " + RESET + "   ");
-        card = questCards.get(1);
-        System.out.print(YELLOW + BLACKTEXT + "               | " + card.getScore() + "|               ");
-        System.out.print(RESET + "\n");
+        printQuestFirstRow();
         do {
             System.out.print(YELLOW + "                                  " + RESET + "     ");
             card = questCards.getFirst();
@@ -281,6 +277,28 @@ public class ClientPublicBoard {
             System.out.print(printQuestCard(row, card) + RESET + "\n");
             row++;
         } while (row < 9);
+    }
+    public void printInitialQuests(){
+        int count = 0;
+        int row = 1;
+        QuestCard card;
+        printQuestFirstRow();
+        do {
+            card = questCards.getFirst();
+            System.out.print(printQuestCard(row, card) + RESET + "   ");
+            card = questCards.get(1);
+            System.out.print(printQuestCard(row, card) + RESET + "\n");
+            row++;
+        } while (row < 9);
+    }
+
+    private void printQuestFirstRow() {
+        QuestCard card;
+        card = questCards.getFirst();
+        System.out.print(YELLOW + BLACKTEXT + "               | " + card.getScore() + "|               " + RESET + "   ");
+        card = questCards.get(1);
+        System.out.print(YELLOW + BLACKTEXT + "               | " + card.getScore() + "|               ");
+        System.out.print(RESET + "\n");
     }
 
     private String printQuestCard(int row, QuestCard card) {
