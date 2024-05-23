@@ -11,6 +11,7 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
@@ -273,6 +274,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
         synchronized (this.server.clients) {
             this.server.clients.put(nickname, this);
         }
+    }
+
+    @Override
+    public void handleRmiClientMessages(RmiMethodCall rmiMethodCall) {
+
     }
 
     @Override

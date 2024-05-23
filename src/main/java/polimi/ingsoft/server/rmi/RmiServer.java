@@ -70,12 +70,16 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
                     synchronized (this.clients){
                         System.out.println("Nickname available");
-                        client.showNicknameUpdate();
+
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.SET_NICKNAME_UPDATE, new Object[]{});
+                        client.handleRmiClientMessages(rmiMethodCall);
                     }
                 } catch (NicknameNotAvailableException exception){
                     synchronized (this.clients){
                         System.out.println("Nickname not available");
-                        client.reportError(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE);
+
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR, new Object[]{ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE});
+                        client.handleRmiClientMessages(rmiMethodCall);
                     }
                 }
             }
@@ -85,7 +89,8 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                 List<Integer> matches = this.listMatches();
 
                 synchronized (this.clients) {
-                    client.showUpdateMatchesList(matches);
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.MATCHES_LIST_UPDATE, new Object[]{matches});
+                    client.handleRmiClientMessages(rmiMethodCall);
                 }
             }
 

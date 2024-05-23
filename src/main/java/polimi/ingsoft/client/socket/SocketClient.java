@@ -9,6 +9,7 @@ import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.SocketMessage;
 
@@ -48,6 +49,11 @@ public class SocketClient extends Client {
     @Override
     protected VirtualMatchServer getMatchServer() {
         return matchServer;
+    }
+
+    @Override
+    public void handleRmiClientMessages(RmiMethodCall rmiMethodCall) {
+
     }
 
     @Override
