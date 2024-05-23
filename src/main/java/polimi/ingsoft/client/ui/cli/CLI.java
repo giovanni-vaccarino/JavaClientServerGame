@@ -11,7 +11,13 @@ import java.util.Scanner;
 
 public class CLI extends UI {
     enum CLICommand {
-        exit, unknown_command, list_matches, create_match, join_match
+        exit,
+        unknown_command,
+        list_matches,
+        create_match,
+        join_match,
+        print_board,
+        place_card
     }
     private final Scanner in;
     private final PrintStream out;
@@ -114,7 +120,7 @@ public class CLI extends UI {
 
                 nickname = candidateNickname;
                 client.setNickname(nickname);
-            } catch (IOException e) { }
+            } catch (IOException ignored) { }
         }).start();
     }
 

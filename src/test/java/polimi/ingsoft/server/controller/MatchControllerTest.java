@@ -353,8 +353,8 @@ class MatchControllerTest {
         String sender = matchController.getGameState().getCurrentPlayer().getNickname();
         String message = "Test Message";
 
-        assertEquals(sender, matchController.writeMessage(sender, message).getSender());
-        assertEquals(message, matchController.writeMessage(sender, message).getText());
+        assertEquals(sender, matchController.writeBroadcastMessage(sender, message).getSender());
+        assertEquals(message, matchController.writeBroadcastMessage(sender, message).getText());
     }
 
     void setupInitialPhase(){

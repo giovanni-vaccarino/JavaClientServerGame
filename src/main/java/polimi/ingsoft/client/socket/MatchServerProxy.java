@@ -4,11 +4,10 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.SocketMessage;
+import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.rmi.RemoteException;
 
 public class MatchServerProxy implements VirtualMatchServer {
     private final ObjectOutputStream out;
@@ -19,7 +18,7 @@ public class MatchServerProxy implements VirtualMatchServer {
 
     @Override
     public void setColor(String nickname, PlayerColor color) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_COLOR_REQUEST,
                 color
         );
@@ -29,7 +28,7 @@ public class MatchServerProxy implements VirtualMatchServer {
 
     @Override
     public void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_INITIAL_CARD_REQUEST,
                 isInitialCardFacingUp
         );
@@ -39,7 +38,7 @@ public class MatchServerProxy implements VirtualMatchServer {
 
     @Override
     public void setQuestCard(String nickname, QuestCard questCard) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_QUEST_CARD_REQUEST,
                 questCard
         );
@@ -48,20 +47,30 @@ public class MatchServerProxy implements VirtualMatchServer {
     }
 
     @Override
-    public void sendMessage(String player, String message) throws IOException {
-
+    public void sendBroadcastMessage(String player, String _message) throws IOException {
+        NetworkMessage message = new NetworkMessage(
+                MessageCodes.MATCH_SEND_BROADCAST_MESSAGE_REQUEST,
+                new NetworkMessage.BroadcastMessagePayload(player, _message)
+        );
+        out.writeObject(message);
+        out.flush();
     }
 
     @Override
-    public void sendPrivateMessage(String player, String message) throws IOException {
-
+    public void sendPrivateMessage(String player, String recipient, String _message) throws IOException {
+        NetworkMessage message = new NetworkMessage(
+                MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST,
+                new NetworkMessage.PrivateMessagePayload(player, recipient, _message)
+        );
+        out.writeObject(message);
+        out.flush();
     }
 
     @Override
     public void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_DRAW_REQUEST,
-                new SocketMessage.DrawCardPayload(deckType, slot)
+                new NetworkMessage.DrawCardPayload(deckType, slot)
         );
         out.writeObject(message);
         out.flush();
@@ -69,9 +78,9 @@ public class MatchServerProxy implements VirtualMatchServer {
 
     @Override
     public void placeCard(String player, MixedCard card, Coordinates coordinates, boolean isFacingUp) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_PLACE_REQUEST,
-                new SocketMessage.PlaceCardPayload(card, coordinates, isFacingUp)
+                new NetworkMessage.PlaceCardPayload(card, coordinates, isFacingUp)
         );
         out.writeObject(message);
         out.flush();

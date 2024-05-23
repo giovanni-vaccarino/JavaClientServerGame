@@ -174,4 +174,24 @@ public class SocketServer implements ConnectionsClient {
             }
         }
     }
+
+    public void matchUpdateBroadcastMessage(Integer matchId, String sender, String message) {
+        List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
+        synchronized (clientsToNotify) {
+            for (var client : clientsToNotify) {
+                try {
+                    client.showUpdateBroadcastChat(sender, message);
+                } catch (IOException ignored) { }
+            }
+        }
+    }
+
+    public void singleUpdatePrivateMessage(String nickname, String sender, String recipient, String message) {
+        VirtualView client = this.clients.get(nickname);
+        synchronized (this.clients) {
+            try {
+                client.showUpdatePrivateChat(sender, recipient, message);
+            } catch (IOException ignored) { }
+        }
+    }
 }

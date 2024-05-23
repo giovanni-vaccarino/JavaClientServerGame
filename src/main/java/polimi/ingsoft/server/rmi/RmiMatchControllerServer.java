@@ -131,15 +131,15 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 }
             }
 
-            case MATCH_SEND_MESSAGE_REQUEST -> {
+            case MATCH_SEND_BROADCAST_MESSAGE_REQUEST -> {
                 String playerNickname = (String) args[0];
                 String message = (String) args[1];
 
-                Message addedMessage = matchController.writeMessage(playerNickname, message);
+                matchController.writeBroadcastMessage(playerNickname, message);
 
                 synchronized (this.clients){
                     for(var client : this.clients){
-                        client.showUpdateChat(addedMessage);
+                        client.showUpdateBroadcastChat(playerNickname, message);
                     }
                 }
             }
@@ -242,16 +242,16 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
     }
 
     @Override
-    public void sendMessage(String player, String message) throws RemoteException {
+    public void sendBroadcastMessage(String player, String message) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_SEND_MESSAGE_REQUEST, new Object[]{player, message}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_SEND_BROADCAST_MESSAGE_REQUEST, new Object[]{player, message}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
 
     @Override
-    public void sendPrivateMessage(String player, String message) throws RemoteException {
+    public void sendPrivateMessage(String player, String recipient, String message) throws RemoteException {
 
     }
 

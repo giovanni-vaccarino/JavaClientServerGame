@@ -13,9 +13,9 @@ public interface VirtualMatchServer extends Remote {
 
     void setQuestCard(String nickname, QuestCard questCard) throws IOException;
 
-    void sendMessage(String player, String message) throws IOException;
+    void sendBroadcastMessage(String player, String message) throws IOException;
 
-    void sendPrivateMessage(String player, String message) throws IOException;
+    void sendPrivateMessage(String player, String recipient, String message) throws IOException;
 
     void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws IOException;
 

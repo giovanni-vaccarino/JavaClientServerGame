@@ -12,7 +12,7 @@ import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.SocketMessage;
+import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -48,9 +48,9 @@ public class ConnectionHandler implements Runnable, VirtualView {
     @Override
     public void run() {
         try {
-            SocketMessage item;
+            NetworkMessage item;
 
-            while ((item = (SocketMessage) in.readObject()) != null) {
+            while ((item = (NetworkMessage) in.readObject()) != null) {
                 MessageCodes type = item.type;
                 Object payload = item.payload;
                 logger.println("SOCKET: Received request with type: " + type.toString());
@@ -187,8 +187,34 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 this.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
                             }
                         }
+                        case MATCH_SEND_BROADCAST_MESSAGE_REQUEST -> {
+                            NetworkMessage.BroadcastMessagePayload broadcastMessagePayload = (NetworkMessage.BroadcastMessagePayload) payload;
+                            String sender = broadcastMessagePayload.sender();
+                            String message = broadcastMessagePayload.message();
+
+                            matchController.writeBroadcastMessage(sender, message);
+                            this.server.matchUpdateBroadcastMessage(
+                                    matchController.getMatchId(),
+                                    sender,
+                                    message
+                            );
+                        }
+                        case MATCH_SEND_PRIVATE_MESSAGE_REQUEST -> {
+                            NetworkMessage.PrivateMessagePayload privateMessagePayload = (NetworkMessage.PrivateMessagePayload) payload;
+                            String sender = privateMessagePayload.sender();
+                            String recipient = privateMessagePayload.receiver();
+                            String message = privateMessagePayload.message();
+
+                            try {
+                                matchController.writePrivateMessage(sender, recipient, message);
+                                this.server.singleUpdatePrivateMessage(sender, sender, recipient, message);
+                                this.server.singleUpdatePrivateMessage(recipient, sender, recipient, message);
+                            } catch (PlayerNotFoundException e) {
+                                this.reportError(ERROR_MESSAGES.PLAYER_NOT_FOUND);
+                            }
+                        }
                         case MATCH_DRAW_REQUEST -> {
-                            SocketMessage.DrawCardPayload drawCardPayload = (SocketMessage.DrawCardPayload) payload;
+                            NetworkMessage.DrawCardPayload drawCardPayload = (NetworkMessage.DrawCardPayload) payload;
                             String deckType = drawCardPayload.deckType();
                             PlaceInPublicBoard.Slots slot = drawCardPayload.slot();
 
@@ -218,7 +244,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             }
                         }
                         case MATCH_PLACE_REQUEST -> {
-                            SocketMessage.PlaceCardPayload placeCardPayload = (SocketMessage.PlaceCardPayload) payload;
+                            NetworkMessage.PlaceCardPayload placeCardPayload = (NetworkMessage.PlaceCardPayload) payload;
                             MixedCard card = placeCardPayload.card();
                             Coordinates coordinates = placeCardPayload.coordinates();
                             Boolean isFacingUp = placeCardPayload.isFacingUp();
@@ -318,10 +344,19 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateChat(Message message) {
+    public void showUpdateBroadcastChat(String sender, String message) {
         synchronized (this.view) {
             try {
-                this.view.showUpdateChat(message);
+                this.view.showUpdateBroadcastChat(sender, message);
+            } catch (IOException ignore) { }
+        }
+    }
+
+    @Override
+    public void showUpdatePrivateChat(String sender, String recipient, String message) {
+        synchronized (this.view) {
+            try {
+                this.view.showUpdatePrivateChat(sender, recipient, message);
             } catch (IOException ignore) { }
         }
     }

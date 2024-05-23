@@ -3,7 +3,7 @@ package polimi.ingsoft.client.socket;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.SocketMessage;
+import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -17,28 +17,28 @@ public class ServerProxy implements VirtualServer {
 
     @Override
     public void setNickname(VirtualView client, String nickname) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.SET_NICKNAME_REQUEST, nickname);
+        NetworkMessage message = new NetworkMessage(MessageCodes.SET_NICKNAME_REQUEST, nickname);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
     public void getMatches(VirtualView client) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.MATCHES_LIST_REQUEST, null);
+        NetworkMessage message = new NetworkMessage(MessageCodes.MATCHES_LIST_REQUEST, null);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
     public void createMatch(String nickname, Integer requiredNumPlayers) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.MATCH_CREATE_REQUEST, requiredNumPlayers);
+        NetworkMessage message = new NetworkMessage(MessageCodes.MATCH_CREATE_REQUEST, requiredNumPlayers);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
     public void joinMatch(String nickname, Integer matchId) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_JOIN_REQUEST,
                 matchId
         );

@@ -4,11 +4,10 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
-import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.SocketMessage;
+import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -24,49 +23,64 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showNicknameUpdate() throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.SET_NICKNAME_UPDATE, null);
+        NetworkMessage message = new NetworkMessage(MessageCodes.SET_NICKNAME_UPDATE, null);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
     public void showUpdateLobbyPlayers(List<String> players) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.LOBBY_PLAYERS_UPDATE, (Serializable) players);
+        NetworkMessage message = new NetworkMessage(MessageCodes.LOBBY_PLAYERS_UPDATE, (Serializable) players);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
     public void showUpdateMatchesList(List<Integer> matches) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.MATCHES_LIST_UPDATE, (Serializable) matches);
+        NetworkMessage message = new NetworkMessage(MessageCodes.MATCHES_LIST_UPDATE, (Serializable) matches);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
     public void showUpdateMatchJoin() throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.MATCH_JOIN_UPDATE, null);
+        NetworkMessage message = new NetworkMessage(MessageCodes.MATCH_JOIN_UPDATE, null);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
     public void showUpdateMatchCreate(Integer matchId) throws IOException {
-        SocketMessage message = new SocketMessage(MessageCodes.MATCH_CREATE_UPDATE, matchId);
+        NetworkMessage message = new NetworkMessage(MessageCodes.MATCH_CREATE_UPDATE, matchId);
         out.writeObject(message);
         out.flush();
     }
 
     @Override
-    public void showUpdateChat(Message message) throws IOException {
+    public void showUpdateBroadcastChat(String sender, String _message) throws IOException {
+        NetworkMessage message = new NetworkMessage(
+                MessageCodes.MATCH_BROADCAST_MESSAGE_UPDATE,
+                new NetworkMessage.BroadcastMessagePayload(sender, _message)
+        );
+        out.writeObject(message);
+        out.flush();
+    }
 
+    @Override
+    public void showUpdatePrivateChat(String sender, String recipient, String _message) throws IOException {
+        NetworkMessage message = new NetworkMessage(
+                MessageCodes.MATCH_PRIVATE_MESSAGE_UPDATE,
+                new NetworkMessage.PrivateMessagePayload(sender, recipient, _message)
+        );
+        out.writeObject(message);
+        out.flush();
     }
 
     @Override
     public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_INITIAL_SETTINGS_UPDATE,
-                new SocketMessage.InitialSettings(color, isFacingUp, questCard)
+                new NetworkMessage.InitialSettings(color, isFacingUp, questCard)
         );
         out.writeObject(message);
         out.flush();
@@ -74,7 +88,7 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
             MessageCodes.MATCH_GAME_STATE_UPDATE,
             gameState
         );
@@ -84,7 +98,7 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_PLAYER_HAND_UPDATE,
                 playerHand
         );
@@ -94,7 +108,7 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdatePublicBoard(PublicBoard publicBoard) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
                 publicBoard
         );
@@ -104,9 +118,9 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_BOARD_UPDATE,
-                new SocketMessage.BoardUpdatePayload(nickname, coordinates, playedCard)
+                new NetworkMessage.BoardUpdatePayload(nickname, coordinates, playedCard)
         );
         out.writeObject(message);
         out.flush();
@@ -114,7 +128,7 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
-        SocketMessage message = new SocketMessage(
+        NetworkMessage message = new NetworkMessage(
                 MessageCodes.ERROR,
                 errorMessage
         );

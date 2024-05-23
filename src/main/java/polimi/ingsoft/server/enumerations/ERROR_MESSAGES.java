@@ -16,7 +16,8 @@ public enum ERROR_MESSAGES {
     COLOR_ALREADY_PICKED("The color you have selected has been already picked"),
     WRONG_PLAYER_TURN("It is not your turn"),
     INITIAL_SETTING_ALREADY_SET("Initial setting already set"),
-    PLAYER_IS_NOT_IN_A_MATCH("Player is currently not in a match");
+    PLAYER_IS_NOT_IN_A_MATCH("Player is currently not in a match"),
+    PLAYER_NOT_FOUND("Unable to find recipient player");
 
     private final String value;
 

@@ -7,7 +7,6 @@ import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.factories.PlayerFactory;
 import polimi.ingsoft.server.model.*;
 
-import java.awt.*;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.*;
@@ -326,7 +325,19 @@ public class MatchController implements Serializable {
      * @param message      the message to send
      * @return the added message
      */
-    public synchronized Message writeMessage(String playerSender, String message){
-        return this.chatController.writeMessage(playerSender, message);
+    public synchronized Message writeBroadcastMessage(String playerSender, String message){
+        return this.chatController.writeBroadcastMessage(playerSender, message);
+    }
+
+    /**
+     * Adds a message in the chat.
+     *
+     * @param sender the nickname of the player sending the message
+     * @param recipient the nickname of the player receiving the message
+     * @param message      the message to send
+     * @return the added message
+     */
+    public synchronized Message writePrivateMessage(String sender, String recipient, String message) throws PlayerNotFoundException {
+        return this.chatController.writePrivateMessage(sender, recipient, message);
     }
 }

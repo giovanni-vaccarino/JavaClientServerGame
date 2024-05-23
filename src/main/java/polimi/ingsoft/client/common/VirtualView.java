@@ -4,7 +4,6 @@ package polimi.ingsoft.client.common;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
-import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
@@ -18,7 +17,8 @@ public interface VirtualView extends Remote {
     void showUpdateMatchJoin() throws IOException;
     void showUpdateLobbyPlayers(List<String> players) throws IOException;
     void showUpdateMatchCreate(Integer matchId) throws IOException;
-    void showUpdateChat(Message message) throws IOException;
+    void showUpdateBroadcastChat(String sender, String message) throws IOException;
+    void showUpdatePrivateChat(String sender, String recipient, String message) throws IOException;
     void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException;
     void showUpdateGameState(GameState gameState) throws IOException;
     void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException;

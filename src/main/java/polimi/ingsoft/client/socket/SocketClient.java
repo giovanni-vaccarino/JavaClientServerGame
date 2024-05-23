@@ -5,11 +5,10 @@ import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
-import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.SocketMessage;
+import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
 import java.io.*;
 import java.net.Socket;
@@ -65,8 +64,8 @@ public class SocketClient extends Client {
     }
 
     private void runVirtualServer() throws IOException, ClassNotFoundException {
-        SocketMessage item;
-        while ((item = (SocketMessage) in.readObject()) != null) {
+        NetworkMessage item;
+        while ((item = (NetworkMessage) in.readObject()) != null) {
             MessageCodes type = item.type;
             Object payload = item.payload;
             // Read message and perform action
@@ -90,7 +89,7 @@ public class SocketClient extends Client {
                     this.showUpdateLobbyPlayers(nicknames);
                 }
                 case SET_INITIAL_SETTINGS_UPDATE -> {
-                    SocketMessage.InitialSettings initialSettings = (SocketMessage.InitialSettings) payload;
+                    NetworkMessage.InitialSettings initialSettings = (NetworkMessage.InitialSettings) payload;
                     PlayerColor color = initialSettings.color();
                     Boolean isInitialCardFacingUp = initialSettings.isInitialCardFacingUp();
                     QuestCard questCard = initialSettings.questCard();
@@ -105,7 +104,7 @@ public class SocketClient extends Client {
                     this.showUpdatePublicBoard(publicBoard);
                 }
                 case MATCH_BOARD_UPDATE -> {
-                    SocketMessage.BoardUpdatePayload boardUpdatePayload = (SocketMessage.BoardUpdatePayload) payload;
+                    NetworkMessage.BoardUpdatePayload boardUpdatePayload = (NetworkMessage.BoardUpdatePayload) payload;
                     String nickname = boardUpdatePayload.nickname();
                     Coordinates coordinates = boardUpdatePayload.coordinates();
                     PlayedCard playedCard = boardUpdatePayload.playedCard();
@@ -114,6 +113,19 @@ public class SocketClient extends Client {
                 case MATCH_PLAYER_HAND_UPDATE -> {
                     PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) payload;
                     this.showUpdatePlayerHand(playerHand);
+                }
+                case MATCH_BROADCAST_MESSAGE_UPDATE -> {
+                    NetworkMessage.BroadcastMessagePayload broadcastMessagePayload = (NetworkMessage.BroadcastMessagePayload) payload;
+                    String sender = broadcastMessagePayload.sender();
+                    String message = broadcastMessagePayload.message();
+
+                }
+                case MATCH_PRIVATE_MESSAGE_UPDATE -> {
+                    NetworkMessage.PrivateMessagePayload privateMessagePayload = (NetworkMessage.PrivateMessagePayload) payload;
+                    String sender = privateMessagePayload.sender();
+                    String recipient = privateMessagePayload.receiver();
+                    String message = privateMessagePayload.message();
+
                 }
                 default -> System.err.println("[INVALID MESSAGE]");
             }

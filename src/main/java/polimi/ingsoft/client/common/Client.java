@@ -8,7 +8,6 @@ import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
-import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
@@ -96,7 +95,12 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdateChat(Message message) throws IOException {
+    public void showUpdateBroadcastChat(String sender, String message) throws IOException {
+
+    }
+
+    @Override
+    public void showUpdatePrivateChat(String sender, String recipient, String message) throws IOException {
 
     }
 
@@ -126,7 +130,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     public void addMessage(String nickname, String message) throws IOException {
-        getMatchServer().sendMessage(nickname, message);
+        getMatchServer().sendBroadcastMessage(nickname, message);
     }
 
     public void drawCard(String nickname, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
