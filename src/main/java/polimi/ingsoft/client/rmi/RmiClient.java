@@ -11,7 +11,7 @@ import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.SocketMessage;
+import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -92,7 +92,7 @@ public class RmiClient extends Client {
             }
 
             case SET_INITIAL_SETTINGS_UPDATE -> {
-                SocketMessage.InitialSettings initialSettings = (SocketMessage.InitialSettings) args[0];
+                NetworkMessage.InitialSettings initialSettings = (NetworkMessage.InitialSettings) args[0];
                 PlayerColor color = initialSettings.color();
                 Boolean isInitialCardFacingUp = initialSettings.isInitialCardFacingUp();
                 QuestCard questCard = initialSettings.questCard();
@@ -110,7 +110,7 @@ public class RmiClient extends Client {
             }
 
             case MATCH_BOARD_UPDATE -> {
-                SocketMessage.BoardUpdatePayload boardUpdatePayload = (SocketMessage.BoardUpdatePayload) args[0];
+                NetworkMessage.BoardUpdatePayload boardUpdatePayload = (NetworkMessage.BoardUpdatePayload) args[0];
                 String nickname = boardUpdatePayload.nickname();
                 Coordinates coordinates = boardUpdatePayload.coordinates();
                 PlayedCard playedCard = boardUpdatePayload.playedCard();
