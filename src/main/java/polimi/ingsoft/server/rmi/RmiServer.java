@@ -1,9 +1,11 @@
 package polimi.ingsoft.server.rmi;
 
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.Utils;
 import polimi.ingsoft.server.common.VirtualMatchServer;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
@@ -145,6 +147,7 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
                     MatchController match = this.mainController.getMatch(matchId);
                     List<String> players = match.getNamePlayers();
+                    GameState gameState = match.getGameState();
 
                     //Adding the client to the match notification list
                     synchronized (matchNotificationList){
@@ -154,11 +157,21 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     RmiMethodCall rmiMethodCallMatchJoin = new RmiMethodCall(MessageCodes.MATCH_JOIN_UPDATE, new Object[]{});
                     RmiMethodCall rmiMethodCallMatchControllerStub = new RmiMethodCall(MessageCodes.MATCH_CONTROLLER_STUB_UPDATE, new Object[]{matchControllerServer.get(matchId)});
 
-
                     synchronized (this.clients){
                         clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchJoin);
                         clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchControllerStub);
+
+                        if(gameState.getGamePhase() == GAME_PHASE.INITIALIZATION){
+                            for(var player : players){
+                                RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
+                                VirtualView client = clients.get(player);
+
+                                client.handleRmiClientMessages(rmiMethodCallGameState);
+                            }
+                        }
                     }
+
+
 
                 } catch (MatchAlreadyFullException | MatchNotFoundException exception){
                     synchronized (this.clients){
