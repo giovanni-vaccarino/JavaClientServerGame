@@ -45,6 +45,8 @@ public class ClientHand {
     }
     public void initialPrint(InitialCard initial){
         cards.add(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0));
+        cards.add(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0));
+        flip(1);
         print();
         this.cards=new ArrayList<>();
     }
