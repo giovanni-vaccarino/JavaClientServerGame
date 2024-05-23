@@ -11,6 +11,7 @@ public class GUIsingleton {
     private StartingPageController startingPageController;
     private NewGamePageController newGamePageController;
     private JoinGamePageController joinGamePageController;
+    private WaitingPageController waitingPageController;
     private Stage stage;
     private GUI gui;
 
@@ -79,5 +80,13 @@ public class GUIsingleton {
 
     public void setJoinGamePageController(JoinGamePageController joinGamePageController) {
         this.joinGamePageController = joinGamePageController;
+    }
+
+    public WaitingPageController getWaitingPageController() {
+        return waitingPageController;
+    }
+
+    public void setWaitingPageController(WaitingPageController waitingPageController) {
+        this.waitingPageController = waitingPageController;
     }
 }

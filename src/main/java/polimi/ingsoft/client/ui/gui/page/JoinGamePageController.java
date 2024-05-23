@@ -107,15 +107,6 @@ public class JoinGamePageController implements Initializable {
         }
     }
 
-    public void nextPage(){
-        WaitingPageController waitingPageController = new WaitingPageController(getStage());
-        try {
-            waitingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void start() throws Exception {
 
         // Load FXML file
@@ -138,6 +129,15 @@ public class JoinGamePageController implements Initializable {
         getStage().getScene().setRoot(root);
 
 
+    }
+
+    public void nextPage(){
+        WaitingPageController waitingPageController = new WaitingPageController();
+        try {
+            waitingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void backPage(ActionEvent actionEvent) throws IOException {

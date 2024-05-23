@@ -56,16 +56,6 @@ public class NewGamePageController {
         getStage().getScene().setRoot(root);
     }
 
-    public void backPage(ActionEvent actionEvent) throws IOException {
-
-        StartingPageController startingPageController = new StartingPageController();
-        try {
-            startingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void setNumberPlayers(ActionEvent actionEvent) {
         if(twoPlayersRadioButton.isSelected()){
 
@@ -90,9 +80,19 @@ public class NewGamePageController {
     }
 
     public void nextPage(){
-        WaitingPageController waitingPageController = new WaitingPageController(getStage());
+        WaitingPageController waitingPageController = new WaitingPageController();
         try {
             waitingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void backPage(ActionEvent actionEvent) throws IOException {
+
+        StartingPageController startingPageController = new StartingPageController();
+        try {
+            startingPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

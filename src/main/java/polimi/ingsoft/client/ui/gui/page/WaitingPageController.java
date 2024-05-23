@@ -5,20 +5,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class WaitingPageController {
-    private Stage stage;
-
-    // Default constructor
-    public WaitingPageController() {}
-
-    // Constructor with stage parameter
-    public WaitingPageController(Stage stage) {
-        this.stage = stage;
+    public WaitingPageController() {
+        GUIsingleton.getInstance().setWaitingPageController(this);
     }
+
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
+    }
+
     public void start() throws Exception {
         // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/WaitingPage.fxml");
@@ -43,7 +48,7 @@ public class WaitingPageController {
             System.out.println("CSS file not found");
         }
 
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void cancelNewGame(ActionEvent actionEvent) throws IOException {
@@ -58,9 +63,7 @@ public class WaitingPageController {
 
     public void startGame(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        ColorPageController colorPageController = new ColorPageController(stage);
+        ColorPageController colorPageController = new ColorPageController(getStage());
         try {
             colorPageController.start();
         } catch (Exception e) {
