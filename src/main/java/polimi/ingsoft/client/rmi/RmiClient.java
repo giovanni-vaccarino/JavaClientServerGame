@@ -64,23 +64,33 @@ public class RmiClient extends Client {
             case SET_NICKNAME_UPDATE -> {
                 this.showNicknameUpdate();
             }
+
             case MATCHES_LIST_UPDATE -> {
                 List<Integer> matches = (List<Integer>) args[0];
                 System.out.println("List Available matches");
                 System.out.println(matches);
                 this.showUpdateMatchesList(matches);
             }
+
             case MATCH_JOIN_UPDATE -> {
                 this.showUpdateMatchJoin();
             }
+
             case MATCH_CREATE_UPDATE -> {
                 Integer matchId = (Integer) args[0];
                 this.showUpdateMatchCreate(matchId);
             }
+
+            case MATCH_CONTROLLER_STUB_UPDATE -> {
+                VirtualMatchServer matchServer = (VirtualMatchServer) args[0];
+                this.setMatchControllerServer(matchServer);
+            }
+
             case LOBBY_PLAYERS_UPDATE -> {
                 List<String> nicknames = (List<String>) args[0];
                 this.showUpdateLobbyPlayers(nicknames);
             }
+
             case SET_INITIAL_SETTINGS_UPDATE -> {
                 SocketMessage.InitialSettings initialSettings = (SocketMessage.InitialSettings) args[0];
                 PlayerColor color = initialSettings.color();
@@ -88,14 +98,17 @@ public class RmiClient extends Client {
                 QuestCard questCard = initialSettings.questCard();
                 this.showUpdateInitialSettings(color, isInitialCardFacingUp, questCard);
             }
+
             case MATCH_GAME_STATE_UPDATE -> {
                 GameState gameState = (GameState) args[0];
                 this.showUpdateGameState(gameState);
             }
+
             case MATCH_PUBLIC_BOARD_UPDATE -> {
                 PublicBoard publicBoard = (PublicBoard) args[0];
                 this.showUpdatePublicBoard(publicBoard);
             }
+
             case MATCH_BOARD_UPDATE -> {
                 SocketMessage.BoardUpdatePayload boardUpdatePayload = (SocketMessage.BoardUpdatePayload) args[0];
                 String nickname = boardUpdatePayload.nickname();
@@ -103,15 +116,18 @@ public class RmiClient extends Client {
                 PlayedCard playedCard = boardUpdatePayload.playedCard();
                 this.showUpdateBoard(nickname, coordinates, playedCard);
             }
+
             case MATCH_PLAYER_HAND_UPDATE -> {
                 PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) args[0];
                 this.showUpdatePlayerHand(playerHand);
             }
+
             case ERROR -> {
                 ERROR_MESSAGES errorMessage= (ERROR_MESSAGES) args[0];
                 this.reportError(errorMessage);
             }
-            default -> System.err.println("[INVALID MESSAGE]");
+
+            default -> System.err.println("RMI CLIENT: [INVALID MESSAGE]");
         }
     }
 
