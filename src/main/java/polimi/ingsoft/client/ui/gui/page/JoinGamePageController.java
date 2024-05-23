@@ -42,10 +42,9 @@ public class JoinGamePageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         errButton.setVisible(false);
-        List<String> items = List.of("Game 1", "Game 2", "Game 3"); // CALL MODEL
+        List<String> items = List.of();
         resetGame();
         setGameList(items);
-        gameList.setStyle("-fx-background-color: white;");
     }
     public void resetGame(){
         setGame("Games");
