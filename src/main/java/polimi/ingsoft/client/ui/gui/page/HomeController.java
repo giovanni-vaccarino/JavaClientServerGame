@@ -10,13 +10,21 @@ import java.io.IOException;
 import java.net.URL;
 
 import javafx.application.Platform;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class HomeController extends Application {
-
     int waitingTime = 1;
+    private static GUI gui;
+    private ConnectionPageController connectionController;
+
+    public HomeController() {
+        gui = GUIsingleton.getInstance().getGui();
+    }
+
     public static void main(String[] args){
         launch(args);
     }
@@ -33,6 +41,8 @@ public class HomeController extends Application {
         stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.show();
+
+        GUIsingleton.getInstance().setStage(stage);
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -64,7 +74,7 @@ public class HomeController extends Application {
     public void nextPage(Stage stage) throws IOException {
 
         //RIGHT ONE:
-        ConnectionPageController connectionController = new ConnectionPageController(stage);
+        connectionController = new ConnectionPageController();
         try {
             connectionController.start(true);
         } catch (Exception e) {

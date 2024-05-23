@@ -6,6 +6,7 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
@@ -19,6 +20,11 @@ public class ClientProxy implements VirtualView {
 
     public ClientProxy(ObjectOutputStream out) {
         this.out = out;
+    }
+
+    @Override
+    public void handleRmiClientMessages(RmiMethodCall rmiMethodCall) {
+
     }
 
     @Override

@@ -30,7 +30,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         if (uiType == UIType.CLI)
             ui = new CLI(scanner, printStream, this);
         else
-            ui = new GUI();
+            ui = new GUI(this);
+
     }
 
     protected abstract VirtualServer getServer();
@@ -76,7 +77,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException{
-
+        ui.showUpdateGameState(gameState);
     }
 
     @Override
@@ -106,7 +107,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
-
+        ui.reportError(errorMessage);
     }
 
     public void setNickname(String nickname) throws IOException {

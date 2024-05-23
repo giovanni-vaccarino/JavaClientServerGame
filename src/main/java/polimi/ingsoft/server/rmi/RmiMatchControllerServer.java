@@ -116,18 +116,24 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         for(var client : this.clients){
 
                             if(client.equals(clientToUpdate)){
-                                //client.showUpdateColor();
+                                //client.showUpdate();
                             }
 
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
                 } catch (WrongGamePhaseException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    }
                 } catch (WrongStepException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    }
                 } catch (InitalChoiceAlreadySetException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                    }
                 }
             }
 
@@ -167,11 +173,17 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         }
                     }
                 } catch (WrongGamePhaseException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    }
                 } catch (WrongStepException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    }
                 } catch (WrongPlayerForCurrentTurnException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                    }
                 }
             }
 
@@ -195,7 +207,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                     synchronized (this.clients){
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
-                                //client.showUpdatePlayerHand();
+                                //clientToUpdate.showUpdatePlayerHand();
                             }
 
                             client.showUpdateBoard(playerNickname, coordinates, playedCard);
@@ -203,11 +215,17 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         }
                     }
                 } catch (WrongGamePhaseException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    }
                 } catch (WrongStepException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    }
                 } catch (WrongPlayerForCurrentTurnException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                    synchronized (this.clients){
+                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                    }
                 }
             }
 

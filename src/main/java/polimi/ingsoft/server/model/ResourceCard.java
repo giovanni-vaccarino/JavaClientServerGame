@@ -23,5 +23,8 @@ public class ResourceCard extends MixedCard {
         return null;
     }
     public int getMatches(Board board){return 1;}
+    public int getScore(){
+        return super.getScore();
+    }
 
 }

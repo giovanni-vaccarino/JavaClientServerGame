@@ -7,21 +7,26 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
+
 import java.io.IOException;
 import java.net.URL;
 
-import static polimi.ingsoft.client.ui.UIType.GUI;
-
 
 public class ConnectionPageController{
-    private Stage stage;
+    private NicknamePageController nicknamePageController;
 
-    // Default constructor
-    public ConnectionPageController() {}
+    public ConnectionPageController(){
+        GUIsingleton.getInstance().setConnectionPageController(this);
+    }
 
-    // Constructor with stage parameter
-    public ConnectionPageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
 
     // transition to set the FadeTransition or not
@@ -51,28 +56,18 @@ public class ConnectionPageController{
             System.out.println("CSS file not found");
         }
 
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void nextPageRMI(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-
-
-        NicknamePageController nicknamePageController = new NicknamePageController(stage);
-        try {
-            nicknamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        nextPageSocket(actionEvent);
     }
 
     public void nextPageSocket(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        nicknamePageController = new NicknamePageController();
 
-        NicknamePageController nicknamePageController = new NicknamePageController(stage);
         try {
             nicknamePageController.start();
         } catch (Exception e) {

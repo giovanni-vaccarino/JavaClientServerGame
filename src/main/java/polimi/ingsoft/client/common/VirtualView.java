@@ -6,12 +6,14 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.rmi.RmiMethodCall;
 
 import java.io.IOException;
 import java.rmi.Remote;
 import java.util.List;
 
 public interface VirtualView extends Remote {
+    void handleRmiClientMessages(RmiMethodCall rmiMethodCall) throws IOException;
     void showNicknameUpdate() throws IOException;
     void showUpdateMatchesList(List<Integer> matches) throws IOException;
     void showUpdateMatchJoin() throws IOException;

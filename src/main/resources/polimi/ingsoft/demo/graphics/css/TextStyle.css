@@ -1,17 +1,21 @@
 .textSmall {
     -fx-font-size: 30px;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-background-color: black;
+    -fx-text-fill: #323232;
 }
 
 .textRegular {
     -fx-font-size: 40px;
     -fx-font-family: 'Old English Text MT';
-    /*-fx-font-family:'DragonHunter';*/
+    -fx-text-background-color: black;
+    -fx-text-fill: #323232;
 }
 
 .textBold {
     -fx-font-size: 55px;
     -fx-font-weight: bold;
     -fx-font-family: 'Old English Text MT';
-    /*-fx-font-family:'DragonHunter';*/
+    -fx-text-background-color: black;
+    -fx-text-fill: #323232;
 }

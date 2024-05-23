@@ -5,8 +5,11 @@ import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
@@ -46,6 +49,11 @@ public class SocketClient extends Client {
     @Override
     protected VirtualMatchServer getMatchServer() {
         return matchServer;
+    }
+
+    @Override
+    public void handleRmiClientMessages(RmiMethodCall rmiMethodCall) {
+
     }
 
     @Override
@@ -126,6 +134,10 @@ public class SocketClient extends Client {
                     String recipient = privateMessagePayload.receiver();
                     String message = privateMessagePayload.message();
 
+                }
+                case ERROR -> {
+                    ERROR_MESSAGES errorMessage= (ERROR_MESSAGES) payload;
+                    this.reportError(errorMessage);
                 }
                 default -> System.err.println("[INVALID MESSAGE]");
             }

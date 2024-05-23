@@ -7,12 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.control.RadioButton;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class NewGamePageController {
-    private Stage stage;
     private int numberPlayers;
 
     @FXML
@@ -24,14 +25,15 @@ public class NewGamePageController {
     @FXML
     private RadioButton fourPlayersRadioButton;
 
-    // Default constructor
-    public NewGamePageController() {}
+    public NewGamePageController() {GUIsingleton.getInstance().setNewGamePageController(this);}
 
-    // Constructor with stage parameter
-    public NewGamePageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
     }
 
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
+    }
     public void start() throws Exception {
 
         // Load FXML file
@@ -51,46 +53,49 @@ public class NewGamePageController {
         } else {
             System.out.println("CSS file not found");
         }
-        stage.getScene().setRoot(root);
-    }
-
-    public void backPage(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        StartingPageController startingPageController = new StartingPageController(stage);
-        try {
-            startingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        getStage().getScene().setRoot(root);
     }
 
     public void setNumberPlayers(ActionEvent actionEvent) {
         if(twoPlayersRadioButton.isSelected()){
 
+            threePlayersRadioButton.setVisible(false);
+            fourPlayersRadioButton.setVisible(false);
             numberPlayers=2;
 
         } else if (threePlayersRadioButton.isSelected()) {
 
+            twoPlayersRadioButton.setVisible(false);
+            fourPlayersRadioButton.setVisible(false);
             numberPlayers=3;
 
         } else if (fourPlayersRadioButton.isSelected()) {
 
+            threePlayersRadioButton.setVisible(false);
+            twoPlayersRadioButton.setVisible(false);
             numberPlayers=4;
         }
 
+        GUIsingleton.getInstance().getGui().createMatch(numberPlayers); // do not use this.gui
+    }
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        WaitingPageController waitingPageController = new WaitingPageController(stage);
+    public void nextPage(){
+        WaitingPageController waitingPageController = new WaitingPageController();
         try {
             waitingPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
 
-        System.out.println(numberPlayers);
+    public void backPage(ActionEvent actionEvent) throws IOException {
+
+        StartingPageController startingPageController = new StartingPageController();
+        try {
+            startingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

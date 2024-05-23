@@ -4,90 +4,106 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static polimi.ingsoft.server.enumerations.ERROR_MESSAGES.MATCH_DOES_NOT_EXIST;
+
 public class JoinGamePageController implements Initializable {
-    private Stage stage;
-    private String game;
+    private int gameId;
     private boolean selected;
     @FXML
     SplitMenuButton gameList;
     @FXML
-    Button errButton;
+    Button errButtonFull;
+    @FXML
+    Button errButtonNoSel;
 
     // Default constructor
-    public JoinGamePageController() {}
+    public JoinGamePageController() {
+        GUIsingleton.getInstance().setJoinGamePageController(this);
+    }
 
-    // Constructor with stage parameter
-    public JoinGamePageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        errButton.setVisible(false);
-        List<String> items = List.of("Game 1", "Game 2", "Game 3"); // CALL MODEL
+        errButtonFull.setVisible(false);
+        errButtonNoSel.setVisible(false);
+        List<Integer> items = getGui().getMatchList();
         resetGame();
         setGameList(items);
     }
     public void resetGame(){
-        setGame("Games");
+        gameList.setText("Games");
         selected = false;
         gameList.setStyle("-fx-background-color: white;");
     }
-    public void setGame(String s){
-        game=String.valueOf(s);
-        gameList.setText(game);
+    public void setGame(Integer s){
+        gameList.setText(s.toString());
+        gameId = s;
     }
 
-    public void setGameList(List<String> games) {
+    public void setGameList(List<Integer> games) {
         gameList.getItems().clear();
-        for (String game : games) {
-            MenuItem menuItem = new MenuItem(game);
+        for (Integer game : games) {
+            MenuItem menuItem = new MenuItem(game.toString());
             menuItem.setOnAction(e -> handleMenuItemAction(game));
             gameList.getItems().add(menuItem);
         }
     }
 
-    private void handleMenuItemAction(String s) {
+    private void handleMenuItemAction(Integer s) {
         if(!selected){
             selected = true;
-            errButton.setVisible(false);
+            errButtonFull.setVisible(false);
+            errButtonNoSel.setVisible(false);
         }
         setGame(s);
     }
 
-    public void refreshGames(){
+    public void updateGames(){
         resetGame();
-        List<String> items = List.of("Game 1", "Game 2");  // REFRESH LIST
-        setGameList(items);
+        setGameList(getGui().getMatchList());
     }
 
-    public void nextPage(ActionEvent actionEvent) throws IOException {
+    public void selectGame(ActionEvent actionEvent) throws IOException {
 
         if(selected){
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            WaitingPageController waitingPageController = new WaitingPageController(stage);
-            try {
-                waitingPageController.start();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            getGui().joinMatch(gameId);
         }else{
-            gameList.setStyle("-fx-background-color: #d34813;");
-            gameList.setText("Select a game");// ADD ERROR WINDOWS
-            errButton.setVisible(true);
+            showError(MATCH_DOES_NOT_EXIST);
+        }
+    }
+
+    public void showError(ERROR_MESSAGES errorMessages){
+        gameList.setStyle("-fx-background-color: #d34813;");
+        //gameList.setText("Select a game");// ADD ERROR WINDOWS
+
+        switch (errorMessages){
+            case MATCH_IS_ALREADY_FULL -> {
+                errButtonFull.setVisible(true);
+            }
+            case MATCH_DOES_NOT_EXIST -> {
+                errButtonNoSel.setVisible(true);
+            }
         }
     }
 
@@ -110,16 +126,23 @@ public class JoinGamePageController implements Initializable {
         } else {
             System.out.println("CSS file not found");
         }
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
 
 
     }
 
+    public void nextPage(){
+        WaitingPageController waitingPageController = new WaitingPageController();
+        try {
+            waitingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void backPage(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        StartingPageController startingPageController = new StartingPageController(stage);
+        StartingPageController startingPageController = new StartingPageController();
         try {
             startingPageController.start();
         } catch (Exception e) {

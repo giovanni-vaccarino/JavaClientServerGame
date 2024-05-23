@@ -34,7 +34,7 @@ public class MainClient {
             while (true) { }
         } catch (IOException e) {
             printStream.println("Error: " + e.getMessage());
-        }
+        }//TODO nullpointer exception se scegli RMI da una rete in cui non c'è nessun server
     }
     
     private static Client createClient(Protocols protocol) throws IOException {
@@ -46,7 +46,7 @@ public class MainClient {
 
     private static Client createRmiClient() {
         try {
-            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner);
+            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.GUI, printStream, scanner);
         } catch (RemoteException | NotBoundException exception) {
             System.out.println(exception);
             return null;
@@ -54,6 +54,6 @@ public class MainClient {
     }
 
     private static Client createSocketClient() throws IOException {
-        return new SocketClient(socketServerHostName, socketServerPort, UIType.CLI, printStream, scanner);
+        return new SocketClient(socketServerHostName, socketServerPort, UIType.GUI, printStream, scanner);
     }
 }

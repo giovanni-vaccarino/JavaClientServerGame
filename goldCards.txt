@@ -1,0 +1,936 @@
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":["FEATHER"],"empty":false},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":2,"BUTTERFLY":0,"FEATHER":0,"WOLF":1,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":1,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard1"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":["POTION"],"empty":false},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":2,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":1,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":1,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard2"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["SCROLL"],"empty":false},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":2,"BUTTERFLY":1,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":1}
+	},
+"id":"GoldCard3"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":3,"BUTTERFLY":0,"FEATHER":0,"WOLF":1,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard4"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":3,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":1,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard5"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":3,"BUTTERFLY":1,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard6"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":["POTION"],"empty":false}
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":3,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard7"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["FEATHER"],"empty":false}
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":3,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard8"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":["SCROLL"],"empty":false}
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":3,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard9"
+}
+{
+"score":5,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["MUSHROOM"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":5,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard10"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["FEATHER"],"empty":false},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":1,"FEATHER":0,"WOLF":0,"LEAF":2,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":1,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard11"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":["SCROLL"],"empty":false},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":1,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":2,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":1}
+	},
+"id":"GoldCard12"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":["POTION"],"empty":false},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":1,"LEAF":2,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":1,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard13"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":1,"FEATHER":0,"WOLF":0,"LEAF":3,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard14"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":1,"LEAF":3,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard15"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":1,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":3,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard16"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":["FEATHER"],"empty":false},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":3,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard17"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["SCROLL"],"empty":false},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":3,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard18"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":["POTION"],"empty":false},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":3,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard19"
+}
+{
+"score":5,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["LEAF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":5,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard20"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["POTION"],"empty":false},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":1,"FEATHER":0,"WOLF":2,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":1,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard21"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":["SCROLL"],"empty":false},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":2,"LEAF":1,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":1}
+	},
+"id":"GoldCard22"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":["FEATHER"],"empty":false},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":1,"BUTTERFLY":0,"FEATHER":0,"WOLF":2,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":1,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard23"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":1,"FEATHER":0,"WOLF":3,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard24"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":1,"BUTTERFLY":0,"FEATHER":0,"WOLF":3,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard25"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":3,"LEAF":1,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard26"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":["SCROLL"],"empty":false},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":3,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard27"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":["POTION"],"empty":false},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":3,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard28"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":{"items":["FEATHER"],"empty":false},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":3,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard29"
+}
+{
+"score":5,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["WOLF"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":5,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard30"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":["FEATHER"],"empty":false},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":2,"FEATHER":0,"WOLF":0,"LEAF":1,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":1,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard31"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":["SCROLL"],"empty":false},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":2,"FEATHER":0,"WOLF":1,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":1}
+	},
+"id":"GoldCard32"
+}
+{
+"score":1,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":["POTION"],"empty":false},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":1,"BUTTERFLY":2,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":{"POTION":1,"MUSHROOM":0,"BUTTERFLY":0,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+	},
+"id":"GoldCard33"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":3,"FEATHER":0,"WOLF":1,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard34"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":3,"FEATHER":0,"WOLF":0,"LEAF":1,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard35"
+}
+{
+"score":2,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":null,
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":1,"BUTTERFLY":3,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":{
+	"cost":"Corner"
+	},
+"id":"GoldCard36"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":["POTION"],"empty":false},
+	"upRight":null,
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":3,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard37"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":["SCROLL"],"empty":false},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":3,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard38"
+}
+{
+"score":3,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":null,
+	"upRight":null,
+	"bottomLeft":{"items":["FEATHER"],"empty":false},
+	"bottomRight":{"items":[],"empty":true},
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":3,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard39"
+}
+{
+"score":5,
+"front":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":{"items":[],"empty":true},
+	"bottomRight":{"items":[],"empty":true},
+	"center":{"items":["BUTTERFLY"],"empty":false}
+	},
+"back":{
+	"upLeft":{"items":[],"empty":true},
+	"upRight":{"items":[],"empty":true},
+	"bottomLeft":null,
+	"bottomRight":null,
+	"center":null
+	},
+"playPattern":{
+		"cost":{"POTION":0,"MUSHROOM":0,"BUTTERFLY":5,"FEATHER":0,"WOLF":0,"LEAF":0,"SCROLL":0}
+		},
+"pointPattern":null,
+"id":"GoldCard40"
+}

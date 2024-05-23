@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 
@@ -146,6 +147,16 @@ public class CLI extends UI {
         this.matchIds.add(matchId);
         out.println(MESSAGES.CREATED_MATCH.getValue());
         joinMatch(matchId);
+    }
+
+    @Override
+    public void reportError(ERROR_MESSAGES errorMessage) {
+
+    }
+
+    @Override
+    public void showUpdateGameState(GameState gameState) {
+
     }
 
     private void joinMatch(Integer matchId) {

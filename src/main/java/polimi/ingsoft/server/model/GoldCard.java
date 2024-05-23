@@ -33,5 +33,8 @@ public class GoldCard extends MixedCard {
     public int getPoints(Board board, Coordinates coordinates){
         return pointPattern==null? 1:pointPattern.getMatch(board,coordinates);
     }
+    public int getScore(){
+        return super.getScore();
+    }
 
 }

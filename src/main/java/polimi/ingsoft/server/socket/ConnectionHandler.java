@@ -11,6 +11,7 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
@@ -64,11 +65,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             String nickname = (String) payload;
                             try {
                                 this.server.setNicknameForClient(this.nickname, nickname);
+                                this.nickname = nickname;
+                                this.server.singleUpdateNickname(this);
                             } catch (NicknameNotAvailableException exception) {
                                 this.reportError(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE);
                             }
-                            this.nickname = nickname;
-                            this.server.singleUpdateNickname(this);
                         }
                         case MATCHES_LIST_REQUEST -> {
                             List<Integer> matches = controller.getMatches();
@@ -299,6 +300,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
         synchronized (this.server.clients) {
             this.server.clients.put(nickname, this);
         }
+    }
+
+    @Override
+    public void handleRmiClientMessages(RmiMethodCall rmiMethodCall) {
+
     }
 
     @Override
