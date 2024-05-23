@@ -1,5 +1,10 @@
 package polimi.ingsoft.client.ui.cli;
 
+import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.server.model.InitialCard;
+import polimi.ingsoft.server.model.QuestCard;
+
+import java.awt.desktop.QuitStrategy;
 import java.io.PrintStream;
 
 public class Printer {
@@ -40,6 +45,17 @@ public class Printer {
                 argument.toLowerCase().equals(PublicBoardArguments.RESOURCE.getValue()))
             out.println(MESSAGES.HELPGETCARDPLACE.getValue());
         else out.println(MESSAGES.ERROR.getValue() );
+    }
+    public void printInitialCardChoice(InitialCard initialCard){
+        out.print(MESSAGES.HELPINITIALCARDCHOICE.getValue());
+        ClientHand hand=new ClientHand();
+        hand.initialPrint(initialCard);
+        hand=null;
+    }
+    public void printQuestCardChoice(QuestCard quest1, QuestCard quest2){
+        out.print(MESSAGES.HELPINITIALQUESTCHOICE.getValue());
+        ClientPublicBoard temp=new ClientPublicBoard(quest1,quest2,null,null,null,null,null,null);
+        temp.printInitialQuests();
 
     }
 }

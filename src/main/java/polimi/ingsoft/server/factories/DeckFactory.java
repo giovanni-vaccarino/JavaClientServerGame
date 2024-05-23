@@ -2,16 +2,8 @@ package polimi.ingsoft.server.factories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import netscape.javascript.JSObject;
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
-
-import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class DeckFactory {

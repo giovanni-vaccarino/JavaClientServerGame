@@ -26,6 +26,7 @@ public class ClientHand {
         this.isFlipped = new ArrayList<>();
     }
 
+
     public void addCard(MixedCard card) {
         if (cards.size() < 3) {
             this.cards.add(card);
@@ -42,7 +43,11 @@ public class ClientHand {
             case Resource.WOLF -> BLUE;
         };
     }
-
+    public void initialPrint(InitialCard initial){
+        cards.add(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0));
+        print();
+        this.cards=new ArrayList<>();
+    }
     public void print() {
         for (int j = 0; j < 9; j++) {
             for (int i = 0; i < cards.size(); i++) {
