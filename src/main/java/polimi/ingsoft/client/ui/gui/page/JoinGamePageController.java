@@ -27,7 +27,6 @@ public class JoinGamePageController implements Initializable {
     // Default constructor
     public JoinGamePageController() {
         GUIsingleton.getInstance().setJoinGamePageController(this);
-        getGui().getClientMatches();
     }
 
     public GUI getGui(){
@@ -73,8 +72,7 @@ public class JoinGamePageController implements Initializable {
 
     public void refreshGames(){
         resetGame();
-        List<String> items = List.of("Game 1", "Game 2");  // REFRESH LIST
-        setGameList(items);
+        setGameList(getGui().getMatchList());
     }
 
     public void nextPage(ActionEvent actionEvent) throws IOException {

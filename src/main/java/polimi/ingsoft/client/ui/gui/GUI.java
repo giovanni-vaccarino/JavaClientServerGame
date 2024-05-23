@@ -24,6 +24,7 @@ public class GUI extends UI{
 
     @Override
     public void showWelcomeScreen() throws IOException {
+        getClientMatches();
         homeController = new HomeController();
         HomeController.main(new String[]{});
     }
