@@ -34,7 +34,7 @@ public class MainClient {
             while (true) { }
         } catch (IOException e) {
             printStream.println("Error: " + e.getMessage());
-        }
+        }//TODO nullpointer exception se scegli RMI da una rete in cui non c'è nessun server
     }
     
     private static Client createClient(Protocols protocol) throws IOException {

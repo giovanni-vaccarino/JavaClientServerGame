@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 
@@ -144,6 +145,11 @@ public class CLI extends UI {
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) {
+
+    }
+
+    @Override
+    public void showUpdateGameState(GameState gameState) {
 
     }
 

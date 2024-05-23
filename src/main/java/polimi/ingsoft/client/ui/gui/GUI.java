@@ -4,8 +4,10 @@ import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,6 +21,7 @@ public class GUI extends UI{
     private Integer matchId;
     private List<Integer> matchList;
     private CLIENT_STATE clientState;
+    private GameState gameState;
 
     public GUI(Client client){
         this.client=client;
@@ -102,11 +105,6 @@ public class GUI extends UI{
     }
 
     @Override
-    public void updatePlayersInLobby(List<String> nicknames) {
-
-    }
-
-    @Override
     public void showMatchCreate(Integer matchId) {
         this.matchId = matchId;
         try {
@@ -115,6 +113,27 @@ public class GUI extends UI{
         }
     }
 
+    @Override
+    public void showUpdateGameState(GameState gameState) {
+        this.gameState = gameState;
+        switch (gameState.getGamePhase()){
+            case INITIALIZATION -> {
+                switch (gameState.getCurrentInitialStep()){
+                    case COLOR -> {
+                        nextPageWaiting();
+                    }
+                }
+            }
+        }
+    }
 
+    public void nextPageWaiting(){
+        GUIsingleton.getInstance().getWaitingPageController().nextPage();
+    }
+
+    @Override
+    public void updatePlayersInLobby(List<String> nicknames) {
+
+    }
 
 }
