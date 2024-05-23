@@ -12,7 +12,7 @@
     -fx-border-width: 0;
     -fx-padding: 0.0em; /* Adjust padding as needed */
     /*-fx-text-fill: #d34813;*/
-    -fx-text-fill: #705f16;
+    /*-fx-text-fill: #705f16;*/
     -fx-font-family: 'Old English Text MT';
     -fx-underline: true;
 }

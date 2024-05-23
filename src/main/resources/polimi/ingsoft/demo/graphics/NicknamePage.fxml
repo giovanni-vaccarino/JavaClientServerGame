@@ -17,6 +17,15 @@
 >
     <children>
 
+        <StackPane layoutX="1100.0" layoutY="40.0" prefWidth="200" prefHeight="120" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="Error!"
+                        prefWidth="200" prefHeight="120" styleClass="errorPane"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        fx:id="errButton">
+                </Button>
+            </children>
+        </StackPane>
 
         <StackPane layoutX="0.0" layoutY="250.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
@@ -39,16 +48,6 @@
                         prefWidth="150" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#validateNickname">
-                </Button>
-            </children>
-        </StackPane>
-
-        <StackPane layoutX="385.0" layoutY="360.0" prefWidth="100" prefHeight="100" alignment="CENTER_LEFT">
-            <children>
-                <Button mnemonicParsing="false" text="Back"
-                        prefWidth="50" prefHeight="50" styleClass="buttonBack"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        onAction="#backPage">
                 </Button>
             </children>
         </StackPane>

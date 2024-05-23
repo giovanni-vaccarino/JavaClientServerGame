@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,7 +19,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class JoinGamePageController implements Initializable {
-    private Stage stage;
     private String game;
     private boolean selected;
     @FXML
@@ -26,11 +27,16 @@ public class JoinGamePageController implements Initializable {
     Button errButton;
 
     // Default constructor
-    public JoinGamePageController() {}
+    public JoinGamePageController() {
+        GUIsingleton.getInstance().setJoinGamePageController(this);
+    }
 
-    // Constructor with stage parameter
-    public JoinGamePageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
 
     @Override
@@ -39,6 +45,7 @@ public class JoinGamePageController implements Initializable {
         List<String> items = List.of("Game 1", "Game 2", "Game 3"); // CALL MODEL
         resetGame();
         setGameList(items);
+        gameList.setStyle("-fx-background-color: white;");
     }
     public void resetGame(){
         setGame("Games");
@@ -76,9 +83,7 @@ public class JoinGamePageController implements Initializable {
     public void nextPage(ActionEvent actionEvent) throws IOException {
 
         if(selected){
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            WaitingPageController waitingPageController = new WaitingPageController(stage);
+            WaitingPageController waitingPageController = new WaitingPageController(getStage());
             try {
                 waitingPageController.start();
             } catch (Exception e) {
@@ -110,16 +115,14 @@ public class JoinGamePageController implements Initializable {
         } else {
             System.out.println("CSS file not found");
         }
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
 
 
     }
 
     public void backPage(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        StartingPageController startingPageController = new StartingPageController(stage);
+        StartingPageController startingPageController = new StartingPageController();
         try {
             startingPageController.start();
         } catch (Exception e) {

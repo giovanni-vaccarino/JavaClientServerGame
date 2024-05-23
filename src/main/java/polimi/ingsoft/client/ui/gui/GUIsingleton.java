@@ -1,16 +1,16 @@
 package polimi.ingsoft.client.ui.gui;
 
 import javafx.stage.Stage;
-import polimi.ingsoft.client.ui.gui.page.ConnectionPageController;
-import polimi.ingsoft.client.ui.gui.page.NewGamePageController;
-import polimi.ingsoft.client.ui.gui.page.NicknamePageController;
+import polimi.ingsoft.client.ui.gui.page.*;
 
 public class GUIsingleton {
     private static GUIsingleton instance;
 
     private ConnectionPageController connectionPageController;
     private NicknamePageController nicknamePageController;
+    private StartingPageController startingPageController;
     private NewGamePageController newGamePageController;
+    private JoinGamePageController joinGamePageController;
     private Stage stage;
     private GUI gui;
 
@@ -63,5 +63,21 @@ public class GUIsingleton {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public StartingPageController getStartingPageController() {
+        return startingPageController;
+    }
+
+    public void setStartingPageController(StartingPageController startingPageController) {
+        this.startingPageController = startingPageController;
+    }
+
+    public JoinGamePageController getJoinGamePageController() {
+        return joinGamePageController;
+    }
+
+    public void setJoinGamePageController(JoinGamePageController joinGamePageController) {
+        this.joinGamePageController = joinGamePageController;
     }
 }
