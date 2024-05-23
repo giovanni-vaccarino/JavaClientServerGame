@@ -115,17 +115,21 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     matchControllerServer.put(matchId, stubController);
 
                     synchronized (this.clients) {
+                        RmiMethodCall rmiMethodCallMatchCreate = new RmiMethodCall(MessageCodes.MATCH_CREATE_UPDATE, new Object[]{matchId});
+                        RmiMethodCall rmiMethodCallMatchesList = new RmiMethodCall(MessageCodes.MATCHES_LIST_UPDATE, new Object[]{listMatches});
+
                         for (var client : this.clients.values()) {
                             if(client.equals(clientToUpdate)){
-                                client.showUpdateMatchCreate(matchId);
+                                client.handleRmiClientMessages(rmiMethodCallMatchCreate);
                             }
-                            client.showUpdateMatchesList(listMatches);
+                            client.handleRmiClientMessages(rmiMethodCallMatchesList);
                         }
                     }
 
                 } catch (NotValidNumPlayersException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR, new Object[]{ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 }
             }
@@ -147,13 +151,19 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                         matchNotificationList.get(matchId).add(clientToUpdate);
                     }
 
+                    RmiMethodCall rmiMethodCallMatchJoin = new RmiMethodCall(MessageCodes.MATCH_JOIN_UPDATE, new Object[]{});
+                    RmiMethodCall rmiMethodCallMatchControllerStub = new RmiMethodCall(MessageCodes.MATCH_CONTROLLER_STUB_UPDATE, new Object[]{matchControllerServer.get(matchId)});
+
+
                     synchronized (this.clients){
-                        clientToUpdate.showUpdateMatchJoin();
-                        clientToUpdate.setMatchControllerServer(matchControllerServer.get(matchId));
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchJoin);
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchControllerStub);
                     }
+
                 } catch (MatchAlreadyFullException | MatchNotFoundException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR, new Object[]{ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 }
             }

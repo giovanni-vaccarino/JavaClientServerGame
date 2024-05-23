@@ -12,6 +12,7 @@ public enum MessageCodes {
     MATCH_CREATE_REQUEST,
     MATCH_CREATE_UPDATE,
     LOBBY_PLAYERS_UPDATE,
+    MATCH_CONTROLLER_STUB_UPDATE,
 
     // Game initialization
     SET_COLOR_REQUEST,
