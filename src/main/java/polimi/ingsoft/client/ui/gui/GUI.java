@@ -2,7 +2,6 @@ package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
@@ -16,6 +15,7 @@ public class GUI extends UI{
     private Client client;
     private String nickname;
     private Integer matchId;
+    private List<String> matchList;
 
     public GUI(Client client){
         this.client=client;
@@ -24,7 +24,6 @@ public class GUI extends UI{
 
     @Override
     public void showWelcomeScreen() throws IOException {
-        client.getMatches(this.client);
         homeController = new HomeController();
         HomeController.main(new String[]{});
     }
@@ -54,6 +53,17 @@ public class GUI extends UI{
         }
     }
 
+    public void getClientMatches(){
+        try {
+            client.getMatches(this.client);
+        } catch (IOException ignore) {
+        }
+    }
+
+    public List<String> getMatchList(){
+        return matchList;
+    }
+
     @Override
     public void showUpdateMatchJoin() {
         GUIsingleton.getInstance().getNewGamePageController().nextPage();
@@ -61,11 +71,9 @@ public class GUI extends UI{
 
     @Override
     public void updateMatchesList(List<Integer> matches) {
-        List<String> stringList = matches.stream()
+        matchList = matches.stream()
                 .map(String::valueOf)
                 .collect(Collectors.toList());
-
-        GUIsingleton.getInstance().getJoinGamePageController().setGameList(stringList);
     }
 
     @Override

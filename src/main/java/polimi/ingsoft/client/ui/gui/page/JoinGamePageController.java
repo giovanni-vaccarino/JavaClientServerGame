@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class JoinGamePageController implements Initializable {
-    private String game;
     private boolean selected;
     @FXML
     SplitMenuButton gameList;
@@ -29,6 +27,7 @@ public class JoinGamePageController implements Initializable {
     // Default constructor
     public JoinGamePageController() {
         GUIsingleton.getInstance().setJoinGamePageController(this);
+        getGui().getClientMatches();
     }
 
     public GUI getGui(){
@@ -42,7 +41,7 @@ public class JoinGamePageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         errButton.setVisible(false);
-        List<String> items = List.of();
+        List<String> items = getGui().getMatchList();
         resetGame();
         setGameList(items);
     }
@@ -52,8 +51,7 @@ public class JoinGamePageController implements Initializable {
         gameList.setStyle("-fx-background-color: white;");
     }
     public void setGame(String s){
-        game=String.valueOf(s);
-        gameList.setText(game);
+        gameList.setText(String.valueOf(s));
     }
 
     public void setGameList(List<String> games) {
