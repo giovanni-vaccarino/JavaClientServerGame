@@ -19,11 +19,15 @@ private static final String RESOURCE="resourceCards.txt";
     }
 
     public Deck<ResourceCard> createResourceDeck() throws JsonProcessingException {
-        ArrayList<ResourceCard> deck=new ArrayList<>();
-
-        cardCreator.readValue(RESOURCE,ResourceCard.class);
-
-        return new Deck<ResourceCard>(deck);
+        ArrayList<ResourceCard> cards=new ArrayList<>();
+        Deck<ResourceCard>deck;
+        cards.add(new ResourceCard(null,null,null,0));
+        cards.add(new ResourceCard(null,null,null,0));
+        cards.add(new ResourceCard(null,null,null,0));
+        deck=new Deck<>(cards);
+        //cardCreator.readValue(RESOURCE,Deck.class);
+        cardCreator.writeValueAsString(deck);
+        return new Deck<ResourceCard>(cards);
     }
     public Deck<GoldCard>createGoldDeck()throws JsonProcessingException {
         ArrayList<GoldCard> deck=new ArrayList<>();
