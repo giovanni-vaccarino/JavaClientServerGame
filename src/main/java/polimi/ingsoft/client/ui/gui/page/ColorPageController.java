@@ -12,6 +12,8 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 
 import java.io.IOException;
@@ -20,7 +22,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ColorPageController implements Initializable {
-    private Stage stage;
     private String color;
     private boolean selected;
     @FXML
@@ -31,11 +32,16 @@ public class ColorPageController implements Initializable {
     ImageView colorSelected;
 
     // Default constructor
-    public ColorPageController() {}
+    public ColorPageController() {
+        GUIsingleton.getInstance().setColorPageController(this);
+    }
 
-    // Constructor with stage parameter
-    public ColorPageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
 
     @Override
@@ -117,9 +123,7 @@ public class ColorPageController implements Initializable {
     public void nextPage(ActionEvent actionEvent) throws IOException {
 
         if(selected){
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            ColorWaitingPageController colorWaitingPageController = new ColorWaitingPageController(stage);
+            ColorWaitingPageController colorWaitingPageController = new ColorWaitingPageController();
             try {
                 colorWaitingPageController.start();
             } catch (Exception e) {
@@ -150,7 +154,7 @@ public class ColorPageController implements Initializable {
         } else {
             System.out.println("CSS file not found");
         }
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 }
 

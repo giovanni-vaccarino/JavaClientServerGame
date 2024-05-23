@@ -5,20 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class InitialCardWaitingPageController {
-    private Stage stage;
-
-    // Default constructor
-    public InitialCardWaitingPageController() {}
-
-    // Constructor with stage parameter
-    public InitialCardWaitingPageController(Stage stage) {
-        this.stage = stage;
+   public InitialCardWaitingPageController() {
+       GUIsingleton.getInstance().setInitialCardWaitingPageController(this);
+   }
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
     }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
+    }
+
     public void start() throws Exception {
         // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/InitialCardWaitingPage.fxml");
@@ -43,25 +47,16 @@ public class InitialCardWaitingPageController {
             System.out.println("CSS file not found");
         }
 
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void nextPage(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        QuestCardPageController questCardPageController = new QuestCardPageController(stage);
+        QuestCardPageController questCardPageController = new QuestCardPageController();
         try {
             questCardPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        /*GamePageController gamePageController = new GamePageController(stage);
-        try {
-            gamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
     }
 }

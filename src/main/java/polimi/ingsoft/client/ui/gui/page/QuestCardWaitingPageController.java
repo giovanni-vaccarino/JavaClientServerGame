@@ -5,19 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class QuestCardWaitingPageController {
-    private Stage stage;
 
-    // Default constructor
-    public QuestCardWaitingPageController() {}
+    public QuestCardWaitingPageController() {
+        GUIsingleton.getInstance().setQuestCardWaitingPageController(this);
+    }
 
-    // Constructor with stage parameter
-    public QuestCardWaitingPageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
     public void start() throws Exception {
         // Load FXML file
@@ -43,14 +48,12 @@ public class QuestCardWaitingPageController {
             System.out.println("CSS file not found");
         }
 
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void nextPage(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        GamePageController gamePageController = new GamePageController(stage);
+        GamePageController gamePageController = new GamePageController();
         try {
             gamePageController.start();
         } catch (Exception e) {

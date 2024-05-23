@@ -66,7 +66,7 @@ public class WaitingPageController {
     }
 
     public void nextPage(){
-        ColorPageController colorPageController = new ColorPageController(getStage());
+        ColorPageController colorPageController = new ColorPageController();
         try {
             colorPageController.start();
         } catch (Exception e) {

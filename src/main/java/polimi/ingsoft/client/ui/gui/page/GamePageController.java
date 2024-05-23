@@ -25,6 +25,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import polimi.ingsoft.client.ui.gui.Coordinates;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.Chat;
@@ -39,7 +41,6 @@ import java.util.*;
  */
 
 public class GamePageController implements Initializable{
-    private Stage stage;
 
     @FXML private GridPane coveredDrawableDeck1;
     @FXML private GridPane coveredDrawableDeck2;
@@ -98,10 +99,8 @@ public class GamePageController implements Initializable{
     private int chatSelected;
 
 
-    public GamePageController() {}
-
-    public GamePageController(Stage stage) {
-        this.stage = stage;
+    public GamePageController() {
+        GUIsingleton.getInstance().setGamePageController(this);
     }
 
     @Override
@@ -245,6 +244,14 @@ public class GamePageController implements Initializable{
                 System.out.println(y);
             });
         }
+    }
+
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
 
     public void setNumTable() {
@@ -959,6 +966,6 @@ public class GamePageController implements Initializable{
         fadeTransition.setToValue(1.0);
         fadeTransition.play();*/
 
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 }

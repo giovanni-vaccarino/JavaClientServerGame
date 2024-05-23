@@ -10,13 +10,14 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class InitialCardPageController implements Initializable {
-    private Stage stage;
     @FXML
     private ImageView initialCard;
     private String frontInitialCardPath;
@@ -25,11 +26,16 @@ public class InitialCardPageController implements Initializable {
     private boolean flip;
 
     // Default constructor
-    public InitialCardPageController() {}
+    public InitialCardPageController() {
+        GUIsingleton.getInstance().setInitialCardPageController(this);
+    }
 
-    // Constructor with stage parameter
-    public InitialCardPageController(Stage stage) {
-        this.stage = stage;
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
+
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
 
     @Override
@@ -96,14 +102,12 @@ public class InitialCardPageController implements Initializable {
             System.out.println("CSS file not found");
         }
 
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void nextPage(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        InitialCardWaitingPageController initialCardWaitingPageController = new InitialCardWaitingPageController(stage);
+        InitialCardWaitingPageController initialCardWaitingPageController = new InitialCardWaitingPageController();
         try {
             initialCardWaitingPageController.start();
         } catch (Exception e) {

@@ -10,13 +10,14 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class QuestCardPageController implements Initializable {
-    private Stage stage;
     @FXML
     private ImageView questCard1;
     @FXML
@@ -26,13 +27,16 @@ public class QuestCardPageController implements Initializable {
 
     private boolean selected; // 0 -- questCard1, 1 -- questCard2
 
+    public QuestCardPageController() {
+        GUIsingleton.getInstance().setQuestCardPageController(this);
+    }
 
-    // Default constructor
-    public QuestCardPageController() {}
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
 
-    // Constructor with stage parameter
-    public QuestCardPageController(Stage stage) {
-        this.stage = stage;
+    public Stage getStage(){
+        return GUIsingleton.getInstance().getStage();
     }
 
     @Override
@@ -95,30 +99,22 @@ public class QuestCardPageController implements Initializable {
             System.out.println("CSS file not found");
         }
 
-        stage.getScene().setRoot(root);
+        getStage().getScene().setRoot(root);
     }
 
     public void questCard1Selected(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
         selected = false;
-
-        nextPage(stage);
+        nextPage();
     }
 
     public void questCard2Selected(ActionEvent actionEvent) throws IOException {
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
         selected = true;
-
-        nextPage(stage);
+        nextPage();
     }
 
-    public void nextPage(Stage stage) throws IOException{
+    public void nextPage() throws IOException{
 
-        QuestCardWaitingPageController questCardWaitingPageController = new QuestCardWaitingPageController(stage);
+        QuestCardWaitingPageController questCardWaitingPageController = new QuestCardWaitingPageController();
         try {
             questCardWaitingPageController.start();
         } catch (Exception e) {
