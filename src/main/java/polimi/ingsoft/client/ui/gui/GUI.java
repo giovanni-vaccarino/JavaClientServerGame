@@ -8,6 +8,7 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GUI extends UI{
 
@@ -23,6 +24,7 @@ public class GUI extends UI{
 
     @Override
     public void showWelcomeScreen() throws IOException {
+        client.getMatches(this.client);
         homeController = new HomeController();
         HomeController.main(new String[]{});
     }
@@ -59,7 +61,11 @@ public class GUI extends UI{
 
     @Override
     public void updateMatchesList(List<Integer> matches) {
+        List<String> stringList = matches.stream()
+                .map(String::valueOf)
+                .collect(Collectors.toList());
 
+        GUIsingleton.getInstance().getJoinGamePageController().setGameList(stringList);
     }
 
     @Override
