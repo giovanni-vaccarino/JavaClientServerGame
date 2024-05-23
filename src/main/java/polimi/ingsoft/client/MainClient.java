@@ -16,9 +16,9 @@ import java.util.Scanner;
 public class MainClient {
     private static final PrintStream printStream = System.out;
     private static final Scanner scanner = new Scanner(System.in);
-    private static final String socketServerHostName = "127.0.0.1";
+    private static final String socketServerHostName = "192.168.129.134";
     private static final int socketServerPort = 4444;
-    private static final String rmiServerHostName = "127.0.0.1";
+    private static final String rmiServerHostName = "192.168.129.134";
     private static final int rmiServerPort = 1234;
     private static final String rmiServerName = "MatchManagerServer";
 
@@ -34,7 +34,7 @@ public class MainClient {
             while (true) { }
         } catch (IOException e) {
             printStream.println("Error: " + e.getMessage());
-        }
+        }//TODO nullpointer exception se scegli RMI da una rete in cui non c'è nessun server
     }
     
     private static Client createClient(Protocols protocol) throws IOException {

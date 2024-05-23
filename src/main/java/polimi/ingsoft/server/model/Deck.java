@@ -3,7 +3,7 @@ package polimi.ingsoft.server.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck<T extends Drawable> extends CardCollection<T> {
+public class Deck<T extends Drawable> extends CardCollection<T> implements  Serializable {
 
 
     public Deck(ArrayList<T> cards){
