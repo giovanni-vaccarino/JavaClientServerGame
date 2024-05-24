@@ -3,6 +3,7 @@ package polimi.ingsoft.client.ui;
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 
@@ -28,6 +29,11 @@ public abstract class UI {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+        try {
+            getClient().setNickname(nickname);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public abstract void showWelcomeScreen() throws IOException;
@@ -38,6 +44,7 @@ public abstract class UI {
     public abstract void showMatchCreate(Integer matchId);
     public abstract void reportError(ERROR_MESSAGES errorMessage);
     public abstract void showUpdateGameState(GameState gameState);
+    public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
 
     public void setColor(PlayerColor playerColor){
         try {

@@ -74,7 +74,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException {
-
+        ui.showUpdateInitialSettings(playerInitialSetting);
     }
 
     @Override
