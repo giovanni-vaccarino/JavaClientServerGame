@@ -157,12 +157,13 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
 
                     RmiMethodCall rmiMethodCallMatchJoin = new RmiMethodCall(MessageCodes.MATCH_JOIN_UPDATE, new Object[]{});
                     RmiMethodCall rmiMethodCallMatchControllerStub = new RmiMethodCall(MessageCodes.MATCH_CONTROLLER_STUB_UPDATE, new Object[]{matchControllerServer.get(matchId)});
-                    //RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
+                    RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
+
 
                     synchronized (this.clients){
                         clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchJoin);
                         clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchControllerStub);
-                        //clientToUpdate.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
 
                         if(gameState.getGamePhase() == GAME_PHASE.INITIALIZATION){
                             for(var player : players){

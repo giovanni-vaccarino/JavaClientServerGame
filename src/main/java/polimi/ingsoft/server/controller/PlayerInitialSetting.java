@@ -3,12 +3,13 @@ package polimi.ingsoft.server.controller;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents the initial settings for a player in the game.
  */
-public class PlayerInitialSetting {
+public class PlayerInitialSetting implements Serializable {
 
     private final String nickname;
 
