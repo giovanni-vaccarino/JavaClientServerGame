@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
@@ -59,11 +60,17 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 try{
                     matchController.setPlayerColor(player, color);
                     GameState gameState = matchController.getGameState();
+                    PlayerInitialSetting playerInitialSetting = matchController.getPlayerInitialSettingByNickname(player)
+                            .orElse(null);
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
 
                         for(var client : this.clients){
+                            if(client.equals(clientToUpdate)){
+                                client.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
+                            }
                             client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
@@ -86,11 +93,17 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 try{
                     matchController.setFaceInitialCard(player, isFaceUp);
                     GameState gameState = matchController.getGameState();
+                    PlayerInitialSetting playerInitialSetting = matchController.getPlayerInitialSettingByNickname(player)
+                            .orElse(null);
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
 
                         for(var client : this.clients){
+                            if(client.equals(clientToUpdate)){
+                                client.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
+                            }
                             client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
@@ -111,11 +124,17 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 try{
                     matchController.setQuestCard(player, questCard);
                     GameState gameState = matchController.getGameState();
+                    PlayerInitialSetting playerInitialSetting = matchController.getPlayerInitialSettingByNickname(player)
+                            .orElse(null);
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
 
                         for(var client : this.clients){
+                            if(client.equals(clientToUpdate)){
+                                client.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
+                            }
                             client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
