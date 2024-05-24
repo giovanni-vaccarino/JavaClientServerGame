@@ -6,6 +6,7 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
@@ -96,15 +97,8 @@ public class RmiClient extends Client {
             }
 
             case SET_INITIAL_SETTINGS_UPDATE -> {
-                /*
-                TODO
-                NetworkMessage.InitialSettings initialSettings = (NetworkMessage.InitialSettings) args[0];
-                PlayerColor color = initialSettings.color();
-                Boolean isInitialCardFacingUp = initialSettings.isInitialCardFacingUp();
-                QuestCard questCard = initialSettings.questCard();
-                this.showUpdateInitialSettings(color, isInitialCardFacingUp, questCard);
-                */
-
+                PlayerInitialSetting playerInitialSetting = (PlayerInitialSetting) args[0];
+                this.showUpdateInitialSettings(playerInitialSetting);
             }
 
             case MATCH_GAME_STATE_UPDATE -> {
