@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * The MatchController class manages the state and behavior of a single match.
  */
 public class MatchController implements Serializable {
+
     private final Integer requestedNumPlayers;
 
     private final GameState gameState;
@@ -65,7 +66,6 @@ public class MatchController implements Serializable {
     public Integer getRequestedNumPlayers() {
         return requestedNumPlayers;
     }
-
 
     /**
      * Returns the ID of this match.

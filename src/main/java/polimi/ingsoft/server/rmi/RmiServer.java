@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.rmi;
 
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.Utils;
@@ -18,10 +19,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -154,12 +152,17 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                         matchNotificationList.get(matchId).add(clientToUpdate);
                     }
 
+                    PlayerInitialSetting playerInitialSetting = match.getPlayerInitialSettingByNickname(playerNickname)
+                            .orElse(null);
+
                     RmiMethodCall rmiMethodCallMatchJoin = new RmiMethodCall(MessageCodes.MATCH_JOIN_UPDATE, new Object[]{});
                     RmiMethodCall rmiMethodCallMatchControllerStub = new RmiMethodCall(MessageCodes.MATCH_CONTROLLER_STUB_UPDATE, new Object[]{matchControllerServer.get(matchId)});
+                    RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
 
                     synchronized (this.clients){
                         clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchJoin);
                         clientToUpdate.handleRmiClientMessages(rmiMethodCallMatchControllerStub);
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
 
                         if(gameState.getGamePhase() == GAME_PHASE.INITIALIZATION){
                             for(var player : players){
