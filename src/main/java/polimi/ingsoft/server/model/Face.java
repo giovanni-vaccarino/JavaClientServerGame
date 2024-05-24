@@ -1,5 +1,7 @@
 package polimi.ingsoft.server.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class Face {
@@ -16,14 +18,14 @@ public class Face {
         bottomRight=null;
         center=null;
     }
-    public Face(CornerSpace upLeft,CornerSpace upRight, CornerSpace bottomLeft, CornerSpace bottomRight){
+    public Face(CornerSpace upLeft,CornerSpace upRight,CornerSpace bottomLeft,CornerSpace bottomRight){
         this.upLeft=upLeft;
         this.upRight=upRight;
         this.bottomRight=bottomRight;
         this.bottomLeft=bottomLeft;
         this.center=null;
     }
-    public Face(CornerSpace upLeft,CornerSpace upRight, CornerSpace bottomLeft, CornerSpace bottomRight,CenterSpace center){
+    public Face(@JsonProperty("upLeft") CornerSpace upLeft,@JsonProperty("upRight") CornerSpace upRight,@JsonProperty("bottomLeft") CornerSpace bottomLeft, @JsonProperty("bottomRight")CornerSpace bottomRight,@JsonProperty("center")CenterSpace center){
         this.upLeft=upLeft;
         this.upRight=upRight;
         this.bottomRight=bottomRight;

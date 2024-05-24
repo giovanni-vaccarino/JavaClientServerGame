@@ -22,10 +22,12 @@ public class GUI extends UI{
     private List<Integer> matchList;
     private CLIENT_STATE clientState;
     private GameState gameState;
+    private boolean nicknameEnable;
 
     public GUI(Client client){
         this.client=client;
         GUIsingleton.getInstance().setGui(this);
+        nicknameEnable = true;
     }
 
     @Override
@@ -37,8 +39,11 @@ public class GUI extends UI{
 
     public void setNickname(String nickname){
         try {
-            this.nickname=nickname;
-            client.setNickname(nickname);
+            if(nicknameEnable){
+                this.nickname=nickname;
+                client.setNickname(nickname);
+                nicknameEnable=false;
+            }
         } catch (IOException ignored) {
         }
     }
@@ -53,6 +58,7 @@ public class GUI extends UI{
         switch (errorMessage){
             case NICKNAME_NOT_AVAILABLE -> {
                 GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
+                nicknameEnable = true;
             }
             case MATCH_IS_ALREADY_FULL -> {
                 GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);

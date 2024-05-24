@@ -1,8 +1,10 @@
 package polimi.ingsoft.server.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ResourceCard extends MixedCard {
 
-    public ResourceCard(String iD,Face front, Face back,int score) {
+    public ResourceCard(@JsonProperty("id") String iD,@JsonProperty("front") Face front, @JsonProperty("back") Face back, @JsonProperty("score")int score) {
         super(iD,front, back,score);
     }
 

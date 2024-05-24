@@ -1,7 +1,12 @@
 package polimi.ingsoft.server.enumerations;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import polimi.ingsoft.server.model.Item;
-
+@JsonTypeName("Object")
+//@JsonProperty("Items")
 public enum Object implements Item {
     SCROLL("SCR"), POTION("POT") , FEATHER("FEA");
 
@@ -14,6 +19,5 @@ public enum Object implements Item {
     public String getAbbreviation(){
         return abbreviation;
     }
-
 
 }
