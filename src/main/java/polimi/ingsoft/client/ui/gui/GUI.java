@@ -33,6 +33,7 @@ public class GUI extends UI{
 
     @Override
     public void showWelcomeScreen() throws IOException {
+        System.out.println("1");
         getClientMatches();
         homeController = new HomeController();
         HomeController.main(new String[]{});
@@ -40,11 +41,13 @@ public class GUI extends UI{
 
     @Override
     public void updateNickname() {
+        System.out.println("2");
         GUIsingleton.getInstance().getNicknamePageController().nextPage();
     }
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) {
+        System.out.println("3");
         switch (errorMessage){
             case NICKNAME_NOT_AVAILABLE -> {
                 GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
@@ -96,11 +99,13 @@ public class GUI extends UI{
 
     @Override
     public void updateMatchesList(List<Integer> matches) {
+        System.out.println("4");
         matchList = matches;
     }
 
     @Override
     public void showMatchCreate(Integer matchId) {
+        System.out.println("5");
         this.matchId = matchId;
         try {
             getClient().joinMatch(getNickname(),matchId);
@@ -110,6 +115,7 @@ public class GUI extends UI{
 
     @Override
     public void showUpdateGameState(GameState gameState) {
+        System.out.println("6");
         this.gameState = gameState;
 
         updateView();
@@ -117,6 +123,7 @@ public class GUI extends UI{
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
+        System.out.println("7");
         this.playerInitialSetting=playerInitialSetting;
     }
 
@@ -129,7 +136,11 @@ public class GUI extends UI{
                             nextPageEnable=false;
                             nextPageWaiting();
                         }else{
-                            GUIsingleton.getInstance().getColorPageController().showSuccess();
+                            if (playerInitialSetting != null){
+                                if(playerInitialSetting.getColor() != null){
+                                    GUIsingleton.getInstance().getColorPageController().showSuccess();
+                                }
+                            }
                         }
                     }
                 }
