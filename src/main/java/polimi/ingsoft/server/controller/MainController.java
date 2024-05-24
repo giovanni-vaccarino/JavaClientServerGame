@@ -50,7 +50,7 @@ public class MainController {
      *
      * @return a list of match IDs
      */
-    public List<Integer> getMatches(){
+    public synchronized List<Integer> getMatches(){
         Set<Integer> keys = this.matches.keySet();
         return new ArrayList<>(keys);
     }
@@ -62,7 +62,7 @@ public class MainController {
      * @param matchId the ID of the match
      * @return the MatchController for the specified match ID
      */
-    public MatchController getMatch(int matchId){
+    public synchronized MatchController getMatch(int matchId){
         return this.matches.get(matchId);
     }
 

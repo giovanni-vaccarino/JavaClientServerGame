@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.rmi;
 
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
@@ -57,10 +58,13 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                 try{
                     matchController.setPlayerColor(player, color);
+                    GameState gameState = matchController.getGameState();
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
+
                         for(var client : this.clients){
-                            client.showUpdateGameState(matchController.getGameState());
+                            client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
                 } catch (WrongGamePhaseException exception){
@@ -81,10 +85,13 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                 try{
                     matchController.setFaceInitialCard(player, isFaceUp);
+                    GameState gameState = matchController.getGameState();
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
+
                         for(var client : this.clients){
-                            client.showUpdateGameState(matchController.getGameState());
+                            client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
                 } catch (WrongGamePhaseException exception){
@@ -103,10 +110,13 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                 try{
                     matchController.setQuestCard(player, questCard);
+                    GameState gameState = matchController.getGameState();
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
+
                         for(var client : this.clients){
-                            client.showUpdateGameState(matchController.getGameState());
+                            client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
                 } catch (WrongGamePhaseException exception){
