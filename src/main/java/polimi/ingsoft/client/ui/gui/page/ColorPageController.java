@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ColorPageController implements Initializable {
+    private PlayerColor myColor;
     private String color;
     private boolean selected;
     @FXML
@@ -81,18 +82,22 @@ public class ColorPageController implements Initializable {
 
         switch (c){
             case RED:
+                myColor = PlayerColor.RED;
                 colorList.setStyle("-fx-background-color: red;");
                 url = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
                 break;
             case BLUE:
+                myColor = PlayerColor.BLUE;
                 colorList.setStyle("-fx-background-color: blue;");
                 url = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
                 break;
             case GREEN:
+                myColor = PlayerColor.GREEN;
                 colorList.setStyle("-fx-background-color: green;");
                 url = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
                 break;
             case YELLOW:
+                myColor = PlayerColor.YELLOW;
                 colorList.setStyle("-fx-background-color: yellow;");
                 url = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
         }
@@ -122,7 +127,7 @@ public class ColorPageController implements Initializable {
     public void selectColor(ActionEvent actionEvent) throws IOException {
 
         if(selected){
-            nextPage();
+            getGui().setColor(myColor);
         }else{
             showError();
         }

@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 public class GUI extends UI{
 
     private HomeController homeController;
-    private Client client;
-    private String nickname;
     private Integer matchId;
     private List<Integer> matchList;
     private CLIENT_STATE clientState;
@@ -26,7 +24,7 @@ public class GUI extends UI{
     private boolean nextPageEnable = true;
 
     public GUI(Client client){
-        this.client=client;
+        super(client);
         GUIsingleton.getInstance().setGui(this);
         nicknameEnable = true;
     }
@@ -41,8 +39,8 @@ public class GUI extends UI{
     public void setNickname(String nickname){
         try {
             if(nicknameEnable){
-                this.nickname=nickname;
-                client.setNickname(nickname);
+                setNickname(nickname);
+                getClient().setNickname(nickname);
                 nicknameEnable=false;
             }
         } catch (IOException ignored) {
@@ -70,7 +68,7 @@ public class GUI extends UI{
     public void createMatch(int numPlayers){
         try {
             clientState = CLIENT_STATE.NEWGAME;
-            client.createMatch(nickname,numPlayers);
+            getClient().createMatch(getNickname(),numPlayers);
         } catch (IOException ignore) {
         }
     }
@@ -78,14 +76,14 @@ public class GUI extends UI{
     public void joinMatch(Integer matchId) {
         try {
             clientState = CLIENT_STATE.JOINGAME;
-            client.joinMatch(nickname, matchId);
+            getClient().joinMatch(getNickname(), matchId);
         } catch (IOException ignore) {
         }
     }
 
     public void getClientMatches(){
         try {
-            client.getMatches(this.client);
+            getClient().getMatches(this.getClient());
         } catch (IOException ignore) {
         }
     }
@@ -115,7 +113,7 @@ public class GUI extends UI{
     public void showMatchCreate(Integer matchId) {
         this.matchId = matchId;
         try {
-            client.joinMatch(nickname,matchId);
+            getClient().joinMatch(getNickname(),matchId);
         } catch (IOException ignore) {
         }
     }
@@ -123,6 +121,11 @@ public class GUI extends UI{
     @Override
     public void showUpdateGameState(GameState gameState) {
         this.gameState = gameState;
+
+        updateView(gameState);
+    }
+
+    public void updateView(GameState gameState){
         switch (gameState.getGamePhase()){
             case INITIALIZATION -> {
                 switch (gameState.getCurrentInitialStep()){

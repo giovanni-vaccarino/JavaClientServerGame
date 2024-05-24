@@ -22,15 +22,13 @@ public class CLI extends UI {
     }
     private final Scanner in;
     private final PrintStream out;
-    private final Client client;
     private List<Integer> matchIds;
     private Integer matchId;
-    private String nickname;
 
     public CLI(Scanner in, PrintStream out, Client client) {
+        super(client);
         this.in = in;
         this.out = out;
-        this.client = client;
     }
 
     private void run() {
@@ -80,7 +78,7 @@ public class CLI extends UI {
         } while (!isValid);
 
         try {
-            client.createMatch(nickname, requestedNumPlayers);
+            getClient().createMatch(getNickname(), requestedNumPlayers);
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_CREATE_MATCH.getValue());
         }
@@ -108,7 +106,7 @@ public class CLI extends UI {
 
     public void showWelcomeScreen() throws IOException {
         out.println(MESSAGES.WELCOME.getValue());
-        client.getMatches(this.client);
+        getClient().getMatches(this.getClient());
         runSetNickname();
     }
 
@@ -119,8 +117,8 @@ public class CLI extends UI {
                 out.print(MESSAGES.CHOOSE_NICKNAME.getValue());
                 candidateNickname = in.nextLine();
 
-                nickname = candidateNickname;
-                client.setNickname(nickname);
+                setNickname(candidateNickname);
+                getClient().setNickname(getNickname());
             } catch (IOException ignored) { }
         }).start();
     }
@@ -162,7 +160,7 @@ public class CLI extends UI {
     private void joinMatch(Integer matchId) {
         out.println(MESSAGES.JOINING_MATCH.getValue());
         try {
-            client.joinMatch(nickname, matchId);
+            getClient().joinMatch(getNickname(), matchId);
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }

@@ -97,11 +97,15 @@ public class SocketClient extends Client {
                     this.showUpdateLobbyPlayers(nicknames);
                 }
                 case SET_INITIAL_SETTINGS_UPDATE -> {
+                    /*
+                    TODO
                     NetworkMessage.InitialSettings initialSettings = (NetworkMessage.InitialSettings) payload;
                     PlayerColor color = initialSettings.color();
                     Boolean isInitialCardFacingUp = initialSettings.isInitialCardFacingUp();
                     QuestCard questCard = initialSettings.questCard();
                     this.showUpdateInitialSettings(color, isInitialCardFacingUp, questCard);
+
+                     */
                 }
                 case MATCH_GAME_STATE_UPDATE -> {
                     GameState gameState = (GameState) payload;
