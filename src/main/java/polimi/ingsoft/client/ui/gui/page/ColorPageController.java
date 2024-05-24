@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -47,7 +46,7 @@ public class ColorPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         errButton.setVisible(false);
-        List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN); // CALL MODEL
+        List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN, PlayerColor.YELLOW); // CALL MODEL
         resetColor();
         setGameList(items);
     }
@@ -71,8 +70,8 @@ public class ColorPageController implements Initializable {
         }
     }
 
-    private void handleMenuItemAction(PlayerColor s) {
-        System.out.println(s.toString().toLowerCase());
+    private void handleMenuItemAction(PlayerColor c) {
+        System.out.println(c.toString().toLowerCase());
         String url="";
         errButton.setVisible(false);
 
@@ -80,7 +79,7 @@ public class ColorPageController implements Initializable {
             selected = true;
         }
 
-        switch (s){
+        switch (c){
             case RED:
                 colorList.setStyle("-fx-background-color: red;");
                 url = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
@@ -100,7 +99,7 @@ public class ColorPageController implements Initializable {
 
         placeColor(url);
 
-        setColorText(s.toString().toLowerCase());
+        setColorText(c.toString().toLowerCase());
     }
 
     public void placeColor(String imageUrl){
@@ -117,23 +116,30 @@ public class ColorPageController implements Initializable {
 
     public void refreshColors(){ // tasto update
         resetColor();
-        List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN); // REFRESH LIST -- CALL MODEL
+        List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN, PlayerColor.YELLOW); // REFRESH LIST -- CALL MODEL
         setGameList(items);
     }
-    public void nextPage(ActionEvent actionEvent) throws IOException {
+    public void selectColor(ActionEvent actionEvent) throws IOException {
 
         if(selected){
-            ColorWaitingPageController colorWaitingPageController = new ColorWaitingPageController();
-            try {
-                colorWaitingPageController.start();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            nextPage();
         }else{
-            colorList.setStyle("-fx-background-color: #d34813;");
-            setColorText("Select another color");
-            errButton.setVisible(true);
+            showError();
         }
+    }
+    public void nextPage(){
+        ColorWaitingPageController colorWaitingPageController = new ColorWaitingPageController();
+        try {
+            colorWaitingPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showError(){
+        colorList.setStyle("-fx-background-color: #d34813;");
+        setColorText("Select another color");
+        errButton.setVisible(true);
     }
     public void start() throws Exception {
 

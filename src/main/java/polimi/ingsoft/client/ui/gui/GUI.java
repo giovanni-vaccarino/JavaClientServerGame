@@ -23,6 +23,7 @@ public class GUI extends UI{
     private CLIENT_STATE clientState;
     private GameState gameState;
     private boolean nicknameEnable;
+    private boolean nextPageEnable = true;
 
     public GUI(Client client){
         this.client=client;
@@ -126,7 +127,10 @@ public class GUI extends UI{
             case INITIALIZATION -> {
                 switch (gameState.getCurrentInitialStep()){
                     case COLOR -> {
-                        nextPageWaiting();
+                        if(nextPageEnable){
+                            nextPageEnable=false;
+                            nextPageWaiting();
+                        }
                     }
                 }
             }

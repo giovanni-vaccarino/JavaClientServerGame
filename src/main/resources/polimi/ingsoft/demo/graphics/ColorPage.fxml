@@ -73,7 +73,7 @@
                 <Button mnemonicParsing="false" text="Select"
                         prefWidth="140" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        onAction="#nextPage">
+                        onAction="#selectColor">
                 </Button>
             </children>
         </StackPane>
