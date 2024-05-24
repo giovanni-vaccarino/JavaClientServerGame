@@ -60,9 +60,6 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                     synchronized (this.clients){
                         for(var client : this.clients){
-                            if(client.equals(clientToUpdate)){
-                                //client.showUpdateColor();
-                            }
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
@@ -87,11 +84,6 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                     synchronized (this.clients){
                         for(var client : this.clients){
-
-                            if(client.equals(clientToUpdate)){
-                                //client.showUpdateColor();
-                            }
-
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
@@ -114,11 +106,6 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                     synchronized (this.clients){
                         for(var client : this.clients){
-
-                            if(client.equals(clientToUpdate)){
-                                //client.showUpdate();
-                            }
-
                             client.showUpdateGameState(matchController.getGameState());
                         }
                     }
