@@ -1,15 +1,18 @@
 package polimi.ingsoft.client.ui.gui;
 
+import jdk.dynalink.linker.GuardedInvocationTransformer;
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +23,12 @@ public class GUI extends UI{
     private List<Integer> matchList;
     private CLIENT_STATE clientState;
     private GameState gameState;
-    private boolean nicknameEnable;
+    private PlayerInitialSetting playerInitialSetting;
     private boolean nextPageEnable = true;
 
     public GUI(Client client){
         super(client);
         GUIsingleton.getInstance().setGui(this);
-        nicknameEnable = true;
     }
 
     @Override
@@ -34,17 +36,6 @@ public class GUI extends UI{
         getClientMatches();
         homeController = new HomeController();
         HomeController.main(new String[]{});
-    }
-
-    public void setNickname(String nickname){
-        try {
-            if(nicknameEnable){
-                setNickname(nickname);
-                getClient().setNickname(nickname);
-                nicknameEnable=false;
-            }
-        } catch (IOException ignored) {
-        }
     }
 
     @Override
@@ -57,7 +48,6 @@ public class GUI extends UI{
         switch (errorMessage){
             case NICKNAME_NOT_AVAILABLE -> {
                 GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
-                nicknameEnable = true;
             }
             case MATCH_IS_ALREADY_FULL -> {
                 GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);
@@ -122,10 +112,15 @@ public class GUI extends UI{
     public void showUpdateGameState(GameState gameState) {
         this.gameState = gameState;
 
-        updateView(gameState);
+        updateView();
     }
 
-    public void updateView(GameState gameState){
+    @Override
+    public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
+        this.playerInitialSetting=playerInitialSetting;
+    }
+
+    public void updateView(){
         switch (gameState.getGamePhase()){
             case INITIALIZATION -> {
                 switch (gameState.getCurrentInitialStep()){
@@ -133,6 +128,10 @@ public class GUI extends UI{
                         if(nextPageEnable){
                             nextPageEnable=false;
                             nextPageWaiting();
+                        }else{
+                            if(playerInitialSetting.getColor() != null){
+                                GUIsingleton.getInstance().getColorPageController().nextPage();
+                            }
                         }
                     }
                 }

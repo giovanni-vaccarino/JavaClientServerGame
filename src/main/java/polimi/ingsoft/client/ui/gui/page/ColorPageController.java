@@ -24,6 +24,7 @@ public class ColorPageController implements Initializable {
     private PlayerColor myColor;
     private String color;
     private boolean selected;
+    private boolean nextPageEnable = true;
     @FXML
     SplitMenuButton colorList;
     @FXML
@@ -133,11 +134,14 @@ public class ColorPageController implements Initializable {
         }
     }
     public void nextPage(){
-        ColorWaitingPageController colorWaitingPageController = new ColorWaitingPageController();
-        try {
-            colorWaitingPageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if(nextPageEnable){
+            nextPageEnable=false;
+            ColorWaitingPageController colorWaitingPageController = new ColorWaitingPageController();
+            try {
+                colorWaitingPageController.start();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
