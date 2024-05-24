@@ -129,9 +129,7 @@ public class GUI extends UI{
                             nextPageEnable=false;
                             nextPageWaiting();
                         }else{
-                            if(playerInitialSetting.getColor() != null){
-                                GUIsingleton.getInstance().getColorPageController().nextPage();
-                            }
+                            GUIsingleton.getInstance().getColorPageController().showSuccess();
                         }
                     }
                 }
