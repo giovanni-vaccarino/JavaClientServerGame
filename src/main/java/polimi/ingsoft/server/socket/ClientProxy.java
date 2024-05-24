@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.socket;
 
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
@@ -83,10 +84,10 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException {
+    public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException {
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_INITIAL_SETTINGS_UPDATE,
-                new NetworkMessage.InitialSettings(color, isFacingUp, questCard)
+                new NetworkMessage.InitialSettings(playerInitialSetting)
         );
         out.writeObject(message);
         out.flush();

@@ -5,6 +5,7 @@ import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.NicknameNotAvailableException;
 import polimi.ingsoft.server.model.*;
@@ -127,10 +128,10 @@ public class SocketServer implements ConnectionsClient {
         }
     }
 
-    public void singleUpdateInitialSettings(VirtualView client, PlayerColor color, Boolean isFacingUp, QuestCard questCard) {
+    public void singleUpdateInitialSettings(VirtualView client, PlayerInitialSetting playerInitialSetting) {
         synchronized (this.clients) {
             try {
-                client.showUpdateInitialSettings(color, isFacingUp, questCard);
+                client.showUpdateInitialSettings(playerInitialSetting);
             } catch (IOException ignored) { }
         }
     }

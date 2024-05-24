@@ -120,9 +120,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 );
                                 this.server.singleUpdateInitialSettings(
                                         this,
-                                        color,
-                                        settings.getIsInitialFaceUp(),
-                                        settings.getQuestCard()
+                                        settings
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
@@ -148,9 +146,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 );
                                 this.server.singleUpdateInitialSettings(
                                         this,
-                                        settings.getColor(),
-                                        isInitialCardFacingUp,
-                                        settings.getQuestCard()
+                                        settings
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
@@ -174,9 +170,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 );
                                 this.server.singleUpdateInitialSettings(
                                         this,
-                                        settings.getColor(),
-                                        settings.getIsInitialFaceUp(),
-                                        questCard
+                                        settings
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
@@ -368,10 +362,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) {
+    public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
         synchronized (this.view) {
             try {
-                this.view.showUpdateInitialSettings(color, isFacingUp, questCard);
+                this.view.showUpdateInitialSettings(playerInitialSetting);
             } catch (IOException ignore) { }
         }
     }
