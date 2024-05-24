@@ -32,6 +32,16 @@
             </children>
         </StackPane>
 
+        <StackPane layoutX="950.0" layoutY="40.0" prefWidth="370" prefHeight="120" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="Success! Now wait"
+                        prefWidth="370" prefHeight="120" styleClass="successPane"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        fx:id="successButton">
+                </Button>
+            </children>
+        </StackPane>
+
         <StackPane layoutX="710.0" layoutY="340.0" prefWidth="100" prefHeight="100" alignment="CENTER">
             <children>
                 <ImageView fx:id="colorSelected"/>

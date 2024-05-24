@@ -66,3 +66,15 @@
     -fx-text-base-color: black;
     -fx-text-fill: #323232;
 }
+
+.successPane {
+    -fx-font-size: 35px;
+    -fx-background-color: green;
+    -fx-background-radius: 10;
+    -fx-border-color: #dfd7b0;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: black;
+    -fx-text-fill: #323232;
+}
