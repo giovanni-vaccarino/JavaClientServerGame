@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
 public class InitialCardPageController implements Initializable {
     @FXML
     private ImageView initialCard;
+    @FXML
+    Button waitButton;
     private String frontInitialCardPath;
     private String backInitialCardPath;
 
@@ -40,9 +42,10 @@ public class InitialCardPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        waitButton.setVisible(false);
         flip=false;
         setInitialCard("/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg",
-                "/polimi/ingsoft/demo/graphics/img/card/backCard/initialCard/backInitialCard(1).jpg");
+                "/polimi/ingsoft/demo/graphics/img/card/backCard/initialCard/backInitialCard(1).jpg"); // TODO outer function!!! SSSIMON
     }
 
     public void setInitialCard(String frontPath, String backPath){
@@ -105,11 +108,19 @@ public class InitialCardPageController implements Initializable {
         getStage().getScene().setRoot(root);
     }
 
-    public void nextPage(ActionEvent actionEvent) throws IOException {
+    public void select(ActionEvent actionEvent) {
+        getGui().setIsFaceInitialCardUp(flip);
+        showWait();
+    }
 
-        InitialCardWaitingPageController initialCardWaitingPageController = new InitialCardWaitingPageController();
+    public void showWait(){
+        waitButton.setVisible(true);
+    }
+
+    public void nextPage(){
+        QuestCardPageController questCardPageController = new QuestCardPageController();
         try {
-            initialCardWaitingPageController.start();
+            questCardPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

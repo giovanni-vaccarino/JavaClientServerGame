@@ -19,10 +19,6 @@ import java.util.stream.Collectors;
  */
 public class MatchController implements Serializable {
 
-    public Integer getRequestedNumPlayers() {
-        return requestedNumPlayers;
-    }
-
     private final Integer requestedNumPlayers;
 
     private final GameState gameState;
@@ -67,13 +63,16 @@ public class MatchController implements Serializable {
         this.gameState = new GameState(this, requestedNumPlayers);
     }
 
+    public Integer getRequestedNumPlayers() {
+        return requestedNumPlayers;
+    }
 
     /**
      * Returns the ID of this match.
      *
      * @return the match ID
      */
-    public int getMatchId() {
+    public synchronized int getMatchId() {
         return matchId;
     }
 
@@ -83,7 +82,7 @@ public class MatchController implements Serializable {
      *
      * @return the game state
      */
-    public GameState getGameState(){return this.gameState;}
+    public synchronized GameState getGameState(){return this.gameState;}
 
 
     /**
@@ -91,7 +90,7 @@ public class MatchController implements Serializable {
      *
      * @return the list of players
      */
-    public List<Player> getPlayers(){
+    public synchronized List<Player> getPlayers(){
         return players;
     }
 
@@ -101,7 +100,7 @@ public class MatchController implements Serializable {
      *
      * @return the list of initial settings
      */
-    public List<PlayerInitialSetting> getPlayerInitialSettings(){return playerInitialSettings;}
+    public synchronized List<PlayerInitialSetting> getPlayerInitialSettings(){return playerInitialSettings;}
 
 
     /**
@@ -109,19 +108,19 @@ public class MatchController implements Serializable {
      *
      * @return a list of player nicknames
      */
-    public List<String> getNamePlayers(){
+    public synchronized List<String> getNamePlayers(){
         return playerInitialSettings.stream().
                 map(PlayerInitialSetting::getNickname).
                 toList();
     }
 
-    public Optional<PlayerInitialSetting> getPlayerInitialSettingByNickname(String nickname) {
+    public synchronized Optional<PlayerInitialSetting> getPlayerInitialSettingByNickname(String nickname) {
         return playerInitialSettings.stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
     }
 
-    public Optional<Player> getPlayerByNickname(String nickname) {
+    public synchronized Optional<Player> getPlayerByNickname(String nickname) {
         return players.stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();

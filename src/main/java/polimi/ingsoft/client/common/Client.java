@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.common;
 
 import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.UIType;
@@ -11,6 +12,7 @@ import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
@@ -71,8 +73,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdateInitialSettings(PlayerColor color, Boolean isFacingUp, QuestCard questCard) throws IOException {
-
+    public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException {
+        ui.showUpdateInitialSettings(playerInitialSetting);
     }
 
     @Override
@@ -128,6 +130,18 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     public void reJoinMatch(Integer matchId, String nickname) throws IOException {
         getServer().reJoinMatch(matchId, nickname);
+    }
+
+    public void setColor(String nickname, PlayerColor color) throws IOException{
+        getMatchServer().setColor(nickname, color);
+    }
+
+    public void setIsInitialCardFaceUp(String nickname, Boolean isFaceUp) throws IOException{
+        getMatchServer().setIsInitialCardFacingUp(nickname, isFaceUp);
+    }
+
+    public void setQuestCard(String nickname, QuestCard questCard) throws IOException{
+        getMatchServer().setQuestCard(nickname, questCard);
     }
 
     public void addMessage(String nickname, String message) throws IOException {

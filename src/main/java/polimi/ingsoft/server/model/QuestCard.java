@@ -1,8 +1,9 @@
 package polimi.ingsoft.server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class QuestCard extends Card implements Drawable, ConditionalPointsCard {
+public class QuestCard extends Card implements Drawable, ConditionalPointsCard, Serializable {
 
     private final Pattern pattern;
     public int getScore(){

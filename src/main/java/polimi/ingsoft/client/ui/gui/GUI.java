@@ -2,29 +2,30 @@ package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.GAME_PHASE;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GUI extends UI{
 
     private HomeController homeController;
-    private Client client;
-    private String nickname;
     private Integer matchId;
     private List<Integer> matchList;
     private CLIENT_STATE clientState;
     private GameState gameState;
+    private PlayerInitialSetting playerInitialSetting;
+    private boolean nextColorPageEnable = true;
+    private boolean nextInitialCardPageEnable = true;
+    private boolean nextQuestCardPageEnable = true;
+    private boolean nextGamePageEnable = true;
 
     public GUI(Client client){
-        this.client=client;
+        super(client);
         GUIsingleton.getInstance().setGui(this);
     }
 
@@ -33,14 +34,6 @@ public class GUI extends UI{
         getClientMatches();
         homeController = new HomeController();
         HomeController.main(new String[]{});
-    }
-
-    public void setNickname(String nickname){
-        try {
-            this.nickname=nickname;
-            client.setNickname(nickname);
-        } catch (IOException ignored) {
-        }
     }
 
     @Override
@@ -57,13 +50,16 @@ public class GUI extends UI{
             case MATCH_IS_ALREADY_FULL -> {
                 GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);
             }
+            case COLOR_ALREADY_PICKED -> {
+                GUIsingleton.getInstance().getColorPageController().showError(errorMessage);
+            }
         }
     }
 
     public void createMatch(int numPlayers){
         try {
             clientState = CLIENT_STATE.NEWGAME;
-            client.createMatch(nickname,numPlayers);
+            getClient().createMatch(getNickname(),numPlayers);
         } catch (IOException ignore) {
         }
     }
@@ -71,14 +67,14 @@ public class GUI extends UI{
     public void joinMatch(Integer matchId) {
         try {
             clientState = CLIENT_STATE.JOINGAME;
-            client.joinMatch(nickname, matchId);
+            getClient().joinMatch(getNickname(), matchId);
         } catch (IOException ignore) {
         }
     }
 
     public void getClientMatches(){
         try {
-            client.getMatches(this.client);
+            getClient().getMatches(this.getClient());
         } catch (IOException ignore) {
         }
     }
@@ -108,7 +104,7 @@ public class GUI extends UI{
     public void showMatchCreate(Integer matchId) {
         this.matchId = matchId;
         try {
-            client.joinMatch(nickname,matchId);
+            getClient().joinMatch(getNickname(),matchId);
         } catch (IOException ignore) {
         }
     }
@@ -116,19 +112,53 @@ public class GUI extends UI{
     @Override
     public void showUpdateGameState(GameState gameState) {
         this.gameState = gameState;
+
+        updateView();
+    }
+
+    @Override
+    public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
+        this.playerInitialSetting=playerInitialSetting;
+    }
+
+    public void updateView(){
         switch (gameState.getGamePhase()){
             case INITIALIZATION -> {
                 switch (gameState.getCurrentInitialStep()){
                     case COLOR -> {
-                        nextPageWaiting();
+                        if(nextColorPageEnable){
+                            nextColorPageEnable =false;
+                            GUIsingleton.getInstance().getWaitingPageController().nextPage();
+                        }else{
+                            /*if (playerInitialSetting != null){
+                                if(playerInitialSetting.getColor() != null){
+                                    GUIsingleton.getInstance().getColorPageController().showSuccess();
+                                }
+                            }*/
+                        }
+                    }
+                    case FACE_INITIAL -> {
+                        if(nextInitialCardPageEnable){
+                            nextInitialCardPageEnable =false;
+                            GUIsingleton.getInstance().getColorPageController().nextPage();
+                        }
+                    }
+                    case QUEST_CARD -> {
+                        if(nextQuestCardPageEnable){
+                            nextQuestCardPageEnable = false;
+                            GUIsingleton.getInstance().getInitialCardPageController().nextPage();
+                        }
+
                     }
                 }
             }
+            case PLAY -> {
+                if(nextGamePageEnable){
+                    nextGamePageEnable = false;
+                    GUIsingleton.getInstance().getQuestCardPageController().nextPage();
+                }
+            }
         }
-    }
-
-    public void nextPageWaiting(){
-        GUIsingleton.getInstance().getWaitingPageController().nextPage();
     }
 
     @Override

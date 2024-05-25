@@ -40,7 +40,7 @@
                 <Button mnemonicParsing="false" text="Select"
                         prefWidth="120" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        onAction="#nextPage">
+                        onAction="#select">
                 </Button>
             </children>
         </StackPane>
@@ -48,6 +48,16 @@
         <StackPane layoutX="0.0" layoutY="350.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
             <children>
                 <ImageView fx:id="initialCard" />
+            </children>
+        </StackPane>
+
+        <StackPane layoutX="1000.0" layoutY="40.0" prefWidth="150" prefHeight="120" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="Wait!"
+                        prefWidth="150" prefHeight="120" styleClass="successPane"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        fx:id="waitButton">
+                </Button>
             </children>
         </StackPane>
 

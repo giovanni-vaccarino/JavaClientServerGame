@@ -1,9 +1,10 @@
 package polimi.ingsoft.server.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Space<T extends Item> {
+public abstract class Space<T extends Item> implements Serializable {
 
     protected final List<T> items;
 

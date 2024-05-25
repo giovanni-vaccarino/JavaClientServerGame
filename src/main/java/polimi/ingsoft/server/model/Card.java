@@ -1,9 +1,11 @@
 package polimi.ingsoft.server.model;
 
+import java.io.Serializable;
+
 /**
  * Oggetto carta, con 2 facce orientate
  */
-public abstract class Card implements Drawable {
+public abstract class Card implements Drawable, Serializable {
     private final int score;
     private final String iD;
     protected Card(int score,String iD){
