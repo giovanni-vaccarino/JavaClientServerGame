@@ -2,9 +2,10 @@ package polimi.ingsoft.server.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Face {
+public class Face implements Serializable {
     private CornerSpace upLeft,upRight,bottomLeft,bottomRight;
     private CenterSpace center;
     public CenterSpace getCenter(){

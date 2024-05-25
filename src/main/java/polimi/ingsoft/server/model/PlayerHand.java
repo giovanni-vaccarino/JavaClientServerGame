@@ -1,9 +1,10 @@
 package polimi.ingsoft.server.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 // TODO change generic to MixedCards
-public class PlayerHand<T extends Drawable> extends CardCollection<T> {
+public class PlayerHand<T extends Drawable> extends CardCollection<T> implements Serializable {
     public PlayerHand(){
 
     }
