@@ -1,14 +1,64 @@
 package polimi.ingsoft.server.model;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.enumerations.Object;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class ItemPattern implements Pattern{
 
+    //@JsonSubTypes.Type(value=ItemPattern.class, name="")
+
+    public static class MapDeserializer extends JsonDeserializer<HashMap> {
+//        @Override
+//        public HashMap<Item, Integer> deserializeKey(String s, DeserializationContext deserializationContext) throws IOException {
+//            System.out.print(s);
+//            return new HashMap<Item, Integer>();
+//        }
+
+        @Override
+        public HashMap deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+//            ObjectMapper mapper = new ObjectMapper();
+//            System.out.println("\n\nlol"+mapper.readValue(jsonParser, HashMap.class));
+            JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+            HashMap<Item,Integer> cost=new HashMap<>();
+            Iterator<HashMap.Entry<String, JsonNode>> fields = node.fields();
+            while (fields.hasNext()) {
+                HashMap.Entry<String, JsonNode> entry = fields.next();
+                String key = entry.getKey();
+                JsonNode value = entry.getValue();
+                Item item=null;
+                if (key.startsWith("MUSHROOM")) {
+                    item=Resource.MUSHROOM;
+                } else if (key.startsWith("BUTTERFLY")) {
+                    item=Resource.BUTTERFLY;
+                } else if (key.startsWith("WOLF")) {
+                    item=Resource.WOLF;
+                }else if (key.startsWith("LEAF")) {
+                    item=Resource.LEAF;
+                }else if (key.startsWith("FEATHER")) {
+                    item= Object.FEATHER;
+                }else if (key.startsWith("POTION")) {
+                    item=Object.POTION;
+                }else if (key.startsWith("SCROLL")) {
+                    item=Object.SCROLL;
+                }
+                cost.put(item, value.asInt());
+            }
+            return cost;//mapper.readValue(jsonParser, HashMap.class);
+        }
+    }
+    @JsonDeserialize(using = MapDeserializer.class)
     private final HashMap<Item,Integer> cost;
 
-    public ItemPattern(HashMap<Item, Integer> cost) {
+    public ItemPattern(@JsonProperty("cost") HashMap<Item, Integer> cost) {
         this.cost = cost;
     }
 
@@ -55,5 +105,6 @@ public class ItemPattern implements Pattern{
     public HashMap<Item,Integer> getCost(){
         return this.cost;
     }
+
 
 }

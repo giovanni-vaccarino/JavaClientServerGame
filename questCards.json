@@ -1,4 +1,4 @@
-{
+[{
 "score":2,
 "pointPattern":{
 	"order":[{"color":"MUSHROOM","posFromBegin":{"x":0,"y":0}},
@@ -7,7 +7,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard1"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -17,7 +17,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard2"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -27,7 +27,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard3"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -37,7 +37,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard4"
-}
+},
 {
 "score":3,
 "pointPattern":{
@@ -47,7 +47,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard5"
-}
+},
 {
 "score":3,
 "pointPattern":{
@@ -57,17 +57,17 @@
 	},
 "playPattern":null,
 "id":"QuestCard6"
-}
+},
 {
 "score":3,
 "pointPattern":{
-	"order":[{"color":"WOLF,"posFromBegin":{"x":0,"y":0}},
+	"order":[{"color":"WOLF","posFromBegin":{"x":0,"y":0}},
 		{"color":"WOLF","posFromBegin":{"x":0,"y":2}},
 		{"color":"MUSHROOM","posFromBegin":{"x":1,"y":3}}]
 	},
 "playPattern":null,
 "id":"QuestCard7"
-}
+},
 {
 "score":3,
 "pointPattern":{
@@ -77,7 +77,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard8"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -85,7 +85,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard9"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -93,7 +93,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard10"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -101,7 +101,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard11"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -109,7 +109,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard12"
-}
+},
 {
 "score":3,
 "pointPattern":{
@@ -117,7 +117,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard13"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -125,7 +125,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard14"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -133,7 +133,7 @@
 	},
 "playPattern":null,
 "id":"QuestCard15"
-}
+},
 {
 "score":2,
 "pointPattern":{
@@ -141,4 +141,4 @@
 	},
 "playPattern":null,
 "id":"QuestCard16"
-}
+}]

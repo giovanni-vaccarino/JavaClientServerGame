@@ -1,11 +1,13 @@
 package polimi.ingsoft.server.model;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SchemePattern implements Pattern{
     private final ArrayList<Link> order;
     private final int maxSize=2;
-    public SchemePattern(ArrayList<Link> order){
+    public SchemePattern(@JsonProperty("order") ArrayList<Link> order){
         this.order=order;
     }
     private int getMatch(HashMap<Coordinates,Boolean> used,boolean setvisited,HashMap<Coordinates,Boolean> visited, Board board, int count, int actualLink, Coordinates actualCoordinates) {
