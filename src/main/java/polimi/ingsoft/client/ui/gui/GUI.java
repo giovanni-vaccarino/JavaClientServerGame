@@ -20,7 +20,9 @@ public class GUI extends UI{
     private GameState gameState;
     private PlayerInitialSetting playerInitialSetting;
     private boolean nextColorPageEnable = true;
-    private boolean nextInitialPageEnable = true;
+    private boolean nextInitialCardPageEnable = true;
+    private boolean nextQuestCardPageEnable = true;
+    private boolean nextGamePageEnable = true;
 
     public GUI(Client client){
         super(client);
@@ -126,7 +128,7 @@ public class GUI extends UI{
                     case COLOR -> {
                         if(nextColorPageEnable){
                             nextColorPageEnable =false;
-                            nextPageWaiting();
+                            GUIsingleton.getInstance().getWaitingPageController().nextPage();
                         }else{
                             /*if (playerInitialSetting != null){
                                 if(playerInitialSetting.getColor() != null){
@@ -136,19 +138,27 @@ public class GUI extends UI{
                         }
                     }
                     case FACE_INITIAL -> {
-                        if(nextInitialPageEnable){
-                            nextInitialPageEnable =false;
+                        if(nextInitialCardPageEnable){
+                            nextInitialCardPageEnable =false;
                             GUIsingleton.getInstance().getColorPageController().nextPage();
                         }
                     }
+                    case QUEST_CARD -> {
+                        if(nextQuestCardPageEnable){
+                            nextQuestCardPageEnable = false;
+                            GUIsingleton.getInstance().getInitialCardPageController().nextPage();
+                        }
+
+                    }
+                }
+            }
+            case PLAY -> {
+                if(nextGamePageEnable){
+                    nextGamePageEnable = false;
+                    GUIsingleton.getInstance().getQuestCardPageController().nextPage();
                 }
             }
         }
-    }
-
-
-    public void nextPageWaiting(){
-        GUIsingleton.getInstance().getWaitingPageController().nextPage();
     }
 
     @Override

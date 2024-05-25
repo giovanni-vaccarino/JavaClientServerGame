@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -22,6 +23,8 @@ public class QuestCardPageController implements Initializable {
     private ImageView questCard1;
     @FXML
     private ImageView questCard2;
+    @FXML
+    Button waitButton;
     private String firstQuestCardPath;
     private String secondQuestCardPath;
 
@@ -41,6 +44,7 @@ public class QuestCardPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        waitButton.setVisible(false);
         setQuestCard("/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(1).jpg",
                 "/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(2).jpg");
     }
@@ -104,19 +108,28 @@ public class QuestCardPageController implements Initializable {
 
     public void questCard1Selected(ActionEvent actionEvent) throws IOException {
         selected = false;
-        nextPage();
+        select();
     }
 
     public void questCard2Selected(ActionEvent actionEvent) throws IOException {
         selected = true;
-        nextPage();
+        select();
     }
 
-    public void nextPage() throws IOException{
+    public void select(){
+        getGui().setQuestCard(null); //TODO add quest card
+        showWait();
+    }
 
-        QuestCardWaitingPageController questCardWaitingPageController = new QuestCardWaitingPageController();
+    public void showWait(){
+        waitButton.setVisible(true);
+    }
+
+    public void nextPage(){
+
+        GamePageController gamePageController = new GamePageController();
         try {
-            questCardWaitingPageController.start();
+            gamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

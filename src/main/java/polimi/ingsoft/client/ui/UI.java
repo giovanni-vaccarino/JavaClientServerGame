@@ -6,6 +6,7 @@ import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.QuestCard;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,5 +55,19 @@ public abstract class UI {
         }
     }
 
+    public void setIsFaceInitialCardUp(boolean isFaceInitialCardUp){
+        try {
+            this.client.setIsInitialCardFaceUp(nickname,isFaceInitialCardUp);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void setQuestCard(QuestCard questCard){
+        try {
+            this.client.setQuestCard(nickname,questCard);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
