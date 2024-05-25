@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 
 import java.io.IOException;
@@ -20,11 +21,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static polimi.ingsoft.server.enumerations.ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET;
+
 public class ColorPageController implements Initializable {
     private PlayerColor myColor;
     private String color;
     private boolean selected;
-    private boolean success = false;
     @FXML
     SplitMenuButton colorList;
     @FXML
@@ -76,41 +78,39 @@ public class ColorPageController implements Initializable {
     }
 
     private void handleMenuItemAction(PlayerColor c) {
-        if(!success){
-            System.out.println(c.toString().toLowerCase());
-            String url="";
-            errButton.setVisible(false);
+        System.out.println(c.toString().toLowerCase());
+        String url="";
+        errButton.setVisible(false);
 
-            if(!selected){
-                selected = true;
-            }
-
-            switch (c){
-                case RED:
-                    myColor = PlayerColor.RED;
-                    colorList.setStyle("-fx-background-color: red;");
-                    url = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
-                    break;
-                case BLUE:
-                    myColor = PlayerColor.BLUE;
-                    colorList.setStyle("-fx-background-color: blue;");
-                    url = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
-                    break;
-                case GREEN:
-                    myColor = PlayerColor.GREEN;
-                    colorList.setStyle("-fx-background-color: green;");
-                    url = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
-                    break;
-                case YELLOW:
-                    myColor = PlayerColor.YELLOW;
-                    colorList.setStyle("-fx-background-color: yellow;");
-                    url = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
-            }
-
-            placeColor(url);
-
-            setColorText(c.toString().toLowerCase());
+        if(!selected){
+            selected = true;
         }
+
+        switch (c){
+            case RED:
+                myColor = PlayerColor.RED;
+                colorList.setStyle("-fx-background-color: red;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
+                break;
+            case BLUE:
+                myColor = PlayerColor.BLUE;
+                colorList.setStyle("-fx-background-color: blue;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
+                break;
+            case GREEN:
+                myColor = PlayerColor.GREEN;
+                colorList.setStyle("-fx-background-color: green;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
+                break;
+            case YELLOW:
+                myColor = PlayerColor.YELLOW;
+                colorList.setStyle("-fx-background-color: yellow;");
+                url = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
+        }
+
+        placeColor(url);
+
+        setColorText(c.toString().toLowerCase());
     }
 
     public void placeColor(String imageUrl){
@@ -126,19 +126,16 @@ public class ColorPageController implements Initializable {
     }
 
     public void refreshColors(){ // tasto update
-        if(!success){
-            resetColor();
-            List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN, PlayerColor.YELLOW); // REFRESH LIST -- CALL MODEL
-            setGameList(items);
-        }
+        resetColor();
+        List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN, PlayerColor.YELLOW); // REFRESH LIST -- CALL MODEL
+        setGameList(items);
     }
     public void selectColor(ActionEvent actionEvent) throws IOException {
-        if(!success){
-            if(selected){
-                getGui().setColor(myColor);
-            }else{
-                showError();
-            }
+        if(selected){
+            getGui().setColor(myColor);
+            showSuccess();
+        }else{
+            showError(INITIAL_SETTING_ALREADY_SET);
         }
     }
     public void nextPage(){
@@ -151,37 +148,30 @@ public class ColorPageController implements Initializable {
     }
 
     public void showSuccess(){
-        success=true;
         errButton.setVisible(false);
         successButton.setVisible(true);
     }
 
-    public void showError(){
+    public void showError(ERROR_MESSAGES errorMessages){
         colorList.setStyle("-fx-background-color: #d34813;");
         setColorText("Select another color");
         successButton.setVisible(false);
         errButton.setVisible(true);
     }
-    public void start() throws Exception {
+    public void start() {
 
-        // Load FXML file
         URL resourceUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/ColorPage.fxml");
         if (resourceUrl == null) {
             System.out.println("FXML file not found");
             return;
         }
-        //System.out.println("FXML file found");
-        Parent root = FXMLLoader.load(resourceUrl);
 
-        // Load CSS file
-        URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
-        if (cssUrl != null) {
-            root.getStylesheets().add(cssUrl.toExternalForm());
-            //System.out.println("CSS file found");
-        } else {
-            System.out.println("CSS file not found");
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(resourceUrl);
+            getStage().getScene().setRoot(root);
+        } catch (Exception ignore) {
         }
-        getStage().getScene().setRoot(root);
     }
 }
 

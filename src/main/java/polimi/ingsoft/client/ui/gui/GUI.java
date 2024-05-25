@@ -1,20 +1,15 @@
 package polimi.ingsoft.client.ui.gui;
 
-import jdk.dynalink.linker.GuardedInvocationTransformer;
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.GAME_PHASE;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GUI extends UI{
 
@@ -24,7 +19,8 @@ public class GUI extends UI{
     private CLIENT_STATE clientState;
     private GameState gameState;
     private PlayerInitialSetting playerInitialSetting;
-    private boolean nextPageEnable = true;
+    private boolean nextColorPageEnable = true;
+    private boolean nextInitialPageEnable = true;
 
     public GUI(Client client){
         super(client);
@@ -33,7 +29,6 @@ public class GUI extends UI{
 
     @Override
     public void showWelcomeScreen() throws IOException {
-        System.out.println("1");
         getClientMatches();
         homeController = new HomeController();
         HomeController.main(new String[]{});
@@ -41,19 +36,20 @@ public class GUI extends UI{
 
     @Override
     public void updateNickname() {
-        System.out.println("2");
         GUIsingleton.getInstance().getNicknamePageController().nextPage();
     }
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) {
-        System.out.println("3");
         switch (errorMessage){
             case NICKNAME_NOT_AVAILABLE -> {
                 GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
             }
             case MATCH_IS_ALREADY_FULL -> {
                 GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);
+            }
+            case COLOR_ALREADY_PICKED -> {
+                GUIsingleton.getInstance().getColorPageController().showError(errorMessage);
             }
         }
     }
@@ -99,13 +95,11 @@ public class GUI extends UI{
 
     @Override
     public void updateMatchesList(List<Integer> matches) {
-        System.out.println("4");
         matchList = matches;
     }
 
     @Override
     public void showMatchCreate(Integer matchId) {
-        System.out.println("5");
         this.matchId = matchId;
         try {
             getClient().joinMatch(getNickname(),matchId);
@@ -115,7 +109,6 @@ public class GUI extends UI{
 
     @Override
     public void showUpdateGameState(GameState gameState) {
-        System.out.println("6");
         this.gameState = gameState;
 
         updateView();
@@ -123,7 +116,6 @@ public class GUI extends UI{
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
-        System.out.println("7");
         this.playerInitialSetting=playerInitialSetting;
     }
 
@@ -132,21 +124,28 @@ public class GUI extends UI{
             case INITIALIZATION -> {
                 switch (gameState.getCurrentInitialStep()){
                     case COLOR -> {
-                        if(nextPageEnable){
-                            nextPageEnable=false;
+                        if(nextColorPageEnable){
+                            nextColorPageEnable =false;
                             nextPageWaiting();
                         }else{
-                            if (playerInitialSetting != null){
+                            /*if (playerInitialSetting != null){
                                 if(playerInitialSetting.getColor() != null){
                                     GUIsingleton.getInstance().getColorPageController().showSuccess();
                                 }
-                            }
+                            }*/
+                        }
+                    }
+                    case FACE_INITIAL -> {
+                        if(nextInitialPageEnable){
+                            nextInitialPageEnable =false;
+                            GUIsingleton.getInstance().getColorPageController().nextPage();
                         }
                     }
                 }
             }
         }
     }
+
 
     public void nextPageWaiting(){
         GUIsingleton.getInstance().getWaitingPageController().nextPage();
