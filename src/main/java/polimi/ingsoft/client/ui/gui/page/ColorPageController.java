@@ -21,18 +21,20 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static polimi.ingsoft.server.enumerations.ERROR_MESSAGES.COLOR_ALREADY_PICKED;
 import static polimi.ingsoft.server.enumerations.ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET;
 
 public class ColorPageController implements Initializable {
     private PlayerColor myColor;
     private String color;
     private boolean selected;
+    private boolean wait =false;
     @FXML
     SplitMenuButton colorList;
     @FXML
     Button errButton;
     @FXML
-    Button successButton;
+    Button waitButton;
     @FXML
     ImageView colorSelected;
 
@@ -52,7 +54,7 @@ public class ColorPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         errButton.setVisible(false);
-        successButton.setVisible(false);
+        waitButton.setVisible(false);
         List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN, PlayerColor.YELLOW); // CALL MODEL
         resetColor();
         setGameList(items);
@@ -133,7 +135,7 @@ public class ColorPageController implements Initializable {
     public void selectColor(ActionEvent actionEvent) throws IOException {
         if(selected){
             getGui().setColor(myColor);
-            showSuccess();
+            showWait();
         }else{
             showError(INITIAL_SETTING_ALREADY_SET);
         }
@@ -147,16 +149,22 @@ public class ColorPageController implements Initializable {
         }
     }
 
-    public void showSuccess(){
-        errButton.setVisible(false);
-        successButton.setVisible(true);
+    public void showWait(){
+        if(!wait){
+            errButton.setVisible(false);
+            waitButton.setVisible(true);
+            wait =true;
+        }
     }
 
     public void showError(ERROR_MESSAGES errorMessages){
-        colorList.setStyle("-fx-background-color: #d34813;");
-        setColorText("Select another color");
-        successButton.setVisible(false);
-        errButton.setVisible(true);
+        if(errorMessages == COLOR_ALREADY_PICKED){
+            wait = false;
+            colorList.setStyle("-fx-background-color: #d34813;");
+            setColorText("Select another color");
+            waitButton.setVisible(false);
+            errButton.setVisible(true);
+        }
     }
     public void start() {
 
@@ -169,7 +177,7 @@ public class ColorPageController implements Initializable {
         Parent root = null;
         try {
             root = FXMLLoader.load(resourceUrl);
-            getStage().getScene().setRoot(root);
+            getStage().getScene().setRoot(root); // TODO capisci da dove arriva exception --> ignora
         } catch (Exception ignore) {
         }
     }

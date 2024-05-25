@@ -32,12 +32,12 @@
             </children>
         </StackPane>
 
-        <StackPane layoutX="950.0" layoutY="40.0" prefWidth="370" prefHeight="120" alignment="CENTER">
+        <StackPane layoutX="1000.0" layoutY="40.0" prefWidth="150" prefHeight="120" alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Success! Now wait"
-                        prefWidth="370" prefHeight="120" styleClass="successPane"
+                <Button mnemonicParsing="false" text="Wait!"
+                        prefWidth="150" prefHeight="120" styleClass="successPane"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        fx:id="successButton">
+                        fx:id="waitButton">
                 </Button>
             </children>
         </StackPane>
