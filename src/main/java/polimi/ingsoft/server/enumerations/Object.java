@@ -1,18 +1,14 @@
 package polimi.ingsoft.server.enumerations;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.*;
 import polimi.ingsoft.server.model.Item;
-@JsonTypeName("Object")
-//@JsonProperty("Items")
 public enum Object implements Item {
-    SCROLL("SCR"), POTION("POT") , FEATHER("FEA");
+    SCROLL("SCROLL"), POTION("POTION") , FEATHER("FEATHER");
 
     private final String abbreviation;
 
-    private Object(String abbreviation){
+    @JsonCreator
+    Object(@JsonProperty("items") String abbreviation){
         this.abbreviation = abbreviation;
     }
 

@@ -25,10 +25,10 @@ private static final String RESOURCE="resourceCards.json";
     File file;
     Scanner fileReader;
     public DeckFactory(){
-        SimpleModule simpleModule = new SimpleModule();
+        //SimpleModule simpleModule = new SimpleModule();
         //simpleModule.addKeyDeserializer(Map.class, new MapDeserializer());
         this.cardCreator=new ObjectMapper();
-        cardCreator.registerModule(simpleModule);
+        //cardCreator.registerModule(simpleModule);
         cardCreator.configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION.mappedFeature(), true); //da cancellare
 
     }
@@ -40,7 +40,10 @@ private static final String RESOURCE="resourceCards.json";
         file=new File(RESOURCE);
         fileReader=new Scanner(file);
         cards=cardCreator.readValue(fileReader.nextLine(),listType);
-        System.out.print(cardCreator.writeValueAsString(new Deck<>(cards).draw()));
+//        for(int i=0;i<40;i++) {
+//            ResourceCard card=new Deck<>(cards).draw();
+//            System.out.println(cardCreator.writeValueAsString(card));
+//        }
         return new Deck<>(cards);
     }
     public Deck<GoldCard>createGoldDeck() throws JsonProcessingException, FileNotFoundException {
@@ -54,7 +57,9 @@ private static final String RESOURCE="resourceCards.json";
 
         //System.out.println(cardCreator.writeValueAsString(new GoldCard(null,null,null,pattern,pattern,1)));//
         cards=cardCreator.readValue(fileReader.nextLine(),listType);
-        System.out.println(cardCreator.writeValueAsString(new Deck<>(cards).draw()));
+//        for(int i=0;i<40;i++) {
+//            System.out.println(cardCreator.writeValueAsString(new Deck<>(cards).draw()));//
+//        }
         return new Deck<>(cards);
         }
     public Deck<QuestCard>createQuestDeck()throws JsonProcessingException {
@@ -62,9 +67,16 @@ private static final String RESOURCE="resourceCards.json";
         cardCreator.readValue(QUEST, GoldCard.class);
         return new Deck<QuestCard>(deck);
     }
-    public Deck<InitialCard>createInitialDeck() throws JsonProcessingException{
-        ArrayList<InitialCard> deck = new ArrayList<>();
-        cardCreator.readValue(INITIAL, GoldCard.class);
-        return new Deck<InitialCard>(deck);
+
+    public Deck<InitialCard>createInitialDeck() throws JsonProcessingException, FileNotFoundException {
+        ArrayList<InitialCard> cards;
+        CollectionType listType = cardCreator.getTypeFactory().constructCollectionType(ArrayList.class, InitialCard.class);
+        file=new File(INITIAL);
+        fileReader=new Scanner(file);
+        cards=cardCreator.readValue(fileReader.nextLine(), listType);
+//        for(int i=0;i<6;i++) {
+//            System.out.println(cardCreator.writeValueAsString(new Deck<>(cards).draw()));//
+//        }
+        return new Deck<InitialCard>(cards);
     }
 }

@@ -11,5 +11,6 @@ public class CornerPattern implements Pattern {
         if(board.getCard(coordinates.sum(new Coordinates(-1,-1)))!=null)count++;
         return count;
     }
-    public String getCost(){return "Corner";}
+    public void setCost(String s){ //DON'T REMOVE THIS FUNCTION! IT'S WHAT KEEPS THE JSON WORKING !!!
+    }
 }

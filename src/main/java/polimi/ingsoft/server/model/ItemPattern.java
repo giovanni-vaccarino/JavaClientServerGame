@@ -106,5 +106,4 @@ public class ItemPattern implements Pattern{
         return this.cost;
     }
 
-
 }
