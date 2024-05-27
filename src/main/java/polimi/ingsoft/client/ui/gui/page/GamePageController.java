@@ -26,9 +26,7 @@ import javafx.scene.image.ImageView;
 import polimi.ingsoft.client.ui.gui.Coordinates;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.client.ui.gui.utils.CardPathUtils;
-import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
-import polimi.ingsoft.client.ui.gui.utils.PlaceCardUtils;
+import polimi.ingsoft.client.ui.gui.utils.*;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.Chat;
 import polimi.ingsoft.server.model.Message;
@@ -50,6 +48,18 @@ public class GamePageController implements Initializable{
     @FXML private GridPane coveredDrawableDeck4;
     @FXML private GridPane visibleDrawableDeck;
     @FXML private GridPane personalDeck;
+
+    @FXML private Button buttonPublicBoard00;
+    @FXML private Button buttonPublicBoard10;
+    @FXML private Button buttonPublicBoard01;
+    @FXML private Button buttonPublicBoard11;
+    @FXML private Button buttonPublicBoard02;
+    @FXML private Button buttonPublicBoard12;
+
+    @FXML private Button buttonPersonalDeck00;
+    @FXML private Button buttonPersonalDeck10;
+    @FXML private Button buttonPersonalDeck20;
+    @FXML private Button buttonPersonalDeck30;
 
     @FXML private GridPane board;
     @FXML private GridPane otherBoards;
@@ -147,6 +157,40 @@ public class GamePageController implements Initializable{
         PlaceCardUtils.placeSameCard(0,1, coveredDrawableDeck4);
         PlaceCardUtils.placeSameCard(0,2, coveredDrawableDeck4);
 
+        // Flip buttons
+
+        buttonPublicBoard00.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(0,0,visibleDrawableDeck);
+        });
+        buttonPublicBoard10.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(1,0,visibleDrawableDeck);
+        });
+        buttonPublicBoard01.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(0,1,visibleDrawableDeck);
+        });
+        buttonPublicBoard11.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(1,1,visibleDrawableDeck);
+        });
+        buttonPublicBoard02.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(0,2,visibleDrawableDeck);
+        });
+        buttonPublicBoard12.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(1,2,visibleDrawableDeck);
+        });
+
+        buttonPersonalDeck00.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(0,0,personalDeck);
+        });
+        buttonPersonalDeck10.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(1,0,personalDeck);
+        });
+        buttonPersonalDeck20.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(2,0,personalDeck);
+        });
+        buttonPersonalDeck30.setOnMouseClicked(event -> {
+            PlaceCardUtils.flipCard(3,0,personalDeck);
+        });
+
         // Set nickname-->color
         nicknameColor = new HashMap<>();
         setNicknameColor("Nico", PlayerColor.BLUE);
@@ -201,8 +245,7 @@ public class GamePageController implements Initializable{
         loadEntireBoard();
 
 
-        // TO CHOOSE A CARD TO PLACE ON THE BOARD
-
+        // Choose a card from a personal deck
         for (Node node : personalDeck.getChildren()) {
             int y = GridPane.getRowIndex(node);
             int x = GridPane.getColumnIndex(node);
@@ -214,6 +257,7 @@ public class GamePageController implements Initializable{
             });
         }
 
+        // Choose a card from Public board
         for (Node node : visibleDrawableDeck.getChildren()) {
             int y = GridPane.getRowIndex(node);
             int x = GridPane.getColumnIndex(node);
@@ -225,6 +269,7 @@ public class GamePageController implements Initializable{
             });
         }
 
+        // Choose a card from Public board (covered cards)
         for (Node node : coveredDrawableDeck1.getChildren()) {
             int y = GridPane.getRowIndex(node);
             int x = GridPane.getColumnIndex(node);
@@ -642,156 +687,14 @@ public class GamePageController implements Initializable{
                             break;
                     }
 
-                    switch(score.get(i)){
-                        case 0:
-                            x=41;
-                            y=331;
-                            break;
-                        case 1:
-                            x=85;
-                            y=331;
-                            break;
-                        case 2:
-                            x=129;
-                            y=331;
-                            break;
-                        case 3:
-                            x=153;
-                            y=294;
-                            break;
-                        case 4:
-                            x=108;
-                            y=294;
-                            break;
-                        case 5:
-                            x=64;
-                            y=294;
-                            break;
-                        case 6:
-                            x=19;
-                            y=294;
-                            break;
-                        case 7:
-                            x=19;
-                            y=251;
-                            break;
-
-                        case 8:
-                            x=62;
-                            y=251;
-                            break;
-
-                        case 9:
-                            x=108;
-                            y=251;
-                            break;
-
-                        case 10:
-                            x=153;
-                            y=251;
-                            break;
-
-                        case 11:
-                            x=153;
-                            y=219;
-                            break;
-
-                        case 12:
-                            x=108;
-                            y=219;
-                            break;
-
-                        case 13:
-                            x=63;
-                            y=219;
-                            break;
-
-                        case 14:
-                            x=19;
-                            y=219;
-                            break;
-
-                        case 15:
-                            x=19;
-                            y=180;
-                            break;
-
-                        case 16:
-                            x=63;
-                            y=180;
-                            break;
-
-                        case 17:
-                            x=108;
-                            y=180;
-                            break;
-
-                        case 18:
-                            x=153;
-                            y=180;
-                            break;
-
-                        case 19:
-                            x=153;
-                            y=143;
-                            break;
-
-                        case 20:
-                            x=86;
-                            y=123;
-                            break;
-
-                        case 21:
-                            x=19;
-                            y=143;
-                            break;
-
-                        case 22:
-                            x=19;
-                            y=104;
-                            break;
-
-                        case 23:
-                            x=19;
-                            y=67;
-                            break;
-
-                        case 24:
-                            x=44;
-                            y=35;
-                            break;
-
-                        case 25:
-                            x=86;
-                            y=28;
-                            break;
-
-                        case 26:
-                            x=127;
-                            y=35;
-                            break;
-
-                        case 27:
-                            x=153;
-                            y=67;
-                            break;
-
-                        case 28:
-                            x=153;
-                            y=104;
-                            break;
-
-                        case 29:
-                            x=86;
-                            y=75;
-                            break;
-                    }
+                    x = ScoreUtils.GetXFromScore(score.get(i));
+                    y = ScoreUtils.GetYFromScore(score.get(i));
 
                     x += (-4)*countSameScore(i);
                     y += (-6)*countSameScore(i);
 
 
-                    placeSingolScore(x,y,imageUrl, imageView);
+                    ScoreUtils.placeSingolScore(x,y,imageUrl, imageView);
                 }
             }else{
                 //errore numero giocatori
@@ -799,19 +702,6 @@ public class GamePageController implements Initializable{
         }
     }
 
-    public void placeSingolScore(int x, int y, String imageUrl, ImageView imageView){
-        Image image = new Image(imageUrl);
-
-        imageView.setFitWidth(29);
-        imageView.setFitHeight(29);
-
-        imageView.setLayoutX(x);
-        imageView.setLayoutY(y);
-
-        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-
-        imageView.setImage(image);
-    }
 
     public int countSameScore(int s){
         int counter = 0;
@@ -827,27 +717,8 @@ public class GamePageController implements Initializable{
         return counter;
     }
     public void placeArrow(String dir, ImageView imageView){
-        double rotationAngle = 0;
-        String id;
 
-        String imageUrl = "/polimi/ingsoft/demo/graphics/img/arrow.PNG"; // Replace with your image URL
-        Image image = new Image(imageUrl);
-
-        imageView.setFitWidth(50.0);
-        imageView.setFitHeight(50.0);
-
-        if(Objects.equals(dir, "S")){
-            rotationAngle = 0.0;
-        } else if (Objects.equals(dir, "E")) {
-            rotationAngle = -90.0;
-        } else if (Objects.equals(dir, "O")) {
-            rotationAngle = 90.0;
-        } else if (Objects.equals(dir, "N")) {
-            rotationAngle = 180.0;
-        }
-        imageView.setRotate(rotationAngle);
-
-        imageView.setImage(image);
+        ArrowUtils.placeArrow(dir,imageView);
 
         imageView.setOnMouseClicked(event -> {
             if(imageView.getId().equals("arrowE")){

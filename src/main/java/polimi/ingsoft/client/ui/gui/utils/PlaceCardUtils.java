@@ -27,4 +27,9 @@ public class PlaceCardUtils {
         // Add the ImageView to the specific cell in the GridPane
         gridPane.add(imageView, x, y);
     }
+
+    public static void flipCard(int x, int y, GridPane gridPane){
+        //todo add memory to the flipped side and then flip it by calling the placeCard
+        System.out.println(x+":"+y);
+    }
 }
