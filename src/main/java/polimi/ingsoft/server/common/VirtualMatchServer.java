@@ -6,6 +6,9 @@ import polimi.ingsoft.server.model.*;
 import java.io.IOException;
 import java.rmi.Remote;
 
+/**
+ * The VirtualMatchServer interface defines the methods for effectively play a match.
+ */
 public interface VirtualMatchServer extends Remote {
     void setColor(String nickname, PlayerColor color) throws IOException;
 

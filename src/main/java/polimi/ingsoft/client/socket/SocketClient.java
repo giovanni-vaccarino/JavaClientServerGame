@@ -113,7 +113,8 @@ public class SocketClient extends Client {
                 }
                 case MATCH_PUBLIC_BOARD_UPDATE -> {
                     PublicBoard publicBoard = (PublicBoard) payload;
-                    this.showUpdatePublicBoard(publicBoard);
+                    //TODO
+                    this.showUpdatePublicBoard(null, null, null);
                 }
                 case MATCH_BOARD_UPDATE -> {
                     NetworkMessage.BoardUpdatePayload boardUpdatePayload = (NetworkMessage.BoardUpdatePayload) payload;
@@ -123,7 +124,7 @@ public class SocketClient extends Client {
                     this.showUpdateBoard(nickname, coordinates, playedCard);
                 }
                 case MATCH_PLAYER_HAND_UPDATE -> {
-                    PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) payload;
+                    PlayerHand playerHand = (PlayerHand) payload;
                     this.showUpdatePlayerHand(playerHand);
                 }
                 case MATCH_BROADCAST_MESSAGE_UPDATE -> {

@@ -104,7 +104,7 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException {
+    public void showUpdatePlayerHand(PlayerHand playerHand) throws IOException {
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_PLAYER_HAND_UPDATE,
                 playerHand
@@ -114,11 +114,11 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdatePublicBoard(PublicBoard publicBoard) throws IOException {
+    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
-                publicBoard
-        );
+                null
+        ); //TODO
         out.writeObject(message);
         out.flush();
     }

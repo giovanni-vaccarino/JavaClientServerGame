@@ -8,21 +8,33 @@ public class PublicBoard implements Serializable {
     private final PlaceInPublicBoard<ResourceCard> placeResource;
     private final PlaceInPublicBoard<GoldCard> placeGold;
     private final PlaceInPublicBoard<QuestCard> placeQuest;
-    private List<InitialCard> availableInitialCards;
+    private Deck<InitialCard> availableInitialCards;
 
     public PublicBoard(
             Deck<ResourceCard> resourceCardsDeck,
             Deck<GoldCard> goldCardsDeck,
             Deck<QuestCard> QuestCardDeck,
-            List<InitialCard> initialCards
+            Deck<InitialCard> initialCards
     ) {
         placeResource = new PlaceInPublicBoard<>(resourceCardsDeck);
         placeGold = new PlaceInPublicBoard<>(goldCardsDeck);
         placeQuest = new PlaceInPublicBoard<>(QuestCardDeck);
-        //TODO add this when you can load the cards: availableInitialCards = initialCards;
+        availableInitialCards = initialCards;
     }
 
-    public InitialCard getInitial(){return availableInitialCards.removeFirst();}
+    public PlaceInPublicBoard<ResourceCard> getPublicBoardResource(){
+        return this.placeResource;
+    }
+
+    public PlaceInPublicBoard<GoldCard> getPublicBoardGold(){
+        return this.placeGold;
+    }
+
+    public PlaceInPublicBoard<QuestCard> getPublicBoardQuest(){
+        return this.placeQuest;
+    }
+
+    public InitialCard getInitial(){return availableInitialCards.draw();}
 
     public ResourceCard getResource(PlaceInPublicBoard.Slots spaceSlot) {
         return placeResource.get(spaceSlot);

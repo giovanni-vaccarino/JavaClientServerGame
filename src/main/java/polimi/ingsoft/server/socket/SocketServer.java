@@ -147,7 +147,7 @@ public class SocketServer implements ConnectionsClient {
         }
     }
 
-    public void singleUpdatePlayerHand(VirtualView client, PlayerHand<MixedCard> playerHand) {
+    public void singleUpdatePlayerHand(VirtualView client, PlayerHand playerHand) {
         synchronized (this.clients) {
             try {
                 client.showUpdatePlayerHand(playerHand);
@@ -160,7 +160,8 @@ public class SocketServer implements ConnectionsClient {
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
-                    client.showUpdatePublicBoard(publicBoard);
+                    //TODO
+                    client.showUpdatePublicBoard(null, null, null);
                 } catch (IOException ignored) { }
             }
         }
