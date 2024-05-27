@@ -9,7 +9,6 @@ import java.util.List;
 
 public class PublicBoardFactory {
     public static PublicBoard createPublicBoard() {
-        //TODO Here put the method to load the decks from the json file, and then the method to shuffle
         try{
             Deck<ResourceCard> resourceCardDeck = DeckFactory.createResourceDeck();
             Deck<GoldCard> goldCardDeck = DeckFactory.createGoldDeck();

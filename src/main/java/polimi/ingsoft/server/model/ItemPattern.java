@@ -9,10 +9,11 @@ import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.enumerations.Object;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class ItemPattern implements Pattern{
+public class ItemPattern implements Pattern, Serializable {
 
     //@JsonSubTypes.Type(value=ItemPattern.class, name="")
 
