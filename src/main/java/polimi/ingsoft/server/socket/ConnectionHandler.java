@@ -380,7 +380,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) {
+    public void showUpdatePlayerHand(PlayerHand playerHand) {
         synchronized (this.view) {
             try {
                 this.view.showUpdatePlayerHand(playerHand);

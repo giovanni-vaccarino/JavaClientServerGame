@@ -147,7 +147,7 @@ public class SocketServer implements ConnectionsClient {
         }
     }
 
-    public void singleUpdatePlayerHand(VirtualView client, PlayerHand<MixedCard> playerHand) {
+    public void singleUpdatePlayerHand(VirtualView client, PlayerHand playerHand) {
         synchronized (this.clients) {
             try {
                 client.showUpdatePlayerHand(playerHand);
