@@ -250,7 +250,7 @@ public class GamePageController implements Initializable{
 
         // Gold
 
-        /*id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
+        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
         path= CardPathUtils.frontMixedCard(id);
         placeCardString(0,1,visibleDrawableDeck, path);
 
@@ -261,11 +261,11 @@ public class GamePageController implements Initializable{
         // Quest
 
         /*id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
-        path= CardPathUtils.frontMixedCard(id);
+        path= CardPathUtils.frontQuestCard(id);
         placeCardString(0,2,visibleDrawableDeck, path);
 
         id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
-        path= CardPathUtils.frontMixedCard(id);
+        path= CardPathUtils.frontQuestCard(id);
         placeCardString(1,2,visibleDrawableDeck, path);*/
 
         // Resource Covered
@@ -274,13 +274,17 @@ public class GamePageController implements Initializable{
         PlaceCardUtils.placeCardString(0,0,coveredDrawableDeck1, path);
 
         // Gold Covered
-        /*id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
+        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
         path= CardPathUtils.backMixedCard(id);
+
+        System.out.println("id: "+id);
+        System.out.println("path: "+path);
+
         PlaceCardUtils.placeCardString(0,1,coveredDrawableDeck1, path);
 
         // Quest Covered
-        id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
-        path= CardPathUtils.backMixedCard(id);
+        /*id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
+        path= CardPathUtils.backQuestCard(id);
         PlaceCardUtils.placeCardString(0,2,coveredDrawableDeck1, path);*/
     }
 
