@@ -5,6 +5,10 @@ import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.server.model.GoldCard;
+import polimi.ingsoft.server.model.PlaceInPublicBoard;
+import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.model.ResourceCard;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -170,5 +174,9 @@ public class CLI extends UI {
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }
+    }
+    @Override
+    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
+
     }
 }

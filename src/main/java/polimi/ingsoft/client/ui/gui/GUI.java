@@ -7,6 +7,8 @@ import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.Resource;
+import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,11 +16,7 @@ import java.util.List;
 public class GUI extends UI{
 
     private HomeController homeController;
-    private Integer matchId;
-    private List<Integer> matchList;
-    private CLIENT_STATE clientState;
-    private GameState gameState;
-    private PlayerInitialSetting playerInitialSetting;
+
     private boolean nextColorPageEnable = true;
     private boolean nextInitialCardPageEnable = true;
     private boolean nextQuestCardPageEnable = true;
@@ -58,7 +56,7 @@ public class GUI extends UI{
 
     public void createMatch(int numPlayers){
         try {
-            clientState = CLIENT_STATE.NEWGAME;
+            getUiModel().setClientState(CLIENT_STATE.NEWGAME);
             getClient().createMatch(getNickname(),numPlayers);
         } catch (IOException ignore) {
         }
@@ -66,7 +64,7 @@ public class GUI extends UI{
 
     public void joinMatch(Integer matchId) {
         try {
-            clientState = CLIENT_STATE.JOINGAME;
+            getUiModel().setClientState(CLIENT_STATE.JOINGAME);
             getClient().joinMatch(getNickname(), matchId);
         } catch (IOException ignore) {
         }
@@ -80,12 +78,12 @@ public class GUI extends UI{
     }
 
     public List<Integer> getMatchList(){
-        return matchList;
+        return getUiModel().getMatchList();
     }
 
     @Override
     public void showUpdateMatchJoin() {
-        switch (clientState){
+        switch (getUiModel().getClientState()){
             case NEWGAME:
                 GUIsingleton.getInstance().getNewGamePageController().nextPage();
                 break;
@@ -97,12 +95,12 @@ public class GUI extends UI{
 
     @Override
     public void updateMatchesList(List<Integer> matches) {
-        matchList = matches;
+        getUiModel().setMatchList(matches);
     }
 
     @Override
     public void showMatchCreate(Integer matchId) {
-        this.matchId = matchId;
+        getUiModel().setMatchId(matchId);
         try {
             getClient().joinMatch(getNickname(),matchId);
         } catch (IOException ignore) {
@@ -111,20 +109,25 @@ public class GUI extends UI{
 
     @Override
     public void showUpdateGameState(GameState gameState) {
-        this.gameState = gameState;
+        getUiModel().setGameState(gameState);
 
         updateView();
     }
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
-        this.playerInitialSetting=playerInitialSetting;
+        getUiModel().setPlayerInitialSetting(playerInitialSetting);
+    }
+
+    public String getInitialCard(){
+        //return playerInitialSetting.getInitialCard().getID(); TODO collega server serializzazione carte
+        return "InitialCard(5)";
     }
 
     public void updateView(){
-        switch (gameState.getGamePhase()){
+        switch (getUiModel().getGameState().getGamePhase()){
             case INITIALIZATION -> {
-                switch (gameState.getCurrentInitialStep()){
+                switch (getUiModel().getGameState().getCurrentInitialStep()){
                     case COLOR -> {
                         if(nextColorPageEnable){
                             nextColorPageEnable =false;
@@ -164,6 +167,10 @@ public class GUI extends UI{
     @Override
     public void updatePlayersInLobby(List<String> nicknames) {
 
+    }
+    @Override
+    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
+        // TODO SET THE PUBLIC CARD
     }
 
 }
