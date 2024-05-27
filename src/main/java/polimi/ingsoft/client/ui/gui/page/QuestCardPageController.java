@@ -127,9 +127,9 @@ public class QuestCardPageController implements Initializable {
 
     public void nextPage(){
 
-        GamePageController gamePageController = new GamePageController();
+        LoadingGamePageController loadingGamePageController = new LoadingGamePageController();
         try {
-            gamePageController.start();
+            loadingGamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

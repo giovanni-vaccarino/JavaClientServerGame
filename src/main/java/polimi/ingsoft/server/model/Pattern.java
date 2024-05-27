@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value= CornerPattern.class, name="Corner"),
         @JsonSubTypes.Type(value=ItemPattern.class, name="Item"),
-        @JsonSubTypes.Type(value=SchemePattern.class, name="Scheme")
+        @JsonSubTypes.Type(value=SchemePattern.class, name="Order")
 })
 public interface Pattern {
     int getMatch(Board board,Coordinates coordinates);

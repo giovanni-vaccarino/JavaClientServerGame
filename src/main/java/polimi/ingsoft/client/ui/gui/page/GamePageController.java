@@ -23,14 +23,15 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-import javafx.util.Callback;
 import polimi.ingsoft.client.ui.gui.Coordinates;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.client.ui.gui.utils.CardPathUtils;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.Chat;
 import polimi.ingsoft.server.model.Message;
+import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
 import java.util.*;
 
@@ -129,14 +130,7 @@ public class GamePageController implements Initializable{
         placeCardHandler(3,0, personalDeck);
 
         // Visible Drawable Cards
-        placeCardHandler(0,0, visibleDrawableDeck);
-        placeCardHandler(1,0, visibleDrawableDeck);
-
-        placeCardHandler(0,1, visibleDrawableDeck);
-        placeCardHandler(1,1, visibleDrawableDeck);
-
-        placeCardHandler(0,2, visibleDrawableDeck);
-        placeCardHandler(1,2, visibleDrawableDeck);
+        setPublicBoard();
 
         // Covered Drawable Cards
 
@@ -180,7 +174,7 @@ public class GamePageController implements Initializable{
 
         // Loading cards Example
         String initialCardPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg";
-        String cardPath = "polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg";
+        String cardPath = "polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg";
         setBoardCoordinatesOrder(0,0,initialCardPath,0);
         setBoardCoordinatesOrder(1,1,cardPath,1);
 
@@ -244,6 +238,38 @@ public class GamePageController implements Initializable{
                 System.out.println(y);
             });
         }
+    }
+
+    public void setPublicBoard(){
+
+        // Resource
+        String id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
+        String path= CardPathUtils.frontMixedCard(id);
+        placeCardString(0,0,visibleDrawableDeck, path);
+
+        id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
+        path= CardPathUtils.frontMixedCard(id);
+        placeCardString(1,0,visibleDrawableDeck, path);
+
+        // Gold
+
+        /*id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
+        path= CardPathUtils.frontMixedCard(id);
+        placeCardString(0,1,visibleDrawableDeck, path);
+
+        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
+        path= CardPathUtils.frontMixedCard(id);
+        placeCardString(1,1,visibleDrawableDeck, path);
+
+        // Quest
+
+        /*id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
+        path= CardPathUtils.frontMixedCard(id);
+        placeCardString(0,2,visibleDrawableDeck, path);
+
+        id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
+        path= CardPathUtils.frontMixedCard(id);
+        placeCardString(1,2,visibleDrawableDeck, path);*/ // TODO TO ADD TO THE SERVER
     }
 
     public GUI getGui(){
@@ -821,7 +847,11 @@ public class GamePageController implements Initializable{
     }
 
     public void placeCardHandler(int x,int y, GridPane gridPane){
-        ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/resourceCard/frontResourceCard(1).jpg"));
+        ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg"));
+        placeCard(x,y,gridPane,cardImg);
+    }
+    public void placeCardString(int x,int y, GridPane gridPane, String path){
+        ImageView cardImg = new ImageView(new Image(path));
         placeCard(x,y,gridPane,cardImg);
     }
 
