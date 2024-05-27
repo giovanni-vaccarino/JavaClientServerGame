@@ -25,7 +25,7 @@ public interface VirtualView extends Remote {
     void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException;
     void showUpdateGameState(GameState gameState) throws IOException;
     void showUpdatePlayerHand(PlayerHand playerHand) throws IOException;
-    void showUpdatePublicBoard(PublicBoard publicBoard) throws IOException;
+    void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException;
     void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException;
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;
     void setMatchControllerServer(VirtualMatchServer server) throws IOException;

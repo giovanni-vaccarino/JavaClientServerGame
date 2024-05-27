@@ -160,7 +160,8 @@ public class SocketServer implements ConnectionsClient {
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
-                    client.showUpdatePublicBoard(publicBoard);
+                    //TODO
+                    client.showUpdatePublicBoard(null, null, null);
                 } catch (IOException ignored) { }
             }
         }

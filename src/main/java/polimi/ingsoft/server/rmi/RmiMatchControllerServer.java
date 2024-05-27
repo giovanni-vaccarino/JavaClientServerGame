@@ -6,6 +6,7 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
@@ -128,12 +129,27 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
 
+                        if(gameState.getGamePhase() == GAME_PHASE.PLAY){
+                            PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+                            PlaceInPublicBoard<ResourceCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+                            PlaceInPublicBoard<ResourceCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+
+
+                            RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
+                                    new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});
+                        }
+
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
                                 client.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
                             }
                             client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
+
+                        if(gameState.getGamePhase() == GAME_PHASE.PLAY){
+                            startGameUpdate();
+                        }
+
                     }
                 } catch (WrongGamePhaseException exception){
                     synchronized (this.clients){
@@ -301,6 +317,20 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
             methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_PLACE_REQUEST, new Object[]{player, card, coordinates, facingUp}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        }
+    }
+
+    private void startGameUpdate() throws IOException {
+        PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+        PlaceInPublicBoard<ResourceCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+        PlaceInPublicBoard<ResourceCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+
+
+        RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
+                new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});
+
+        for(var client : this.clients){
+            client.handleRmiClientMessages(rmiMethodCallPublicBoard);
         }
     }
 }

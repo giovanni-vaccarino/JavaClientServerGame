@@ -113,7 +113,8 @@ public class SocketClient extends Client {
                 }
                 case MATCH_PUBLIC_BOARD_UPDATE -> {
                     PublicBoard publicBoard = (PublicBoard) payload;
-                    this.showUpdatePublicBoard(publicBoard);
+                    //TODO
+                    this.showUpdatePublicBoard(null, null, null);
                 }
                 case MATCH_BOARD_UPDATE -> {
                     NetworkMessage.BoardUpdatePayload boardUpdatePayload = (NetworkMessage.BoardUpdatePayload) payload;

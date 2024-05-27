@@ -107,8 +107,11 @@ public class RmiClient extends Client {
             }
 
             case MATCH_PUBLIC_BOARD_UPDATE -> {
-                PublicBoard publicBoard = (PublicBoard) args[0];
-                this.showUpdatePublicBoard(publicBoard);
+                PlaceInPublicBoard resourcePublicBoard = (PlaceInPublicBoard<ResourceCard>) args[0];
+                PlaceInPublicBoard goldPublicBoard = (PlaceInPublicBoard<ResourceCard>) args[1];
+                PlaceInPublicBoard questPublicBoard = (PlaceInPublicBoard<ResourceCard>) args[2];
+
+                this.showUpdatePublicBoard(resourcePublicBoard, goldPublicBoard, questPublicBoard);
             }
 
             case MATCH_BOARD_UPDATE -> {

@@ -389,10 +389,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdatePublicBoard(PublicBoard publicBoard) {
+    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
         synchronized (this.view) {
             try {
-                this.view.showUpdatePublicBoard(publicBoard);
+                this.view.showUpdatePublicBoard(resourceCards, goldCards, questCards);
             } catch (IOException ignore) { }
         }
     }

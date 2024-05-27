@@ -88,8 +88,9 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdatePublicBoard(PublicBoard publicBoard) throws IOException {
-
+    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
+        System.out.println("RECEIVED PUBLIC BOARD INITIALIZATION");
+        ui.showUpdatePublicBoard(resourceCards, goldCards, questCards);
     }
 
     @Override
