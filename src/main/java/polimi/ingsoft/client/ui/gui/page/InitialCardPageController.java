@@ -44,8 +44,13 @@ public class InitialCardPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         waitButton.setVisible(false);
         flip=false;
-        setInitialCard("/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg",
-                "/polimi/ingsoft/demo/graphics/img/card/backCard/initialCard/backInitialCard(1).jpg"); // TODO outer function!!! SSSIMON
+        setInitialCardPath(getGui().getInitialCard());
+    }
+
+    public void setInitialCardPath(String id){
+        String frontPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/front"+id+".jpg";
+        String backPath = "/polimi/ingsoft/demo/graphics/img/card/backCard/initialCard/back"+id+".jpg";
+        setInitialCard(frontPath, backPath); // TODO outer function!!! SSSIMON
     }
 
     public void setInitialCard(String frontPath, String backPath){
