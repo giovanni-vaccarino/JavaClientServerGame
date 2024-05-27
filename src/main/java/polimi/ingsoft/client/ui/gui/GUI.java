@@ -173,6 +173,7 @@ public class GUI extends UI{
         getUiModel().setResourceCards(resourceCards);
         getUiModel().setGoldCards(goldCards);
         getUiModel().setQuestCards(questCards);
+        GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
     }
 
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){

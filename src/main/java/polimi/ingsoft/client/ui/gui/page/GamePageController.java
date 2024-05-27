@@ -253,7 +253,7 @@ public class GamePageController implements Initializable{
 
         // Gold
 
-        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
+        /*id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
         path= CardPathUtils.frontMixedCard(id);
         placeCardString(0,1,visibleDrawableDeck, path);
 
@@ -262,14 +262,6 @@ public class GamePageController implements Initializable{
         placeCardString(1,1,visibleDrawableDeck, path);
 
         // Quest
-
-        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
-        path= CardPathUtils.frontMixedCard(id);
-        placeCardString(0,2,visibleDrawableDeck, path);
-
-        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
-        path= CardPathUtils.frontMixedCard(id);
-        placeCardString(1,2,visibleDrawableDeck, path);
 
         /*id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
         path= CardPathUtils.frontMixedCard(id);

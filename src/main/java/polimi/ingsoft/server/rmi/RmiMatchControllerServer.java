@@ -129,15 +129,6 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
 
-                        if(gameState.getGamePhase() == GAME_PHASE.PLAY){
-                            PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-                            PlaceInPublicBoard<ResourceCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-                            PlaceInPublicBoard<ResourceCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-
-
-                            RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
-                                    new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});
-                        }
 
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
@@ -147,7 +138,9 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         }
 
                         if(gameState.getGamePhase() == GAME_PHASE.PLAY){
+                            System.out.println("STO INVIANDO 1");
                             startGameUpdate();
+                            System.out.println("STO INVIANDO 2");
                         }
 
                     }
@@ -324,7 +317,6 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
         PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
         PlaceInPublicBoard<ResourceCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
         PlaceInPublicBoard<ResourceCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-
 
         RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
                 new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});

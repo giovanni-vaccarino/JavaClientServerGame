@@ -19,6 +19,7 @@ public class GUIsingleton {
     private QuestCardPageController questCardPageController;
     private QuestCardWaitingPageController questCardWaitingPageController;
     private GamePageController gamePageController;
+    private LoadingGamePageController loadingGamePageController;
     private Stage stage;
     private GUI gui;
 
@@ -151,5 +152,13 @@ public class GUIsingleton {
 
     public void setGamePageController(GamePageController gamePageController) {
         this.gamePageController = gamePageController;
+    }
+
+    public LoadingGamePageController getLoadingGamePageController() {
+        return loadingGamePageController;
+    }
+
+    public void setLoadingGamePageController(LoadingGamePageController loadingGamePageController) {
+        this.loadingGamePageController = loadingGamePageController;
     }
 }
