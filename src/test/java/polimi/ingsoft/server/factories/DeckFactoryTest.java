@@ -2,10 +2,7 @@ package polimi.ingsoft.server.factories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.model.Deck;
-import polimi.ingsoft.server.model.GoldCard;
-import polimi.ingsoft.server.model.InitialCard;
-import polimi.ingsoft.server.model.ResourceCard;
+import polimi.ingsoft.server.model.*;
 
 import java.io.FileNotFoundException;
 
@@ -14,8 +11,13 @@ class DeckFactoryTest {
 
     @Test
     void createResourceDeck() throws FileNotFoundException, JsonProcessingException {
-        DeckFactory cards=new DeckFactory();
-        Deck<ResourceCard> deck=cards.createResourceDeck();
+        Deck<ResourceCard> deck= DeckFactory.createResourceDeck();
+
+        Deck<GoldCard> deck2=DeckFactory.createGoldDeck();
+
+        Deck<InitialCard> deck3=DeckFactory.createInitialDeck();
+
+        Deck<QuestCard> deck4=DeckFactory.createQuestDeck();
     }
 
     @Test
@@ -25,7 +27,9 @@ class DeckFactoryTest {
     }
 
     @Test
-    void createQuestDeck() throws JsonProcessingException {
+    void createQuestDeck() throws JsonProcessingException, FileNotFoundException {
+        DeckFactory cards=new DeckFactory();
+        Deck<QuestCard> deck=cards.createQuestDeck();
     }
 
     @Test
