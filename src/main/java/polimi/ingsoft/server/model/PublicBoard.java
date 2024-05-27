@@ -8,7 +8,7 @@ public class PublicBoard implements Serializable {
     private final PlaceInPublicBoard<ResourceCard> placeResource;
     private final PlaceInPublicBoard<GoldCard> placeGold;
     private final PlaceInPublicBoard<QuestCard> placeQuest;
-    private Deck<InitialCard> availableInitialCards;
+    private final Deck<InitialCard> availableInitialCards;
 
     public PublicBoard(
             Deck<ResourceCard> resourceCardsDeck,
