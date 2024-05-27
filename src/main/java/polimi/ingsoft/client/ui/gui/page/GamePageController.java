@@ -28,6 +28,7 @@ import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.utils.CardPathUtils;
 import polimi.ingsoft.client.ui.gui.utils.GridPaneUtils;
+import polimi.ingsoft.client.ui.gui.utils.PlaceCardUtils;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.Chat;
 import polimi.ingsoft.server.model.Message;
@@ -124,31 +125,27 @@ public class GamePageController implements Initializable{
         setChatList(chatHashMap.keySet().stream().toList());
 
         // Personal cards
-        placeCardHandler(0,0, personalDeck);
-        placeCardHandler(1,0, personalDeck);
-        placeCardHandler(2,0, personalDeck);
-        placeCardHandler(3,0, personalDeck);
+        placeSameCard(0,0, personalDeck);
+        placeSameCard(1,0, personalDeck);
+        placeSameCard(2,0, personalDeck);
+        placeSameCard(3,0, personalDeck);
 
-        // Visible Drawable Cards
+        // Public board
         setPublicBoard();
 
-        // Covered Drawable Cards
+        // Public Board Covered Cards (static)
 
-        placeCardHandler(0,0, coveredDrawableDeck1);
-        placeCardHandler(0,1, coveredDrawableDeck1);
-        placeCardHandler(0,2, coveredDrawableDeck1);
+        PlaceCardUtils.placeSameCard(0,0, coveredDrawableDeck2);
+        PlaceCardUtils.placeSameCard(0,1, coveredDrawableDeck2);
+        PlaceCardUtils.placeSameCard(0,2, coveredDrawableDeck2);
 
-        placeCardHandler(0,0, coveredDrawableDeck2);
-        placeCardHandler(0,1, coveredDrawableDeck2);
-        placeCardHandler(0,2, coveredDrawableDeck2);
+        PlaceCardUtils.placeSameCard(0,0, coveredDrawableDeck3);
+        PlaceCardUtils.placeSameCard(0,1, coveredDrawableDeck3);
+        PlaceCardUtils.placeSameCard(0,2, coveredDrawableDeck3);
 
-        placeCardHandler(0,0, coveredDrawableDeck3);
-        placeCardHandler(0,1, coveredDrawableDeck3);
-        placeCardHandler(0,2, coveredDrawableDeck3);
-
-        placeCardHandler(0,0, coveredDrawableDeck4);
-        placeCardHandler(0,1, coveredDrawableDeck4);
-        placeCardHandler(0,2, coveredDrawableDeck4);
+        PlaceCardUtils.placeSameCard(0,0, coveredDrawableDeck4);
+        PlaceCardUtils.placeSameCard(0,1, coveredDrawableDeck4);
+        PlaceCardUtils.placeSameCard(0,2, coveredDrawableDeck4);
 
         // Set nickname-->color
         nicknameColor = new HashMap<>();
@@ -245,11 +242,11 @@ public class GamePageController implements Initializable{
         // Resource
         String id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
         String path= CardPathUtils.frontMixedCard(id);
-        placeCardString(0,0,visibleDrawableDeck, path);
+        PlaceCardUtils.placeCardString(0,0,visibleDrawableDeck, path);
 
         id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
         path= CardPathUtils.frontMixedCard(id);
-        placeCardString(1,0,visibleDrawableDeck, path);
+        PlaceCardUtils.placeCardString(1,0,visibleDrawableDeck, path);
 
         // Gold
 
@@ -269,7 +266,22 @@ public class GamePageController implements Initializable{
 
         id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
         path= CardPathUtils.frontMixedCard(id);
-        placeCardString(1,2,visibleDrawableDeck, path);*/ // TODO TO ADD TO THE SERVER
+        placeCardString(1,2,visibleDrawableDeck, path);*/
+
+        // Resource Covered
+        id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
+        path= CardPathUtils.backMixedCard(id);
+        PlaceCardUtils.placeCardString(0,0,coveredDrawableDeck1, path);
+
+        // Gold Covered
+        /*id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
+        path= CardPathUtils.backMixedCard(id);
+        PlaceCardUtils.placeCardString(0,1,coveredDrawableDeck1, path);
+
+        // Quest Covered
+        id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
+        path= CardPathUtils.backMixedCard(id);
+        PlaceCardUtils.placeCardString(0,2,coveredDrawableDeck1, path);*/
     }
 
     public GUI getGui(){
@@ -526,7 +538,7 @@ public class GamePageController implements Initializable{
 
                             node.setOnMouseClicked(event -> {
                                 // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
-                                placeCardHandler(x, y, board);
+                                placeSameCard(x, y, board);
                             });
                         }
                     }
@@ -846,7 +858,7 @@ public class GamePageController implements Initializable{
         });
     }
 
-    public void placeCardHandler(int x,int y, GridPane gridPane){
+    public void placeSameCard(int x, int y, GridPane gridPane){
         ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg"));
         placeCard(x,y,gridPane,cardImg);
     }
