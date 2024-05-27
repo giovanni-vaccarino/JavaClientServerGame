@@ -8,13 +8,13 @@ public class PublicBoard implements Serializable {
     private final PlaceInPublicBoard<ResourceCard> placeResource;
     private final PlaceInPublicBoard<GoldCard> placeGold;
     private final PlaceInPublicBoard<QuestCard> placeQuest;
-    private List<InitialCard> availableInitialCards;
+    private Deck<InitialCard> availableInitialCards;
 
     public PublicBoard(
             Deck<ResourceCard> resourceCardsDeck,
             Deck<GoldCard> goldCardsDeck,
             Deck<QuestCard> QuestCardDeck,
-            List<InitialCard> initialCards
+            Deck<InitialCard> initialCards
     ) {
         placeResource = new PlaceInPublicBoard<>(resourceCardsDeck);
         placeGold = new PlaceInPublicBoard<>(goldCardsDeck);
@@ -22,7 +22,7 @@ public class PublicBoard implements Serializable {
         //TODO add this when you can load the cards: availableInitialCards = initialCards;
     }
 
-    public InitialCard getInitial(){return availableInitialCards.removeFirst();}
+    public InitialCard getInitial(){return availableInitialCards.draw();}
 
     public ResourceCard getResource(PlaceInPublicBoard.Slots spaceSlot) {
         return placeResource.get(spaceSlot);

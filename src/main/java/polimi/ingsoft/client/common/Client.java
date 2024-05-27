@@ -83,7 +83,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdatePlayerHand(PlayerHand<MixedCard> playerHand) throws IOException {
+    public void showUpdatePlayerHand(PlayerHand playerHand) throws IOException {
 
     }
 

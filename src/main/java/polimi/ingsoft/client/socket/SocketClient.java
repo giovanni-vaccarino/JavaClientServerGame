@@ -123,7 +123,7 @@ public class SocketClient extends Client {
                     this.showUpdateBoard(nickname, coordinates, playedCard);
                 }
                 case MATCH_PLAYER_HAND_UPDATE -> {
-                    PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) payload;
+                    PlayerHand playerHand = (PlayerHand) payload;
                     this.showUpdatePlayerHand(playerHand);
                 }
                 case MATCH_BROADCAST_MESSAGE_UPDATE -> {

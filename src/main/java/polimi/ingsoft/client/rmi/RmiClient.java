@@ -120,7 +120,7 @@ public class RmiClient extends Client {
             }
 
             case MATCH_PLAYER_HAND_UPDATE -> {
-                PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) args[0];
+                PlayerHand playerHand = (PlayerHand) args[0];
                 this.showUpdatePlayerHand(playerHand);
             }
 

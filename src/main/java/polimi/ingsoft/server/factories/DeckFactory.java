@@ -9,32 +9,29 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import polimi.ingsoft.server.model.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import polimi.ingsoft.server.enumerations.Resource;
+import java.util.*;
 
-import java.util.Map;
-import java.util.Scanner;
+import polimi.ingsoft.server.enumerations.Resource;
 
 public class DeckFactory {
 private static final String RESOURCE="resourceCards.json";
     private static final String GOLD="goldCards.json";
     private static final String QUEST="questCards.json";
     private static final String INITIAL="initialCards.json";
-    ObjectMapper cardCreator;
-    File file;
-    Scanner fileReader;
-    public DeckFactory(){
+    static ObjectMapper cardCreator;
+    static File file;
+    static Scanner fileReader;
+    static {
         //SimpleModule simpleModule = new SimpleModule();
         //simpleModule.addKeyDeserializer(Map.class, new MapDeserializer());
-        this.cardCreator=new ObjectMapper();
+        cardCreator=new ObjectMapper();
         //cardCreator.registerModule(simpleModule);
         cardCreator.configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION.mappedFeature(), true); //da cancellare
-
     }
 
 
-    public Deck<ResourceCard> createResourceDeck() throws JsonProcessingException, FileNotFoundException {
+    public static Deck<ResourceCard> createResourceDeck() throws JsonProcessingException, FileNotFoundException {
+        ObjectMapper cardCreator = new ObjectMapper();
         ArrayList<ResourceCard> cards;
         CollectionType listType = cardCreator.getTypeFactory().constructCollectionType(ArrayList.class, ResourceCard.class);
         file=new File(RESOURCE);
@@ -46,7 +43,7 @@ private static final String RESOURCE="resourceCards.json";
 //        }
         return new Deck<>(cards);
     }
-    public Deck<GoldCard>createGoldDeck() throws JsonProcessingException, FileNotFoundException {
+    public static Deck<GoldCard>createGoldDeck() throws JsonProcessingException, FileNotFoundException {
         ArrayList<GoldCard> cards;
         CollectionType listType = cardCreator.getTypeFactory().constructCollectionType(ArrayList.class, GoldCard.class);
         file=new File(GOLD);
@@ -62,13 +59,13 @@ private static final String RESOURCE="resourceCards.json";
 //        }
         return new Deck<>(cards);
         }
-    public Deck<QuestCard>createQuestDeck()throws JsonProcessingException {
+    public static Deck<QuestCard>createQuestDeck()throws JsonProcessingException {
         ArrayList<QuestCard> deck = new ArrayList<>();
         cardCreator.readValue(QUEST, GoldCard.class);
-        return new Deck<QuestCard>(deck);
+        return new Deck<>(deck);
     }
 
-    public Deck<InitialCard>createInitialDeck() throws JsonProcessingException, FileNotFoundException {
+    public static Deck<InitialCard>createInitialDeck() throws JsonProcessingException, FileNotFoundException {
         ArrayList<InitialCard> cards;
         CollectionType listType = cardCreator.getTypeFactory().constructCollectionType(ArrayList.class, InitialCard.class);
         file=new File(INITIAL);
@@ -77,6 +74,6 @@ private static final String RESOURCE="resourceCards.json";
 //        for(int i=0;i<6;i++) {
 //            System.out.println(cardCreator.writeValueAsString(new Deck<>(cards).draw()));//
 //        }
-        return new Deck<InitialCard>(cards);
+        return new Deck<>(cards);
     }
 }
