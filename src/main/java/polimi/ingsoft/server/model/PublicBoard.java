@@ -22,6 +22,18 @@ public class PublicBoard implements Serializable {
         availableInitialCards = initialCards;
     }
 
+    public PlaceInPublicBoard<ResourceCard> getPublicBoardResource(){
+        return this.placeResource;
+    }
+
+    public PlaceInPublicBoard<GoldCard> getPublicBoardGold(){
+        return this.placeGold;
+    }
+
+    public PlaceInPublicBoard<QuestCard> getPublicBoardQuest(){
+        return this.placeQuest;
+    }
+
     public InitialCard getInitial(){return availableInitialCards.draw();}
 
     public ResourceCard getResource(PlaceInPublicBoard.Slots spaceSlot) {
