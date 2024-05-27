@@ -1,6 +1,8 @@
 package polimi.ingsoft.server.model;
 
-public class CornerPattern implements Pattern {
+import java.io.Serializable;
+
+public class CornerPattern implements Pattern, Serializable {
 
     @Override
     public int getMatch(Board board,Coordinates coordinates){
