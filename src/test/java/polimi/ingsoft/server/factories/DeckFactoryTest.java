@@ -11,8 +11,13 @@ class DeckFactoryTest {
 
     @Test
     void createResourceDeck() throws FileNotFoundException, JsonProcessingException {
-        DeckFactory cards=new DeckFactory();
-        Deck<ResourceCard> deck=cards.createResourceDeck();
+        Deck<ResourceCard> deck= DeckFactory.createResourceDeck();
+
+        Deck<GoldCard> deck2=DeckFactory.createGoldDeck();
+
+        Deck<InitialCard> deck3=DeckFactory.createInitialDeck();
+
+        Deck<QuestCard> deck4=DeckFactory.createQuestDeck();
     }
 
     @Test
