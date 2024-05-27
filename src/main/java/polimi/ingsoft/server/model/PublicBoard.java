@@ -19,7 +19,7 @@ public class PublicBoard implements Serializable {
         placeResource = new PlaceInPublicBoard<>(resourceCardsDeck);
         placeGold = new PlaceInPublicBoard<>(goldCardsDeck);
         placeQuest = new PlaceInPublicBoard<>(QuestCardDeck);
-        //TODO add this when you can load the cards: availableInitialCards = initialCards;
+        availableInitialCards = initialCards;
     }
 
     public InitialCard getInitial(){return availableInitialCards.draw();}

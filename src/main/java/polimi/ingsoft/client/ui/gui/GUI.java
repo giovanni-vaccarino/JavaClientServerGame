@@ -120,8 +120,8 @@ public class GUI extends UI{
     }
 
     public String getInitialCard(){
-        //return playerInitialSetting.getInitialCard().getID(); TODO collega server serializzazione carte
-        return "InitialCard(5)";
+        return getUiModel().getPlayerInitialSetting().getInitialCard().getID();
+        //return "InitialCard(5)";
     }
 
     public void updateView(){
