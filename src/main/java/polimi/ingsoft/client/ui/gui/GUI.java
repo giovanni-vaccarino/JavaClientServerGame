@@ -170,7 +170,9 @@ public class GUI extends UI{
     }
     @Override
     public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
-        // TODO SET THE PUBLIC CARD
+        getUiModel().setResourceCards(resourceCards);
+        getUiModel().setGoldCards(goldCards);
+        getUiModel().setQuestCards(questCards);
     }
 
 }
