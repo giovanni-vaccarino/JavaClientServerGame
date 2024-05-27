@@ -24,7 +24,7 @@ public class ItemPattern implements Pattern{
 //        }
 
         @Override
-        public HashMap deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        public HashMap<Item,Integer> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
 //            ObjectMapper mapper = new ObjectMapper();
 //            System.out.println("\n\nlol"+mapper.readValue(jsonParser, HashMap.class));
             JsonNode node = jsonParser.getCodec().readTree(jsonParser);

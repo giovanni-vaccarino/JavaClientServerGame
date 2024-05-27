@@ -29,7 +29,7 @@ private static final String RESOURCE="resourceCards.json";
         //simpleModule.addKeyDeserializer(Map.class, new MapDeserializer());
         this.cardCreator=new ObjectMapper();
         //cardCreator.registerModule(simpleModule);
-        cardCreator.configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION.mappedFeature(), true); //da cancellare
+        //cardCreator.configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION.mappedFeature(), true); //da cancellare
 
     }
 
@@ -51,21 +51,56 @@ private static final String RESOURCE="resourceCards.json";
         CollectionType listType = cardCreator.getTypeFactory().constructCollectionType(ArrayList.class, GoldCard.class);
         file=new File(GOLD);
         fileReader=new Scanner(file);
+        cards=cardCreator.readValue(fileReader.nextLine(),listType);
 //        HashMap<Item,Integer> cost=new HashMap<>();//
 //        cost.put(Resource.MUSHROOM,1);//
 //        ItemPattern pattern=new ItemPattern(cost);//
 
         //System.out.println(cardCreator.writeValueAsString(new GoldCard(null,null,null,pattern,pattern,1)));//
-        cards=cardCreator.readValue(fileReader.nextLine(),listType);
 //        for(int i=0;i<40;i++) {
 //            System.out.println(cardCreator.writeValueAsString(new Deck<>(cards).draw()));//
 //        }
         return new Deck<>(cards);
         }
-    public Deck<QuestCard>createQuestDeck()throws JsonProcessingException {
-        ArrayList<QuestCard> deck = new ArrayList<>();
-        cardCreator.readValue(QUEST, GoldCard.class);
-        return new Deck<QuestCard>(deck);
+    public Deck<QuestCard>createQuestDeck() throws JsonProcessingException, FileNotFoundException {
+        ArrayList<QuestCard> cards;
+        String s;
+        int rows=0,count=0,score,x,y;
+        Resource resource;
+        ArrayList<Link> links=new ArrayList<>();
+        CollectionType listType = cardCreator.getTypeFactory().constructCollectionType(ArrayList.class, QuestCard.class);
+        file=new File(QUEST);
+        fileReader=new Scanner(file);
+        cards=cardCreator.readValue(fileReader.nextLine(), listType);
+        do{
+            links=new ArrayList<>();
+            s=fileReader.nextLine();
+            score=Integer.parseInt(s);
+            count=0;
+            do {
+                s = fileReader.nextLine();
+                resource = switch (s) {
+                    case "MUSHROOM" -> Resource.MUSHROOM;
+                    case "WOLF" -> Resource.WOLF;
+                    case "BUTTERFLY" -> Resource.BUTTERFLY;
+                    case "LEAF" -> Resource.LEAF;
+                    default -> null;
+                };
+                s = fileReader.nextLine();
+                x = Integer.parseInt(s);
+                s = fileReader.nextLine();
+                y = Integer.parseInt(s);
+                links.add(new Link(resource, new Coordinates(x, y)));
+                count++;
+            }while(count<3);
+            s = fileReader.nextLine();
+            cards.add(new QuestCard(s,new SchemePattern(links),score));
+            rows++;
+        }while(rows<8);
+        for(int i=0;i<16;i++) {
+            System.out.println(cardCreator.writeValueAsString(new Deck<>(cards).draw()));//
+        }
+        return new Deck<>(cards);
     }
 
     public Deck<InitialCard>createInitialDeck() throws JsonProcessingException, FileNotFoundException {

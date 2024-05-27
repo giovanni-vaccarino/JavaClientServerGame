@@ -1,12 +1,15 @@
 package polimi.ingsoft.server.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Coordinates {
+public class Coordinates implements Serializable {
     private final int x;
     private final int y;
 
-    public Coordinates(int x, int y){
+    public Coordinates(@JsonProperty("x") int x,@JsonProperty("y") int y){
         this.x = x;
         this.y = y;
     }
