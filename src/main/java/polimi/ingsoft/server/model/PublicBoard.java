@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class PublicBoard implements Serializable {
 
@@ -37,14 +36,14 @@ public class PublicBoard implements Serializable {
     public InitialCard getInitial(){return availableInitialCards.draw();}
 
     public ResourceCard getResource(PlaceInPublicBoard.Slots spaceSlot) {
-        return placeResource.get(spaceSlot);
+        return placeResource.draw(spaceSlot);
     }
 
     public GoldCard getGold(PlaceInPublicBoard.Slots spaceSlot) {
-        return placeGold.get(spaceSlot);
+        return placeGold.draw(spaceSlot);
     }
 
     public QuestCard getQuest(PlaceInPublicBoard.Slots spaceSlot) {
-        return placeQuest.get(spaceSlot);
+        return placeQuest.draw(spaceSlot);
     }
 }
