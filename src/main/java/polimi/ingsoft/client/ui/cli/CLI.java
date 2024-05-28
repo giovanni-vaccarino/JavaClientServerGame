@@ -41,7 +41,7 @@ public class CLI extends UI {
 
 
     }
-    private final HashMap<String, Board> players;
+//    private final HashMap<String, Board> players;
     private final Scanner in;
     private final PrintStream out;
 

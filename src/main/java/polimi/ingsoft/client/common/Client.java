@@ -98,11 +98,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void setPlayerBoards(Map<String, Board> playerBoards){
-        if(playerBoards != null){
-            System.out.println("Ho ricevuto le boards dei player");
-        }else{
-            System.out.println("playerboards null");
-        }
+        ui.setPlayerBoards(playerBoards);
     }
 
     @Override

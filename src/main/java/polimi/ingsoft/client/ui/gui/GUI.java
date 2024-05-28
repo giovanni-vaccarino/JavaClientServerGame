@@ -119,6 +119,7 @@ public class GUI extends UI{
         getUiModel().setPlayerInitialSetting(playerInitialSetting);
     }
 
+
     public String getInitialCard(){
         return getUiModel().getPlayerInitialSetting().getInitialCard().getID();
         //return "InitialCard(5)";
