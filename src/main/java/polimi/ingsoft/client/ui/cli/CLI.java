@@ -148,7 +148,7 @@ public class CLI extends UI {
                 String currentPlayerNickname = gameState.getCurrentPlayer().getNickname();
                 out.println(MESSAGES.CURRENT_PLAYER.getValue() + currentPlayerNickname);
 
-                Board currentPlayerBoard = getPlayerBoards().get(currentPlayerNickname);
+                //Board currentPlayerBoard = getPlayerBoards().get(currentPlayerNickname);
                 // Print current player board
 
                 if (Objects.equals(currentPlayerNickname, getNickname())) {

@@ -18,12 +18,6 @@ import java.util.Map;
 public abstract class UI {
 
     private final Client client;
-
-    public Map<String, Board> getPlayerBoards() {
-        return playerBoards;
-    }
-
-    private Map<String, Board> playerBoards;
     private String nickname;
     private final UIModel uiModel;
     public  UI (Client client){
@@ -88,10 +82,15 @@ public abstract class UI {
     }
 
     public void setPlayerBoards(Map<String, Board> playerBoard){
-        this.playerBoards = playerBoard;
+        getUiModel().setPlayerBoards(playerBoard);
+    }
+
+    public Map<String, Board> getPlayerBoards(){
+        return getUiModel().getPlayerBoards();
     }
 
     public UIModel getUiModel() {
         return uiModel;
     }
+
 }
