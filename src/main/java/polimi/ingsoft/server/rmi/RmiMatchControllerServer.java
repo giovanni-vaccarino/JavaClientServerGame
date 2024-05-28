@@ -326,14 +326,17 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
         PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
         PlaceInPublicBoard<GoldCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardGold();
         PlaceInPublicBoard<QuestCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardQuest();
-        Map<String, Board> playerBoards = new HashMap<>();
+        Map<String, Board> playerBoards = matchController.getPlayerBoards();
 
         RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
                 new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});
+        RmiMethodCall rmiMethodCallPlayerBoards = new RmiMethodCall(MessageCodes.MATCH_SET_BOARDS,
+                new Object[]{playerBoards});
 
         for(var client : this.clients){
             try{
                 client.handleRmiClientMessages(rmiMethodCallPublicBoard);
+                client.handleRmiClientMessages(rmiMethodCallPlayerBoards);
             } catch (RemoteException exception){
                 System.out.println(exception.getMessage());
             }

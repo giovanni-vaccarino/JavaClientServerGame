@@ -12,6 +12,7 @@ import polimi.ingsoft.server.rmi.RmiMethodCall;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.util.List;
+import java.util.Map;
 
 public interface VirtualView extends Remote {
     void handleRmiClientMessages(RmiMethodCall rmiMethodCall) throws IOException;
@@ -26,6 +27,7 @@ public interface VirtualView extends Remote {
     void showUpdateGameState(GameState gameState) throws IOException;
     void showUpdatePlayerHand(PlayerHand playerHand) throws IOException;
     void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException;
+    void setPlayerBoards(Map<String, Board> playerBoards) throws IOException;
     void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException;
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;
     void setMatchControllerServer(VirtualMatchServer server) throws IOException;
