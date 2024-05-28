@@ -12,11 +12,12 @@ import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,7 +38,10 @@ public class CLI extends UI {
         SELECTING_QUEST_CARD,
         WAITING_FOR_QUEST_CARD,
         WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD,
+
+
     }
+    private final HashMap<String, Board> players;
     private final Scanner in;
     private final PrintStream out;
 
@@ -140,6 +144,7 @@ public class CLI extends UI {
         } else if (gameState.getGamePhase() == GAME_PHASE.PLAY) {
             if (state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD) {
                 // Game ready to start
+
             }
         }
     }
@@ -157,6 +162,16 @@ public class CLI extends UI {
                 && playerInitialSetting.getQuestCard() != null) {
             state = CLIState.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD;
         }
+    }
+
+    @Override
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
+        ClientPublicBoard publicBoard=
+                new ClientPublicBoard(
+                        questCards.get(PlaceInPublicBoard.Slots.SLOT_A),questCards.get(PlaceInPublicBoard.Slots.SLOT_B),
+                        resourceCards.get(PlaceInPublicBoard.Slots.DECK),resourceCards.get(PlaceInPublicBoard.Slots.SLOT_A),resourceCards.get(PlaceInPublicBoard.Slots.SLOT_B),
+                        goldCards.get(PlaceInPublicBoard.Slots.DECK),goldCards.get(PlaceInPublicBoard.Slots.SLOT_A),goldCards.get(PlaceInPublicBoard.Slots.SLOT_B)
+                );
     }
 
     public void selectColor(PlayerColor color) {
@@ -202,4 +217,5 @@ public class CLI extends UI {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }
     }
+
 }
