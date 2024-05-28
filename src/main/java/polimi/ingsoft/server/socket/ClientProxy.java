@@ -96,9 +96,10 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException {
+        System.out.println("GAME STATE: " + gameState);
         NetworkMessage message = new NetworkMessage(
             MessageCodes.MATCH_GAME_STATE_UPDATE,
-            gameState
+            new NetworkMessage.GameStatePayload(gameState)
         );
         out.writeObject(message);
         out.flush();

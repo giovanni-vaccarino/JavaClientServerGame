@@ -23,6 +23,14 @@ public class PlayerInitialSetting implements Serializable {
 
     private QuestCard firstChoosableQuestCard;
 
+    public QuestCard getFirstChoosableQuestCard() {
+        return firstChoosableQuestCard;
+    }
+
+    public QuestCard getSecondChoosableQuestCard() {
+        return secondChoosableQuestCard;
+    }
+
     private QuestCard secondChoosableQuestCard;
 
     private PlayerColor color;
