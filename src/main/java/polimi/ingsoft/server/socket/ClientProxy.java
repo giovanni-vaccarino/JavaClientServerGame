@@ -86,6 +86,7 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException {
+        System.out.println("UPDATE PIS: " + playerInitialSetting.getFirstChoosableQuestCard() + " " + playerInitialSetting.getFirstChoosableQuestCard());
         PlayerInitialSetting playerInitialSettingCopy = playerInitialSetting.clone();
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_INITIAL_SETTINGS_UPDATE,

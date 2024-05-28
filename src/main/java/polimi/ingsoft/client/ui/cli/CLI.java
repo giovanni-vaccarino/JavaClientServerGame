@@ -146,6 +146,7 @@ public class CLI extends UI {
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
+        out.println("UPDATE PIS: " + playerInitialSetting.getFirstChoosableQuestCard() + " " + playerInitialSetting.getSecondChoosableQuestCard());
         matchInitializationManager.setPlayerInitialSetting(playerInitialSetting);
         if (state == CLIState.WAITING_FOR_COLOR
                 && playerInitialSetting.getColor() != null) {

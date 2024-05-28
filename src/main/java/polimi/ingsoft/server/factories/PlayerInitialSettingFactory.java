@@ -9,6 +9,7 @@ public class PlayerInitialSettingFactory {
         ResourceCard secondResourceCard = publicBoard.getResource(PlaceInPublicBoard.Slots.DECK);
         GoldCard goldCard = publicBoard.getGold(PlaceInPublicBoard.Slots.DECK);
         QuestCard firstQuestCard = publicBoard.getQuest(PlaceInPublicBoard.Slots.DECK);
+        System.out.println("CONTROLLER: " + firstQuestCard);
         QuestCard secondQuestCard = publicBoard.getQuest(PlaceInPublicBoard.Slots.DECK);
         InitialCard initialCard = publicBoard.getInitial();
 
