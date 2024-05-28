@@ -257,8 +257,6 @@ public class MatchController implements Serializable {
             //TODO
         }
 
-        //TODO Ensures what should go first(goToNextPlayer or updateState)
-        gameState.goToNextPlayer();
         gameState.updateState();
     }
 
@@ -274,14 +272,14 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public synchronized MixedCard drawCard(Player player, String deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public synchronized MixedCard drawCard(Player player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         switch(deckType){
             //TODO Change to TYPE_HAND_CARD.RESOURCE and TYPE_HAND_CARD.GOLD when network is updated
-            case "Resource"-> {
+            case RESOURCE -> {
                 return this.drawResourceCard(player, slot);
             }
 
-            case "Gold" -> {
+            case GOLD -> {
                 return this.drawGoldCard(player, slot);
             }
         }
@@ -303,7 +301,7 @@ public class MatchController implements Serializable {
     private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.DRAW);
 
-        gameState.updateTurnStep();
+        gameState.goToNextPlayer();
 
         return publicBoard.getResource(slot);
     }
@@ -322,7 +320,7 @@ public class MatchController implements Serializable {
     private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.DRAW);
 
-        gameState.updateTurnStep();
+        gameState.goToNextPlayer();
 
         return publicBoard.getGold(slot);
     }

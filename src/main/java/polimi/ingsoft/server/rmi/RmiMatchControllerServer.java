@@ -8,6 +8,7 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -131,16 +132,6 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
 
-                        if(gameState.getGamePhase() == GAME_PHASE.PLAY){
-                            PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-                            PlaceInPublicBoard<ResourceCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-                            PlaceInPublicBoard<ResourceCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-
-
-                            RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
-                                    new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});
-                        }
-
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
                                 client.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
@@ -183,7 +174,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
             case MATCH_DRAW_REQUEST -> {
                 String playerNickname = (String) args[0];
-                String deckType = (String) args[1];
+                TYPE_HAND_CARD deckType = (TYPE_HAND_CARD) args[1];
                 PlaceInPublicBoard.Slots slot = (PlaceInPublicBoard.Slots) args[2];
                 VirtualView clientToUpdate = RmiServer.clients.get(playerNickname);
 
@@ -193,14 +184,27 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                 try{
                     MixedCard drawedCard = matchController.drawCard(player, deckType, slot);
+                    GameState gameState = matchController.getGameState();
+                    PlaceInPublicBoard<?> publicBoardUpdate = (deckType == TYPE_HAND_CARD.RESOURCE) ?
+                            matchController.getPublicBoard().getPublicBoardResource()
+                            :
+                            matchController.getPublicBoard().getPublicBoardGold();
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE,
+                                new Object[]{gameState});
+                        RmiMethodCall rmiMethodCallPlayerHand = new RmiMethodCall(MessageCodes.MATCH_PLAYER_HAND_UPDATE,
+                                new Object[]{drawedCard});
+                        RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
+                                new Object[]{deckType, publicBoardUpdate});
+
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
-                                //client.showUpdatePlayerHand(drawedCard);
+                                client.handleRmiClientMessages(rmiMethodCallPlayerHand);
                             }
 
-                            client.showUpdateGameState(matchController.getGameState());
+                            client.handleRmiClientMessages(rmiMethodCallPublicBoard);
+                            client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
                 } catch (WrongGamePhaseException exception){
@@ -305,7 +309,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
     }
 
     @Override
-    public void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
+    public void drawCard(String player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_DRAW_REQUEST, new Object[]{player, deckType, slot}));
         } catch (InterruptedException e) {
