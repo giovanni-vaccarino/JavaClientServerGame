@@ -14,8 +14,13 @@ public class PlaceCardUtils {
     private static final Map<Coordinates, Boolean> isCartFrontPublicBoard = new HashMap<>();
     private static final Map<Coordinates, Boolean> isCartFrontPlayerHand = new HashMap<>();
 
-    public static void placeSameCard(int x, int y, GridPane gridPane){
+    public static void placeSameResourceCard(int x, int y, GridPane gridPane){
         ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg"));
+        placeCard(x,y,gridPane,cardImg);
+    }
+
+    public static void placeSameQuestCard(int x, int y, GridPane gridPane){
+        ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/backCard/questCard/backQuestCard(1).jpg"));
         placeCard(x,y,gridPane,cardImg);
     }
 
