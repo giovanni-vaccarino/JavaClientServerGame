@@ -62,7 +62,6 @@ public class UIModel {
         List<MixedCard> playerHand = new ArrayList<>();
         for(int i=0; i<3; i++){
             playerHand.add(playerInitialSetting.getPlayerHand().get(i));
-            System.out.println(i+" -- id PlayerHand: "+playerInitialSetting.getPlayerHand().get(i).getID());
         }
         setPlayerHand(playerHand);
 

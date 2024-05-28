@@ -13,11 +13,8 @@ public class GUIsingleton {
     private JoinGamePageController joinGamePageController;
     private WaitingPageController waitingPageController;
     private ColorPageController colorPageController;
-    private ColorWaitingPageController colorWaitingPageController;
     private InitialCardPageController initialCardPageController;
-    private InitialCardWaitingPageController initialCardWaitingPageController;
     private QuestCardPageController questCardPageController;
-    private QuestCardWaitingPageController questCardWaitingPageController;
     private GamePageController gamePageController;
     private LoadingGamePageController loadingGamePageController;
     private Stage stage;
@@ -106,14 +103,6 @@ public class GUIsingleton {
         this.colorPageController = colorPageController;
     }
 
-    public ColorWaitingPageController getColorWaitingPageController() {
-        return colorWaitingPageController;
-    }
-
-    public void setColorWaitingPageController(ColorWaitingPageController colorWaitingPageController) {
-        this.colorWaitingPageController = colorWaitingPageController;
-    }
-
     public InitialCardPageController getInitialCardPageController() {
         return initialCardPageController;
     }
@@ -122,28 +111,12 @@ public class GUIsingleton {
         this.initialCardPageController = initialCardPageController;
     }
 
-    public InitialCardWaitingPageController getInitialCardWaitingPageController() {
-        return initialCardWaitingPageController;
-    }
-
-    public void setInitialCardWaitingPageController(InitialCardWaitingPageController initialCardWaitingPageController) {
-        this.initialCardWaitingPageController = initialCardWaitingPageController;
-    }
-
     public QuestCardPageController getQuestCardPageController() {
         return questCardPageController;
     }
 
     public void setQuestCardPageController(QuestCardPageController questCardPageController) {
         this.questCardPageController = questCardPageController;
-    }
-
-    public QuestCardWaitingPageController getQuestCardWaitingPageController() {
-        return questCardWaitingPageController;
-    }
-
-    public void setQuestCardWaitingPageController(QuestCardWaitingPageController questCardWaitingPageController) {
-        this.questCardWaitingPageController = questCardWaitingPageController;
     }
 
     public GamePageController getGamePageController() {
