@@ -4,6 +4,7 @@ import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.cli.ClientPublicBoard;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
+import polimi.ingsoft.client.ui.gui.utils.PlaceCardUtils;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
@@ -117,6 +118,7 @@ public class GUI extends UI{
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
+        PlaceCardUtils.initializeFaceCards();
         getUiModel().setPlayerInitialSetting(playerInitialSetting);
     }
 
@@ -190,4 +192,19 @@ public class GUI extends UI{
         return getUiModel().getQuestCards();
     }
 
+    public List<MixedCard> getPlayerHand(){
+        return getUiModel().getPlayerHand();
+    }
+
+    public QuestCard getFirstChoosableQuestCard(){
+        return getUiModel().getPlayerInitialSetting().getFirstChoosableQuestCard();
+    }
+
+    public QuestCard getSecondChoosableQuestCard(){
+        return getUiModel().getPlayerInitialSetting().getSecondChoosableQuestCard();
+    }
+
+    public QuestCard getPersonalQuestCard(){
+        return getUiModel().getPersonalQuestCard();
+    }
 }

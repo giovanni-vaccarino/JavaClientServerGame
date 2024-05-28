@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -13,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.client.ui.gui.UIModel;
+import polimi.ingsoft.server.model.QuestCard;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +28,8 @@ public class QuestCardPageController implements Initializable {
     Button waitButton;
     private String firstQuestCardPath;
     private String secondQuestCardPath;
+    private QuestCard firstQuestCard;
+    private QuestCard secondQuestCard;
 
     private boolean selected; // 0 -- questCard1, 1 -- questCard2
 
@@ -45,13 +48,14 @@ public class QuestCardPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         waitButton.setVisible(false);
-        setQuestCard("/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(1).jpg",
-                "/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/frontQuestCard(2).jpg");
+        firstQuestCard = getGui().getFirstChoosableQuestCard();
+        secondQuestCard = getGui().getSecondChoosableQuestCard();
+        setQuestCardPath();
     }
 
-    public void setQuestCard(String firstPath, String secondPath){
-        firstQuestCardPath = String.valueOf(firstPath);
-        secondQuestCardPath = String.valueOf(secondPath);
+    public void setQuestCardPath(){
+        firstQuestCardPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/front"+firstQuestCard.getID()+".jpg";
+        secondQuestCardPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/questCard/front"+secondQuestCard.getID()+".jpg";
         placeCards();
     }
 
@@ -108,16 +112,21 @@ public class QuestCardPageController implements Initializable {
 
     public void questCard1Selected(ActionEvent actionEvent) throws IOException {
         selected = false;
-        select();
+        select(1);
     }
 
     public void questCard2Selected(ActionEvent actionEvent) throws IOException {
         selected = true;
-        select();
+        select(2);
     }
 
-    public void select(){
-        getGui().setQuestCard(null); //TODO add quest card
+    public void select(int questNumber){
+        if(questNumber == 1){
+            getGui().setQuestCard(firstQuestCard);
+        } else if (questNumber == 2) {
+            getGui().setQuestCard(secondQuestCard);
+        }
+
         showWait();
     }
 

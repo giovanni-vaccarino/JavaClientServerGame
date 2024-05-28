@@ -132,10 +132,7 @@ public class GamePageController implements Initializable{
         setChatList(chatHashMap.keySet().stream().toList());
 
         // Personal cards
-        placeSameCard(0,0, personalDeck);
-        placeSameCard(1,0, personalDeck);
-        placeSameCard(2,0, personalDeck);
-        placeSameCard(3,0, personalDeck);
+        setPlayerHand();
 
         // Start flip
         PlaceCardUtils.initializeFaceCards();
@@ -285,6 +282,9 @@ public class GamePageController implements Initializable{
         SetGamePage.setVisiblePublicBoard(visibleDrawableDeck);
     }
 
+    public void setPlayerHand(){
+        SetGamePage.setPlayerHand(personalDeck);
+    }
     public GUI getGui(){
         return GUIsingleton.getInstance().getGui();
     }
