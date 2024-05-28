@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.exceptions;
+package polimi.ingsoft.server.exceptions.MatchExceptions;
 
 import polimi.ingsoft.server.enumerations.PlayerColor;
 

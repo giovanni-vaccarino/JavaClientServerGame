@@ -11,11 +11,14 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
-import polimi.ingsoft.server.exceptions.*;
+import polimi.ingsoft.server.exceptions.MatchExceptions.*;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NicknameNotAvailableException;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
-import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.NetworkMessage;
+import polimi.ingsoft.server.common.protocol.MessageCodes;
+import polimi.ingsoft.server.common.protocol.NetworkMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

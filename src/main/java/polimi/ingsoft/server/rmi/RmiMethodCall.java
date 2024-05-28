@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.rmi;
 
-import polimi.ingsoft.server.socket.protocol.MessageCodes;
+import polimi.ingsoft.server.common.protocol.MessageCodes;
 
 import java.io.Serializable;
 

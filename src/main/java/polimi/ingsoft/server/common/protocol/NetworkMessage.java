@@ -1,8 +1,7 @@
-package polimi.ingsoft.server.socket.protocol;
+package polimi.ingsoft.server.common.protocol;
 
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 

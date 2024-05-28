@@ -1,6 +1,6 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.exceptions.PlayerNotFoundException;
+import polimi.ingsoft.server.exceptions.MatchExceptions.PlayerNotFoundException;
 import polimi.ingsoft.server.model.Chat;
 import polimi.ingsoft.server.model.Message;
 

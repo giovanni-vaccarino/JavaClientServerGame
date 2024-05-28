@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.exceptions.*;
+import polimi.ingsoft.server.exceptions.MatchExceptions.*;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.factories.PlayerInitialSettingFactory;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.*;

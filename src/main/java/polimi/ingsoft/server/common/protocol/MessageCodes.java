@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.socket.protocol;
+package polimi.ingsoft.server.common.protocol;
 
 public enum MessageCodes {
     // Game setup and lobby
