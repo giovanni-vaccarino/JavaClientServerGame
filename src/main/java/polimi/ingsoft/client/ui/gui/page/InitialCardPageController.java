@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.client.ui.gui.utils.CardPathUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,8 +49,8 @@ public class InitialCardPageController implements Initializable {
     }
 
     public void setInitialCardPath(String id){
-        String frontPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/front"+id+".jpg";
-        String backPath = "/polimi/ingsoft/demo/graphics/img/card/backCard/initialCard/back"+id+".jpg";
+        String frontPath = CardPathUtils.frontInitialCard(id);
+        String backPath = CardPathUtils.backInitialCard(id);
         setInitialCard(frontPath, backPath); // TODO outer function!!! SSSIMON
     }
 

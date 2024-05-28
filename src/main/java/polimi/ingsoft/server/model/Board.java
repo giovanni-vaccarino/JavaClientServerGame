@@ -31,6 +31,10 @@ public class Board implements Serializable {
         return cards.get(coordinates);
     }
 
+    public Map<Coordinates, PlayedCard> getAllCards(){
+        return cards;
+    }
+
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
         if(this.check(position)) {
             this.cards.put(position, new PlayedCard(card, facingUp,cards.size()+1));

@@ -16,4 +16,12 @@ public class CardPathUtils {
     public static String backQuestCard(String id){
         return "/polimi/ingsoft/demo/graphics/img/card/backCard/questCard/back"+id+".jpg";
     }
+
+    public static String frontInitialCard(String id){
+        return "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/front"+id+".jpg";
+    }
+
+    public static String backInitialCard(String id){
+        return "/polimi/ingsoft/demo/graphics/img/card/backCard/initialCard/back"+id+".jpg";
+    }
 }
