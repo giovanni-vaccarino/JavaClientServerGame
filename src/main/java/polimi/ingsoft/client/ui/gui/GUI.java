@@ -171,7 +171,7 @@ public class GUI extends UI{
 
     }
     @Override
-    public void updatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
         getUiModel().setResourceCards(resourceCards);
         getUiModel().setGoldCards(goldCards);
         getUiModel().setQuestCards(questCards);
@@ -190,7 +190,4 @@ public class GUI extends UI{
         return getUiModel().getQuestCards();
     }
 
-    @Override
-    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
-    }
 }
