@@ -7,6 +7,7 @@ import polimi.ingsoft.server.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UIModel {
     private Integer matchId;
@@ -19,6 +20,7 @@ public class UIModel {
     private PlaceInPublicBoard<QuestCard> questCards;
     private List<MixedCard> playerHand;
     private QuestCard personalQuestCard;
+    private Map<String, Board> playerBoards;
 
     public Integer getMatchId() {
         return matchId;
@@ -108,5 +110,13 @@ public class UIModel {
 
     public void setPersonalQuestCard(QuestCard personalQuestCard) {
         this.personalQuestCard = personalQuestCard;
+    }
+
+    public Map<String, Board> getPlayerBoards() {
+        return playerBoards;
+    }
+
+    public void setPlayerBoards(Map<String, Board> playerBoards) {
+        this.playerBoards = playerBoards;
     }
 }

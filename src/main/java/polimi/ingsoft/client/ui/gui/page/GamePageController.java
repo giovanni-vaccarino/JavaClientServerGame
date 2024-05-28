@@ -195,7 +195,7 @@ public class GamePageController implements Initializable{
         boardCoordinates = new HashMap<>();
         boardOrder = new HashMap<>();
         setNumTable();
-        setBoardNickname("Nico");
+        setBoardNickname(myName);
         boardAppo = new ImageView[colNum][rowNum];
 
         // Free places on Board
