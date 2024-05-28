@@ -8,6 +8,7 @@ import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
@@ -22,6 +23,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ConnectionHandler implements Runnable, VirtualView {
     private final Socket socket;
@@ -82,6 +84,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 this.server.singleUpdateMatchJoin(this);
 
                                 MatchController matchController = controller.getMatch(id);
+                                GameState gameState = matchController.getGameState();
                                 // Set match controller for usage later
                                 this.matchController = matchController;
                                 List<String> nicknames = matchController.getNamePlayers();
@@ -89,6 +92,12 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 //Adding the client to the match notification list
                                 synchronized (this.server.matchNotificationList){
                                     this.server.matchNotificationList.get(id).add(this);
+                                }
+                                if (gameState.getGamePhase() == GAME_PHASE.INITIALIZATION) {
+                                    this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        gameState
+                                    );
                                 }
                             } catch (MatchAlreadyFullException exception) {
                                 this.reportError(ERROR_MESSAGES.MATCH_IS_ALREADY_FULL);
@@ -114,13 +123,13 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             try {
                                 matchController.setPlayerColor(nickname, color);
                                 PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
-                                this.server.matchUpdateGameState(
-                                        matchController.getMatchId(),
-                                        matchController.getGameState()
-                                );
                                 this.server.singleUpdateInitialSettings(
                                         this,
                                         settings
+                                );
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
@@ -140,13 +149,13 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             try {
                                 matchController.setFaceInitialCard(nickname, isInitialCardFacingUp);
                                 PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
-                                this.server.matchUpdateGameState(
-                                        matchController.getMatchId(),
-                                        matchController.getGameState()
-                                );
                                 this.server.singleUpdateInitialSettings(
                                         this,
                                         settings
+                                );
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
@@ -164,13 +173,13 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             try {
                                 matchController.setQuestCard(nickname, questCard);
                                 PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
-                                this.server.matchUpdateGameState(
-                                        matchController.getMatchId(),
-                                        matchController.getGameState()
-                                );
                                 this.server.singleUpdateInitialSettings(
                                         this,
                                         settings
+                                );
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
@@ -363,6 +372,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
+        logger.println("SOCKET: Sending update player initial settings to " + nickname);
         synchronized (this.view) {
             try {
                 this.view.showUpdateInitialSettings(playerInitialSetting);
@@ -372,6 +382,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
     @Override
     public void showUpdateGameState(GameState gameState) {
+        logger.println("SOCKET: Sending update game state to " + nickname);
         synchronized (this.view) {
             try {
                 this.view.showUpdateGameState(gameState);
@@ -395,6 +406,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
                 this.view.showUpdatePublicBoard(resourceCards, goldCards, questCards);
             } catch (IOException ignore) { }
         }
+    }
+
+    @Override
+    public void setPlayerBoards(Map<String, Board> playerBoards) throws IOException {
+
     }
 
     @Override

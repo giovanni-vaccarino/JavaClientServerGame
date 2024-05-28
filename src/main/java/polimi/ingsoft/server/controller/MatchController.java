@@ -127,6 +127,17 @@ public class MatchController implements Serializable {
     }
 
 
+    public synchronized Map<String, Board> getPlayerBoards(){
+        Map<String, Board> playerBoards = new HashMap<>();
+
+        for(var player : getPlayers()){
+            playerBoards.put(player.getNickname(), player.getBoard());
+        }
+
+        return playerBoards;
+    }
+
+
     /**
      * Adds a player to this match.
      *

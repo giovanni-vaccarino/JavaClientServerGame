@@ -1,10 +1,16 @@
 package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.client.ui.cli.pages.LobbyManager;
+import polimi.ingsoft.client.ui.cli.pages.MatchInitializationManager;
+import polimi.ingsoft.client.ui.cli.pages.MatchManager;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
+import polimi.ingsoft.server.enumerations.INITIAL_STEP;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.GoldCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.QuestCard;
@@ -16,167 +22,179 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CLI extends UI {
-    enum CLICommand {
-        exit,
-        unknown_command,
-        list_matches,
-        create_match,
-        join_match,
-        print_board,
-        place_card
+    enum CLIState {
+        WELCOME,
+        WAITING_FOR_MATCHES,
+        WAITING_FOR_JOIN,
+        WAITING_FOR_CREATE,
+        WAITING_FOR_NICKNAME,
+        WAITING_FOR_PLAYERS,
+        SELECTING_COLOR,
+        WAITING_FOR_COLOR,
+        WAITING_FOR_OTHERS_TO_SELECT_COLOR,
+        SELECTING_INITIAL_CARD_FACE,
+        WAITING_FOR_INITIAL_CARD_FACE,
+        WAITING_FOR_OTHERS_TO_SELECT_INITIAL_CARD_FACE,
+        SELECTING_QUEST_CARD,
+        WAITING_FOR_QUEST_CARD,
+        WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD,
     }
     private final Scanner in;
     private final PrintStream out;
-    private List<Integer> matchIds;
-    private Integer matchId;
+
+    private CLIState state = CLIState.WELCOME;
+
+    private final MatchManager matchManagerPage;
+    private final LobbyManager lobbyManager;
+    private final MatchInitializationManager matchInitializationManager;
 
     public CLI(Scanner in, PrintStream out, Client client) {
         super(client);
         this.in = in;
         this.out = out;
-    }
-
-    private void run() {
-        new Thread(() -> {
-            CLICommand command = CLICommand.unknown_command;
-            do {
-                try {
-                    command = CLICommand.valueOf(in.nextLine());
-                    switch (command) {
-                        case list_matches -> showMatchesList();
-                        case create_match -> runCreateMatch();
-                        case join_match -> runJoinMatch();
-                    }
-                } catch (IllegalArgumentException e) {
-                    out.println(ERROR_MESSAGES.UNKNOWN_COMMAND.getValue());
-                }
-            } while (command != CLICommand.exit);
-        }).start();
-    }
-
-    private void showMatchesList() {
-        int i = 0;
-        for (Integer match : matchIds)
-            out.printf("%d. Match number %d%n", ++i, match);
+        matchManagerPage = new MatchManager(in, out, this);
+        lobbyManager = new LobbyManager(out);
+        matchInitializationManager = new MatchInitializationManager(in, out, this);
     }
 
     public void updateNickname() {
-        out.println(MESSAGES.NICKNAME_UPDATED.getValue());
-        this.run();
+        if (state == CLIState.WAITING_FOR_NICKNAME) {
+            out.println(MESSAGES.NICKNAME_UPDATED.getValue());
+            try {
+                getClient().getMatches(this.getClient());
+                state = CLIState.WAITING_FOR_MATCHES;
+            } catch (IOException e) {
+                out.println(ERROR_MESSAGES.UNABLE_TO_LIST_MATCHES.getValue());
+            }
+        }
     }
 
-    private void runCreateMatch() {
-        int requestedNumPlayers;
-        boolean isValid = false;
+    public void showWelcomeScreen() {
+        out.println(MESSAGES.WELCOME.getValue());
 
-        do {
-            out.print(MESSAGES.CHOOSE_NUMPLAYERS.getValue());
-            requestedNumPlayers = in.nextInt();
-            in.nextLine();
+        String candidateNickname;
+        out.print(MESSAGES.CHOOSE_NICKNAME.getValue());
+        candidateNickname = in.nextLine();
+        setNickname(candidateNickname);
+        state = CLIState.WAITING_FOR_NICKNAME;
+    }
 
-            if (isValidNumberOfPlayers(requestedNumPlayers)){
-                isValid = true;
+    public void updateMatchesList(List<Integer> matches) {
+        if (state == CLIState.WAITING_FOR_MATCHES) {
+            matchManagerPage.updateMatchesList(matches);
+            matchManagerPage.showMatchesList();
+            matchManagerPage.runMatchRoutine();
+        }
+    }
+
+    @Override
+    public void showUpdateMatchJoin() {
+        if (state == CLIState.WAITING_FOR_JOIN) {
+            out.println(MESSAGES.JOINED_MATCH.getValue());
+            state = CLIState.WAITING_FOR_PLAYERS;
+        }
+    }
+
+    @Override
+    public void updatePlayersInLobby(List<String> nicknames) {
+        if (state == CLIState.WAITING_FOR_PLAYERS) {
+            lobbyManager.setNicknames(nicknames);
+            lobbyManager.showWaitingPlayers();
+        }
+    }
+
+    @Override
+    public void showMatchCreate(Integer matchId) {
+        if (state == CLIState.WAITING_FOR_CREATE) {
+            matchManagerPage.updateMatchesList(matchId);
+            out.println(MESSAGES.CREATED_MATCH.getValue());
+            joinMatch(matchId);
+        }
+    }
+
+    @Override
+    public void reportError(ERROR_MESSAGES errorMessage) {
+        out.println("ERROR: " + errorMessage.getValue());
+        if (state == CLIState.WAITING_FOR_COLOR && errorMessage == ERROR_MESSAGES.COLOR_ALREADY_PICKED) {
+            matchInitializationManager.selectColor();
+        }
+    }
+
+    @Override
+    public void showUpdateGameState(GameState gameState) {
+        if (gameState.getGamePhase() == GAME_PHASE.INITIALIZATION) {
+            // Initialization phase
+            if (state == CLIState.WAITING_FOR_PLAYERS
+                    && gameState.getCurrentInitialStep() == INITIAL_STEP.COLOR) {
+                state = CLIState.SELECTING_COLOR;
+                matchInitializationManager.selectColor();
+            } else if ((state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_COLOR || state == CLIState.WAITING_FOR_COLOR)
+                            && gameState.getCurrentInitialStep() == INITIAL_STEP.FACE_INITIAL) {
+                state = CLIState.SELECTING_INITIAL_CARD_FACE;
+                matchInitializationManager.selectInitialCardFace();
+            } else if (state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_INITIAL_CARD_FACE
+                            && gameState.getCurrentInitialStep() == INITIAL_STEP.QUEST_CARD) {
+                state = CLIState.SELECTING_QUEST_CARD;
+                matchInitializationManager.selectQuestCard();
             }
-            else {
-                out.println(ERROR_MESSAGES.PLAYERS_OUT_OF_BOUND.getValue());
+        } else if (gameState.getGamePhase() == GAME_PHASE.PLAY) {
+            if (state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD) {
+                // Game ready to start
             }
-        } while (!isValid);
+        }
+    }
 
+    @Override
+    public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
+        matchInitializationManager.setPlayerInitialSetting(playerInitialSetting);
+        if (state == CLIState.WAITING_FOR_COLOR
+                && playerInitialSetting.getColor() != null) {
+            state = CLIState.WAITING_FOR_OTHERS_TO_SELECT_COLOR;
+        } else if (state == CLIState.WAITING_FOR_INITIAL_CARD_FACE
+                && playerInitialSetting.getIsInitialFaceUp() != null) {
+            state = CLIState.WAITING_FOR_OTHERS_TO_SELECT_INITIAL_CARD_FACE;
+        } else if (state == CLIState.WAITING_FOR_QUEST_CARD
+                && playerInitialSetting.getQuestCard() != null) {
+            state = CLIState.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD;
+        }
+    }
+
+    @Override
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
+
+    }
+
+    public void setColor(PlayerColor playerColor) {
+        super.setColor(playerColor);
+        state = CLIState.WAITING_FOR_COLOR;
+    }
+
+    public void setIsFaceInitialCardUp(boolean isFaceInitialCardUp) {
+        super.setIsFaceInitialCardUp(isFaceInitialCardUp);
+        state = CLIState.WAITING_FOR_INITIAL_CARD_FACE;
+    }
+
+    public void setQuestCard(QuestCard questCard) {
+        super.setQuestCard(questCard);
+        state = CLIState.WAITING_FOR_QUEST_CARD;
+    }
+
+    public void createMatch(int requestedNumPlayers) {
         try {
             getClient().createMatch(getNickname(), requestedNumPlayers);
+            state = CLIState.WAITING_FOR_CREATE;
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_CREATE_MATCH.getValue());
         }
     }
 
-    private boolean isValidNumberOfPlayers(int numberOfPlayers) {
-        return numberOfPlayers <= 4 && numberOfPlayers >= 2;
-    }
-
-    private void runJoinMatch() {
-        int matchId;
-        boolean isValid = false;
-        do {
-            out.print(MESSAGES.CHOOSE_MATCH.getValue());
-            matchId = in.nextInt();
-            in.nextLine();
-            if (matchIds.contains(matchId)) {
-                isValid = true;
-            } else {
-                out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
-            }
-        } while (!isValid);
-        joinMatch(matchId);
-    }
-
-    public void showWelcomeScreen() throws IOException {
-        out.println(MESSAGES.WELCOME.getValue());
-        getClient().getMatches(this.getClient());
-        runSetNickname();
-    }
-
-    public void runSetNickname() {
-        new Thread(() -> {
-            try {
-                String candidateNickname;
-                out.print(MESSAGES.CHOOSE_NICKNAME.getValue());
-                candidateNickname = in.nextLine();
-
-                setNickname(candidateNickname);
-                getClient().setNickname(getNickname());
-            } catch (IOException ignored) { }
-        }).start();
-    }
-
-    public void updateMatchesList(List<Integer> matches) {
-        this.matchIds = matches;
-    }
-
-    @Override
-    public void showUpdateMatchJoin() {
-        out.println(MESSAGES.JOINED_MATCH.getValue());
-    }
-
-    @Override
-    public void updatePlayersInLobby(List<String> nicknames) {
-        out.println(MESSAGES.PLAYERS_IN_LOBBY.getValue());
-        for (var nickname : nicknames)
-            out.println(nickname);
-    }
-
-    @Override
-    public void showMatchCreate(Integer matchId) {
-        this.matchId = matchId;
-        this.matchIds.add(matchId);
-        out.println(MESSAGES.CREATED_MATCH.getValue());
-        joinMatch(matchId);
-    }
-
-    @Override
-    public void reportError(ERROR_MESSAGES errorMessage) {
-
-    }
-
-    @Override
-    public void showUpdateGameState(GameState gameState) {
-
-    }
-
-    @Override
-    public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) {
-
-    }
-
-    private void joinMatch(Integer matchId) {
+    public void joinMatch(Integer matchId) {
         out.println(MESSAGES.JOINING_MATCH.getValue());
         try {
             getClient().joinMatch(getNickname(), matchId);
+            state = CLIState.WAITING_FOR_JOIN;
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }
-    }
-    @Override
-    public void updatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
-
     }
 }

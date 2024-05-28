@@ -301,7 +301,7 @@ public class ClientPublicBoard {
         System.out.print(RESET + "\n");
     }
 
-    private String printQuestCard(int row, QuestCard card) {
+    public static String printQuestCard(int row, QuestCard card) {
         Pattern pattern;
         pattern = card.getPointPattern();
         try {

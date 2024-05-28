@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public class ClientProxy implements VirtualView {
     private final ObjectOutputStream out;
@@ -85,9 +86,10 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException {
+        PlayerInitialSetting playerInitialSettingCopy = playerInitialSetting.clone();
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_INITIAL_SETTINGS_UPDATE,
-                new NetworkMessage.InitialSettings(playerInitialSetting)
+                new NetworkMessage.InitialSettings(playerInitialSettingCopy)
         );
         out.writeObject(message);
         out.flush();
@@ -95,9 +97,10 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException {
+        GameState gameStateCopy = gameState.clone();
         NetworkMessage message = new NetworkMessage(
             MessageCodes.MATCH_GAME_STATE_UPDATE,
-            gameState
+            new NetworkMessage.GameStatePayload(gameStateCopy)
         );
         out.writeObject(message);
         out.flush();
@@ -121,6 +124,11 @@ public class ClientProxy implements VirtualView {
         ); //TODO
         out.writeObject(message);
         out.flush();
+    }
+
+    @Override
+    public void setPlayerBoards(Map<String, Board> playerBoards) throws IOException {
+
     }
 
     @Override

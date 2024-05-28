@@ -22,6 +22,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -43,9 +44,6 @@ public class RmiClient extends Client {
         super(ui, printStream, scanner);
         Registry registry = LocateRegistry.getRegistry(rmiServerHostName, rmiServerPort);
         this.server = (VirtualServerInterface) registry.lookup(rmiServerName);
-
-        System.out.println(Arrays.toString(registry.list()));
-
         methodWorkerThread.start();
     }
 
@@ -72,8 +70,6 @@ public class RmiClient extends Client {
 
             case MATCHES_LIST_UPDATE -> {
                 List<Integer> matches = (List<Integer>) args[0];
-                System.out.println("List Available matches");
-                System.out.println(matches);
                 this.showUpdateMatchesList(matches);
             }
 
@@ -116,6 +112,12 @@ public class RmiClient extends Client {
                 System.out.println("CI ARRIVO 4");
 
                 this.showUpdatePublicBoard(resourcePublicBoard, goldPublicBoard, questPublicBoard);
+            }
+
+            case MATCH_SET_BOARDS -> {
+                Map<String, Board> playerBoards = (Map<String, Board>) args[0];
+
+                this.setPlayerBoards(playerBoards);
             }
 
             case MATCH_BOARD_UPDATE -> {

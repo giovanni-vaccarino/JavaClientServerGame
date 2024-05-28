@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * This class manages the state of the game, including the FSMs of the game
  */
-public class GameState implements Serializable {
+public class GameState implements Serializable, Cloneable {
     /**
      * The match controller associated with this game state.
      * Declared transient to avoid serialization and network transmission.
@@ -123,7 +123,7 @@ public class GameState implements Serializable {
                     this.matchController.initializePlayers();
                     this.setFirstPlayer();
                     this.gamePhase = GAME_PHASE.PLAY;
-                    this.currentTurnStep = TURN_STEP.DRAW;
+                    this.currentTurnStep = TURN_STEP.PLACE;
                 }
             }
 
@@ -180,12 +180,12 @@ public class GameState implements Serializable {
      */
     public void updateTurnStep(){
         switch(currentTurnStep){
-            case TURN_STEP.DRAW -> {
-                this.currentTurnStep = TURN_STEP.PLACE;
-            }
-
             case TURN_STEP.PLACE -> {
                 this.currentTurnStep = TURN_STEP.DRAW;
+            }
+
+            case TURN_STEP.DRAW -> {
+                this.currentTurnStep = TURN_STEP.PLACE;
             }
         }
     }
@@ -307,5 +307,16 @@ public class GameState implements Serializable {
                 .max(Comparator.comparingInt(player -> player.getBoard().getScore()));
 
         return winner.orElse(null);
+    }
+
+    @Override
+    public GameState clone() {
+        try {
+            GameState clone = (GameState) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

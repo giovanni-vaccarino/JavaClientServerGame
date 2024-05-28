@@ -6,6 +6,7 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
@@ -97,18 +98,14 @@ public class SocketClient extends Client {
                     this.showUpdateLobbyPlayers(nicknames);
                 }
                 case SET_INITIAL_SETTINGS_UPDATE -> {
-                    /*
-                    TODO
+                    // TODO remove record and use plain obj
                     NetworkMessage.InitialSettings initialSettings = (NetworkMessage.InitialSettings) payload;
-                    PlayerColor color = initialSettings.color();
-                    Boolean isInitialCardFacingUp = initialSettings.isInitialCardFacingUp();
-                    QuestCard questCard = initialSettings.questCard();
-                    this.showUpdateInitialSettings(color, isInitialCardFacingUp, questCard);
-
-                     */
+                    PlayerInitialSetting playerInitialSetting = initialSettings.playerInitialSetting();
+                    this.showUpdateInitialSettings(playerInitialSetting);
                 }
                 case MATCH_GAME_STATE_UPDATE -> {
-                    GameState gameState = (GameState) payload;
+                    NetworkMessage.GameStatePayload gameStatePayload = (NetworkMessage.GameStatePayload) payload;
+                    GameState gameState = gameStatePayload.gameState();
                     this.showUpdateGameState(gameState);
                 }
                 case MATCH_PUBLIC_BOARD_UPDATE -> {

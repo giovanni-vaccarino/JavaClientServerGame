@@ -20,6 +20,7 @@ public class ClientHand {
     private String color;
     private ArrayList<MixedCard> cards;
     private ArrayList<Boolean> isFlipped; //true: visualizzo back false:visualizzo front
+    private QuestCard questCard;
 
     public ClientHand() {
         this.cards = new ArrayList<>();
@@ -32,6 +33,9 @@ public class ClientHand {
             this.cards.add(card);
             this.isFlipped.add(true);
         }
+    }
+    public void addQuestCard(QuestCard questCard){
+        this.questCard=questCard;
     }
 
     public static String defineColor(MixedCard card) {
@@ -46,7 +50,8 @@ public class ClientHand {
     public void initialPrint(InitialCard initial){
         cards.add(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0));
         cards.add(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0));
-        flip(1);
+        isFlipped.add(true);
+        isFlipped.add(false);
         print();
         this.cards=new ArrayList<>();
     }
@@ -69,7 +74,12 @@ public class ClientHand {
                 }
                 System.out.print(RESET + "    ");
             }
-            System.out.print("\n");
+            if(questCard!=null) {
+                if (j == 0)
+                    System.out.print(YELLOW + BLACKTEXT + "               | " + questCard.getScore() + "|               ");
+                else System.out.print(ClientPublicBoard.printQuestCard(j, questCard));
+            }
+            System.out.print(RESET+"\n");
         }
     }
 
@@ -136,8 +146,11 @@ public class ClientHand {
         String print="";
         if (isFlipped.get(i) && j != 0 && j != 8) {
             return actualColor + "              ";
-        } else if (j == 0 && isFlipped.get(i)) return printFirstRow(card, i, j, actualColor);
-        else if (j == 8 && isFlipped.get(i)) return printLastRow(card, i, j, actualColor);
+        }
+        else if (j == 0 && isFlipped.get(i)) return printFirstRow(card, i, j, actualColor);
+        else if (j==0 && !isFlipped.get(i) && card.getScore(isFlipped.get(i))==0)return printFirstRow(card, i, j, actualColor);
+        else if (j == 8 && !isFlipped.get(i)) return printLastRow(card, i, j, actualColor);
+
         else {
             center = card.getFront().getCenter();
             switch (center.getItems().size()) {
