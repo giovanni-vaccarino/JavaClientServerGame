@@ -117,8 +117,8 @@ public class SetGamePage {
         int x,y, order;
         String path, id;
 
-        for(String player : getGui().getPlayerBoards().keySet()){
-            allCards = getGui().getPlayerBoards().get(player).getAllCards();
+        for(String player : getGui().getUiModel().getPlayerBoards().keySet()){
+            allCards = getGui().getUiModel().getPlayerBoards().get(player).getCards();
             for (polimi.ingsoft.server.model.Coordinates coordinates: allCards.keySet()){
                 x = coordinates.getX();
                 y = coordinates.getY();
@@ -149,8 +149,8 @@ public class SetGamePage {
     public static void setNicknameColors(){
         GamePageController gamePageController = GUIsingleton.getInstance().getGamePageController();
 
-        for(String player : getGui().getPlayerBoards().keySet()){
-            gamePageController.setNicknameColor(player, getGui().getPlayerBoards().get(player).getColor());
+        for(String player : getGui().getUiModel().getPlayerBoards().keySet()){
+            gamePageController.setNicknameColor(player, getGui().getUiModel().getPlayerBoards().get(player).getColor());
         }
     }
 }

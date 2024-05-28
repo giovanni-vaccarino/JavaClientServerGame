@@ -354,7 +354,7 @@ public class GamePageController implements Initializable{
 
     public void setBoard(){
         SetGamePage.setBoardData();
-        setNameBoards(getGui().getPlayerBoards().keySet().stream().toList());
+        setNameBoards(getGui().getUiModel().getPlayerBoards().keySet().stream().toList());
     }
 
     public void setNameBoards(List<String> playerList) {
