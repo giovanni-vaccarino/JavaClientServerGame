@@ -18,7 +18,7 @@ public class ClientHand {
     public static final String BLACKTEXT = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
     private String color;
-    private ArrayList<MixedCard> cards;
+    private static ArrayList<MixedCard> cards;
     private ArrayList<Boolean> isFlipped; //true: visualizzo back false:visualizzo front
     private QuestCard questCard;
 
@@ -39,7 +39,9 @@ public class ClientHand {
     }
 
     public static String defineColor(MixedCard card) {
+        if(cards.get(0)==cards.get(1))return YELLOW;
         if (card.getFront().getCenter().getItems().size() != 1) return YELLOW;
+        else if(cards.getFirst()==cards.get(1))return YELLOW;
         return switch (card.getFront().getCenter().getItems().getFirst()) {
             case Resource.BUTTERFLY -> PURPLE;
             case Resource.LEAF -> GREEN;
