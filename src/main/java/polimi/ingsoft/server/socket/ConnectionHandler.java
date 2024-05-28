@@ -10,6 +10,7 @@ import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
@@ -177,12 +178,12 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                         this,
                                         settings
                                 );
+                                if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
+                                    this.startGameUpdate();
                                 this.server.matchUpdateGameState(
                                         matchController.getMatchId(),
                                         matchController.getGameState()
                                 );
-                                if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
-                                    this.startGameUpdate();
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
                             } catch (WrongGamePhaseException exception) {
@@ -221,7 +222,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
                         }
                         case MATCH_DRAW_REQUEST -> {
                             NetworkMessage.DrawCardPayload drawCardPayload = (NetworkMessage.DrawCardPayload) payload;
-                            String deckType = drawCardPayload.deckType();
+                            TYPE_HAND_CARD deckType = drawCardPayload.deckType();
                             PlaceInPublicBoard.Slots slot = drawCardPayload.slot();
 
                             Player player = matchController.getPlayerByNickname(nickname)
@@ -412,7 +413,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
+    public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException {
 
     }
 

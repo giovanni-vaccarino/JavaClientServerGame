@@ -8,11 +8,14 @@ import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 
+import javax.management.MXBean;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
@@ -110,21 +113,23 @@ public class RmiClient extends Client {
             }
 
             case MATCH_PUBLIC_BOARD_UPDATE -> {
-                PlaceInPublicBoard<ResourceCard> resourcePublicBoard = (PlaceInPublicBoard<ResourceCard>) args[0];
-                PlaceInPublicBoard<GoldCard> goldPublicBoard = (PlaceInPublicBoard<GoldCard>) args[1];
-                PlaceInPublicBoard<QuestCard> questPublicBoard = (PlaceInPublicBoard<QuestCard>) args[2];
+                TYPE_HAND_CARD deckType = (TYPE_HAND_CARD) args[0];
+                PlaceInPublicBoard<?> placeInPublicBoard = (PlaceInPublicBoard<?>) args[1];
+
+                this.showUpdatePublicBoard(deckType, placeInPublicBoard);
             }
 
             case MATCH_BOARD_UPDATE -> {
-                NetworkMessage.BoardUpdatePayload boardUpdatePayload = (NetworkMessage.BoardUpdatePayload) args[0];
-                String nickname = boardUpdatePayload.nickname();
-                Coordinates coordinates = boardUpdatePayload.coordinates();
-                PlayedCard playedCard = boardUpdatePayload.playedCard();
+                String nickname = (String) args[0];
+                Coordinates coordinates = (Coordinates) args[1];
+                PlayedCard playedCard = (PlayedCard) args[2];
+
                 this.showUpdateBoard(nickname, coordinates, playedCard);
             }
 
             case MATCH_PLAYER_HAND_UPDATE -> {
                 PlayerHand playerHand = (PlayerHand) args[0];
+
                 this.showUpdatePlayerHand(playerHand);
             }
 

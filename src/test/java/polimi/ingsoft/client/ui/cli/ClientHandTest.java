@@ -26,7 +26,7 @@ class ClientHandTest {
         bottomleft=new CornerSpace(list);
         bottomright=new CornerSpace(list);
         //list2.add(Resource.LEAF);
-        list2.add(Resource.MUSHROOM);
+        //list2.add(Resource.MUSHROOM);
         list2.add(Resource.BUTTERFLY);
         center=new CenterSpace(list2);
         front=new Face(upleft,upright,bottomleft,bottomright,center);

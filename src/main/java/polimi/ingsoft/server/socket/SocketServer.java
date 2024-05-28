@@ -159,8 +159,8 @@ public class SocketServer implements ConnectionsClient {
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
-                    //TODO rimettere showUpda
-                    client.showCreatePublicBoard(publicBoard.getPublicBoardResource(), publicBoard.getPublicBoardGold(), publicBoard.getPublicBoardQuest());
+                    //TODO
+                    client.showUpdatePublicBoard(null, null);
                 } catch (IOException ignored) { }
             }
         }

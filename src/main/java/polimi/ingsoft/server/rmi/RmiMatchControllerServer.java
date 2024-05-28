@@ -8,6 +8,7 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -18,6 +19,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -77,13 +79,21 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         }
                     }
                 } catch (WrongGamePhaseException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                            new Object[]{ERROR_MESSAGES.WRONG_GAME_PHASE});
+                    clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                 } catch (WrongStepException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                            new Object[]{ERROR_MESSAGES.WRONG_STEP});
+                    clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                 } catch (ColorAlreadyPickedException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.COLOR_ALREADY_PICKED);
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                            new Object[]{ERROR_MESSAGES.COLOR_ALREADY_PICKED});
+                    clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                 } catch (InitalChoiceAlreadySetException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                            new Object[]{ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET});
+                    clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                 }
             }
 
@@ -109,11 +119,23 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         }
                     }
                 } catch (WrongGamePhaseException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_GAME_PHASE});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
                 } catch (WrongStepException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_STEP});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
                 } catch (InitalChoiceAlreadySetException exception){
-                    clientToUpdate.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
                 }
             }
 
@@ -131,16 +153,6 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         RmiMethodCall rmiMethodCallPlayerInitialSetting = new RmiMethodCall(MessageCodes.SET_INITIAL_SETTINGS_UPDATE, new Object[]{playerInitialSetting});
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE, new Object[]{gameState});
 
-                        if(gameState.getGamePhase() == GAME_PHASE.PLAY){
-                            PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-                            PlaceInPublicBoard<ResourceCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-                            PlaceInPublicBoard<ResourceCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-
-
-                            RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
-                                    new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});
-                        }
-
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
                                 client.handleRmiClientMessages(rmiMethodCallPlayerInitialSetting);
@@ -155,15 +167,21 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                     }
                 } catch (WrongGamePhaseException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_GAME_PHASE});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 } catch (WrongStepException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_STEP});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 } catch (InitalChoiceAlreadySetException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 }
             }
@@ -183,37 +201,57 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
             case MATCH_DRAW_REQUEST -> {
                 String playerNickname = (String) args[0];
-                String deckType = (String) args[1];
+                TYPE_HAND_CARD deckType = (TYPE_HAND_CARD) args[1];
                 PlaceInPublicBoard.Slots slot = (PlaceInPublicBoard.Slots) args[2];
                 VirtualView clientToUpdate = RmiServer.clients.get(playerNickname);
 
                 Player player = matchController.getPlayerByNickname(playerNickname)
                         .orElse(null);
 
-
                 try{
+                    //TODO remove return from drawCard if not necessary
                     MixedCard drawedCard = matchController.drawCard(player, deckType, slot);
+                    PlayerHand playerHand = player.getHand();
+                    GameState gameState = matchController.getGameState();
+                    PlaceInPublicBoard<?> publicBoardUpdate = (deckType == TYPE_HAND_CARD.RESOURCE) ?
+                            matchController.getPublicBoard().getPublicBoardResource()
+                            :
+                            matchController.getPublicBoard().getPublicBoardGold();
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE,
+                                new Object[]{gameState});
+                        RmiMethodCall rmiMethodCallPlayerHand = new RmiMethodCall(MessageCodes.MATCH_PLAYER_HAND_UPDATE,
+                                new Object[]{playerHand});
+                        RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
+                                new Object[]{deckType, publicBoardUpdate});
+
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
-                                //client.showUpdatePlayerHand(drawedCard);
+                                client.handleRmiClientMessages(rmiMethodCallPlayerHand);
                             }
 
-                            client.showUpdateGameState(matchController.getGameState());
+                            client.handleRmiClientMessages(rmiMethodCallPublicBoard);
+                            client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
                 } catch (WrongGamePhaseException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_GAME_PHASE});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 } catch (WrongStepException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_STEP});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 } catch (WrongPlayerForCurrentTurnException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_PLAYER_TURN});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 }
             }
@@ -232,30 +270,46 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                     // Add the card to the player board
                     matchController.placeCard(player, card, coordinates, isFacingUp);
 
+                    GameState gameState = matchController.getGameState();
+                    PlayerHand playerHand = player.getHand();
+
                     // Get of the played card
                     PlayedCard playedCard = player.getBoard().getCard(coordinates);
 
                     synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE,
+                                new Object[]{gameState});
+                        RmiMethodCall rmiMethodCallBoardUpdate = new RmiMethodCall(MessageCodes.MATCH_BOARD_UPDATE,
+                                new Object[]{playerNickname, coordinates, playedCard});
+                        RmiMethodCall rmiMethodCallPlayerHand = new RmiMethodCall(MessageCodes.MATCH_PLAYER_HAND_UPDATE,
+                                new Object[]{playerHand});
+
                         for(var client : this.clients){
                             if(client.equals(clientToUpdate)){
-                                //clientToUpdate.showUpdatePlayerHand();
+                                client.handleRmiClientMessages(rmiMethodCallPlayerHand);
                             }
 
-                            client.showUpdateBoard(playerNickname, coordinates, playedCard);
-                            client.showUpdateGameState(matchController.getGameState());
+                            client.handleRmiClientMessages(rmiMethodCallBoardUpdate);
+                            client.handleRmiClientMessages(rmiMethodCallGameState);
                         }
                     }
                 } catch (WrongGamePhaseException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_GAME_PHASE);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_GAME_PHASE});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 } catch (WrongStepException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_STEP);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_STEP});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 } catch (WrongPlayerForCurrentTurnException exception){
                     synchronized (this.clients){
-                        clientToUpdate.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.WRONG_PLAYER_TURN});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 }
             }
@@ -305,7 +359,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
     }
 
     @Override
-    public void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
+    public void drawCard(String player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws RemoteException {
         try {
             methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_DRAW_REQUEST, new Object[]{player, deckType, slot}));
         } catch (InterruptedException e) {

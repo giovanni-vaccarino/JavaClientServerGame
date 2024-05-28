@@ -17,15 +17,19 @@ import java.util.Map;
 
 public abstract class UI {
 
-    private Client client;
-    private Map<String,Board>playerBoards;
+    private final Client client;
+
+    public Map<String, Board> getPlayerBoards() {
+        return playerBoards;
+    }
+
+    private Map<String, Board> playerBoards;
     private String nickname;
-    private UIModel uiModel;
+    private final UIModel uiModel;
     public  UI (Client client){
         this.client = client;
         uiModel = new UIModel();
     }
-    protected ClientPublicBoard publicBoard;
 
     public Client getClient(){
         return client;
@@ -53,7 +57,11 @@ public abstract class UI {
     public abstract void reportError(ERROR_MESSAGES errorMessage);
     public abstract void showUpdateGameState(GameState gameState);
     public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
-    public abstract void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards);
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
+        getUiModel().setResourceCards(resourceCards);
+        getUiModel().setGoldCards(goldCards);
+        getUiModel().setQuestCards(questCards);
+    }
 
     public void setColor(PlayerColor playerColor){
         try {
@@ -80,7 +88,7 @@ public abstract class UI {
     }
 
     public void setPlayerBoards(Map<String, Board> playerBoard){
-        this.playerBoards=playerBoard;
+        this.playerBoards = playerBoard;
     }
 
     public UIModel getUiModel() {

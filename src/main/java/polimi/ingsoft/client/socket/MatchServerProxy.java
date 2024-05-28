@@ -2,6 +2,7 @@ package polimi.ingsoft.client.socket;
 
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import polimi.ingsoft.server.socket.protocol.NetworkMessage;
@@ -67,7 +68,7 @@ public class MatchServerProxy implements VirtualMatchServer {
     }
 
     @Override
-    public void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
+    public void drawCard(String player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException {
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_DRAW_REQUEST,
                 new NetworkMessage.DrawCardPayload(deckType, slot)

@@ -3,13 +3,14 @@ package polimi.ingsoft.server.socket.protocol;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
 import java.io.Serializable;
 import java.util.Map;
 
 public class NetworkMessage implements Serializable {
-    public record DrawCardPayload(String deckType, PlaceInPublicBoard.Slots slot) implements Serializable { }
+    public record DrawCardPayload(TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) implements Serializable { }
     public record PlaceCardPayload(MixedCard card, Coordinates coordinates, Boolean isFacingUp) implements Serializable { }
     public record BoardUpdatePayload(String nickname, Coordinates coordinates, PlayedCard playedCard) implements Serializable { }
     public record InitialSettings(PlayerInitialSetting playerInitialSetting) implements Serializable { }

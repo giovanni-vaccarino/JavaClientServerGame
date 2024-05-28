@@ -6,19 +6,14 @@ import polimi.ingsoft.client.ui.cli.pages.MatchInitializationManager;
 import polimi.ingsoft.client.ui.cli.pages.MatchManager;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
+import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.server.enumerations.GAME_PHASE;
-import polimi.ingsoft.server.enumerations.INITIAL_STEP;
-import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.GoldCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-import polimi.ingsoft.server.model.QuestCard;
-import polimi.ingsoft.server.model.ResourceCard;
+import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CLI extends UI {
@@ -38,6 +33,12 @@ public class CLI extends UI {
         SELECTING_QUEST_CARD,
         WAITING_FOR_QUEST_CARD,
         WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD,
+        READY_TO_PLAY,
+        WAITING_FOR_TURN,
+        PLACE,
+        WAITING_FOR_PLACE,
+        DRAW,
+        WAITING_FOR_DRAW
     }
     private final Scanner in;
     private final PrintStream out;
@@ -128,7 +129,7 @@ public class CLI extends UI {
                     && gameState.getCurrentInitialStep() == INITIAL_STEP.COLOR) {
                 state = CLIState.SELECTING_COLOR;
                 matchInitializationManager.selectColor();
-            } else if ((state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_COLOR || state == CLIState.WAITING_FOR_COLOR)
+            } else if (state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_COLOR
                             && gameState.getCurrentInitialStep() == INITIAL_STEP.FACE_INITIAL) {
                 state = CLIState.SELECTING_INITIAL_CARD_FACE;
                 matchInitializationManager.selectInitialCardFace();
@@ -138,9 +139,35 @@ public class CLI extends UI {
                 matchInitializationManager.selectQuestCard();
             }
         } else if (gameState.getGamePhase() == GAME_PHASE.PLAY) {
-            if (state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD) {
+            if (state == CLIState.READY_TO_PLAY) {
                 // Game ready to start
+                out.println(MESSAGES.GAME_START.getValue());
             }
+
+            if (gameState.getCurrentTurnStep() == TURN_STEP.PLACE) {
+                String currentPlayerNickname = gameState.getCurrentPlayer().getNickname();
+                out.println(MESSAGES.CURRENT_PLAYER.getValue() + currentPlayerNickname);
+
+                Board currentPlayerBoard = getPlayerBoards().get(currentPlayerNickname);
+                // Print current player board
+
+                if (Objects.equals(currentPlayerNickname, getNickname())) {
+                    // Your turn
+
+                    // Print player hand
+                    // Wait for place
+                    state = CLIState.PLACE;
+                }
+            } else {
+                String currentPlayerNickname = gameState.getCurrentPlayer().getNickname();
+
+                if (Objects.equals(currentPlayerNickname, getNickname())) {
+                    // Print public boards
+                    // Wait for draw
+                    state = CLIState.DRAW;
+                }
+            }
+
         }
     }
 
@@ -161,7 +188,10 @@ public class CLI extends UI {
 
     @Override
     public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
-
+        if (state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD) {
+            super.createPublicBoard(resourceCards, goldCards, questCards);
+            state = CLIState.READY_TO_PLAY;
+        }
     }
 
     public void setColor(PlayerColor playerColor) {

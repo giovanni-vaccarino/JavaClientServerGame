@@ -10,6 +10,7 @@ import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
@@ -89,17 +90,18 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdatePlayerHand(PlayerHand playerHand) throws IOException {
-
+        //ui.showUpdatePlayerHand(playerHand)
     }
 
     @Override
-    public void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
-
+    public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException{
+        //ui.showUpdatePublicBoard(deckType, placeInPublicBoard)
     }
+
 
     @Override
     public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException{
-
+        //ui.showUpdateBoard(nickname, coordinates, playedCard)
     }
 
     @Override
@@ -153,7 +155,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         getMatchServer().sendBroadcastMessage(nickname, message);
     }
 
-    public void drawCard(String nickname, String deckType, PlaceInPublicBoard.Slots slot) throws IOException {
+    public void drawCard(String nickname, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException {
         getMatchServer().drawCard(nickname, deckType, slot);
     }
 

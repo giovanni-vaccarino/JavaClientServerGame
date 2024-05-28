@@ -6,6 +6,7 @@ import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -127,7 +128,7 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
+    public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException{
 
     }
 

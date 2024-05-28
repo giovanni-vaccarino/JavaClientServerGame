@@ -266,7 +266,7 @@ class MatchControllerTest {
         // Drawing a card
         MixedCard drawnCard = null;
         try {
-            drawnCard = matchController.drawCard(currentPlayer, "Resource", PlaceInPublicBoard.Slots.SLOT_A);
+            drawnCard = matchController.drawCard(currentPlayer, TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_A);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
@@ -328,7 +328,7 @@ class MatchControllerTest {
         assertNotNull(notCurrentPlayer);
 
         assertThrows(WrongPlayerForCurrentTurnException.class, () ->
-                matchController.drawCard(notCurrentPlayer, "Resource", PlaceInPublicBoard.Slots.SLOT_B));
+                matchController.drawCard(notCurrentPlayer, TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_B));
     }
 
     @Test
@@ -342,7 +342,7 @@ class MatchControllerTest {
         Player currentPlayer = matchController.getGameState().getCurrentPlayer();
 
         assertThrows(WrongStepException.class, () ->
-                matchController.drawCard(currentPlayer, "Resource", PlaceInPublicBoard.Slots.SLOT_A)
+                matchController.drawCard(currentPlayer, TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_A)
         );
     }
 

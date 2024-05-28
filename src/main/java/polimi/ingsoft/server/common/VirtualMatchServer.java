@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.common;
 
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public interface VirtualMatchServer extends Remote {
 
     void sendPrivateMessage(String player, String recipient, String message) throws IOException;
 
-    void drawCard(String player, String deckType, PlaceInPublicBoard.Slots slot) throws IOException;
+    void drawCard(String player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException;
 
     void placeCard(String player, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException;
 }

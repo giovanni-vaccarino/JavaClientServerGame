@@ -174,9 +174,7 @@ public class GUI extends UI{
     }
     @Override
     public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
-        getUiModel().setResourceCards(resourceCards);
-        getUiModel().setGoldCards(goldCards);
-        getUiModel().setQuestCards(questCards);
+        super.createPublicBoard(resourceCards, goldCards, questCards);
         GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
     }
 
