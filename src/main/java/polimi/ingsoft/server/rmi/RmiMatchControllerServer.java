@@ -15,7 +15,9 @@ import polimi.ingsoft.server.socket.protocol.MessageCodes;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -322,15 +324,19 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
     private void startGameUpdate() throws IOException {
         PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-        PlaceInPublicBoard<ResourceCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-        PlaceInPublicBoard<ResourceCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardResource();
-
+        PlaceInPublicBoard<GoldCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardGold();
+        PlaceInPublicBoard<QuestCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardQuest();
+        Map<String, Board> playerBoards = new HashMap<>();
 
         RmiMethodCall rmiMethodCallPublicBoard = new RmiMethodCall(MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
                 new Object[]{resourcePublicBoard, goldPublicBoard, questPublicBoard});
 
         for(var client : this.clients){
-            client.handleRmiClientMessages(rmiMethodCallPublicBoard);
+            try{
+                client.handleRmiClientMessages(rmiMethodCallPublicBoard);
+            } catch (RemoteException exception){
+                System.out.println(exception.getMessage());
+            }
         }
     }
 }
