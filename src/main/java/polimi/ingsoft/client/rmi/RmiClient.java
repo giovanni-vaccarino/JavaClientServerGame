@@ -43,9 +43,6 @@ public class RmiClient extends Client {
         super(ui, printStream, scanner);
         Registry registry = LocateRegistry.getRegistry(rmiServerHostName, rmiServerPort);
         this.server = (VirtualServerInterface) registry.lookup(rmiServerName);
-
-        System.out.println(Arrays.toString(registry.list()));
-
         methodWorkerThread.start();
     }
 
@@ -72,8 +69,6 @@ public class RmiClient extends Client {
 
             case MATCHES_LIST_UPDATE -> {
                 List<Integer> matches = (List<Integer>) args[0];
-                System.out.println("List Available matches");
-                System.out.println(matches);
                 this.showUpdateMatchesList(matches);
             }
 

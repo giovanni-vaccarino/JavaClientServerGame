@@ -6,7 +6,9 @@ public enum ERROR_MESSAGES {
     MATCH_NUMBER_OUT_OF_BOUND("Match does not exist"),
     NICKNAME_NOT_AVAILABLE("Nickname is not available"),
     UNKNOWN_COMMAND("Unknown command"),
+    INVALID_COMMAND("This command cannot be run in this situation"),
     UNKNOWN_ERROR("Unexpected error"),
+    UNABLE_TO_LIST_MATCHES("Unable to list matches"),
     UNABLE_TO_JOIN_MATCH("Unable to join match"),
     MATCH_IS_ALREADY_FULL("Match is already full"),
     MATCH_DOES_NOT_EXIST("Match does not exist"),
@@ -17,6 +19,12 @@ public enum ERROR_MESSAGES {
     WRONG_PLAYER_TURN("It is not your turn"),
     INITIAL_SETTING_ALREADY_SET("Initial setting already set"),
     PLAYER_IS_NOT_IN_A_MATCH("Player is currently not in a match"),
+    COLOR_ID_OUT_OF_BOUND("Color id is out of bounds"),
+    UNABLE_TO_SET_COLOR("Unable to set player color"),
+    INVALID_FACE("The face you provided is invalid"),
+    UNABLE_TO_SET_FACE("Unable to set initial card face"),
+    INVALID_QUEST_CARD("The quest card number you provided is invalid"),
+    UNABLE_TO_SET_QUEST_CARD("Unable to set quest card"),
     PLAYER_NOT_FOUND("Unable to find recipient player");
 
     private final String value;

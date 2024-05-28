@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.socket.protocol;
 
+import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
@@ -13,7 +14,8 @@ public class NetworkMessage implements Serializable {
     public record InitialSettings(PlayerInitialSetting playerInitialSetting) implements Serializable { }
     public record PrivateMessagePayload(String sender, String receiver, String message) implements Serializable { }
     public record BroadcastMessagePayload(String sender, String message) implements Serializable { }
-
+    public record GameStatePayload(GameState gameState) implements Serializable { }
+    
     public NetworkMessage(MessageCodes type, Serializable payload) {
         this.type = type;
         this.payload = payload;

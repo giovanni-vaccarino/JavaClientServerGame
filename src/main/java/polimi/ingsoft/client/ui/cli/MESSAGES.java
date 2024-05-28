@@ -6,14 +6,16 @@ public enum MESSAGES {
     WELCOME("Welcome to CODEX, choose your nickname: \n"),
     NICKNAME_UPDATED("Your nickname was successfully set"),
     UNABLE_TO_UPDATE_NICKNAME("This nickname has already been used"),
-    CHOOSE_MATCH("Choose your match: "),
+    NO_MATCHES_TO_SHOW("There are currently no matches being run"),
+    CHOOSE_MATCH("Choose your match or create a new one by typing 0: "),
     CHOOSE_NICKNAME("Choose your nickname: "),
     CHOOSE_NUMPLAYERS("Choose how many players should the game have: "),
     JOINING_MATCH("Joining match..."),
     JOINED_MATCH("Succesfully joined match"),
     PLAYERS_IN_LOBBY("Players waiting in lobby: "),
     CREATED_MATCH("Successfully create match"),
-
+    CHOOSE_COLOR("Select your color id: "),
+    CHOOSE_INITIAL_CARD_FACE("Select the initial card face you would like to use [F/B]: "),
 
     /*QUESTI LI HO AGGIUNTI IO ANDRE-SIMO*/
     CHOOSE_ACTION("COMMAND>"),

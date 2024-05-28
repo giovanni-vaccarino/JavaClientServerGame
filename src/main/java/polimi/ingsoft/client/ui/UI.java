@@ -49,7 +49,7 @@ public abstract class UI {
 
     public void setColor(PlayerColor playerColor){
         try {
-            this.client.setColor(nickname,playerColor);
+            this.client.setColor(nickname, playerColor);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +57,7 @@ public abstract class UI {
 
     public void setIsFaceInitialCardUp(boolean isFaceInitialCardUp){
         try {
-            this.client.setIsInitialCardFaceUp(nickname,isFaceInitialCardUp);
+            this.client.setIsInitialCardFaceUp(nickname, isFaceInitialCardUp);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -65,7 +65,7 @@ public abstract class UI {
 
     public void setQuestCard(QuestCard questCard){
         try {
-            this.client.setQuestCard(nickname,questCard);
+            this.client.setQuestCard(nickname, questCard);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
