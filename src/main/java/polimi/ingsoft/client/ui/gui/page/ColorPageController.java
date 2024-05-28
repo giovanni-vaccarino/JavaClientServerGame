@@ -80,7 +80,6 @@ public class ColorPageController implements Initializable {
     }
 
     private void handleMenuItemAction(PlayerColor c) {
-        System.out.println(c.toString().toLowerCase());
         String url="";
         errButton.setVisible(false);
 

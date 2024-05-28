@@ -3,11 +3,9 @@ package polimi.ingsoft.client.ui.gui;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
-import polimi.ingsoft.server.model.GoldCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-import polimi.ingsoft.server.model.QuestCard;
-import polimi.ingsoft.server.model.ResourceCard;
+import polimi.ingsoft.server.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UIModel {
@@ -19,6 +17,8 @@ public class UIModel {
     private PlaceInPublicBoard<ResourceCard> resourceCards;
     private PlaceInPublicBoard<GoldCard> goldCards;
     private PlaceInPublicBoard<QuestCard> questCards;
+    private List<MixedCard> playerHand;
+    private QuestCard personalQuestCard;
 
     public Integer getMatchId() {
         return matchId;
@@ -58,6 +58,17 @@ public class UIModel {
 
     public void setPlayerInitialSetting(PlayerInitialSetting playerInitialSetting) {
         this.playerInitialSetting = playerInitialSetting;
+
+        List<MixedCard> playerHand = new ArrayList<>();
+        for(int i=0; i<3; i++){
+            playerHand.add(playerInitialSetting.getPlayerHand().get(i));
+            System.out.println(i+" -- id PlayerHand: "+playerInitialSetting.getPlayerHand().get(i).getID());
+        }
+        setPlayerHand(playerHand);
+
+        if (playerInitialSetting.getQuestCard() != null){
+            setPersonalQuestCard(playerInitialSetting.getQuestCard());
+        }
     }
 
     public PlaceInPublicBoard<ResourceCard> getResourceCards() {
@@ -82,5 +93,21 @@ public class UIModel {
 
     public void setQuestCards(PlaceInPublicBoard<QuestCard> questCards) {
         this.questCards = questCards;
+    }
+
+    public List<MixedCard> getPlayerHand() {
+        return playerHand;
+    }
+
+    public void setPlayerHand(List<MixedCard> playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    public QuestCard getPersonalQuestCard() {
+        return personalQuestCard;
+    }
+
+    public void setPersonalQuestCard(QuestCard personalQuestCard) {
+        this.personalQuestCard = personalQuestCard;
     }
 }

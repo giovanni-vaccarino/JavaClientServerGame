@@ -17,19 +17,11 @@ public class PlayerInitialSetting implements Serializable, Cloneable {
 
     private InitialCard initialCard;
 
-    private PlayerHand playerHand = new PlayerHand();
+    private PlayerHand playerHand;
 
     private QuestCard questCard;
 
     private QuestCard firstChoosableQuestCard;
-
-    public QuestCard getFirstChoosableQuestCard() {
-        return firstChoosableQuestCard;
-    }
-
-    public QuestCard getSecondChoosableQuestCard() {
-        return secondChoosableQuestCard;
-    }
 
     private QuestCard secondChoosableQuestCard;
 
@@ -58,6 +50,14 @@ public class PlayerInitialSetting implements Serializable, Cloneable {
         this.firstChoosableQuestCard = firstQuestCard;
         this.secondChoosableQuestCard = secondQuestCard;
         this.initialCard = initialCard;
+    }
+
+    public QuestCard getFirstChoosableQuestCard() {
+        return firstChoosableQuestCard;
+    }
+
+    public QuestCard getSecondChoosableQuestCard() {
+        return secondChoosableQuestCard;
     }
 
     public void setIsInitialFaceUp(boolean isInitialFaceUp) {

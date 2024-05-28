@@ -67,7 +67,7 @@ public class PlaceCardUtils {
         isCartFrontPublicBoard.remove(coordinates);
         isCartFrontPublicBoard.put(coordinates,!isFront);
 
-        System.out.println(isCartFrontPublicBoard);
+        //System.out.println(isCartFrontPublicBoard);
 
         GUIsingleton.getInstance().getGamePageController().setVisiblePublicBoard();
     }
@@ -75,9 +75,14 @@ public class PlaceCardUtils {
     public static void flipCardPlayerHand(int x, int y){
         //System.out.println(x+":"+y);
 
-        /*Boolean isFront = getIsFrontPlayerHandCard();
-        isCartFrontPlayerHand.remove(new Coordinates(x,y));
-        isCartFrontPlayerHand.put(new Coordinates(x,y),!isFront);*/
+        Coordinates coordinates = new Coordinates(x,y);
+        Boolean isFront = getIsFrontPlayerHandCard(x,y);
+        isCartFrontPlayerHand.remove(coordinates);
+        isCartFrontPlayerHand.put(coordinates,!isFront);
+
+        //System.out.println(isCartFrontPlayerHand);
+
+        GUIsingleton.getInstance().getGamePageController().setPlayerHand();
     }
 
 

@@ -80,4 +80,28 @@ public class SetGamePage {
         path= CardPathUtils.frontQuestCard(id);
         PlaceCardUtils.placeCardString(1,2,visibleDrawableDeck, path);
     }
+
+    public static void setPlayerHand(GridPane personalDeck){
+        String path, id;
+
+        GridPaneUtils.eraseGridPane(personalDeck,1,4);
+
+        id = getGui().getPersonalQuestCard().getID();
+        if(PlaceCardUtils.getIsFrontPlayerHandCard(0,0)){
+            path= CardPathUtils.frontQuestCard(id);
+        }else{
+            path= CardPathUtils.backQuestCard(id);
+        }
+        PlaceCardUtils.placeCardString(0,0,personalDeck, path);
+
+        for(int i=0; i<3; i++){
+            id = getGui().getPlayerHand().get(i).getID();
+            if(PlaceCardUtils.getIsFrontPlayerHandCard(i+1,0)){
+                path= CardPathUtils.frontMixedCard(id);
+            }else{
+                path= CardPathUtils.backMixedCard(id);
+            }
+            PlaceCardUtils.placeCardString(i+1,0,personalDeck, path);
+        }
+    }
 }
