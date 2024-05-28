@@ -26,7 +26,7 @@ class ClientHandTest {
         bottomleft=new CornerSpace(list);
         bottomright=new CornerSpace(list);
         //list2.add(Resource.LEAF);
-        list2.add(Resource.MUSHROOM);
+        //list2.add(Resource.MUSHROOM);
         list2.add(Resource.BUTTERFLY);
         center=new CenterSpace(list2);
         front=new Face(upleft,upright,bottomleft,bottomright,center);
@@ -72,7 +72,7 @@ class ClientHandTest {
         bottomright=new CornerSpace(list);
         back=new Face(upleft,null,bottomleft,bottomright);
 
-        b=new ResourceCard("lol",front,back,2);
+        b=new ResourceCard("lol",front,back,0);
 
 
         list = new ArrayList<>();
@@ -104,7 +104,7 @@ class ClientHandTest {
         itemcost.put(Resource.BUTTERFLY,1);
         itemcost.put(Resource.WOLF,0);
         itemcost.put(Resource.LEAF,0);
-        c=new GoldCard("lol",front,back,new ItemPattern(itemcost),new CornerPattern(),/*new ItemPattern(cost),*/2);
+        c=new GoldCard("lol",front,back,new ItemPattern(itemcost),null,/*new CornerPattern(),new ItemPattern(cost),*/2);
 
 
         list = new ArrayList<>();
