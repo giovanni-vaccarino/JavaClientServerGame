@@ -131,14 +131,16 @@ public class RmiClient extends Client {
             }
 
             case MATCH_BROADCAST_MESSAGE_UPDATE -> {
-                String playerSender = (String) args[0];
-                Message message = (Message) args[1];
+                Message message = (Message) args[0];
 
-                this.showUpdateBroadcastChat(playerSender, null);
+                this.showUpdateBroadcastChat(message);
             }
 
             case MATCH_PRIVATE_MESSAGE_UPDATE -> {
-                this.showUpdatePrivateChat(null, null, null);
+                String recipient = (String) args[0];
+                Message message = (Message) args[1];
+
+                this.showUpdatePrivateChat(recipient, message);
             }
 
             case ERROR -> {

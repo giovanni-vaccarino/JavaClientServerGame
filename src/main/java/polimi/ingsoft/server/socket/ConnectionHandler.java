@@ -202,11 +202,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             String sender = broadcastMessagePayload.sender();
                             String message = broadcastMessagePayload.message();
 
-                            matchController.writeBroadcastMessage(sender, message);
+                            Message messageSent = matchController.writeBroadcastMessage(sender, message);
                             this.server.matchUpdateBroadcastMessage(
                                     matchController.getMatchId(),
-                                    sender,
-                                    message
+                                    messageSent
                             );
                         }
                         case MATCH_SEND_PRIVATE_MESSAGE_REQUEST -> {
@@ -216,9 +215,9 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             String message = privateMessagePayload.message();
 
                             try {
-                                matchController.writePrivateMessage(sender, recipient, message);
-                                this.server.singleUpdatePrivateMessage(sender, sender, recipient, message);
-                                this.server.singleUpdatePrivateMessage(recipient, sender, recipient, message);
+                                Message messageSent = matchController.writePrivateMessage(sender, recipient, message);
+                                this.server.singleUpdatePrivateMessage(sender, recipient, messageSent);
+                                this.server.singleUpdatePrivateMessage(recipient, recipient, messageSent);
                             } catch (PlayerNotFoundException e) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_NOT_FOUND);
                             }
@@ -359,19 +358,19 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateBroadcastChat(String sender, String message) {
+    public void showUpdateBroadcastChat(Message message) {
         synchronized (this.view) {
             try {
-                this.view.showUpdateBroadcastChat(sender, message);
+                this.view.showUpdateBroadcastChat(message);
             } catch (IOException ignore) { }
         }
     }
 
     @Override
-    public void showUpdatePrivateChat(String sender, String recipient, String message) {
+    public void showUpdatePrivateChat(String recipient, Message message) {
         synchronized (this.view) {
             try {
-                this.view.showUpdatePrivateChat(sender, recipient, message);
+                this.view.showUpdatePrivateChat(recipient, message);
             } catch (IOException ignore) { }
         }
     }

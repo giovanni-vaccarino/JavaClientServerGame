@@ -177,22 +177,22 @@ public class SocketServer implements ConnectionsClient {
         }
     }
 
-    public void matchUpdateBroadcastMessage(Integer matchId, String sender, String message) {
+    public void matchUpdateBroadcastMessage(Integer matchId, Message message) {
         List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
-                    client.showUpdateBroadcastChat(sender, message);
+                    client.showUpdateBroadcastChat(message);
                 } catch (IOException ignored) { }
             }
         }
     }
 
-    public void singleUpdatePrivateMessage(String nickname, String sender, String recipient, String message) {
+    public void singleUpdatePrivateMessage(String nickname, String recipient, Message message) {
         VirtualView client = this.clients.get(nickname);
         synchronized (this.clients) {
             try {
-                client.showUpdatePrivateChat(sender, recipient, message);
+                client.showUpdatePrivateChat(recipient, message);
             } catch (IOException ignored) { }
         }
     }
