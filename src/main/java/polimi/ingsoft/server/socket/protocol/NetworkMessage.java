@@ -6,6 +6,7 @@ import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class NetworkMessage implements Serializable {
     public record DrawCardPayload(String deckType, PlaceInPublicBoard.Slots slot) implements Serializable { }
@@ -15,7 +16,13 @@ public class NetworkMessage implements Serializable {
     public record PrivateMessagePayload(String sender, String receiver, String message) implements Serializable { }
     public record BroadcastMessagePayload(String sender, String message) implements Serializable { }
     public record GameStatePayload(GameState gameState) implements Serializable { }
-    
+    public record GameStartUpdate(
+            PlaceInPublicBoard<ResourceCard> resource,
+            PlaceInPublicBoard<GoldCard> gold,
+            PlaceInPublicBoard<QuestCard> quest,
+            Map<String, Board> boards
+            ) implements Serializable { }
+
     public NetworkMessage(MessageCodes type, Serializable payload) {
         this.type = type;
         this.payload = payload;

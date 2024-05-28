@@ -17,6 +17,7 @@ import polimi.ingsoft.server.socket.protocol.NetworkMessage;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class SocketClient extends Client {
@@ -107,6 +108,14 @@ public class SocketClient extends Client {
                     NetworkMessage.GameStatePayload gameStatePayload = (NetworkMessage.GameStatePayload) payload;
                     GameState gameState = gameStatePayload.gameState();
                     this.showUpdateGameState(gameState);
+                }
+                case GAME_START_UPDATE -> {
+                    NetworkMessage.GameStartUpdate gameStartUpdate = (NetworkMessage.GameStartUpdate) payload;
+                    Map<String, Board> boards = gameStartUpdate.boards();
+                    PlaceInPublicBoard<ResourceCard> resource = gameStartUpdate.resource();
+                    PlaceInPublicBoard<GoldCard> gold = gameStartUpdate.gold();
+                    PlaceInPublicBoard<QuestCard> quest = gameStartUpdate.quest();
+                    this.showUpdateGameStart(resource, gold, quest, boards);
                 }
                 case MATCH_PUBLIC_BOARD_UPDATE -> {
                     PublicBoard publicBoard = (PublicBoard) payload;
