@@ -159,6 +159,11 @@ public class CLI extends UI {
         }
     }
 
+    @Override
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
+
+    }
+
     public void setColor(PlayerColor playerColor) {
         super.setColor(playerColor);
         state = CLIState.WAITING_FOR_COLOR;
@@ -191,9 +196,5 @@ public class CLI extends UI {
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }
-    }
-    @Override
-    public void updatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
-
     }
 }
