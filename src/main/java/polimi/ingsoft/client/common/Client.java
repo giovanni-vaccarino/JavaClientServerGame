@@ -12,7 +12,6 @@ import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
@@ -90,8 +89,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     @Override
     public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
         System.out.println("RECEIVED PUBLIC BOARD INITIALIZATION");
-        System.out.println(resourceCards.get(PlaceInPublicBoard.Slots.SLOT_A).getID());
-        System.out.println(goldCards.get(PlaceInPublicBoard.Slots.SLOT_A).getID());
+        System.out.println(resourceCards.draw(PlaceInPublicBoard.Slots.SLOT_A).getID());
+        System.out.println(goldCards.draw(PlaceInPublicBoard.Slots.SLOT_A).getID());
         //System.out.println(questCards.get(PlaceInPublicBoard.Slots.SLOT_A).getID());
         ui.updatePublicBoard(resourceCards, goldCards, questCards);
     }
