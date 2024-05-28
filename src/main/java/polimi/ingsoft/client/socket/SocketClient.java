@@ -131,17 +131,17 @@ public class SocketClient extends Client {
                     this.showUpdatePlayerHand(playerHand);
                 }
                 case MATCH_BROADCAST_MESSAGE_UPDATE -> {
-                    NetworkMessage.BroadcastMessagePayload broadcastMessagePayload = (NetworkMessage.BroadcastMessagePayload) payload;
-                    String sender = broadcastMessagePayload.sender();
-                    String message = broadcastMessagePayload.message();
-                    this.showUpdateBroadcastChat(sender, message);
+                    NetworkMessage.BroadcastMessageUpdatePayload broadcastMessagePayload = (NetworkMessage.BroadcastMessageUpdatePayload) payload;
+                    Message message = broadcastMessagePayload.message();
+
+                    this.showUpdateBroadcastChat(message);
                 }
                 case MATCH_PRIVATE_MESSAGE_UPDATE -> {
-                    NetworkMessage.PrivateMessagePayload privateMessagePayload = (NetworkMessage.PrivateMessagePayload) payload;
-                    String sender = privateMessagePayload.sender();
+                    NetworkMessage.PrivateMessageUpdatePayload privateMessagePayload = (NetworkMessage.PrivateMessageUpdatePayload) payload;
                     String recipient = privateMessagePayload.receiver();
-                    String message = privateMessagePayload.message();
-                    this.showUpdatePrivateChat(sender, recipient, message);
+                    Message message = privateMessagePayload.message();
+
+                    this.showUpdatePrivateChat(recipient, message);
                 }
                 case ERROR -> {
                     ERROR_MESSAGES errorMessage= (ERROR_MESSAGES) payload;

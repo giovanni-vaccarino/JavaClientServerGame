@@ -15,6 +15,8 @@ public class NetworkMessage implements Serializable {
     public record InitialSettings(PlayerInitialSetting playerInitialSetting) implements Serializable { }
     public record PrivateMessagePayload(String sender, String receiver, String message) implements Serializable { }
     public record BroadcastMessagePayload(String sender, String message) implements Serializable { }
+    public record PrivateMessageUpdatePayload(String receiver, Message message) implements Serializable { }
+    public record BroadcastMessageUpdatePayload(Message message) implements Serializable { }
     public record GameStatePayload(GameState gameState) implements Serializable { }
     public record GameStartUpdate(
             PlaceInPublicBoard<ResourceCard> resource,

@@ -65,20 +65,20 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdateBroadcastChat(String sender, String _message) throws IOException {
+    public void showUpdateBroadcastChat(Message _message) throws IOException {
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_BROADCAST_MESSAGE_UPDATE,
-                new NetworkMessage.BroadcastMessagePayload(sender, _message)
+                new NetworkMessage.BroadcastMessageUpdatePayload(_message)
         );
         out.writeObject(message);
         out.flush();
     }
 
     @Override
-    public void showUpdatePrivateChat(String sender, String recipient, String _message) throws IOException {
+    public void showUpdatePrivateChat(String recipient, Message _message) throws IOException {
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_PRIVATE_MESSAGE_UPDATE,
-                new NetworkMessage.PrivateMessagePayload(sender, recipient, _message)
+                new NetworkMessage.PrivateMessageUpdatePayload(recipient, _message)
         );
         out.writeObject(message);
         out.flush();

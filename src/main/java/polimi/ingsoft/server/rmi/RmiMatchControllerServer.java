@@ -188,13 +188,44 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 String playerNickname = (String) args[0];
                 String message = (String) args[1];
 
-                matchController.writeBroadcastMessage(playerNickname, message);
+                Message sentMessage = matchController.writeBroadcastMessage(playerNickname, message);
 
                 synchronized (this.clients){
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.MATCH_SEND_BROADCAST_MESSAGE_REQUEST,
+                            new Object[]{sentMessage});
                     for(var client : this.clients){
-                        client.showUpdateBroadcastChat(playerNickname, message);
+                        client.handleRmiClientMessages(rmiMethodCall);
                     }
                 }
+            }
+
+            case MATCH_SEND_PRIVATE_MESSAGE_REQUEST -> {
+                String playerNickame = (String) args[0];
+                String reciever = (String) args[1];
+                String message = (String) args[2];
+                VirtualView clientSenderToUpdate = RmiServer.clients.get(playerNickame);
+                VirtualView clientReceiverToUpdate = RmiServer.clients.get(reciever);
+
+                try{
+                    Message sentMessage = matchController.writePrivateMessage(playerNickame, reciever, message);
+
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCallSender = new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST,
+                                new Object[]{reciever, sentMessage});
+                        RmiMethodCall rmiMethodCallReceiver = new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST,
+                                new Object[]{playerNickame, sentMessage});
+
+                        clientSenderToUpdate.handleRmiClientMessages(rmiMethodCallSender);
+                        clientReceiverToUpdate.handleRmiClientMessages(rmiMethodCallReceiver);
+                    }
+                } catch (PlayerNotFoundException exception){
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.PLAYER_NOT_FOUND});
+                        clientSenderToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
+                }
+
             }
 
             case MATCH_DRAW_REQUEST -> {
@@ -207,8 +238,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         .orElse(null);
 
                 try{
-                    //TODO remove return from drawCard if not necessary
-                    MixedCard drawedCard = matchController.drawCard(player, deckType, slot);
+                    matchController.drawCard(player, deckType, slot);
                     PlayerHand playerHand = player.getHand();
                     GameState gameState = matchController.getGameState();
                     PlaceInPublicBoard<?> publicBoardUpdate = (deckType == TYPE_HAND_CARD.RESOURCE) ?
