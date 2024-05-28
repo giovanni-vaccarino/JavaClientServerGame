@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * This class represents the initial settings for a player in the game.
  */
-public class PlayerInitialSetting implements Serializable {
+public class PlayerInitialSetting implements Serializable, Cloneable {
 
     private final String nickname;
 
@@ -94,5 +94,16 @@ public class PlayerInitialSetting implements Serializable {
 
     public InitialCard getInitialCard(){
         return this.initialCard;
+    }
+
+    @Override
+    public PlayerInitialSetting clone() {
+        try {
+            PlayerInitialSetting clone = (PlayerInitialSetting) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

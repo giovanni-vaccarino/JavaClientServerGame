@@ -5,18 +5,19 @@ import polimi.ingsoft.client.ui.cli.pages.LobbyManager;
 import polimi.ingsoft.client.ui.cli.pages.MatchInitializationManager;
 import polimi.ingsoft.client.ui.cli.pages.MatchManager;
 import polimi.ingsoft.server.controller.GameState;
-import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.GoldCard;
+import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.model.ResourceCard;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -121,7 +122,6 @@ public class CLI extends UI {
 
     @Override
     public void showUpdateGameState(GameState gameState) {
-        out.println("GAME STATE UPDATE: " + gameState.getCurrentInitialStep());
         if (gameState.getGamePhase() == GAME_PHASE.INITIALIZATION) {
             // Initialization phase
             if (state == CLIState.WAITING_FOR_PLAYERS
@@ -159,29 +159,19 @@ public class CLI extends UI {
         }
     }
 
-    public void selectColor(PlayerColor color) {
-        try {
-            getClient().setColor(getNickname(), color);
-            state = CLIState.WAITING_FOR_COLOR;
-        } catch (IOException e) {
-            out.println(ERROR_MESSAGES.UNABLE_TO_SET_COLOR.getValue());
-        }
+    public void setColor(PlayerColor playerColor) {
+        super.setColor(playerColor);
+        state = CLIState.WAITING_FOR_COLOR;
     }
 
-    public void selectInitialCardFace(boolean isFacingUp) {
-        try {
-            getClient().setIsInitialCardFaceUp(getNickname(), isFacingUp);
-        } catch (IOException e) {
-            out.println(ERROR_MESSAGES.UNABLE_TO_SET_FACE.getValue());
-        }
+    public void setIsFaceInitialCardUp(boolean isFaceInitialCardUp) {
+        super.setIsFaceInitialCardUp(isFaceInitialCardUp);
+        state = CLIState.WAITING_FOR_INITIAL_CARD_FACE;
     }
 
-    public void selectQuestCard(QuestCard questCard) {
-        try {
-            getClient().setQuestCard(getNickname(), questCard);
-        } catch (IOException e) {
-            out.println(ERROR_MESSAGES.UNABLE_TO_SET_QUEST_CARD.getValue());
-        }
+    public void setQuestCard(QuestCard questCard) {
+        super.setQuestCard(questCard);
+        state = CLIState.WAITING_FOR_QUEST_CARD;
     }
 
     public void createMatch(int requestedNumPlayers) {
@@ -201,5 +191,9 @@ public class CLI extends UI {
         } catch (IOException e) {
             out.println(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH.getValue());
         }
+    }
+    @Override
+    public void updatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
+
     }
 }

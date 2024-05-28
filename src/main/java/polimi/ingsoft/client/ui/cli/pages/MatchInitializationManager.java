@@ -3,13 +3,10 @@ package polimi.ingsoft.client.ui.cli.pages;
 import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.cli.Printer;
-import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Objects;
 import java.util.Scanner;
@@ -18,7 +15,6 @@ public class MatchInitializationManager {
     private final Scanner in;
     private final PrintStream out;
     private final CLI cli;
-    private INITIAL_STEP currentStep = INITIAL_STEP.COLOR;
     private PlayerInitialSetting playerInitialSetting;
     private final Printer printer;
 
@@ -53,7 +49,7 @@ public class MatchInitializationManager {
                 out.println(ERROR_MESSAGES.COLOR_ID_OUT_OF_BOUND.getValue());
             }
         } while (!isValid);
-        cli.selectColor(PlayerColor.values()[colorId - 1]);
+        cli.setColor(PlayerColor.values()[colorId - 1]);
     }
 
     public void selectInitialCardFace() {
@@ -73,7 +69,7 @@ public class MatchInitializationManager {
                 out.println(ERROR_MESSAGES.INVALID_FACE.getValue());
             }
         } while (!isValid);
-        cli.selectInitialCardFace(face.equals("F"));
+        cli.setIsFaceInitialCardUp(face.equals("F"));
     }
 
     public void selectQuestCard() {
@@ -94,7 +90,7 @@ public class MatchInitializationManager {
                 out.println(ERROR_MESSAGES.INVALID_QUEST_CARD.getValue());
             }
         } while (!isValid);
-        cli.selectQuestCard(questCard == 1 ?
+        cli.setQuestCard(questCard == 1 ?
                 playerInitialSetting.getFirstChoosableQuestCard() :
                 playerInitialSetting.getSecondChoosableQuestCard());
     }

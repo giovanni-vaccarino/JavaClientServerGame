@@ -106,7 +106,6 @@ public class SocketClient extends Client {
                 case MATCH_GAME_STATE_UPDATE -> {
                     NetworkMessage.GameStatePayload gameStatePayload = (NetworkMessage.GameStatePayload) payload;
                     GameState gameState = gameStatePayload.gameState();
-                    System.out.println("GAME STATE UPDATE [A]: " + gameState);
                     this.showUpdateGameState(gameState);
                 }
                 case MATCH_PUBLIC_BOARD_UPDATE -> {
