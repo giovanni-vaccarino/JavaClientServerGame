@@ -17,10 +17,8 @@ public enum MESSAGES {
     CHOOSE_COLOR("Select your color id: "),
     CHOOSE_INITIAL_CARD_FACE("Select the initial card face you would like to use [F/B]: "),
     CHOOSE_QUEST_CARD("Select the quest card you would like to use [1/2]: "),
-
-    /*QUESTI LI HO AGGIUNTI IO ANDRE-SIMO*/
-    CHOOSE_ACTION("COMMAND>"),
-
+    GAME_START("The game will start now"),
+    CURRENT_PLAYER("Current player: "),
     HELPMAIN("HERE'S WHAT YOU CAN DO !\n" +
             "->BOARD:ENTER THE BOARD MENU\n" +
             "->PUBLICBOARD: ENTER THE PUBLICBOARD MENU\n" +
