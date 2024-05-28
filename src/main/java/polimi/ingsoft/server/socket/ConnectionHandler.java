@@ -177,12 +177,12 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                         this,
                                         settings
                                 );
+                                if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
+                                    this.startGameUpdate();
                                 this.server.matchUpdateGameState(
                                         matchController.getMatchId(),
                                         matchController.getGameState()
                                 );
-                                if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
-                                    this.startGameUpdate();
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
                             } catch (WrongGamePhaseException exception) {
