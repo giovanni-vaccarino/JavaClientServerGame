@@ -1,8 +1,10 @@
 package polimi.ingsoft.server.model;
 import polimi.ingsoft.server.enumerations.Resource;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class PlayedCard {
+public class PlayedCard implements Serializable {
     private final GameCard card;
     private boolean upRight=true;
     private boolean upLeft=true;

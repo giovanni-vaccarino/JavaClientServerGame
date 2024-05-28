@@ -340,10 +340,9 @@ class MatchControllerTest {
         assertEquals(3, matchController.getPlayers().size());
 
         Player currentPlayer = matchController.getGameState().getCurrentPlayer();
-        MixedCard card = null;
 
         assertThrows(WrongStepException.class, () ->
-                matchController.placeCard(currentPlayer, card, new Coordinates(1,1), true)
+                matchController.drawCard(currentPlayer, "Resource", PlaceInPublicBoard.Slots.SLOT_A)
         );
     }
 

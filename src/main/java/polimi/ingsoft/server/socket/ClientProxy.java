@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public class ClientProxy implements VirtualView {
     private final ObjectOutputStream out;
@@ -121,6 +122,11 @@ public class ClientProxy implements VirtualView {
         ); //TODO
         out.writeObject(message);
         out.flush();
+    }
+
+    @Override
+    public void setPlayerBoards(Map<String, Board> playerBoards) throws IOException {
+
     }
 
     @Override
