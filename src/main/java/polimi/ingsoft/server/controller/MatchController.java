@@ -169,10 +169,17 @@ public class MatchController implements Serializable {
     public void initializePlayers() {
         this.players = this.players.isEmpty() ?
                 this.playerInitialSettings.stream()
-                        .map(PlayerFactory::createPlayer)
+                        .map(playerInitialSetting ->
+                                PlayerFactory.createPlayer(playerInitialSetting, isFirstPlayer(playerInitialSetting.getNickname())))
                         .collect(Collectors.toList())
                 :
                 this.players;
+    }
+
+    private Boolean isFirstPlayer(String nickname){
+        Integer firstPlayerIndex = gameState.getFirstPlayerIndex();
+
+        return getPlayers().get(firstPlayerIndex).getNickname().equals(nickname);
     }
 
 
