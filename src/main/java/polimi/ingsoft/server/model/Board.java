@@ -1,18 +1,22 @@
 package polimi.ingsoft.server.model;
 import polimi.ingsoft.server.enumerations.Object;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.Resource;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 // TODO refactor
 public class Board implements Serializable {
+    private final PlayerColor color;
     private int score;
-    private final HashMap<Coordinates, PlayedCard> cards;
-    private HashMap<Item,Integer> resources;
-    public Board(GameCard initialCard,boolean isFaceUp){
-        this.cards=new HashMap<Coordinates,PlayedCard>();
-        resources=new HashMap<Item,Integer>();
+    private final Map<Coordinates, PlayedCard> cards;
+    private final Map<Item,Integer> resources;
+    public Board(GameCard initialCard, boolean isFaceUp, PlayerColor color){
+        this.color = color;
+        this.cards=new HashMap<>();
+        resources=new HashMap<>();
         resources.put(Resource.WOLF,0);
         resources.put(Resource.LEAF,0);
         resources.put(Resource.MUSHROOM,0);
@@ -81,6 +85,8 @@ public class Board implements Serializable {
     }
 
     public Integer getScore(){return this.score;}
+
+    public PlayerColor getColor(){return this.color;}
 
     public boolean isNotBlocked(){
         Coordinates coordinates=new Coordinates(0,0);

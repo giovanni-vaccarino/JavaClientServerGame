@@ -14,7 +14,7 @@ public class PlayerFactory {
         boolean isInitialFaceUp = playerInitialSetting.getIsInitialFaceUp();
         QuestCard questCard = playerInitialSetting.getQuestCard();
 
-        Board board = BoardFactory.createBoard(initialCard, isInitialFaceUp);
+        Board board = BoardFactory.createBoard(initialCard, isInitialFaceUp, color);
 
         return new Player(playerHand, nickname, color, board, questCard);
     }
