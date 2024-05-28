@@ -133,24 +133,6 @@
                 </Button>
             </children>
         </StackPane>
-        <StackPane alignment="CENTER" layoutX="490.0" layoutY="360.0" prefHeight="30" prefWidth="40.0">
-            <children>
-                <Button mnemonicParsing="false" text="flip"
-                        prefWidth="40" prefHeight="40" styleClass="buttonSmall"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        fx:id="buttonPublicBoard02">
-                </Button>
-            </children>
-        </StackPane>
-        <StackPane alignment="CENTER" layoutX="640.0" layoutY="360.0" prefHeight="30" prefWidth="40.0">
-            <children>
-                <Button mnemonicParsing="false" text="flip"
-                        prefWidth="40" prefHeight="40" styleClass="buttonSmall"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        fx:id="buttonPublicBoard12">
-                </Button>
-            </children>
-        </StackPane>
 
 
         <!-- Personal deck -->

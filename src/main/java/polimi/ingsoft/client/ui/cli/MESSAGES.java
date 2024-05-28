@@ -33,9 +33,9 @@ public enum MESSAGES {
             ->BACK: GO BACK TO THE MAIN MENU !
             ->HELP: PRINT THIS LIST AGAIN!
             """),
-    HELPINITIALCARDCHOICE("SELECT WHICH SIDE OF THE CARD TO KEEP FACE UP !\n" +
-            "->LEFT: PICK THE LEFT SIDE !\n" +
-            "->RIGHT: PICK THE RIGHT SIDE !\n"),
+    HELP_INITIAL_CARD_CHOICE("SELECT WHICH SIDE OF THE CARD TO KEEP FACE UP\n" +
+            "->F: PICK THE FRONT (on the left)\n" +
+            "->B: PICK THE BOTTOM (on the right)\n"),
     HELPINITIALQUESTCHOICE("SELECT WHICH QUEST UP TO KEEP !\n" +
             "THINK CAREFULLY, AS YOU WON'T BE ABLE TO CHANGE IT LATER !\n" +
             "->LEFT: PICK THE LEFT CARD !\n" +

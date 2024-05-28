@@ -86,9 +86,11 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException {
+        System.out.println("UPDATE PIS: " + playerInitialSetting.getFirstChoosableQuestCard() + " " + playerInitialSetting.getFirstChoosableQuestCard());
+        PlayerInitialSetting playerInitialSettingCopy = playerInitialSetting.clone();
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.SET_INITIAL_SETTINGS_UPDATE,
-                new NetworkMessage.InitialSettings(playerInitialSetting)
+                new NetworkMessage.InitialSettings(playerInitialSettingCopy)
         );
         out.writeObject(message);
         out.flush();
@@ -96,10 +98,10 @@ public class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException {
-        System.out.println("GAME STATE: " + gameState);
+        GameState gameStateCopy = gameState.clone();
         NetworkMessage message = new NetworkMessage(
             MessageCodes.MATCH_GAME_STATE_UPDATE,
-            new NetworkMessage.GameStatePayload(gameState)
+            new NetworkMessage.GameStatePayload(gameStateCopy)
         );
         out.writeObject(message);
         out.flush();

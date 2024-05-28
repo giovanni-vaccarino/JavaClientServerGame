@@ -1,10 +1,8 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.server.model.InitialCard;
 import polimi.ingsoft.server.model.QuestCard;
 
-import java.awt.desktop.QuitStrategy;
 import java.io.PrintStream;
 
 public class Printer {
@@ -47,7 +45,7 @@ public class Printer {
         else out.println(MESSAGES.ERROR.getValue() );
     }
     public void printInitialCardChoice(InitialCard initialCard){
-        out.print(MESSAGES.HELPINITIALCARDCHOICE.getValue());
+        out.print(MESSAGES.HELP_INITIAL_CARD_CHOICE.getValue());
         ClientHand hand=new ClientHand();
         hand.initialPrint(initialCard);
         hand=null;

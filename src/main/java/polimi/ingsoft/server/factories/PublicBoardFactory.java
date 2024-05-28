@@ -12,7 +12,7 @@ public class PublicBoardFactory {
         try{
             Deck<ResourceCard> resourceCardDeck = DeckFactory.createResourceDeck();
             Deck<GoldCard> goldCardDeck = DeckFactory.createGoldDeck();
-            Deck<QuestCard> questCardDeck = new Deck<>();
+            Deck<QuestCard> questCardDeck = DeckFactory.createQuestDeck();
             Deck<InitialCard> initialCards = DeckFactory.createInitialDeck();
 
             return new PublicBoard(resourceCardDeck, goldCardDeck, questCardDeck, initialCards);

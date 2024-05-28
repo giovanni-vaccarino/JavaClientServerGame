@@ -2,6 +2,7 @@ package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.client.ui.cli.ClientPublicBoard;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
@@ -119,6 +120,7 @@ public class GUI extends UI{
         getUiModel().setPlayerInitialSetting(playerInitialSetting);
     }
 
+
     public String getInitialCard(){
         return getUiModel().getPlayerInitialSetting().getInitialCard().getID();
         //return "InitialCard(5)";
@@ -169,7 +171,7 @@ public class GUI extends UI{
 
     }
     @Override
-    public void updatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
         getUiModel().setResourceCards(resourceCards);
         getUiModel().setGoldCards(goldCards);
         getUiModel().setQuestCards(questCards);
@@ -187,4 +189,5 @@ public class GUI extends UI{
     public PlaceInPublicBoard<QuestCard> getQuestCardPublicBoard(){
         return getUiModel().getQuestCards();
     }
+
 }

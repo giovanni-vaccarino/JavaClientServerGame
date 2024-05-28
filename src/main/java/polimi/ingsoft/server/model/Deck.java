@@ -18,4 +18,10 @@ public class Deck<T extends Drawable> extends CardCollection<T> implements  Seri
             return this.cards.removeFirst();
         } else return null;
     }
+
+    public T show() {
+        if (!this.cards.isEmpty()) {
+            return this.cards.getFirst();
+        } else return null;
+    }
 }
