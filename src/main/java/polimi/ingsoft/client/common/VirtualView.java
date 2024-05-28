@@ -32,7 +32,6 @@ public interface VirtualView extends Remote {
             Map<String, Board> boards
     ) throws IOException;
     void showUpdatePlayerHand(PlayerHand playerHand) throws IOException;
-    void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException;
     void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException;
     void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException;
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;

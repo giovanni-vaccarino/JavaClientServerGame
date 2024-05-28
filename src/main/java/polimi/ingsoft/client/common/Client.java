@@ -90,23 +90,18 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdatePlayerHand(PlayerHand playerHand) throws IOException {
-
-    }
-
-    @Override
-    public void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
-
+        //ui.showUpdatePlayerHand(playerHand)
     }
 
     @Override
     public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException{
-        //ui.showUpdatePublicBoard()
+        //ui.showUpdatePublicBoard(deckType, placeInPublicBoard)
     }
 
 
     @Override
     public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException{
-
+        //ui.showUpdateBoard(nickname, coordinates, playedCard)
     }
 
     @Override

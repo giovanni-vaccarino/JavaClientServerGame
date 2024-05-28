@@ -274,7 +274,6 @@ public class MatchController implements Serializable {
      */
     public synchronized MixedCard drawCard(Player player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         switch(deckType){
-            //TODO Change to TYPE_HAND_CARD.RESOURCE and TYPE_HAND_CARD.GOLD when network is updated
             case RESOURCE -> {
                 return this.drawResourceCard(player, slot);
             }
