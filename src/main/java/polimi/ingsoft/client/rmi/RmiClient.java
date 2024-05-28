@@ -133,6 +133,17 @@ public class RmiClient extends Client {
                 this.showUpdatePlayerHand(playerHand);
             }
 
+            case MATCH_BROADCAST_MESSAGE_UPDATE -> {
+                String playerSender = (String) args[0];
+                Message message = (Message) args[1];
+
+                this.showUpdateBroadcastChat(playerSender, null);
+            }
+
+            case MATCH_PRIVATE_MESSAGE_UPDATE -> {
+                this.showUpdatePrivateChat(null, null, null);
+            }
+
             case ERROR -> {
                 ERROR_MESSAGES errorMessage= (ERROR_MESSAGES) args[0];
                 this.reportError(errorMessage);
