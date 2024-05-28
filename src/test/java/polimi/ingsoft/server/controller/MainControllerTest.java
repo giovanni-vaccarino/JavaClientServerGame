@@ -2,8 +2,8 @@ package polimi.ingsoft.server.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
-import polimi.ingsoft.server.exceptions.MatchNotFoundException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
 
 import java.util.List;
 

@@ -9,8 +9,8 @@ import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
-import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.NetworkMessage;
+import polimi.ingsoft.server.common.protocol.MessageCodes;
+import polimi.ingsoft.server.common.protocol.NetworkMessage;
 
 import java.io.*;
 import java.net.Socket;

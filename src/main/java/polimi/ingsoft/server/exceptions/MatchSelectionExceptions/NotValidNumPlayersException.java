@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.exceptions;
+package polimi.ingsoft.server.exceptions.MatchSelectionExceptions;
 
 public class NotValidNumPlayersException extends IllegalArgumentException{
     public NotValidNumPlayersException(){

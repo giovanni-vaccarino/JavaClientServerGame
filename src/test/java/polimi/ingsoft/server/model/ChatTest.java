@@ -2,7 +2,7 @@ package polimi.ingsoft.server.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.exceptions.NotValidMessageException;
+import polimi.ingsoft.server.exceptions.MatchExceptions.NotValidMessageException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

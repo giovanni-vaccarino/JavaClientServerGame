@@ -1,8 +1,8 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.exceptions.MatchAlreadyFullException;
-import polimi.ingsoft.server.exceptions.MatchNotFoundException;
-import polimi.ingsoft.server.exceptions.NotValidNumPlayersException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NotValidNumPlayersException;
 import polimi.ingsoft.server.factories.MatchFactory;
 
 import java.io.PrintStream;

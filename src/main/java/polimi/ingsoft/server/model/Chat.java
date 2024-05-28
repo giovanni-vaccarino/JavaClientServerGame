@@ -1,5 +1,5 @@
 package polimi.ingsoft.server.model;
-import polimi.ingsoft.server.exceptions.NotValidMessageException;
+import polimi.ingsoft.server.exceptions.MatchExceptions.NotValidMessageException;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -8,14 +8,11 @@ import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
-import polimi.ingsoft.server.socket.protocol.MessageCodes;
-import polimi.ingsoft.server.socket.protocol.NetworkMessage;
+import polimi.ingsoft.server.common.protocol.MessageCodes;
 
-import javax.management.MXBean;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;

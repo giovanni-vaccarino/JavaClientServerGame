@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.exceptions;
+package polimi.ingsoft.server.exceptions.MatchExceptions;
 
 public class WrongPlayerForCurrentTurnException extends Exception {
     public WrongPlayerForCurrentTurnException() {

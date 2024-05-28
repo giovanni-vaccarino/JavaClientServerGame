@@ -7,13 +7,15 @@ import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.Utils;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
-import polimi.ingsoft.server.exceptions.*;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.socket.ConnectionHandler;
-import polimi.ingsoft.server.socket.protocol.MessageCodes;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NicknameNotAvailableException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NotValidNumPlayersException;
+import polimi.ingsoft.server.common.protocol.MessageCodes;
 
 import java.io.IOException;
 import java.io.PrintStream;

@@ -5,7 +5,7 @@ import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.exceptions.NicknameNotAvailableException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NicknameNotAvailableException;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
