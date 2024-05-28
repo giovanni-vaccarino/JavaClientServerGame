@@ -2,6 +2,7 @@ package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
+import polimi.ingsoft.client.ui.cli.ClientPublicBoard;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
@@ -187,5 +188,9 @@ public class GUI extends UI{
 
     public PlaceInPublicBoard<QuestCard> getQuestCardPublicBoard(){
         return getUiModel().getQuestCards();
+    }
+
+    @Override
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
     }
 }

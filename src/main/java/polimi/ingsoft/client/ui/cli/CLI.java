@@ -166,7 +166,7 @@ public class CLI extends UI {
 
     @Override
     public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
-        ClientPublicBoard publicBoard=
+        super.publicBoard=
                 new ClientPublicBoard(
                         questCards.get(PlaceInPublicBoard.Slots.SLOT_A),questCards.get(PlaceInPublicBoard.Slots.SLOT_B),
                         resourceCards.get(PlaceInPublicBoard.Slots.DECK),resourceCards.get(PlaceInPublicBoard.Slots.SLOT_A),resourceCards.get(PlaceInPublicBoard.Slots.SLOT_B),

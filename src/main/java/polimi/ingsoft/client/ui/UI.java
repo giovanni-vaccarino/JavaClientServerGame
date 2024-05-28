@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.ui;
 
 import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.client.ui.cli.ClientPublicBoard;
 import polimi.ingsoft.client.ui.gui.UIModel;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
@@ -24,6 +25,7 @@ public abstract class UI {
         this.client = client;
         uiModel = new UIModel();
     }
+    protected ClientPublicBoard publicBoard;
 
     public Client getClient(){
         return client;
