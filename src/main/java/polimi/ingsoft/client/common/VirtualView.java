@@ -25,6 +25,12 @@ public interface VirtualView extends Remote {
     void showUpdatePrivateChat(String sender, String recipient, String message) throws IOException;
     void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException;
     void showUpdateGameState(GameState gameState) throws IOException;
+    void showUpdateGameStart(
+            PlaceInPublicBoard<ResourceCard> resource,
+            PlaceInPublicBoard<GoldCard> gold,
+            PlaceInPublicBoard<QuestCard> quest,
+            Map<String, Board> boards
+    ) throws IOException;
     void showUpdatePlayerHand(PlayerHand playerHand) throws IOException;
     void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException;
     void setPlayerBoards(Map<String, Board> playerBoards) throws IOException;

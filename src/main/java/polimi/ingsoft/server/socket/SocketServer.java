@@ -16,6 +16,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SocketServer implements ConnectionsClient {
     private final int port;
@@ -195,6 +196,23 @@ public class SocketServer implements ConnectionsClient {
             try {
                 client.showUpdatePrivateChat(sender, recipient, message);
             } catch (IOException ignored) { }
+        }
+    }
+
+    public void matchUpdateGameStart(
+            Integer matchId,
+            PlaceInPublicBoard<ResourceCard> resource,
+            PlaceInPublicBoard<GoldCard> gold,
+            PlaceInPublicBoard<QuestCard> quest,
+            Map<String, Board> boards
+    ) {
+        List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
+        synchronized (clientsToNotify) {
+            for (var client : clientsToNotify) {
+                try {
+                    client.showUpdateGameStart(resource, gold, quest, boards);
+                } catch (IOException ignored) { }
+            }
         }
     }
 }

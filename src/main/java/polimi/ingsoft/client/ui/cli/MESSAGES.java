@@ -16,6 +16,7 @@ public enum MESSAGES {
     CREATED_MATCH("Successfully create match"),
     CHOOSE_COLOR("Select your color id: "),
     CHOOSE_INITIAL_CARD_FACE("Select the initial card face you would like to use [F/B]: "),
+    CHOOSE_QUEST_CARD("Select the quest card you would like to use [1/2]: "),
 
     /*QUESTI LI HO AGGIUNTI IO ANDRE-SIMO*/
     CHOOSE_ACTION("COMMAND>"),
