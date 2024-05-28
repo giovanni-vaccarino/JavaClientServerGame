@@ -83,7 +83,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameStart(PlaceInPublicBoard<ResourceCard> resource, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quest, Map<String, Board> boards) throws IOException {
-
+        ui.createPublicBoard(resource, gold, quest);
+        ui.setPlayerBoards(boards);
     }
 
     @Override
@@ -92,17 +93,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
-        System.out.println("RECEIVED PUBLIC BOARD INITIALIZATION");
-        System.out.println(resourceCards.draw(PlaceInPublicBoard.Slots.SLOT_A).getID());
-        System.out.println(goldCards.draw(PlaceInPublicBoard.Slots.SLOT_A).getID());
-        //System.out.println(questCards.get(PlaceInPublicBoard.Slots.SLOT_A).getID());
-        ui.createPublicBoard(resourceCards, goldCards, questCards);
-    }
+    public void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
 
-    @Override
-    public void setPlayerBoards(Map<String, Board> playerBoards){
-        ui.setPlayerBoards(playerBoards);
     }
 
     @Override

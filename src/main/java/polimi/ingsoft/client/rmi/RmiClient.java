@@ -8,7 +8,6 @@ import polimi.ingsoft.server.common.VirtualServerInterface;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -20,7 +19,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -108,22 +106,13 @@ public class RmiClient extends Client {
                 PlaceInPublicBoard<QuestCard> questPublicBoard = (PlaceInPublicBoard<QuestCard>) args[2];
                 Map<String, Board> playerBoards = (Map<String, Board>) args[3];
 
-                this.showUpdatePublicBoard(resourcePublicBoard, goldPublicBoard, questPublicBoard);
-                this.setPlayerBoards(playerBoards);
+                this.showUpdateGameStart(resourcePublicBoard, goldPublicBoard, questPublicBoard, playerBoards);
             }
 
             case MATCH_PUBLIC_BOARD_UPDATE -> {
                 PlaceInPublicBoard<ResourceCard> resourcePublicBoard = (PlaceInPublicBoard<ResourceCard>) args[0];
                 PlaceInPublicBoard<GoldCard> goldPublicBoard = (PlaceInPublicBoard<GoldCard>) args[1];
                 PlaceInPublicBoard<QuestCard> questPublicBoard = (PlaceInPublicBoard<QuestCard>) args[2];
-
-                this.showUpdatePublicBoard(resourcePublicBoard, goldPublicBoard, questPublicBoard);
-            }
-
-            case MATCH_SET_BOARDS -> {
-                Map<String, Board> playerBoards = (Map<String, Board>) args[0];
-
-                this.setPlayerBoards(playerBoards);
             }
 
             case MATCH_BOARD_UPDATE -> {

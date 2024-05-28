@@ -4,9 +4,7 @@ import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.ConnectionsClient;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MainController;
-import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.NicknameNotAvailableException;
 import polimi.ingsoft.server.model.*;
 
@@ -161,8 +159,8 @@ public class SocketServer implements ConnectionsClient {
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
-                    //TODO
-                    client.showUpdatePublicBoard(null, null, null);
+                    //TODO rimettere showUpda
+                    client.showCreatePublicBoard(publicBoard.getPublicBoardResource(), publicBoard.getPublicBoardGold(), publicBoard.getPublicBoardQuest());
                 } catch (IOException ignored) { }
             }
         }

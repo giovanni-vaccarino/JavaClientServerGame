@@ -5,10 +5,8 @@ import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
-import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.rmi.RmiMethodCall;
 import polimi.ingsoft.server.socket.protocol.MessageCodes;
@@ -120,7 +118,6 @@ public class SocketClient extends Client {
                 case MATCH_PUBLIC_BOARD_UPDATE -> {
                     PublicBoard publicBoard = (PublicBoard) payload;
                     //TODO
-                    this.showUpdatePublicBoard(null, null, null);
                 }
                 case MATCH_BOARD_UPDATE -> {
                     NetworkMessage.BoardUpdatePayload boardUpdatePayload = (NetworkMessage.BoardUpdatePayload) payload;

@@ -127,17 +127,7 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
-        NetworkMessage message = new NetworkMessage(
-                MessageCodes.MATCH_PUBLIC_BOARD_UPDATE,
-                null
-        ); //TODO
-        out.writeObject(message);
-        out.flush();
-    }
-
-    @Override
-    public void setPlayerBoards(Map<String, Board> playerBoards) throws IOException {
+    public void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
 
     }
 
