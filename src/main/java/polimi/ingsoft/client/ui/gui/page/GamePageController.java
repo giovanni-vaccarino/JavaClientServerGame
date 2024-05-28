@@ -30,7 +30,6 @@ import polimi.ingsoft.client.ui.gui.utils.*;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.Chat;
 import polimi.ingsoft.server.model.Message;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
 import java.util.*;
 
@@ -53,8 +52,6 @@ public class GamePageController implements Initializable{
     @FXML private Button buttonPublicBoard10;
     @FXML private Button buttonPublicBoard01;
     @FXML private Button buttonPublicBoard11;
-    @FXML private Button buttonPublicBoard02;
-    @FXML private Button buttonPublicBoard12;
 
     @FXML private Button buttonPersonalDeck00;
     @FXML private Button buttonPersonalDeck10;
@@ -140,55 +137,52 @@ public class GamePageController implements Initializable{
         placeSameCard(2,0, personalDeck);
         placeSameCard(3,0, personalDeck);
 
+        // Start flip
+        PlaceCardUtils.initializeFaceCards();
+
         // Public board
         setPublicBoard();
 
         // Public Board Covered Cards (static)
 
-        PlaceCardUtils.placeSameCard(0,0, coveredDrawableDeck2);
-        PlaceCardUtils.placeSameCard(0,1, coveredDrawableDeck2);
-        PlaceCardUtils.placeSameCard(0,2, coveredDrawableDeck2);
+        PlaceCardUtils.placeSameResourceCard(0,0, coveredDrawableDeck2);
+        PlaceCardUtils.placeSameResourceCard(0,1, coveredDrawableDeck2);
+        PlaceCardUtils.placeSameQuestCard(0,2, coveredDrawableDeck2);
 
-        PlaceCardUtils.placeSameCard(0,0, coveredDrawableDeck3);
-        PlaceCardUtils.placeSameCard(0,1, coveredDrawableDeck3);
-        PlaceCardUtils.placeSameCard(0,2, coveredDrawableDeck3);
+        PlaceCardUtils.placeSameResourceCard(0,0, coveredDrawableDeck3);
+        PlaceCardUtils.placeSameResourceCard(0,1, coveredDrawableDeck3);
+        PlaceCardUtils.placeSameQuestCard(0,2, coveredDrawableDeck3);
 
-        PlaceCardUtils.placeSameCard(0,0, coveredDrawableDeck4);
-        PlaceCardUtils.placeSameCard(0,1, coveredDrawableDeck4);
-        PlaceCardUtils.placeSameCard(0,2, coveredDrawableDeck4);
+        PlaceCardUtils.placeSameResourceCard(0,0, coveredDrawableDeck4);
+        PlaceCardUtils.placeSameResourceCard(0,1, coveredDrawableDeck4);
+        PlaceCardUtils.placeSameQuestCard(0,2, coveredDrawableDeck4);
 
         // Flip buttons
 
         buttonPublicBoard00.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(0,0,visibleDrawableDeck);
+            PlaceCardUtils.flipCardPublicBoard(0,0);
         });
         buttonPublicBoard10.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(1,0,visibleDrawableDeck);
+            PlaceCardUtils.flipCardPublicBoard(1,0);
         });
         buttonPublicBoard01.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(0,1,visibleDrawableDeck);
+            PlaceCardUtils.flipCardPublicBoard(0,1);
         });
         buttonPublicBoard11.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(1,1,visibleDrawableDeck);
-        });
-        buttonPublicBoard02.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(0,2,visibleDrawableDeck);
-        });
-        buttonPublicBoard12.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(1,2,visibleDrawableDeck);
+            PlaceCardUtils.flipCardPublicBoard(1,1);
         });
 
         buttonPersonalDeck00.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(0,0,personalDeck);
+            PlaceCardUtils.flipCardPlayerHand(0,0);
         });
         buttonPersonalDeck10.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(1,0,personalDeck);
+            PlaceCardUtils.flipCardPlayerHand(1,0);
         });
         buttonPersonalDeck20.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(2,0,personalDeck);
+            PlaceCardUtils.flipCardPlayerHand(2,0);
         });
         buttonPersonalDeck30.setOnMouseClicked(event -> {
-            PlaceCardUtils.flipCard(3,0,personalDeck);
+            PlaceCardUtils.flipCardPlayerHand(3,0);
         });
 
         // Set nickname-->color
@@ -283,54 +277,12 @@ public class GamePageController implements Initializable{
     }
 
     public void setPublicBoard(){
+        setVisiblePublicBoard();
+        SetGamePage.setCoveredPublicBoard(coveredDrawableDeck1);
+    }
 
-        // Resource
-        String id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
-        String path= CardPathUtils.frontMixedCard(id);
-        PlaceCardUtils.placeCardString(0,0,visibleDrawableDeck, path);
-
-        id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
-        path= CardPathUtils.frontMixedCard(id);
-        PlaceCardUtils.placeCardString(1,0,visibleDrawableDeck, path);
-
-        // Gold
-
-        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
-        path= CardPathUtils.frontMixedCard(id);
-        placeCardString(0,1,visibleDrawableDeck, path);
-
-        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
-        path= CardPathUtils.frontMixedCard(id);
-        placeCardString(1,1,visibleDrawableDeck, path);
-
-        // Quest
-
-        /*id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_A).getID();
-        path= CardPathUtils.frontQuestCard(id);
-        placeCardString(0,2,visibleDrawableDeck, path);
-
-        id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.SLOT_B).getID();
-        path= CardPathUtils.frontQuestCard(id);
-        placeCardString(1,2,visibleDrawableDeck, path);*/
-
-        // Resource Covered
-        id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
-        path= CardPathUtils.backMixedCard(id);
-        PlaceCardUtils.placeCardString(0,0,coveredDrawableDeck1, path);
-
-        // Gold Covered
-        id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
-        path= CardPathUtils.backMixedCard(id);
-
-        System.out.println("id: "+id);
-        System.out.println("path: "+path);
-
-        PlaceCardUtils.placeCardString(0,1,coveredDrawableDeck1, path);
-
-        // Quest Covered
-        /*id = getGui().getQuestCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
-        path= CardPathUtils.backQuestCard(id);
-        PlaceCardUtils.placeCardString(0,2,coveredDrawableDeck1, path);*/
+    public void setVisiblePublicBoard(){
+        SetGamePage.setVisiblePublicBoard(visibleDrawableDeck);
     }
 
     public GUI getGui(){

@@ -4,11 +4,23 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.server.model.Coordinates;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlaceCardUtils {
+    private static final Map<Coordinates, Boolean> isCartFrontPublicBoard = new HashMap<>();
+    private static final Map<Coordinates, Boolean> isCartFrontPlayerHand = new HashMap<>();
 
-    public static void placeSameCard(int x, int y, GridPane gridPane){
+    public static void placeSameResourceCard(int x, int y, GridPane gridPane){
         ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg"));
+        placeCard(x,y,gridPane,cardImg);
+    }
+
+    public static void placeSameQuestCard(int x, int y, GridPane gridPane){
+        ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/backCard/questCard/backQuestCard(1).jpg"));
         placeCard(x,y,gridPane,cardImg);
     }
 
@@ -28,8 +40,45 @@ public class PlaceCardUtils {
         gridPane.add(imageView, x, y);
     }
 
-    public static void flipCard(int x, int y, GridPane gridPane){
-        //todo add memory to the flipped side and then flip it by calling the placeCard
-        System.out.println(x+":"+y);
+    public static void initializeFaceCards(){
+        for(int i=0; i<2; i++){
+            for(int j=0; j<2; j++){
+                isCartFrontPublicBoard.put(new Coordinates(i,j),true);
+            }
+        }
+
+        for(int i=0; i<4; i++){
+            isCartFrontPlayerHand.put(new Coordinates(i,0),true);
+        }
     }
+
+    public static Boolean getIsFrontPublicBoardCard(int x, int y){
+        return isCartFrontPublicBoard.get(new Coordinates(x,y));
+    }
+
+    public static Boolean getIsFrontPlayerHandCard(int x, int y){
+        return isCartFrontPlayerHand.get(new Coordinates(x,y));
+    }
+
+    public static void flipCardPublicBoard(int x, int y){
+        //System.out.println(x+":"+y);
+        Coordinates coordinates = new Coordinates(x,y);
+        Boolean isFront = getIsFrontPublicBoardCard(x,y);
+        isCartFrontPublicBoard.remove(coordinates);
+        isCartFrontPublicBoard.put(coordinates,!isFront);
+
+        System.out.println(isCartFrontPublicBoard);
+
+        GUIsingleton.getInstance().getGamePageController().setVisiblePublicBoard();
+    }
+
+    public static void flipCardPlayerHand(int x, int y){
+        //System.out.println(x+":"+y);
+
+        /*Boolean isFront = getIsFrontPlayerHandCard();
+        isCartFrontPlayerHand.remove(new Coordinates(x,y));
+        isCartFrontPlayerHand.put(new Coordinates(x,y),!isFront);*/
+    }
+
+
 }

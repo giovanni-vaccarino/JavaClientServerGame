@@ -181,6 +181,8 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                         matchController.getMatchId(),
                                         matchController.getGameState()
                                 );
+                                if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
+                                    this.startGameUpdate();
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
                             } catch (WrongGamePhaseException exception) {
@@ -391,6 +393,16 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
+    public void showUpdateGameStart(PlaceInPublicBoard<ResourceCard> resource, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quest, Map<String, Board> boards) throws IOException {
+        logger.println("SOCKET: Sending update game state start to " + nickname);
+        synchronized (this.view) {
+            try {
+                this.view.showUpdateGameStart(resource, gold, quest, boards);
+            } catch (IOException ignore) { }
+        }
+    }
+
+    @Override
     public void showUpdatePlayerHand(PlayerHand playerHand) {
         synchronized (this.view) {
             try {
@@ -400,16 +412,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
-        synchronized (this.view) {
-            try {
-                this.view.showUpdatePublicBoard(resourceCards, goldCards, questCards);
-            } catch (IOException ignore) { }
-        }
-    }
-
-    @Override
-    public void setPlayerBoards(Map<String, Board> playerBoards) throws IOException {
+    public void showCreatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) throws IOException {
 
     }
 
@@ -433,4 +436,19 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
     @Override
     public void setMatchControllerServer(VirtualMatchServer matchServer) { }
+
+    private void startGameUpdate() {
+        PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+        PlaceInPublicBoard<GoldCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardGold();
+        PlaceInPublicBoard<QuestCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardQuest();
+        Map<String, Board> playerBoards = matchController.getPlayerBoards();
+
+        this.server.matchUpdateGameStart(
+                matchController.getMatchId(),
+                resourcePublicBoard,
+                goldPublicBoard,
+                questPublicBoard,
+                playerBoards
+        );
+    }
 }

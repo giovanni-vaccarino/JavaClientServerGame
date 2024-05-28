@@ -79,7 +79,7 @@ public class MatchInitializationManager {
         boolean isValid = false;
 
         do {
-            out.print(MESSAGES.CHOOSE_COLOR.getValue());
+            out.print(MESSAGES.CHOOSE_QUEST_CARD.getValue());
             questCard = in.nextInt();
             in.nextLine();
 

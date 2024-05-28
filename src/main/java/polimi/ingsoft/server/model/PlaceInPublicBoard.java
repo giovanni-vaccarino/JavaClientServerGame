@@ -17,7 +17,7 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable {
         this.slotB = deck.draw();
     }
 
-    public T get(PlaceInPublicBoard.Slots slot) {
+    public T draw(PlaceInPublicBoard.Slots slot) {
         switch (slot) {
             case DECK -> {
                 return deck.draw();
@@ -31,6 +31,21 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable {
                 T result = this.slotB;
                 this.slotB = deck.draw();
                 return result;
+            }
+        }
+        return null;
+    }
+
+    public T get(PlaceInPublicBoard.Slots slot) {
+        switch (slot) {
+            case DECK -> {
+                return deck.show();
+            }
+            case SLOT_A -> {
+                return this.slotA;
+            }
+            case SLOT_B -> {
+                return this.slotB;
             }
         }
         return null;
