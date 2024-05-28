@@ -252,6 +252,7 @@ public class MatchController implements Serializable {
     public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
+        //TODO check the availability process -> board.add(...) only after card.getPlayability > 0 ? Simon resolve this
         boolean isAdded = board.add(coordinates, card, facingUp);
 
         if(isAdded && card.getPlayability(board) > 0){

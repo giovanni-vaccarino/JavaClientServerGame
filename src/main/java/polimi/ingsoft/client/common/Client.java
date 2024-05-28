@@ -90,18 +90,18 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdatePlayerHand(PlayerHand playerHand) throws IOException {
-        //ui.showUpdatePlayerHand(playerHand)
+        ui.updatePlayerHand(playerHand);
     }
 
     @Override
     public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException{
-        //ui.showUpdatePublicBoard(deckType, placeInPublicBoard)
+        ui.updatePublicBoard(deckType, placeInPublicBoard);
     }
 
 
     @Override
     public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException{
-        //ui.showUpdateBoard(nickname, coordinates, playedCard)
+        ui.updatePlayerBoard(nickname, coordinates, playedCard);
     }
 
     @Override
@@ -151,8 +151,12 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         getMatchServer().setQuestCard(nickname, questCard);
     }
 
-    public void addMessage(String nickname, String message) throws IOException {
-        getMatchServer().sendBroadcastMessage(nickname, message);
+    public void sendBroadCastMessage(String sender, String receiver, String message) throws IOException {
+        getMatchServer().sendBroadcastMessage(sender, message);
+    }
+
+    public void sendPrivateMessage(String sender, String receiver, String message) throws IOException {
+        getMatchServer().sendPrivateMessage(sender, receiver, message);
     }
 
     public void drawCard(String nickname, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException {

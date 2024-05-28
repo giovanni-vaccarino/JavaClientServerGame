@@ -8,6 +8,7 @@ import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
@@ -16,13 +17,27 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class UI {
-
     private final Client client;
     private String nickname;
     private final UIModel uiModel;
+
     public  UI (Client client){
         this.client = client;
         uiModel = new UIModel();
+    }
+
+    public abstract void showWelcomeScreen() throws IOException;
+    public abstract void updateNickname();
+    public abstract void updateMatchesList(List<Integer> matches);
+    public abstract void showUpdateMatchJoin();
+    public abstract void updatePlayersInLobby(List<String> nicknames);
+    public abstract void showMatchCreate(Integer matchId);
+    public abstract void reportError(ERROR_MESSAGES errorMessage);
+    public abstract void showUpdateGameState(GameState gameState);
+    public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
+
+    public UIModel getUiModel() {
+        return uiModel;
     }
 
     public Client getClient(){
@@ -40,21 +55,6 @@ public abstract class UI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public abstract void showWelcomeScreen() throws IOException;
-    public abstract void updateNickname();
-    public abstract void updateMatchesList(List<Integer> matches);
-    public abstract void showUpdateMatchJoin();
-    public abstract void updatePlayersInLobby(List<String> nicknames);
-    public abstract void showMatchCreate(Integer matchId);
-    public abstract void reportError(ERROR_MESSAGES errorMessage);
-    public abstract void showUpdateGameState(GameState gameState);
-    public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
-    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
-        getUiModel().setResourceCards(resourceCards);
-        getUiModel().setGoldCards(goldCards);
-        getUiModel().setQuestCards(questCards);
     }
 
     public void setColor(PlayerColor playerColor){
@@ -85,12 +85,26 @@ public abstract class UI {
         getUiModel().setPlayerBoards(playerBoard);
     }
 
-    public Map<String, Board> getPlayerBoards(){
-        return getUiModel().getPlayerBoards();
+    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
+        getUiModel().setResourceCards(resourceCards);
+        getUiModel().setGoldCards(goldCards);
+        getUiModel().setQuestCards(questCards);
     }
 
-    public UIModel getUiModel() {
-        return uiModel;
+    public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard){
+        //TODO fix and delete the cast
+        if (deckType == TYPE_HAND_CARD.RESOURCE) {
+            getUiModel().setPlaceInPublicBoardResource((PlaceInPublicBoard<ResourceCard>) placeInPublicBoard);
+        } else {
+            getUiModel().setPlaceInPublicBoardGold((PlaceInPublicBoard<GoldCard>)placeInPublicBoard);
+        }
     }
 
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
+        getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
+    }
+
+    public void updatePlayerHand(PlayerHand playerHand){
+        getUiModel().setPlayerHand(playerHand.getCards());
+    }
 }
