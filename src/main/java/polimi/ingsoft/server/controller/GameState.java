@@ -248,6 +248,7 @@ public class GameState implements Serializable, Cloneable {
      * @return true if it is the last round, false otherwise
      */
     private boolean isLastRound() {
+        //TODO case if the deck is empty?
         return this.matchController.getPlayers().stream()
                 .mapToInt(player -> player.getBoard().getScore())
                 .anyMatch(score -> score >= 20);

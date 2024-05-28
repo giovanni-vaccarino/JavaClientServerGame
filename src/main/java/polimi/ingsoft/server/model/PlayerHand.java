@@ -18,4 +18,8 @@ public class PlayerHand extends CardCollection<MixedCard> implements Serializabl
     public void add(MixedCard card) {
         this.cards.addLast(card);
     }
+
+    public void remove(MixedCard card){
+        this.cards.remove(card);
+    }
 }

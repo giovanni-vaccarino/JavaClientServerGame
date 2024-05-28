@@ -153,6 +153,9 @@ public class MatchController implements Serializable {
         // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
         PlayerInitialSetting playerInitialSetting = PlayerInitialSettingFactory.createPlayerInitialSetting(this.publicBoard, nickname);
 
+        //Adding a new private chat for the player
+        chatController.addPrivateChat(nickname);
+
         playerInitialSettings.add(playerInitialSetting);
 
         gameState.updateState();
@@ -253,6 +256,7 @@ public class MatchController implements Serializable {
 
         if(isAdded && card.getPlayability(board) > 0){
             board.updatePoints(card.getPoints(board,coordinates)*card.getScore(facingUp));
+            player.removeFromHand(card);
         }
         else{
             //TODO
@@ -273,18 +277,16 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public synchronized MixedCard drawCard(Player player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public synchronized void drawCard(Player player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         switch(deckType){
             case RESOURCE -> {
-                return this.drawResourceCard(player, slot);
+               this.drawResourceCard(player, slot);
             }
 
             case GOLD -> {
-                return this.drawGoldCard(player, slot);
+                this.drawGoldCard(player, slot);
             }
         }
-
-        return null;
     }
 
 
@@ -298,12 +300,12 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    private ResourceCard drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    private void drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.DRAW);
 
         gameState.goToNextPlayer();
 
-        return publicBoard.getResource(slot);
+        player.addToHand(publicBoard.getResource(slot));
     }
 
 
@@ -317,12 +319,12 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    private GoldCard drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    private void drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
         gameState.validateMove(player, TURN_STEP.DRAW);
 
         gameState.goToNextPlayer();
 
-        return publicBoard.getGold(slot);
+        player.addToHand(publicBoard.getResource(slot));
     }
 
 

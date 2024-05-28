@@ -231,9 +231,9 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                     .orElse(null);
 
                             try {
-                                MixedCard card = matchController.drawCard(player, deckType, slot);
-                                player.addToHand(card);
+                                matchController.drawCard(player, deckType, slot);
                                 this.server.singleUpdatePlayerHand(this, player.getHand());
+
                                 this.server.matchUpdateGameState(
                                         matchController.getMatchId(),
                                         matchController.getGameState()

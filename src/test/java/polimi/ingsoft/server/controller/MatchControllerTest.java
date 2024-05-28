@@ -268,9 +268,8 @@ class MatchControllerTest {
         Player currentPlayer = matchController.getGameState().getCurrentPlayer();
 
         // Drawing a card
-        MixedCard drawnCard = null;
         try {
-            drawnCard = matchController.drawCard(currentPlayer, TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_A);
+            matchController.drawCard(currentPlayer, TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_A);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
@@ -281,6 +280,7 @@ class MatchControllerTest {
         Coordinates coordinates = new Coordinates(1, 1);
         boolean facingUp = true;
 
+        MixedCard drawnCard = null;
         //TODO Here gives unexcepted exception because the card is not placeable
         //      When we got the correct initialization of all cards, repeat the test
         try {

@@ -29,6 +29,7 @@ public class ChatController implements Serializable {
         Chat chat = privateChats.get(recipient);
         if (chat == null)
             throw new PlayerNotFoundException();
+
         return chat.addMessage(sender, message);
     }
 }

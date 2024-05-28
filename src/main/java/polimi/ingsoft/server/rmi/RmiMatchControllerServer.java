@@ -238,8 +238,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                         .orElse(null);
 
                 try{
-                    //TODO remove return from drawCard if not necessary
-                    MixedCard drawedCard = matchController.drawCard(player, deckType, slot);
+                    matchController.drawCard(player, deckType, slot);
                     PlayerHand playerHand = player.getHand();
                     GameState gameState = matchController.getGameState();
                     PlaceInPublicBoard<?> publicBoardUpdate = (deckType == TYPE_HAND_CARD.RESOURCE) ?
