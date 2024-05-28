@@ -1,30 +1,31 @@
 package polimi.ingsoft.client.ui;
 
 import polimi.ingsoft.client.common.Client;
+import polimi.ingsoft.client.ui.cli.ClientPublicBoard;
 import polimi.ingsoft.client.ui.gui.UIModel;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.GoldCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-import polimi.ingsoft.server.model.QuestCard;
-import polimi.ingsoft.server.model.ResourceCard;
+import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class UI {
 
     private Client client;
-
+    private Map<String,Board>playerBoards;
     private String nickname;
     private UIModel uiModel;
     public  UI (Client client){
         this.client = client;
         uiModel = new UIModel();
     }
+    protected ClientPublicBoard publicBoard;
 
     public Client getClient(){
         return client;
@@ -52,8 +53,7 @@ public abstract class UI {
     public abstract void reportError(ERROR_MESSAGES errorMessage);
     public abstract void showUpdateGameState(GameState gameState);
     public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
-    public abstract void updatePublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards);
-
+    public abstract void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards);
 
     public void setColor(PlayerColor playerColor){
         try {
@@ -77,6 +77,10 @@ public abstract class UI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setPlayerBoards(Map<String, Board> playerBoard){
+        this.playerBoards=playerBoard;
     }
 
     public UIModel getUiModel() {

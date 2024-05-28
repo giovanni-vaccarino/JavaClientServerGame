@@ -18,6 +18,7 @@ import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public abstract class Client extends UnicastRemoteObject implements VirtualView, Runnable {
@@ -33,7 +34,6 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
             ui = new CLI(scanner, printStream, this);
         else
             ui = new GUI(this);
-
     }
 
     protected abstract VirtualServer getServer();
@@ -93,7 +93,12 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         System.out.println(resourceCards.get(PlaceInPublicBoard.Slots.SLOT_A).getID());
         System.out.println(goldCards.get(PlaceInPublicBoard.Slots.SLOT_A).getID());
         //System.out.println(questCards.get(PlaceInPublicBoard.Slots.SLOT_A).getID());
-        ui.updatePublicBoard(resourceCards, goldCards, questCards);
+        ui.createPublicBoard(resourceCards, goldCards, questCards);
+    }
+
+    @Override
+    public void setPlayerBoards(Map<String, Board> playerBoards){
+        ui.setPlayerBoards(playerBoards);
     }
 
     @Override

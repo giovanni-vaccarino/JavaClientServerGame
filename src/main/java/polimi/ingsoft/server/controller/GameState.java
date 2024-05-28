@@ -123,7 +123,7 @@ public class GameState implements Serializable, Cloneable {
                     this.matchController.initializePlayers();
                     this.setFirstPlayer();
                     this.gamePhase = GAME_PHASE.PLAY;
-                    this.currentTurnStep = TURN_STEP.DRAW;
+                    this.currentTurnStep = TURN_STEP.PLACE;
                 }
             }
 
@@ -180,12 +180,12 @@ public class GameState implements Serializable, Cloneable {
      */
     public void updateTurnStep(){
         switch(currentTurnStep){
-            case TURN_STEP.DRAW -> {
-                this.currentTurnStep = TURN_STEP.PLACE;
-            }
-
             case TURN_STEP.PLACE -> {
                 this.currentTurnStep = TURN_STEP.DRAW;
+            }
+
+            case TURN_STEP.DRAW -> {
+                this.currentTurnStep = TURN_STEP.PLACE;
             }
         }
     }

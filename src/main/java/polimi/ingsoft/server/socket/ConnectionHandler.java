@@ -23,6 +23,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ConnectionHandler implements Runnable, VirtualView {
     private final Socket socket;
@@ -405,6 +406,11 @@ public class ConnectionHandler implements Runnable, VirtualView {
                 this.view.showUpdatePublicBoard(resourceCards, goldCards, questCards);
             } catch (IOException ignore) { }
         }
+    }
+
+    @Override
+    public void setPlayerBoards(Map<String, Board> playerBoards) throws IOException {
+
     }
 
     @Override
