@@ -15,12 +15,9 @@ public class PlayerInitialSetting implements Serializable {
 
     private boolean isInitialFaceUp;
 
-    //TODO Once added the initial card of the player remove this
-    private InitialCard initialCard = new InitialCard("temp",
-            new Face(new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CenterSpace(new ArrayList<>()))
-            , new Face(new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CornerSpace(new ArrayList<>()), new CenterSpace(new ArrayList<>())), 0);
+    private InitialCard initialCard;
 
-    private PlayerHand<MixedCard> playerHand = new PlayerHand<>();
+    private PlayerHand playerHand = new PlayerHand();
 
     private QuestCard questCard;
 
@@ -52,7 +49,7 @@ public class PlayerInitialSetting implements Serializable {
      * @param initialCard       the initial card of the player
      */
     public PlayerInitialSetting(String nickname,
-                                PlayerHand<MixedCard> playerHand,
+                                PlayerHand playerHand,
                                 QuestCard firstQuestCard,
                                 QuestCard secondQuestCard,
                                 InitialCard initialCard){
@@ -91,7 +88,7 @@ public class PlayerInitialSetting implements Serializable {
         return this.questCard;
     }
 
-    public PlayerHand<MixedCard> getPlayerHand(){
+    public PlayerHand getPlayerHand(){
         return this.playerHand;
     }
 

@@ -7,7 +7,7 @@ import polimi.ingsoft.server.model.*;
 
 public class PlayerFactory {
     public static Player createPlayer(PlayerInitialSetting playerInitialSetting) {
-        PlayerHand<MixedCard> playerHand = playerInitialSetting.getPlayerHand();
+        PlayerHand playerHand = playerInitialSetting.getPlayerHand();
         InitialCard initialCard = playerInitialSetting.getInitialCard();
         String nickname = playerInitialSetting.getNickname();
         PlayerColor color = playerInitialSetting.getColor();

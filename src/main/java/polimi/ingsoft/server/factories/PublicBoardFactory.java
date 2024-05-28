@@ -1,18 +1,25 @@
 package polimi.ingsoft.server.factories;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import polimi.ingsoft.server.model.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PublicBoardFactory {
     public static PublicBoard createPublicBoard() {
-        //TODO Here put the method to load the decks from the json file, and then the method to shuffle
-        Deck<ResourceCard> resourceCardDeck = new Deck<>();
-        Deck<GoldCard> goldCardDeck = new Deck<>();
-        Deck<QuestCard> questCardDeck = new Deck<>();
-        List<InitialCard> initialCards = new ArrayList<>();
+        try{
+            Deck<ResourceCard> resourceCardDeck = DeckFactory.createResourceDeck();
+            Deck<GoldCard> goldCardDeck = DeckFactory.createGoldDeck();
+            Deck<QuestCard> questCardDeck = new Deck<>();
+            Deck<InitialCard> initialCards = DeckFactory.createInitialDeck();
 
-        return new PublicBoard(resourceCardDeck, goldCardDeck, questCardDeck, initialCards);
+            return new PublicBoard(resourceCardDeck, goldCardDeck, questCardDeck, initialCards);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

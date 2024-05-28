@@ -14,7 +14,6 @@
     /*-fx-text-fill: #705f16;*/
     -fx-font-family: 'Old English Text MT';
     -fx-underline: true;
-    -fx-text-fill: #323232;
 }
 
 .buttonCancel {
@@ -25,8 +24,18 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
-    -fx-text-fill: #323232;
 }
+
+.buttonSmall {
+    -fx-font-size: 13px;
+    -fx-background-color: #705f16;
+    -fx-background-radius: 10;
+    -fx-border-color: #dfd7b0;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: 'Old English Text MT';
+}
+
 
 .buttonRegular {
     -fx-font-size: 25px;
@@ -36,7 +45,6 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
-    -fx-text-fill: #323232;
 }
 
 .buttonLarge {
@@ -47,7 +55,6 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
-    -fx-text-fill: #323232;
 }
 
 .errorPane {
@@ -58,7 +65,6 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
-    -fx-text-fill: #323232;
 }
 
 .successPane {
@@ -69,5 +75,4 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
-    -fx-text-fill: #323232;
 }

@@ -1,5 +1,7 @@
 package polimi.ingsoft.server.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,7 +11,7 @@ public class QuestCard extends Card implements Drawable, ConditionalPointsCard, 
     public int getScore(){
         return super.getScore();
     }
-    public QuestCard(String iD,Pattern pattern,int points){
+    public QuestCard(@JsonProperty("id") String iD, @JsonProperty("pointPattern")Pattern pattern,@JsonProperty("score") int points){
         super(points,iD);
         this.pattern=pattern;
     }
@@ -21,4 +23,5 @@ public class QuestCard extends Card implements Drawable, ConditionalPointsCard, 
         return pattern;
     }
     public ItemPattern getPlayPattern(){return null;}
+
 }

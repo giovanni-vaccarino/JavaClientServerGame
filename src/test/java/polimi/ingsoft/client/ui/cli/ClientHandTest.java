@@ -12,6 +12,7 @@ import java.util.List;
 
 class ClientHandTest {
     private static MixedCard a,b,c,d;
+    private static QuestCard quest,quest2;
     ClientHand hand=new ClientHand();
     @BeforeAll
     public static void init(){
@@ -132,18 +133,36 @@ class ClientHandTest {
 
         d=new ResourceCard("lol",front,back,0);
 
+        ArrayList<Link> links=new ArrayList<>();
+        links.addFirst(new Link(Resource.WOLF,new Coordinates(0,0)));
+        links.add(new Link(Resource.WOLF,new Coordinates(1,1)));
+        links.add(new Link(Resource.WOLF,new Coordinates(2,2)));
+        quest=new QuestCard("id",new SchemePattern(links),3);
+
+        HashMap<Item,Integer>costquest=new HashMap<>();
+        costquest.put(Resource.LEAF,3);
+        costquest.put(Resource.WOLF,0);
+        costquest.put(Resource.MUSHROOM,0);
+        costquest.put(Resource.BUTTERFLY,0);
+        costquest.put(Object.SCROLL,0);
+        costquest.put(Object.POTION,0);
+        costquest.put(Object.FEATHER,0);
+        quest2=new QuestCard("id",new ItemPattern(costquest),1);
+
     }
     @Test
     void print() {
         hand.addCard(a);
         hand.addCard(b);
         hand.addCard(c);
+        hand.addQuestCard(quest);
         //hand.addCard(d);
         hand.print();
         System.out.print("\n\n\n");
         hand.flip(0);
         hand.flip(1);
         hand.flip(2);
+        hand.addQuestCard(quest2);
         hand.print();
         System.out.print("\n\n\n");
         hand.flip(1);

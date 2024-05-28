@@ -20,6 +20,7 @@ public class ClientHand {
     private String color;
     private ArrayList<MixedCard> cards;
     private ArrayList<Boolean> isFlipped; //true: visualizzo back false:visualizzo front
+    private QuestCard questCard;
 
     public ClientHand() {
         this.cards = new ArrayList<>();
@@ -32,6 +33,9 @@ public class ClientHand {
             this.cards.add(card);
             this.isFlipped.add(true);
         }
+    }
+    public void addQuestCard(QuestCard questCard){
+        this.questCard=questCard;
     }
 
     public static String defineColor(MixedCard card) {
@@ -69,7 +73,9 @@ public class ClientHand {
                 }
                 System.out.print(RESET + "    ");
             }
-            System.out.print("\n");
+            if(j==0)System.out.print(YELLOW + BLACKTEXT + "               | " + questCard.getScore() + "|               ");
+            else System.out.print(ClientPublicBoard.printQuestCard(j,questCard));
+            System.out.print(RESET+"\n");
         }
     }
 

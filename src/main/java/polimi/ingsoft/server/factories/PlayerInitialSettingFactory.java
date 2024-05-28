@@ -10,14 +10,10 @@ public class PlayerInitialSettingFactory {
         GoldCard goldCard = publicBoard.getGold(PlaceInPublicBoard.Slots.DECK);
         QuestCard firstQuestCard = publicBoard.getQuest(PlaceInPublicBoard.Slots.DECK);
         QuestCard secondQuestCard = publicBoard.getQuest(PlaceInPublicBoard.Slots.DECK);
-        //TODO add this when ready to load cards: InitialCard initialCard = publicBoard.getInitial();
+        InitialCard initialCard = publicBoard.getInitial();
 
-        //TODO change playerHand constructor
-        PlayerHand<MixedCard> playerHand = new PlayerHand<>();
+        PlayerHand playerHand = new PlayerHand(firstResourceCard, secondResourceCard, goldCard);
 
-        //TODO change PlayerIntialSetting constructor like this when ready:
-        //          PlayerInitialSetting(nickname, playerHand, firstQuestCard, secondQuestCard);
-
-        return new PlayerInitialSetting(nickname);
+        return new PlayerInitialSetting(nickname, playerHand, firstQuestCard, secondQuestCard, initialCard);
     }
 }

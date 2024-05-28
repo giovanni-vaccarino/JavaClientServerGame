@@ -102,8 +102,15 @@ public class RmiClient extends Client {
             }
 
             case MATCH_PUBLIC_BOARD_UPDATE -> {
-                PublicBoard publicBoard = (PublicBoard) args[0];
-                this.showUpdatePublicBoard(publicBoard);
+                System.out.println("CI ARRIVO 1");
+                PlaceInPublicBoard<ResourceCard> resourcePublicBoard = (PlaceInPublicBoard<ResourceCard>) args[0];
+                System.out.println("CI ARRIVO 2");
+                PlaceInPublicBoard<GoldCard> goldPublicBoard = (PlaceInPublicBoard<GoldCard>) args[1];
+                System.out.println("CI ARRIVO 3");
+                PlaceInPublicBoard<QuestCard> questPublicBoard = (PlaceInPublicBoard<QuestCard>) args[2];
+                System.out.println("CI ARRIVO 4");
+
+                this.showUpdatePublicBoard(resourcePublicBoard, goldPublicBoard, questPublicBoard);
             }
 
             case MATCH_BOARD_UPDATE -> {
@@ -115,7 +122,7 @@ public class RmiClient extends Client {
             }
 
             case MATCH_PLAYER_HAND_UPDATE -> {
-                PlayerHand<MixedCard> playerHand = (PlayerHand<MixedCard>) args[0];
+                PlayerHand playerHand = (PlayerHand) args[0];
                 this.showUpdatePlayerHand(playerHand);
             }
 
