@@ -1,22 +1,26 @@
 package polimi.ingsoft.server.enumerations;
 
 public enum ERROR_MESSAGES {
-    PLAYERS_OUT_OF_BOUND("Number of players not accepted. Type a number between 2 and 4"),
+    // General errors
     PROTOCOL_NUMBER_OUT_OF_BOUND("Protocol does not exist"),
-    MATCH_NUMBER_OUT_OF_BOUND("Match does not exist"),
-    NICKNAME_NOT_AVAILABLE("Nickname is not available"),
     UNKNOWN_COMMAND("Unknown command"),
-    INVALID_COMMAND("This command cannot be run in this situation"),
     UNKNOWN_ERROR("Unexpected error"),
+    BAD_INPUT("The input you provided is not valid"),
+
+    // Nickname errors
+    NICKNAME_NOT_AVAILABLE("Nickname is not available"),
+
+    // Matches management errors
     UNABLE_TO_LIST_MATCHES("Unable to list matches"),
+    MATCH_NUMBER_OUT_OF_BOUND("Match does not exist"),
     UNABLE_TO_JOIN_MATCH("Unable to join match"),
     MATCH_IS_ALREADY_FULL("Match is already full"),
     MATCH_DOES_NOT_EXIST("Match does not exist"),
     UNABLE_TO_CREATE_MATCH("Unable to create match"),
-    WRONG_GAME_PHASE("Wrong phase of the game"),
-    WRONG_STEP("Wrong step"),
+    PLAYERS_OUT_OF_BOUND("Number of players not accepted. Type a number between 2 and 4"),
+
+    // Game initialization errors
     COLOR_ALREADY_PICKED("The color you have selected has been already picked"),
-    WRONG_PLAYER_TURN("It is not your turn"),
     INITIAL_SETTING_ALREADY_SET("Initial setting already set"),
     PLAYER_IS_NOT_IN_A_MATCH("Player is currently not in a match"),
     COLOR_ID_OUT_OF_BOUND("Color id is out of bounds"),
@@ -25,6 +29,15 @@ public enum ERROR_MESSAGES {
     UNABLE_TO_SET_FACE("Unable to set initial card face"),
     INVALID_QUEST_CARD("The quest card number you provided is invalid"),
     UNABLE_TO_SET_QUEST_CARD("Unable to set quest card"),
+
+    // Game errors
+    WRONG_GAME_PHASE("Wrong phase of the game"),
+    WRONG_STEP("Wrong step"),
+    WRONG_PLAYER_TURN("It is not your turn"),
+    UNABLE_TO_DRAW_CARD("Unable to draw card"),
+    UNABLE_TO_PLACE_CARD("Unable to place card"),
+
+    // Chat errors
     PLAYER_NOT_FOUND("Unable to find recipient player");
 
     private final String value;

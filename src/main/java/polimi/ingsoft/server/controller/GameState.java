@@ -24,6 +24,7 @@ public class GameState implements Serializable, Cloneable {
     private final Integer requestedNumPlayers;
 
     private int currentPlayerIndex;
+    private String currentPlayerNickname;
 
     private int firstPlayerIndex;
 
@@ -105,6 +106,17 @@ public class GameState implements Serializable, Cloneable {
      * @return the current turn step
      */
     public TURN_STEP getCurrentTurnStep(){return this.currentTurnStep;}
+
+
+    /**
+     * Returns the current player's nickname.
+     *
+     * @return the current player's nickname
+     */
+    public String getCurrentPlayerNickname() {
+        return this.currentPlayerNickname;
+    }
+
 
     /**
      * Updates the game phase
@@ -276,6 +288,7 @@ public class GameState implements Serializable, Cloneable {
 
         this.firstPlayerIndex = random.nextInt(requestedNumPlayers);
         currentPlayerIndex = firstPlayerIndex;
+        currentPlayerNickname = getCurrentPlayer().getNickname();
     }
 
 
@@ -292,6 +305,7 @@ public class GameState implements Serializable, Cloneable {
      */
     public void goToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % requestedNumPlayers;
+        currentPlayerNickname = getCurrentPlayer().getNickname();
 
         this.updateTurnNumber();
         this.updateTurnStep();

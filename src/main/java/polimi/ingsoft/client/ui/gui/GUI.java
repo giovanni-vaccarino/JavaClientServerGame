@@ -14,6 +14,7 @@ import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class GUI extends UI{
 
@@ -122,6 +123,11 @@ public class GUI extends UI{
         getUiModel().setPlayerInitialSetting(playerInitialSetting);
     }
 
+    @Override
+    public void setPlayerBoards(Map<String, Board> playerBoard){
+        getUiModel().setPlayerBoards(playerBoard);
+    }
+
 
     public String getInitialCard(){
         return getUiModel().getPlayerInitialSetting().getInitialCard().getID();
@@ -174,7 +180,9 @@ public class GUI extends UI{
     }
     @Override
     public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards){
-        super.createPublicBoard(resourceCards, goldCards, questCards);
+        getUiModel().setResourceCards(resourceCards);
+        getUiModel().setGoldCards(goldCards);
+        getUiModel().setQuestCards(questCards);
         GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
     }
 

@@ -84,24 +84,25 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameStart(PlaceInPublicBoard<ResourceCard> resource, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quest, Map<String, Board> boards) throws IOException {
+        // Do not change this order
         ui.createPublicBoard(resource, gold, quest);
         ui.setPlayerBoards(boards);
     }
 
     @Override
-    public void showUpdatePlayerHand(PlayerHand playerHand) throws IOException {
-        //ui.showUpdatePlayerHand(playerHand)
+    public void showUpdatePlayerHand(PlayerHand playerHand) {
+
     }
 
     @Override
     public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException{
-        //ui.showUpdatePublicBoard(deckType, placeInPublicBoard)
+
     }
 
 
     @Override
     public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException{
-        //ui.showUpdateBoard(nickname, coordinates, playedCard)
+
     }
 
     @Override

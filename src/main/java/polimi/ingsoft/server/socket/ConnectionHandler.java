@@ -89,14 +89,14 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
                                 MatchController matchController = controller.getMatch(id);
                                 GameState gameState = matchController.getGameState();
-                                // Set match controller for usage later
-                                this.matchController = matchController;
-                                List<String> nicknames = matchController.getNamePlayers();
-                                this.server.lobbyUpdatePlayerJoin(nicknames);
                                 //Adding the client to the match notification list
                                 synchronized (this.server.matchNotificationList){
                                     this.server.matchNotificationList.get(id).add(this);
                                 }
+                                // Set match controller for usage later
+                                this.matchController = matchController;
+                                List<String> nicknames = matchController.getNamePlayers();
+                                this.server.lobbyUpdatePlayerJoin(nicknames);
                                 if (gameState.getGamePhase() == GAME_PHASE.INITIALIZATION) {
                                     this.server.matchUpdateGameState(
                                         matchController.getMatchId(),
@@ -215,9 +215,9 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             String message = privateMessagePayload.message();
 
                             try {
-                                Message messageSent = matchController.writePrivateMessage(sender, recipient, message);
-                                this.server.singleUpdatePrivateMessage(sender, recipient, messageSent);
-                                this.server.singleUpdatePrivateMessage(recipient, recipient, messageSent);
+                                Message _message = matchController.writePrivateMessage(sender, recipient, message);
+                                this.server.singleUpdatePrivateMessage(sender, sender, _message);
+                                this.server.singleUpdatePrivateMessage(recipient, sender, _message);
                             } catch (PlayerNotFoundException e) {
                                 this.reportError(ERROR_MESSAGES.PLAYER_NOT_FOUND);
                             }
@@ -233,14 +233,13 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             try {
                                 matchController.drawCard(player, deckType, slot);
                                 this.server.singleUpdatePlayerHand(this, player.getHand());
-
-                                this.server.matchUpdateGameState(
-                                        matchController.getMatchId(),
-                                        matchController.getGameState()
-                                );
                                 this.server.matchUpdatePublicBoard(
                                         matchController.getMatchId(),
                                         matchController.getPublicBoard()
+                                );
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.UNKNOWN_ERROR);
@@ -265,15 +264,15 @@ public class ConnectionHandler implements Runnable, VirtualView {
                                 matchController.placeCard(player, card, coordinates, isFacingUp);
                                 PlayedCard playedCard = player.getBoard().getCard(coordinates);
                                 this.server.singleUpdatePlayerHand(this, player.getHand());
-                                this.server.matchUpdateGameState(
-                                        matchController.getMatchId(),
-                                        matchController.getGameState()
-                                );
                                 this.server.matchUpdatePlayerBoard(
                                         matchController.getMatchId(),
                                         nickname,
                                         coordinates,
                                         playedCard
+                                );
+                                this.server.matchUpdateGameState(
+                                        matchController.getMatchId(),
+                                        matchController.getGameState()
                                 );
                             } catch (NullPointerException exception) {
                                 this.reportError(ERROR_MESSAGES.UNKNOWN_ERROR);
@@ -300,6 +299,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
             out.close();
             socket.close();
         } catch (IOException | ClassNotFoundException e) {
+            // TODO handle disconnection here
             throw new RuntimeException(e);
         }
     }

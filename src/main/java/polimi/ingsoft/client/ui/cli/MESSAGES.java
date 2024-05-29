@@ -3,9 +3,8 @@ package polimi.ingsoft.client.ui.cli;
 public enum MESSAGES {
     CHOOSE_PROTOCOL_LIST("Before starting, choose which communication protocol you want to use: "),
     CHOOSE_PROTOCOL("Choose your protocol: "),
-    WELCOME("Welcome to CODEX, choose your nickname: \n"),
+    WELCOME("Welcome to CODEX\n"),
     NICKNAME_UPDATED("Your nickname was successfully set"),
-    UNABLE_TO_UPDATE_NICKNAME("This nickname has already been used"),
     NO_MATCHES_TO_SHOW("There are currently no matches being run"),
     CHOOSE_MATCH("Choose your match or create a new one by typing 0: "),
     CHOOSE_NICKNAME("Choose your nickname: "),
@@ -13,12 +12,20 @@ public enum MESSAGES {
     JOINING_MATCH("Joining match..."),
     JOINED_MATCH("Succesfully joined match"),
     PLAYERS_IN_LOBBY("Players waiting in lobby: "),
-    CREATED_MATCH("Successfully create match"),
+    CREATED_MATCH("Successfully created match"),
     CHOOSE_COLOR("Select your color id: "),
+    COLOR_SUCCESSFULLY_SET("Your color was successfully set"),
     CHOOSE_INITIAL_CARD_FACE("Select the initial card face you would like to use [F/B]: "),
+    INITIAL_CARD_FACE_SUCCESSFULLY_SET("The initial card face was successfully set"),
     CHOOSE_QUEST_CARD("Select the quest card you would like to use [1/2]: "),
+    QUEST_CARD_SUCCESSFULLY_SET("The quest card was successfully set"),
     GAME_START("The game will start now"),
+    IS_YOUR_TURN("It's now your turn to play"),
     CURRENT_PLAYER("Current player: "),
+    CARD_SUCCESSFULLY_PLACED("Card was placed successfully"),
+    CARD_SUCCESSFULLY_DRAWN("Card was drawn successfully"),
+    OTHER_PLAYER_PERFORMING_PLACE(" has to place her/his card"),
+    OTHER_PLAYER_PERFORMING_DRAW(" has to place her/his card"),
     HELPMAIN("HERE'S WHAT YOU CAN DO !\n" +
             "->BOARD:ENTER THE BOARD MENU\n" +
             "->PUBLICBOARD: ENTER THE PUBLICBOARD MENU\n" +

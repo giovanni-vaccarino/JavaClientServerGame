@@ -8,6 +8,7 @@ import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
@@ -51,11 +52,7 @@ public abstract class UI {
     public abstract void reportError(ERROR_MESSAGES errorMessage);
     public abstract void showUpdateGameState(GameState gameState);
     public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
-    public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
-        getUiModel().setResourceCards(resourceCards);
-        getUiModel().setGoldCards(goldCards);
-        getUiModel().setQuestCards(questCards);
-    }
+    public abstract void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards);
 
     public void setColor(PlayerColor playerColor){
         try {
@@ -81,9 +78,7 @@ public abstract class UI {
         }
     }
 
-    public void setPlayerBoards(Map<String, Board> playerBoard){
-        getUiModel().setPlayerBoards(playerBoard);
-    }
+    public abstract void setPlayerBoards(Map<String, Board> playerBoard);
 
     public Map<String, Board> getPlayerBoards(){
         return getUiModel().getPlayerBoards();
