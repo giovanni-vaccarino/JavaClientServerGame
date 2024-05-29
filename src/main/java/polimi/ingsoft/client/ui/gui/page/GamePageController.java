@@ -92,7 +92,6 @@ public class GamePageController implements Initializable{
     private HashMap<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
     private String myName;
-    private String firstPlayer;
 
     private ImageView[][] boardAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
 
@@ -189,7 +188,6 @@ public class GamePageController implements Initializable{
 
         // Board load
         setMyName(getGui().getNickname());
-        setFirstPlayer(myName);
 
         CenterBoardX = 2;
         CenterBoardY = 4;
@@ -342,10 +340,6 @@ public class GamePageController implements Initializable{
         this.myName=n;
     }
 
-    public void setFirstPlayer(String n){
-        this.firstPlayer=n;
-    }
-
     public void setScore(List<Integer> s){
         if(s.size()<=4) {
             this.score = s;
@@ -461,6 +455,7 @@ public class GamePageController implements Initializable{
         this.CenterBoardY = 4;*/
     }
 
+    // METHOD THAT SHOWS THE CURRENT BOARD NICKNAME
     public void loadBoardCards(){
 
         Coordinates coordinates = new Coordinates(0,0);
@@ -591,7 +586,7 @@ public class GamePageController implements Initializable{
             // Add the ImageView to the specific cell in the GridPane
             board.add(scoreImg, CenterBoardX, CenterBoardY);
 
-            if(boardNickname.equals(firstPlayer)){
+            if(getGui().getUiModel().getPlayerBoards().get(boardNickname).getFirstPlayer()){
                 img_path = "/polimi/ingsoft/demo/graphics/img/score/blackScore.png";
 
                 scoreImg = new ImageView(new Image(img_path));
@@ -658,7 +653,6 @@ public class GamePageController implements Initializable{
             }
         }
     }
-
 
     public int countSameScore(int s){
         int counter = 0;
