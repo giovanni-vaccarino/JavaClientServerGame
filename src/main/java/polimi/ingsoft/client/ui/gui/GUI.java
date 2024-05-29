@@ -10,6 +10,7 @@ import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.Resource;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.model.Coordinates;
 
@@ -26,9 +27,16 @@ public class GUI extends UI{
     private boolean nextQuestCardPageEnable = true;
     private boolean nextGamePageEnable = true;
 
+    private final UIModel uiModel;
+
     public GUI(Client client){
         super(client);
         GUIsingleton.getInstance().setGui(this);
+        uiModel = new UIModel();
+    }
+
+    public UIModel getUiModel() {
+        return uiModel;
     }
 
     @Override
@@ -188,9 +196,24 @@ public class GUI extends UI{
     }
 
     @Override
+    public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard){
+        //TODO fix and delete the cast
+        if (deckType == TYPE_HAND_CARD.RESOURCE) {
+            getUiModel().setPlaceInPublicBoardResource((PlaceInPublicBoard<ResourceCard>) placeInPublicBoard);
+        } else {
+            getUiModel().setPlaceInPublicBoardGold((PlaceInPublicBoard<GoldCard>)placeInPublicBoard);
+        }
+    }
+
+    @Override
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
         getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
         GUIsingleton.getInstance().getGamePageController().refreshBoard();
+    }
+
+    @Override
+    public void updatePlayerHand(PlayerHand playerHand){
+        getUiModel().setPlayerHand(playerHand.getCards());
     }
 
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){

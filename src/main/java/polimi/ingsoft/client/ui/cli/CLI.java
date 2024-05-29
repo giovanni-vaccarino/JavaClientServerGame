@@ -170,6 +170,11 @@ public class CLI extends UI {
     }
 
     @Override
+    public void updatePlayerHand(PlayerHand playerHand) {
+
+    }
+
+    @Override
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) {
 
     }
@@ -179,5 +184,10 @@ public class CLI extends UI {
         if (phase == CLIPhase.GAME_INIT) {
             gameManager.initializePublicBoards(resourceCards, goldCards, questCards);
         }
+    }
+
+    @Override
+    public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) {
+
     }
 }

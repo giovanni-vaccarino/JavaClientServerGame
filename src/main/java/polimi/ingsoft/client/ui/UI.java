@@ -16,11 +16,9 @@ import java.util.Map;
 public abstract class UI {
     private final Client client;
     private String nickname;
-    private final UIModel uiModel;
 
     public  UI (Client client){
         this.client = client;
-        uiModel = new UIModel();
     }
 
     public abstract void showWelcomeScreen() throws IOException;
@@ -33,7 +31,10 @@ public abstract class UI {
     public abstract void showUpdateGameState(GameState gameState);
     public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
     public abstract void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards);
+    public abstract void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard);
     public abstract void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard);
+    public abstract void setPlayerBoards(Map<String, Board> playerBoard);
+    public abstract void updatePlayerHand(PlayerHand playerHand);
 
     public Client getClient(){
         return client;
@@ -68,30 +69,11 @@ public abstract class UI {
         }
     }
 
-    public void setQuestCard(QuestCard questCard){
+    public void setQuestCard(QuestCard questCard) {
         try {
             this.client.setQuestCard(nickname, questCard);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public abstract void setPlayerBoards(Map<String, Board> playerBoard);
-
-    public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard){
-        //TODO fix and delete the cast
-        if (deckType == TYPE_HAND_CARD.RESOURCE) {
-            getUiModel().setPlaceInPublicBoardResource((PlaceInPublicBoard<ResourceCard>) placeInPublicBoard);
-        } else {
-            getUiModel().setPlaceInPublicBoardGold((PlaceInPublicBoard<GoldCard>)placeInPublicBoard);
-        }
-    }
-
-    public void updatePlayerHand(PlayerHand playerHand){
-        getUiModel().setPlayerHand(playerHand.getCards());
-    }
-
-    public UIModel getUiModel() {
-        return uiModel;
     }
 }
