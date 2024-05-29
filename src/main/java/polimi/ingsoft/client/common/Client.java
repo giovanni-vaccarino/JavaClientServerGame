@@ -85,6 +85,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     @Override
     public void showUpdateGameStart(PlaceInPublicBoard<ResourceCard> resource, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quest, Map<String, Board> boards) throws IOException {
         ui.setPlayerBoards(boards);
+        System.out.println("nico: "+boards.get("nico").getFirstPlayer());
+        System.out.println("gio: "+boards.get("gio").getFirstPlayer());
         ui.createPublicBoard(resource, gold, quest);
     }
 

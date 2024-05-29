@@ -134,4 +134,8 @@ public class Board implements Serializable {
     public int getPotions(){
         return resources.get(Object.POTION);
     }
+
+    public Boolean getFirstPlayer() {
+        return isFirstPlayer;
+    }
 }

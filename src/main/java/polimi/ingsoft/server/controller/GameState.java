@@ -120,8 +120,8 @@ public class GameState implements Serializable, Cloneable {
 
             case GAME_PHASE.INITIALIZATION -> {
                 if (playerStepCheck.size() == requestedNumPlayers && this.currentInitialStep == INITIAL_STEP.QUEST_CARD){
-                    this.matchController.initializePlayers();
                     this.setFirstPlayer();
+                    this.matchController.initializePlayers();
                     this.gamePhase = GAME_PHASE.PLAY;
                     this.currentTurnStep = TURN_STEP.PLACE;
                 }
@@ -275,6 +275,7 @@ public class GameState implements Serializable, Cloneable {
         Random random = new Random();
 
         this.firstPlayerIndex = random.nextInt(requestedNumPlayers);
+        System.out.println("INDICE: "+firstPlayerIndex);
         currentPlayerIndex = firstPlayerIndex;
     }
 
