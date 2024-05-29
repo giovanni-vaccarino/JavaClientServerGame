@@ -461,6 +461,7 @@ public class GamePageController implements Initializable{
         this.CenterBoardY = 4;*/
     }
 
+    // METHOD THAT SHOWS THE CURRENT BOARD NICKNAME
     public void loadBoardCards(){
 
         Coordinates coordinates = new Coordinates(0,0);
@@ -658,7 +659,6 @@ public class GamePageController implements Initializable{
             }
         }
     }
-
 
     public int countSameScore(int s){
         int counter = 0;

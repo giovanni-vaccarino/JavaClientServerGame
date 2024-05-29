@@ -141,6 +141,7 @@ public class SetGamePage {
 
                 order = allCards.get(coordinates).getOrder();
 
+                // TO FILL THE MODEL OF GAMEPAGE CONTROLLER:
                 GUIsingleton.getInstance().getGamePageController().setBoardCoordinatesOrder(x,y,path,order,player);
             }
         }
