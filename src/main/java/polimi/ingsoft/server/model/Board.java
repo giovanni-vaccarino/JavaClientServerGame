@@ -9,11 +9,13 @@ import java.util.Map;
 
 // TODO refactor
 public class Board implements Serializable {
+    private final Boolean isFirstPlayer;
     private final PlayerColor color;
     private int score;
     private final Map<Coordinates, PlayedCard> cards;
     private final Map<Item,Integer> resources;
-    public Board(GameCard initialCard, boolean isFaceUp, PlayerColor color){
+    public Board(GameCard initialCard, boolean isFaceUp, Boolean isFirstPlayer, PlayerColor color){
+        this.isFirstPlayer = isFirstPlayer;
         this.color = color;
         this.cards=new HashMap<>();
         resources=new HashMap<>();
@@ -29,6 +31,10 @@ public class Board implements Serializable {
     }
     public PlayedCard getCard(Coordinates coordinates){
         return cards.get(coordinates);
+    }
+
+    public Map<Coordinates, PlayedCard> getCards(){
+        return this.cards;
     }
 
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
@@ -127,5 +133,9 @@ public class Board implements Serializable {
     }
     public int getPotions(){
         return resources.get(Object.POTION);
+    }
+
+    public Boolean getFirstPlayer() {
+        return isFirstPlayer;
     }
 }

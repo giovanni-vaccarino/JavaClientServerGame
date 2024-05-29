@@ -3,7 +3,13 @@ package polimi.ingsoft.client.ui.gui.utils;
 import javafx.scene.layout.GridPane;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.client.ui.gui.page.GamePageController;
+import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
+import polimi.ingsoft.server.model.PlayedCard;
+
+import java.util.Map;
 
 public class SetGamePage {
     public static GUI getGui(){
@@ -102,6 +108,57 @@ public class SetGamePage {
                 path= CardPathUtils.backMixedCard(id);
             }
             PlaceCardUtils.placeCardString(i+1,0,personalDeck, path);
+        }
+    }
+
+    public static void setBoardData(){
+
+        Map<Coordinates, PlayedCard> allCards;
+        int x,y, order;
+        String path, id;
+
+        for(String player : getGui().getUiModel().getPlayerBoards().keySet()){
+            System.out.println(player);
+            allCards = getGui().getUiModel().getPlayerBoards().get(player).getCards(); // hashmap <coordinate, playedcard>
+            for (polimi.ingsoft.server.model.Coordinates coordinates: allCards.keySet()){
+                x = coordinates.getX();
+                y = coordinates.getY();
+                System.out.println(x+":"+y);
+                if(allCards.get(coordinates) == null){
+                    System.out.println("allCards.get(coordinates) NULL");
+                }else {
+                    System.out.println("allCards.get(coordinates) NON null - "+allCards.get(coordinates));
+                }
+                id = allCards.get(coordinates).getCard().getID();
+
+                if(x==0 && y==0){
+                    // Initial card
+                    if(allCards.get(coordinates).isFacingUp()){
+                        path = CardPathUtils.frontInitialCard(id);
+                    }else {
+                        path = CardPathUtils.backInitialCard(id);
+                    }
+                } else if (allCards.get(coordinates).isFacingUp()){
+                    // Mixed card facing up
+                    path = CardPathUtils.frontMixedCard(id);
+                } else {
+                    // Mixed card facing down
+                    path = CardPathUtils.backMixedCard(id);
+                }
+
+                order = allCards.get(coordinates).getOrder();
+
+                // TO FILL THE MODEL OF GAMEPAGE CONTROLLER:
+                GUIsingleton.getInstance().getGamePageController().setBoardCoordinatesOrder(x,y,path,order,player);
+            }
+        }
+    }
+
+    public static void setNicknameColors(){
+        GamePageController gamePageController = GUIsingleton.getInstance().getGamePageController();
+
+        for(String player : getGui().getUiModel().getPlayerBoards().keySet()){
+            gamePageController.setNicknameColor(player, getGui().getUiModel().getPlayerBoards().get(player).getColor());
         }
     }
 }

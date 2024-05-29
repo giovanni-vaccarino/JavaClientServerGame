@@ -169,10 +169,17 @@ public class MatchController implements Serializable {
     public void initializePlayers() {
         this.players = this.players.isEmpty() ?
                 this.playerInitialSettings.stream()
-                        .map(PlayerFactory::createPlayer)
+                        .map(playerInitialSetting ->
+                                PlayerFactory.createPlayer(playerInitialSetting, isFirstPlayer(playerInitialSetting.getNickname())))
                         .collect(Collectors.toList())
                 :
                 this.players;
+    }
+
+    private Boolean isFirstPlayer(String nickname){
+        Integer firstPlayerIndex = gameState.getFirstPlayerIndex();
+
+        return getPlayerInitialSettings().get(firstPlayerIndex).getNickname().equals(nickname);
     }
 
 
@@ -249,9 +256,10 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, CoordinateNotValidException, NotEnoughResourcesException {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
+        //TODO put the throws in board.add
         boolean isAdded = board.add(coordinates, card, facingUp);
 
         if(isAdded && card.getPlayability(board) > 0){
@@ -259,7 +267,11 @@ public class MatchController implements Serializable {
             player.removeFromHand(card);
         }
         else{
-            //TODO
+            if(!isAdded){
+                throw new CoordinateNotValidException();
+            }else{
+                throw new NotEnoughResourcesException();
+            }
         }
 
         gameState.updateState();

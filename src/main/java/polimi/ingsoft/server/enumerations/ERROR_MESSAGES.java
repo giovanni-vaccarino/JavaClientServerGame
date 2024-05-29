@@ -36,6 +36,8 @@ public enum ERROR_MESSAGES {
     WRONG_PLAYER_TURN("It is not your turn"),
     UNABLE_TO_DRAW_CARD("Unable to draw card"),
     UNABLE_TO_PLACE_CARD("Unable to place card"),
+    COORDINATE_NOT_VALID("The coordinate you selected is not valid"),
+    NOT_ENOUGH_RESOURCES("You do not have enough resources to place that card"),
 
     // Chat errors
     PLAYER_NOT_FOUND("Unable to find recipient player");

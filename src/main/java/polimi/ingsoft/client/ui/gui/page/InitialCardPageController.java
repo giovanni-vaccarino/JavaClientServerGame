@@ -12,8 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.client.ui.gui.utils.CardPathUtils;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,7 +25,7 @@ public class InitialCardPageController implements Initializable {
     private String frontInitialCardPath;
     private String backInitialCardPath;
 
-    private boolean flip;
+    private boolean isFaceUp;
 
     // Default constructor
     public InitialCardPageController() {
@@ -43,13 +43,13 @@ public class InitialCardPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         waitButton.setVisible(false);
-        flip=false;
+        isFaceUp =false;
         setInitialCardPath(getGui().getInitialCard());
     }
 
     public void setInitialCardPath(String id){
-        String frontPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/front"+id+".jpg";
-        String backPath = "/polimi/ingsoft/demo/graphics/img/card/backCard/initialCard/back"+id+".jpg";
+        String frontPath = CardPathUtils.frontInitialCard(id);
+        String backPath = CardPathUtils.backInitialCard(id);
         setInitialCard(frontPath, backPath); // TODO outer function!!! SSSIMON
     }
 
@@ -66,10 +66,10 @@ public class InitialCardPageController implements Initializable {
          */
         Image image;
 
-        if(flip){
-            image = new Image(backInitialCardPath);
-        }else{
+        if(isFaceUp){
             image = new Image(frontInitialCardPath);
+        }else{
+            image = new Image(backInitialCardPath);
         }
 
         initialCard.setFitWidth(140);
@@ -82,7 +82,7 @@ public class InitialCardPageController implements Initializable {
     }
 
     public void flip(){
-        flip = !flip;
+        isFaceUp = !isFaceUp;
         placeFace();
     }
 
@@ -114,7 +114,7 @@ public class InitialCardPageController implements Initializable {
     }
 
     public void select(ActionEvent actionEvent) {
-        getGui().setIsFaceInitialCardUp(flip);
+        getGui().setIsFaceInitialCardUp(isFaceUp);
         showWait();
     }
 

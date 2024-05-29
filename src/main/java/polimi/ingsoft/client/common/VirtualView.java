@@ -16,24 +16,141 @@ import java.util.Map;
 
 public interface VirtualView extends Remote {
     void handleRmiClientMessages(RmiMethodCall rmiMethodCall) throws IOException;
+
+
+    /**
+     * Updates the nickname in the UI.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     void showNicknameUpdate() throws IOException;
+
+
+    /**
+     * Updates the matches list in the UI.
+     *
+     * @param matches The list of match IDs.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateMatchesList(List<Integer> matches) throws IOException;
+
+
+    /**
+     * Ensures that match join has been successful.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateMatchJoin() throws IOException;
+
+
+    /**
+     * Updates the lobby players list in the UI.
+     *
+     * @param players The list of player nicknames.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateLobbyPlayers(List<String> players) throws IOException;
+
+
+    /**
+     * Updates the match creation information in the UI.
+     *
+     * @param matchId The ID of the created match.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateMatchCreate(Integer matchId) throws IOException;
+
+
+    /**
+     * Updates the broadcast chat in the UI.
+     *
+     * @param message The broadcast message.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateBroadcastChat(Message message) throws IOException;
+
+
+    /**
+     * Updates the private chat in the UI.
+     *
+     * @param recipient The recipient of the message.
+     * @param message   The private message.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdatePrivateChat(String recipient, Message message) throws IOException;
+
+
+    /**
+     * Updates the initial settings of a player in the UI.
+     *
+     * @param playerInitialSetting The initial settings of the player.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException;
+
+
+    /**
+     * Updates the game state in the UI.
+     *
+     * @param gameState The current game state.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateGameState(GameState gameState) throws IOException;
+
+
+    /**
+     * Updates the match start information in the UI.
+     *
+     * @param resource The resource placeInPublicboard .
+     * @param gold     The gold placeInPublicboard.
+     * @param quest    The quest placeInPublicboard.
+     * @param boards   The player boards.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateGameStart(
             PlaceInPublicBoard<ResourceCard> resource,
             PlaceInPublicBoard<GoldCard> gold,
             PlaceInPublicBoard<QuestCard> quest,
             Map<String, Board> boards
     ) throws IOException;
+
+
+    /**
+     * Updates the player's hand in the UI.
+     *
+     * @param playerHand The player's hand.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdatePlayerHand(PlayerHand playerHand) throws IOException;
+
+
+    /**
+     * Updates the public board in the UI.
+     *
+     * @param deckType          The type of deck.
+     * @param placeInPublicBoard The place in the public board.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException;
+
+
+    /**
+     * Updates the board for a specific player in the UI.
+     *
+     * @param nickname   The nickname of the player.
+     * @param coordinates The coordinates where the card is placed.
+     * @param playedCard The played card.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException;
+
+
+    /**
+     * Reports an error message in the UI.
+     *
+     * @param errorMessage The error message to be reported.
+     * @throws IOException If an I/O error occurs.
+     */
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;
     void setMatchControllerServer(VirtualMatchServer server) throws IOException;
 }

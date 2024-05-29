@@ -294,9 +294,13 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 Player player = matchController.getPlayerByNickname(playerNickname)
                         .orElse(null);
 
+                System.out.println("STO ELABORANDO RICHIESTA PLACE");
+
                 try{
                     // Add the card to the player board
                     matchController.placeCard(player, card, coordinates, isFacingUp);
+
+                    System.out.println("CARTA PIAZZATA BENE");
 
                     GameState gameState = matchController.getGameState();
                     PlayerHand playerHand = player.getHand();
@@ -337,6 +341,18 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                     synchronized (this.clients){
                         RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
                                 new Object[]{ERROR_MESSAGES.WRONG_PLAYER_TURN});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
+                } catch (CoordinateNotValidException e) {
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.COORDINATE_NOT_VALID});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
+                } catch (NotEnoughResourcesException e){
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.NOT_ENOUGH_RESOURCES});
                         clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
                 }

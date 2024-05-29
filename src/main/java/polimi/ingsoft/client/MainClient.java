@@ -26,8 +26,19 @@ public class MainClient {
         ProtocolChoiceCLI protocolChoiceCLI = new ProtocolChoiceCLI(scanner, printStream);
         Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
 
+        //If no parameters GUI
+        UIType uiType = UIType.GUI;
+
+        if(args.length == 1){
+            if(args[0].toLowerCase().equals("cli") || args[0].toLowerCase().equals("tui")){
+                uiType = UIType.CLI;
+            }else if(args[0].toLowerCase().equals("gui")){
+                uiType = UIType.GUI;
+            }
+        }
+
         try {
-            Client client = createClient(protocol);
+            Client client = createClient(protocol, uiType);
             client.run();
             client.getUi().showWelcomeScreen();
 
@@ -37,23 +48,23 @@ public class MainClient {
         }//TODO nullpointer exception se scegli RMI da una rete in cui non c'è nessun server
     }
     
-    private static Client createClient(Protocols protocol) throws IOException {
+    private static Client createClient(Protocols protocol, UIType uiType) throws IOException {
         if (protocol == Protocols.RMI)
-            return createRmiClient();
+            return createRmiClient(uiType);
         else
-            return createSocketClient();
+            return createSocketClient(uiType);
     }
 
-    private static Client createRmiClient() {
+    private static Client createRmiClient(UIType uiType) {
         try {
-            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, UIType.CLI, printStream, scanner);
+            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, uiType, printStream, scanner);
         } catch (RemoteException | NotBoundException exception) {
             System.out.println(exception);
             return null;
         }
     }
 
-    private static Client createSocketClient() throws IOException {
-        return new SocketClient(socketServerHostName, socketServerPort, UIType.CLI, printStream, scanner);
+    private static Client createSocketClient(UIType uiType) throws IOException {
+        return new SocketClient(socketServerHostName, socketServerPort, uiType, printStream, scanner);
     }
 }

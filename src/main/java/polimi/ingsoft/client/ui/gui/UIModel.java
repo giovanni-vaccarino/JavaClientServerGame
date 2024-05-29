@@ -4,6 +4,7 @@ import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.Coordinates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,47 +77,68 @@ public class UIModel {
         return resourceCards;
     }
 
-    public void setResourceCards(PlaceInPublicBoard<ResourceCard> resourceCards) {
-        this.resourceCards = resourceCards;
-    }
-
     public PlaceInPublicBoard<GoldCard> getGoldCards() {
         return goldCards;
-    }
-
-    public void setGoldCards(PlaceInPublicBoard<GoldCard> goldCards) {
-        this.goldCards = goldCards;
     }
 
     public PlaceInPublicBoard<QuestCard> getQuestCards() {
         return questCards;
     }
 
-    public void setQuestCards(PlaceInPublicBoard<QuestCard> questCards) {
-        this.questCards = questCards;
-    }
-
     public List<MixedCard> getPlayerHand() {
         return playerHand;
-    }
-
-    public void setPlayerHand(List<MixedCard> playerHand) {
-        this.playerHand = playerHand;
     }
 
     public QuestCard getPersonalQuestCard() {
         return personalQuestCard;
     }
 
-    public void setPersonalQuestCard(QuestCard personalQuestCard) {
-        this.personalQuestCard = personalQuestCard;
-    }
-
     public Map<String, Board> getPlayerBoards() {
         return playerBoards;
     }
 
+    public void setPlaceInPublicBoardResource(PlaceInPublicBoard<ResourceCard> placeInPublicBoard){
+        this.resourceCards = placeInPublicBoard;
+    }
+
+    public void setResourceCards(PlaceInPublicBoard<ResourceCard> resourceCards) {
+        this.resourceCards = resourceCards;
+    }
+
+
+    public void setPlaceInPublicBoardGold(PlaceInPublicBoard<GoldCard> placeInPublicBoard){
+        this.goldCards = placeInPublicBoard;
+    }
+
+    public void setGoldCards(PlaceInPublicBoard<GoldCard> goldCards) {
+        this.goldCards = goldCards;
+    }
+
+    public void setQuestCards(PlaceInPublicBoard<QuestCard> questCards) {
+        this.questCards = questCards;
+    }
+
+    public void setPlayerHand(List<MixedCard> playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    public void setPersonalQuestCard(QuestCard personalQuestCard) {
+        this.personalQuestCard = personalQuestCard;
+    }
+
     public void setPlayerBoards(Map<String, Board> playerBoards) {
         this.playerBoards = playerBoards;
+    }
+
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
+        Board playerBoard = playerBoards.get(nickname);
+
+        playerBoard.getCards().put(coordinates, playedCard);
+
+        if(playedCard == null){
+            System.out.println("Played Card NULL");
+        }else {
+            System.out.println("Played Card NON NULL "+coordinates.getX()+":"+coordinates.getY());
+        }
     }
 }

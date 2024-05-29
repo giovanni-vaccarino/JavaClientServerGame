@@ -43,12 +43,14 @@ public class PlaceCardUtils {
     public static void initializeFaceCards(){
         for(int i=0; i<2; i++){
             for(int j=0; j<2; j++){
-                isCartFrontPublicBoard.put(new Coordinates(i,j),true);
+                isCartFrontPublicBoard.put(new Coordinates(i,j),false);
             }
         }
 
-        for(int i=0; i<4; i++){
-            isCartFrontPlayerHand.put(new Coordinates(i,0),true);
+        isCartFrontPlayerHand.put(new Coordinates(0,0),true);
+
+        for(int i=1; i<4; i++){
+            isCartFrontPlayerHand.put(new Coordinates(i,0),false);
         }
     }
 

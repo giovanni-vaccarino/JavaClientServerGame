@@ -11,6 +11,7 @@ import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.Coordinates;
 
 import java.io.IOException;
 import java.util.List;
@@ -184,6 +185,12 @@ public class GUI extends UI{
         getUiModel().setGoldCards(goldCards);
         getUiModel().setQuestCards(questCards);
         GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
+    }
+
+    @Override
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
+        getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
+        GUIsingleton.getInstance().getGamePageController().refreshBoard();
     }
 
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){
