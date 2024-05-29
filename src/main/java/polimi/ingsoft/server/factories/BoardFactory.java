@@ -7,7 +7,7 @@ import polimi.ingsoft.server.model.InitialCard;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
 
 public class BoardFactory {
-    public static Board createBoard(InitialCard initialCard, boolean isInitialFaceUp, PlayerColor color) {
-        return new Board(initialCard, isInitialFaceUp, color);
+    public static Board createBoard(InitialCard initialCard, boolean isInitialFaceUp, PlayerColor color, Boolean isFirstPlayer) {
+        return new Board(initialCard, isInitialFaceUp, isFirstPlayer, color);
     }
 }
