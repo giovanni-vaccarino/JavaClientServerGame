@@ -15,6 +15,8 @@ public enum ERROR_MESSAGES {
     UNABLE_TO_CREATE_MATCH("Unable to create match"),
     WRONG_GAME_PHASE("Wrong phase of the game"),
     WRONG_STEP("Wrong step"),
+    COORDINATE_NOT_VALID("The coordinate you selected is not valid"),
+    NOT_ENOUGH_RESOURCES("You do not have enough resources to place that card"),
     COLOR_ALREADY_PICKED("The color you have selected has been already picked"),
     WRONG_PLAYER_TURN("It is not your turn"),
     INITIAL_SETTING_ALREADY_SET("Initial setting already set"),

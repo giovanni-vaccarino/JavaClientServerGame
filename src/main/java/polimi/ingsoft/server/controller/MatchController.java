@@ -256,10 +256,10 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, CoordinateNotValidException, NotEnoughResourcesException {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
-        //TODO check the availability process -> board.add(...) only after card.getPlayability > 0 ? Simon resolve this
+        //TODO put the throws in board.add
         boolean isAdded = board.add(coordinates, card, facingUp);
 
         if(isAdded && card.getPlayability(board) > 0){
@@ -267,8 +267,11 @@ public class MatchController implements Serializable {
             player.removeFromHand(card);
         }
         else{
-            //TODO
-            System.out.println("RAMO ELSE PLACE CARD SERVER: "+isAdded);
+            if(!isAdded){
+                throw new CoordinateNotValidException();
+            }else{
+                throw new NotEnoughResourcesException();
+            }
         }
 
         gameState.updateState();
