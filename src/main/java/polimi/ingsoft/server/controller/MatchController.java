@@ -284,7 +284,6 @@ public class MatchController implements Serializable {
      * @param player   the player drawing the card
      * @param deckType the type of deck to draw from
      * @param slot     the slot from which to draw the card
-     * @return the drawn card
      * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
@@ -307,7 +306,6 @@ public class MatchController implements Serializable {
      *
      * @param player the player drawing the card
      * @param slot   the slot from which to draw the card
-     * @return the drawn resource card
      * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
@@ -326,7 +324,6 @@ public class MatchController implements Serializable {
      *
      * @param player the player drawing the card
      * @param slot   the slot from which to draw the card
-     * @return the drawn gold card
      * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
