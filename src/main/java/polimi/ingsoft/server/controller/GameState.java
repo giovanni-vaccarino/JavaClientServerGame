@@ -287,7 +287,6 @@ public class GameState implements Serializable, Cloneable {
         Random random = new Random();
 
         this.firstPlayerIndex = random.nextInt(requestedNumPlayers);
-        System.out.println("INDICE: "+firstPlayerIndex);
         currentPlayerIndex = firstPlayerIndex;
         currentPlayerNickname = matchController.getPlayerInitialSettings().get(firstPlayerIndex).getNickname();
     }

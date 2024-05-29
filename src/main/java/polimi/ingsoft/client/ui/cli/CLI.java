@@ -139,6 +139,7 @@ public class CLI extends UI {
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) {
+        out.println("Incoming error");
         currentManager.parseError(errorMessage);
     }
 

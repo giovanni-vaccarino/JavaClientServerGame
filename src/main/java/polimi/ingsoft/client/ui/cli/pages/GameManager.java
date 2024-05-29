@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.ui.cli.pages;
 
 import polimi.ingsoft.client.ui.cli.CLI;
+import polimi.ingsoft.client.ui.cli.ClientBoard;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.cli.Printer;
 import polimi.ingsoft.server.controller.GameState;
@@ -70,15 +71,6 @@ public class GameManager implements CLIPhaseManager {
     @Override
     public void start() {
         out.println(MESSAGES.GAME_START.getValue());
-
-//        out.println("\n\nGAME MODEL REPORT: \n");
-//        out.println("Nicknames: " + model.nicknames);
-//        out.println("Player boards: " + model.playerBoards);
-//        out.println("Player hand: " + model.hand.getCards());
-//        out.println("Game phase: " + model.gamePhase);
-//        out.println("Turn step: " + model.turnStep);
-//        out.println("Current player: " + model.currentPlayerNickname);
-//        out.println("State: " + state);
 
         updateGameState(temporaryModel.initialGameState);
     }
@@ -207,6 +199,7 @@ public class GameManager implements CLIPhaseManager {
         // Print public board
         PlaceInPublicBoard<ResourceCard> resourceCards = model.resourceCards;
         PlaceInPublicBoard<GoldCard> goldCards = model.goldCards;
+
 
         // Print player hand
         PlayerHand hand = model.hand;

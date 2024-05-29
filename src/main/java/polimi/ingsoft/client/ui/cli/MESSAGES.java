@@ -25,7 +25,7 @@ public enum MESSAGES {
     CARD_SUCCESSFULLY_PLACED("Card was placed successfully"),
     CARD_SUCCESSFULLY_DRAWN("Card was drawn successfully"),
     OTHER_PLAYER_PERFORMING_PLACE(" has to place her/his card"),
-    OTHER_PLAYER_PERFORMING_DRAW(" has to place her/his card"),
+    OTHER_PLAYER_PERFORMING_DRAW(" has to draw her/his card"),
     HELPMAIN("HERE'S WHAT YOU CAN DO !\n" +
             "->BOARD:ENTER THE BOARD MENU\n" +
             "->PUBLICBOARD: ENTER THE PUBLICBOARD MENU\n" +
@@ -40,12 +40,12 @@ public enum MESSAGES {
             ->HELP: PRINT THIS LIST AGAIN!
             """),
     HELP_INITIAL_CARD_CHOICE("SELECT WHICH SIDE OF THE CARD TO KEEP FACE UP\n" +
-            "->F: PICK THE FRONT (on the left)\n" +
-            "->B: PICK THE BOTTOM (on the right)\n"),
-    HELPINITIALQUESTCHOICE("SELECT WHICH QUEST UP TO KEEP !\n" +
-            "THINK CAREFULLY, AS YOU WON'T BE ABLE TO CHANGE IT LATER !\n" +
-            "->LEFT: PICK THE LEFT CARD !\n" +
-            "->RIGHT: PICK THE RIGHT CARD !\n"),
+            "-> F: PICK THE FRONT (on the left)\n" +
+            "-> B: PICK THE BOTTOM (on the right)\n"),
+    HELP_QUEST_CARD_CHOICE("SELECT WHICH QUEST UP TO KEEP \n" +
+            "THINK CAREFULLY, AS YOU WON'T BE ABLE TO CHANGE IT LATER \n" +
+            "-> 1: Pick the one on the left \n" +
+            "-> 2: Pick the one on the right \n"),
     PLAYCARDHELP("""
             A CARD THAT'S SHOWN LEFT TO THE CENTRAL SPACE ALWAYS HAS AN X COORDINATE DECREASED BY 1!
             A CARD THAT'S SHOWN RIGHT TO THE CENTRAL SPACE ALWAYS HAS AN X COORDINATE INCREASED BY 1!
