@@ -268,6 +268,7 @@ public class MatchController implements Serializable {
         }
         else{
             //TODO
+            System.out.println("RAMO ELSE PLACE CARD SERVER: "+isAdded);
         }
 
         gameState.updateState();

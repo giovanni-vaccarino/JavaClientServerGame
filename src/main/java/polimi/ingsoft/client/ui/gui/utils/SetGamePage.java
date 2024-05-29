@@ -118,10 +118,17 @@ public class SetGamePage {
         String path, id;
 
         for(String player : getGui().getUiModel().getPlayerBoards().keySet()){
-            allCards = getGui().getUiModel().getPlayerBoards().get(player).getCards();
+            System.out.println(player);
+            allCards = getGui().getUiModel().getPlayerBoards().get(player).getCards(); // hashmap <coordinate, playedcard>
             for (polimi.ingsoft.server.model.Coordinates coordinates: allCards.keySet()){
                 x = coordinates.getX();
                 y = coordinates.getY();
+                System.out.println(x+":"+y);
+                if(allCards.get(coordinates) == null){
+                    System.out.println("allCards.get(coordinates) NULL");
+                }else {
+                    System.out.println("allCards.get(coordinates) NON null - "+allCards.get(coordinates));
+                }
                 id = allCards.get(coordinates).getCard().getID();
 
                 if(x==0 && y==0){

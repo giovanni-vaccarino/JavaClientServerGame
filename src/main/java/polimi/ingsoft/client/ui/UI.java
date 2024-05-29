@@ -36,6 +36,8 @@ public abstract class UI {
     public abstract void showUpdateGameState(GameState gameState);
     public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
 
+    public abstract void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard);
+
     public UIModel getUiModel() {
         return uiModel;
     }
@@ -98,10 +100,6 @@ public abstract class UI {
         } else {
             getUiModel().setPlaceInPublicBoardGold((PlaceInPublicBoard<GoldCard>)placeInPublicBoard);
         }
-    }
-
-    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
-        getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
     }
 
     public void updatePlayerHand(PlayerHand playerHand){

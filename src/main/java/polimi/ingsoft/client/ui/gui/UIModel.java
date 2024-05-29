@@ -134,5 +134,11 @@ public class UIModel {
         Board playerBoard = playerBoards.get(nickname);
 
         playerBoard.getCards().put(coordinates, playedCard);
+
+        if(playedCard == null){
+            System.out.println("Played Card NULL");
+        }else {
+            System.out.println("Played Card NON NULL "+coordinates.getX()+":"+coordinates.getY());
+        }
     }
 }

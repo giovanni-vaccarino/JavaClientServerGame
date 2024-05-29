@@ -187,6 +187,11 @@ public class CLI extends UI {
     }
 
     @Override
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) {
+
+    }
+
+    @Override
     public void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards) {
         if (state == CLIState.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD) {
             super.createPublicBoard(resourceCards, goldCards, questCards);
