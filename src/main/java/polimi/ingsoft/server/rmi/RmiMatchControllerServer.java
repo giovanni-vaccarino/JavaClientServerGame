@@ -339,6 +339,18 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                                 new Object[]{ERROR_MESSAGES.WRONG_PLAYER_TURN});
                         clientToUpdate.handleRmiClientMessages(rmiMethodCall);
                     }
+                } catch (CoordinateNotValidException e) {
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.COORDINATE_NOT_VALID});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
+                } catch (NotEnoughResourcesException e){
+                    synchronized (this.clients){
+                        RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.ERROR,
+                                new Object[]{ERROR_MESSAGES.NOT_ENOUGH_RESOURCES});
+                        clientToUpdate.handleRmiClientMessages(rmiMethodCall);
+                    }
                 }
             }
 
