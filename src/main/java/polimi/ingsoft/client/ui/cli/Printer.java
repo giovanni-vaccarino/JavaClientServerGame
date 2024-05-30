@@ -51,7 +51,7 @@ public class Printer {
         hand=null;
     }
     public void printQuestCardChoice(QuestCard quest1, QuestCard quest2){
-        out.print(MESSAGES.HELPINITIALQUESTCHOICE.getValue());
+        out.print(MESSAGES.HELP_QUEST_CARD_CHOICE.getValue());
         ClientPublicBoard temp=new ClientPublicBoard(quest1,quest2,null,null,null,null,null,null);
         temp.printInitialQuests();
 

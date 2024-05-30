@@ -283,9 +283,9 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             } catch (WrongPlayerForCurrentTurnException exception){
                                 this.reportError(ERROR_MESSAGES.WRONG_PLAYER_TURN);
                             } catch (CoordinateNotValidException e) {
-                                throw new RuntimeException(e);
+                                this.reportError(ERROR_MESSAGES.COORDINATE_NOT_VALID);
                             } catch (NotEnoughResourcesException e) {
-                                throw new RuntimeException(e);
+                                this.reportError(ERROR_MESSAGES.NOT_ENOUGH_RESOURCES);
                             }
                         }
                         default -> {
