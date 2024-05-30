@@ -4,6 +4,7 @@ import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.Resource;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,11 @@ public class Board implements Serializable {
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
         if(this.check(position)) {
             this.cards.put(position, new PlayedCard(card, facingUp,cards.size()+1));
+            PlayedCard playedCard=this.cards.get(position);
+            if(playedCard.getUpLeftCorner()==null)playedCard.setUpLeft();
+            if(playedCard.getUpRightCorner()==null)playedCard.setUpRight();
+            if(playedCard.getBottomLeftCorner()==null)playedCard.setDownLeft();
+            if(playedCard.getBottomRightCorner()==null)playedCard.setDownRight();
             if (cards.containsKey(position.downRight())){
                 cards.get(position.downRight()).setUpLeft();
                 if(!cards.get(position.downRight()).getFace().getUpLeft().getItems().isEmpty()&&
@@ -68,15 +74,16 @@ public class Board implements Serializable {
             if(cards.get(position).getBottomRightCorner()!=null&&!cards.get(position).getBottomRightCorner().getItems().isEmpty())resources.put(cards.get(position).getBottomRightCorner().getItems().getFirst(),resources.get(cards.get(position).getBottomRightCorner().getItems().getFirst())+1);
             if(cards.get(position).getUpLeftCorner()!=null&&!cards.get(position).getUpLeftCorner().getItems().isEmpty())resources.put(cards.get(position).getUpLeftCorner().getItems().getFirst(),resources.get(cards.get(position).getUpLeftCorner().getItems().getFirst())+1);
             if(cards.get(position).getUpRightCorner()!=null&&!cards.get(position).getUpRightCorner().getItems().isEmpty())resources.put(cards.get(position).getUpRightCorner().getItems().getFirst(),resources.get(cards.get(position).getUpRightCorner().getItems().getFirst())+1);
-            if(cards.get(position).isFacingUp())for(int i=0;i<cards.get(position).getCenter().getItems().size();i++)resources.put(cards.get(position).getCenter().getItems().get(i),resources.get(cards.get(position).getCenter().getItems().get(i))+1); //iterare per aggiunegre tutti gli elementi del center
+            if(cards.get(position).isFacingUp())for(int i=0;i<cards.get(position).getCenter().getItems().size();i++)resources.put(cards.get(position).getCenter().getItems().get(i),resources.get(cards.get(position).getCenter().getItems().get(i))+1);
             return true;
         }
         return false;
     }
     public boolean check(Coordinates position){
         boolean verify=false;
-        if(position.equals(new Coordinates(0,0)))return !verify;
+        if(position.equals(new Coordinates(0,0))&&!cards.containsKey(position))return !verify;
         if(cards.containsKey(position))return verify;
+
         if(!(cards.containsKey(position.downLeft()) || cards.containsKey(position.upLeft())
                 || cards.containsKey(position.upRight()) || cards.containsKey(position.downRight())))return verify;
 
@@ -94,24 +101,32 @@ public class Board implements Serializable {
 
     public PlayerColor getColor(){return this.color;}
 
+    public ArrayList<Coordinates> getAvaiablePlaces(){
+        ArrayList<Coordinates>freePlaces=new ArrayList<>();
+        HashMap<Coordinates,Boolean> visited=new HashMap<>();
+        return this.getAvaiablePlaces(visited,freePlaces,new Coordinates(0,0));
+    }
+    private ArrayList<Coordinates>getAvaiablePlaces(HashMap<Coordinates,Boolean> visited,ArrayList<Coordinates>freePlaces, Coordinates actualCoordinates){
+        visited.put(actualCoordinates,true);
+        Coordinates next=actualCoordinates.sum(new Coordinates(-1,1));
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(check(next))freePlaces.add(next);
+        next=actualCoordinates.sum(new Coordinates(1,1));
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(check(next))freePlaces.add(next);
+        next=actualCoordinates.sum(new Coordinates(-1,-1));
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(check(next))freePlaces.add(next);
+        next=actualCoordinates.sum(new Coordinates(1,-1));
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(check(next))freePlaces.add(next);
+        return freePlaces;
+    }
+
     public boolean isNotBlocked(){
-        Coordinates coordinates=new Coordinates(0,0);
-        HashMap<Coordinates,Boolean> visited=new HashMap<Coordinates, Boolean>();
-        return this.isNotBlocked(coordinates,visited);
+        return !getAvaiablePlaces().isEmpty();
     }
-    private boolean isNotBlocked(Coordinates coordinates,HashMap<Coordinates,Boolean> visited){
-        visited.put(coordinates,true);
-        boolean a=false;
-        Coordinates next=coordinates.sum(new Coordinates(1,1));
-        if(!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
-        next=coordinates.sum(new Coordinates(-1,1));
-        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
-        next=coordinates.sum(new Coordinates(1,-1));
-        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
-        next=coordinates.sum(new Coordinates(-1,-1));
-        if(!a&&!visited.containsKey(next)&&cards.containsKey(next))a=isNotBlocked(next,visited);
-        return a||cards.get(coordinates).isFreeUpRight()||cards.get(coordinates).isFreeUpLeft()||cards.get(coordinates).isFreeDownRight()||cards.get(coordinates).isFreeDownLeft();
-    }
+
     public int getNumCards(){return this.cards.size();}
     public int getWolfs(){
         return resources.get(Resource.WOLF);
