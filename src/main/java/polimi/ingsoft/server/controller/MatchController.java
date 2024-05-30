@@ -259,19 +259,18 @@ public class MatchController implements Serializable {
     public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, CoordinateNotValidException, NotEnoughResourcesException {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
-        //TODO put the throws in board.add
-        boolean isAdded = board.add(coordinates, card, facingUp);
 
-        if(isAdded && card.getPlayability(board) > 0){
-            board.updatePoints(card.getPoints(board,coordinates)*card.getScore(facingUp));
-            player.removeFromHand(card);
+        if(card.getPlayability(board) > 0){
+            boolean isAdded = board.add(coordinates, card, facingUp);
+            if(isAdded){
+                board.updatePoints(card.getPoints(board,coordinates)*card.getScore(facingUp));
+                player.removeFromHand(card);
+            }else{
+                throw new CoordinateNotValidException();
+            }
         }
         else{
-            if(!isAdded){
-                throw new CoordinateNotValidException();
-            }else{
-                throw new NotEnoughResourcesException();
-            }
+            throw new NotEnoughResourcesException();
         }
 
         gameState.updateState();
