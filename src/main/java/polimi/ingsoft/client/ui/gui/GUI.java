@@ -135,6 +135,7 @@ public class GUI extends UI{
     @Override
     public void setPlayerBoards(Map<String, Board> playerBoard){
         getUiModel().setPlayerBoards(playerBoard);
+        GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
     }
 
 
@@ -192,7 +193,6 @@ public class GUI extends UI{
         getUiModel().setResourceCards(resourceCards);
         getUiModel().setGoldCards(goldCards);
         getUiModel().setQuestCards(questCards);
-        GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
     }
 
     @Override
@@ -207,6 +207,7 @@ public class GUI extends UI{
 
     @Override
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
+        System.out.println("REFRESH BOARD IN GUI");
         getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
         GUIsingleton.getInstance().getGamePageController().refreshBoard();
     }

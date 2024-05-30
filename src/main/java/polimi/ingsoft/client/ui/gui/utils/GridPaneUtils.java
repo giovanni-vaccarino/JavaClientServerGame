@@ -31,12 +31,11 @@ public class GridPaneUtils {
         Node node = getNodeFromGridPane(gridPane, row, col);
         if (node != null && node instanceof ImageView) {
             //gridPane.getChildren().remove(node);
-            gridPane.getChildren().remove(node);
-            /*if (Platform.isFxApplicationThread()) {
+            if (Platform.isFxApplicationThread()) {
                 gridPane.getChildren().remove(node);
             } else {
                 Platform.runLater(() -> gridPane.getChildren().remove(node));
-            }*/
+            }
         }
     }
 

@@ -25,6 +25,7 @@ public class PlaceCardUtils {
     }
 
     public static void placeCardString(int x,int y, GridPane gridPane, String path){
+        System.out.println("PLACE CARD PATH - "+path);
         ImageView cardImg = new ImageView(new Image(path));
         placeCard(x,y,gridPane,cardImg);
     }

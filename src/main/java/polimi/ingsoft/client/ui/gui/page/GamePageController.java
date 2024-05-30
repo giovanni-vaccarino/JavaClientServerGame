@@ -433,6 +433,7 @@ public class GamePageController implements Initializable{
     }
 
     public void refreshBoard(){
+        System.out.println("REFRESHING BOARD");
         SetGamePage.setBoardData();
         loadBoardCards();
     }
@@ -739,13 +740,13 @@ public class GamePageController implements Initializable{
 
         // Add the ImageView to the specific cell in the GridPane
 
-        gridPane.add(imageView, x, y);
+        //gridPane.add(imageView, x, y);
 
-        /*if (Platform.isFxApplicationThread()) {
+        if (Platform.isFxApplicationThread()) {
             gridPane.add(imageView, x, y);
         } else {
             Platform.runLater(() -> gridPane.add(imageView, x, y));
-        }*/
+        }
     }
 
     /*public void loadCard(ImageView imageView, String imagePath) {
