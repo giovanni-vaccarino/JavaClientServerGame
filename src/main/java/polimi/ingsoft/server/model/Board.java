@@ -15,6 +15,14 @@ public class Board implements Serializable {
     private int score;
     private final Map<Coordinates, PlayedCard> cards;
     private final Map<Item,Integer> resources;
+
+    /**
+     * Board builder
+     * @param initialCard defines the player's first card, always to be put at coordinates 0,0
+     * @param isFaceUp defines initialcard's orientation
+     * @param isFirstPlayer defines wether a player is the first player or not
+     * @param color defines player's color
+     */
     public Board(GameCard initialCard, boolean isFaceUp, Boolean isFirstPlayer, PlayerColor color){
         this.isFirstPlayer = isFirstPlayer;
         this.color = color;
@@ -30,14 +38,31 @@ public class Board implements Serializable {
         this.add(new Coordinates(0,0),initialCard,isFaceUp);
         this.score=0;
     }
+
+    /**
+     * Returns card at given coordinates
+     * @param coordinates defines the position
+     * @return the card at the given coordinates
+     */
     public PlayedCard getCard(Coordinates coordinates){
         return cards.get(coordinates);
     }
 
+    /**
+     * Returns all the board's cards
+     * @return the board's cards' hashmap
+     */
     public Map<Coordinates, PlayedCard> getCards(){
         return this.cards;
     }
 
+    /**
+     * Adds a card in board after proper controls
+     * @param position defines coordinates where the card would be put
+     * @param card defines the card that should be put in board
+     * @param facingUp defines card's orientation
+     * @return true if card has been placed in board,otherwise false
+     */
     public boolean add(Coordinates position, GameCard card, boolean facingUp) {
         if(this.check(position)) {
             this.cards.put(position, new PlayedCard(card, facingUp,cards.size()+1));
@@ -79,6 +104,12 @@ public class Board implements Serializable {
         }
         return false;
     }
+
+    /**
+     * Controls whether a certain position is avaible for placing cards
+     * @param position the position that should be controlled
+     * @return true if a card can be put in defined position, otherwise false
+     */
     public boolean check(Coordinates position){
         boolean verify=false;
         if(position.equals(new Coordinates(0,0))&&!cards.containsKey(position))return !verify;
@@ -93,63 +124,128 @@ public class Board implements Serializable {
         if(cards.containsKey(position.downLeft()) && !cards.get(position.downLeft()).isFreeUpRight())return verify;
         return !verify;
     }
+
+    /**
+     * Updates player's score
+     * @param points defines the amount of points that should be added to the board's player's score
+     */
     public void updatePoints(int points){
         score=score+points;
     }
 
+    /**
+     * Returns the amount of points a player has
+     * @return the amount of points a player has
+     */
     public Integer getScore(){return this.score;}
 
+    /**
+     * Returns player's color
+     * @return player's color
+     */
     public PlayerColor getColor(){return this.color;}
 
-    public ArrayList<Coordinates> getAvaiablePlaces(){
+    /**
+     * Return a list containing all positions available for card placing in board
+     * @return a list containing all positions available for card placing in board
+     */
+    public ArrayList<Coordinates> getAvailablePlaces(){
         ArrayList<Coordinates>freePlaces=new ArrayList<>();
         HashMap<Coordinates,Boolean> visited=new HashMap<>();
-        return this.getAvaiablePlaces(visited,freePlaces,new Coordinates(0,0));
+        return this.getAvailablePlaces(visited,freePlaces,new Coordinates(0,0));
     }
-    private ArrayList<Coordinates>getAvaiablePlaces(HashMap<Coordinates,Boolean> visited,ArrayList<Coordinates>freePlaces, Coordinates actualCoordinates){
+
+    /**
+     * Private call of public getAvailablePlaces, return a list containing all positions available for card placing in board
+     * @param visited defines all the already visited positions
+     * @param freePlaces defines the already found free position
+     * @param actualCoordinates defines the position that is now being checked
+     * @return a list containing all positions available for card placing in board
+     */
+    private ArrayList<Coordinates>getAvailablePlaces(HashMap<Coordinates,Boolean> visited,ArrayList<Coordinates>freePlaces, Coordinates actualCoordinates){
         visited.put(actualCoordinates,true);
         Coordinates next=actualCoordinates.sum(new Coordinates(-1,1));
-        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvailablePlaces(visited,freePlaces,next);
         if(check(next))freePlaces.add(next);
         next=actualCoordinates.sum(new Coordinates(1,1));
-        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvailablePlaces(visited,freePlaces,next);
         if(check(next))freePlaces.add(next);
         next=actualCoordinates.sum(new Coordinates(-1,-1));
-        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvailablePlaces(visited,freePlaces,next);
         if(check(next))freePlaces.add(next);
         next=actualCoordinates.sum(new Coordinates(1,-1));
-        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvaiablePlaces(visited,freePlaces,next);
+        if(cards.containsKey(next)&&!visited.containsKey(next))freePlaces=getAvailablePlaces(visited,freePlaces,next);
         if(check(next))freePlaces.add(next);
         return freePlaces;
     }
 
+    /**
+     * Returns true if a board still has available positions, otherwise false
+     * @return true if a board still has available positions, otherwise false
+     */
     public boolean isNotBlocked(){
-        return !getAvaiablePlaces().isEmpty();
+        return !getAvailablePlaces().isEmpty();
     }
 
+    /**
+     * Returns the amount of cards correctly placed in board
+     * @return the amount of cards correctly placed in board
+     */
     public int getNumCards(){return this.cards.size();}
+
+    /**
+     * Returns the amount of WOLF resources a player has
+     * @return the amount of WOLF resources a player has
+     */
     public int getWolfs(){
         return resources.get(Resource.WOLF);
     }
+    /**
+     * Returns the amount of LEAF resources a player has
+     * @return the amount of LEAF resources a player has
+     */
     public int getLeaves(){
         return resources.get(Resource.LEAF);
     }
+    /**
+     * Returns the amount of MUSHROOM resources a player has
+     * @return the amount of MUSHROOM resources a player has
+     */
     public int getMushrooms(){
         return resources.get(Resource.MUSHROOM);
     }
+    /**
+     * Returns the amount of BUTTERFLY resources a player has
+     * @return the amount of BUTTERFLY resources a player has
+     */
     public int getButterflies(){
         return resources.get(Resource.BUTTERFLY);
     }
+    /**
+     * Returns the amount of FEATHER objects a player has
+     * @return the amount of FEATHER objects a player has
+     */
     public int getFeathers(){
         return resources.get(Object.FEATHER);
     }
+    /**
+     * Returns the amount of SCROLL objects a player has
+     * @return the amount of SCROLL objects a player has
+     */
     public int getScrolls(){
         return resources.get(Object.SCROLL);
     }
+    /**
+     * Returns the amount of POTION objects a player has
+     * @return the amount of POTION objects a player has
+     */
     public int getPotions(){
         return resources.get(Object.POTION);
     }
-
+    /**
+     * Returns true if board's player is the first player, otherwise false
+     * @return true if board's player is the first player, otherwise false
+     */
     public Boolean getFirstPlayer() {
         return isFirstPlayer;
     }

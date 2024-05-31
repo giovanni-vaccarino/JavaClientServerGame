@@ -3,6 +3,7 @@ package polimi.ingsoft.server.model;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.enumerations.Object;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.*;
@@ -249,7 +250,7 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
     }
     @Test
     void add() {
-        a=new Board(initial,true);
+        a=new Board(initial,true,true, PlayerColor.RED);
         System.out.println("RES1"+a.add(new Coordinates(-1,1),res1,false));
         System.out.println("RES2"+a.add(new Coordinates(-1,-1),res2,false));
         System.out.println("RES2"+a.add(new Coordinates(1,1),res2,false));

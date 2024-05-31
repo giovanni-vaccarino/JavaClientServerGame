@@ -2,6 +2,7 @@ package polimi.ingsoft.server.model;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.Resource;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ class SchemePatternTest {
         Face front=new Face(new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners),new CenterSpace(center)),
             back=new Face(new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners),new CornerSpace(corners));
         InitialCard initial=new InitialCard("lol",front,back,0);
-        board=new Board(initial,true);
+        board=new Board(initial,true,true, PlayerColor.RED);
 
         center = new ArrayList<Resource>();
         center.add(Resource.MUSHROOM);
