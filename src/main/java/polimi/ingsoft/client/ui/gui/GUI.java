@@ -235,6 +235,16 @@ public class GUI extends UI{
         getUiModel().setPlayerHand(playerHand.getCards());
     }
 
+    @Override
+    public void updateBroadcastChat(Message message){
+        uiModel.addBroadcastMessage(message);
+    }
+
+    @Override
+    public void updatePrivateChat(String receiver, Message message){
+        uiModel.addPrivateMessage(receiver, message);
+    }
+
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){
         return getUiModel().getResourceCards();
     }

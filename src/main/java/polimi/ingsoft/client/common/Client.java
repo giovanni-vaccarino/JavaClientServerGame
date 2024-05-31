@@ -140,12 +140,12 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateBroadcastChat(Message message) throws IOException {
-
+        ui.updateBroadcastChat(message);
     }
 
     @Override
     public void showUpdatePrivateChat(String recipient, Message message) throws IOException {
-
+        ui.updatePrivateChat(recipient, message);
     }
 
     @Override

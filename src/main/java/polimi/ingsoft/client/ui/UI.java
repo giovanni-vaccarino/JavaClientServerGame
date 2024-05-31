@@ -35,6 +35,8 @@ public abstract class UI {
     public abstract void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score);
     public abstract void setPlayerBoards(Map<String, Board> playerBoard);
     public abstract void updatePlayerHand(PlayerHand playerHand);
+    public abstract void updateBroadcastChat(Message message);
+    public abstract void updatePrivateChat(String receiver, Message message);
 
     public Client getClient(){
         return client;

@@ -22,6 +22,8 @@ public class UIModel {
     private List<MixedCard> playerHand;
     private QuestCard personalQuestCard;
     private Map<String, Board> playerBoards;
+    private Chat broadcastChat;
+    private Map<String, Chat> privateChat;
 
     public Integer getMatchId() {
         return matchId;
@@ -142,5 +144,13 @@ public class UIModel {
         }else {
             System.out.println("Played Card NON NULL "+coordinates.getX()+":"+coordinates.getY());
         }
+    }
+
+    public void addBroadcastMessage(Message message){
+        broadcastChat.addMessage(message.getSender(), message.getText());
+    }
+
+    public void addPrivateMessage(String receiver, Message message){
+        privateChat.get(receiver).addMessage(message.getSender(), message.getText());
     }
 }
