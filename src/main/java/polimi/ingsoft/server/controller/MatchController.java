@@ -273,7 +273,7 @@ public class MatchController implements Serializable {
             throw new NotEnoughResourcesException();
         }
 
-        gameState.updateState();
+        gameState.updateTurnStep();
     }
 
 
@@ -332,7 +332,7 @@ public class MatchController implements Serializable {
 
         gameState.goToNextPlayer();
 
-        player.addToHand(publicBoard.getResource(slot));
+        player.addToHand(publicBoard.getGold(slot));
     }
 
 

@@ -273,6 +273,7 @@ public class GameState implements Serializable, Cloneable {
     private void setLastRound(){
         boolean isLastRound = this.isLastRound();
 
+        // TODO ensures that this is not done multiple times
         if (isLastRound){
             gamePhase = GAME_PHASE.LAST_ROUND;
             this.endRound = this.turnNumber + 2;
@@ -309,6 +310,7 @@ public class GameState implements Serializable, Cloneable {
 
         this.updateTurnNumber();
         this.updateTurnStep();
+        this.updateState();
     }
 
 

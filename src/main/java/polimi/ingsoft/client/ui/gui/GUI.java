@@ -2,14 +2,12 @@ package polimi.ingsoft.client.ui.gui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.client.ui.cli.ClientPublicBoard;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.client.ui.gui.utils.PlaceCardUtils;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.model.Coordinates;
@@ -136,7 +134,6 @@ public class GUI extends UI{
     @Override
     public void showUpdateGameState(GameState gameState) {
         getUiModel().setGameState(gameState);
-
         updateView();
     }
 
@@ -193,6 +190,8 @@ public class GUI extends UI{
                 if(nextGamePageEnable){
                     nextGamePageEnable = false;
                     GUIsingleton.getInstance().getQuestCardPageController().nextPage();
+                }else {
+                    //javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setPublicBoard());
                 }
             }
         }
@@ -211,23 +210,27 @@ public class GUI extends UI{
 
     @Override
     public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard){
-        //TODO fix and delete the cast
+        System.out.println("STO RICEVENDO UN AGGIORNAMENTO DI PUBLIC BOARD DI TIPO: "+ deckType);
+
+        //TODO check playerHand update --> must be before
         if (deckType == TYPE_HAND_CARD.RESOURCE) {
             getUiModel().setPlaceInPublicBoardResource((PlaceInPublicBoard<ResourceCard>) placeInPublicBoard);
         } else {
             getUiModel().setPlaceInPublicBoardGold((PlaceInPublicBoard<GoldCard>)placeInPublicBoard);
         }
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updatePublicBoard());
     }
 
     @Override
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
         System.out.println("REFRESH BOARD IN GUI");
         getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
-        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().refreshBoard());
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateBoard());
     }
 
     @Override
     public void updatePlayerHand(PlayerHand playerHand){
+        System.out.println(playerHand.getCards().toString());
         getUiModel().setPlayerHand(playerHand.getCards());
     }
 
@@ -257,5 +260,14 @@ public class GUI extends UI{
 
     public QuestCard getPersonalQuestCard(){
         return getUiModel().getPersonalQuestCard();
+    }
+
+    public void drawPublicBoard(TYPE_HAND_CARD typeHandCard, PlaceInPublicBoard.Slots slots){
+        System.out.println("TYPE: "+typeHandCard+"/ SLOT: "+slots.toString()+"/ NICKNAME: "+getNickname());
+        try {
+            getClient().drawCard(getNickname(),typeHandCard,slots);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
