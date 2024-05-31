@@ -106,7 +106,7 @@ public class SetGamePage {
         }
         PlaceCardUtils.placeCardString(0,0,personalDeck, path);
 
-        for(int i=0; i<3; i++){
+        for(int i=0; i<getGui().getPlayerHand().size(); i++){
             id = getGui().getPlayerHand().get(i).getID();
             if(PlaceCardUtils.getIsFrontPlayerHandCard(i+1,0)){
                 path= CardPathUtils.frontMixedCard(id);
