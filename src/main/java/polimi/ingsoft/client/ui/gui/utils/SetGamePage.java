@@ -5,15 +5,20 @@ import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.page.GamePageController;
 import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.Board;
 import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.PlayedCard;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class SetGamePage {
     public static GUI getGui(){
         return GUIsingleton.getInstance().getGui();
+    }
+    public static GamePageController getGamePageController(){
+        return GUIsingleton.getInstance().getGamePageController();
     }
 
     public static void setCoveredPublicBoard(GridPane coveredDrawableDeck1){
@@ -119,8 +124,19 @@ public class SetGamePage {
 
         for(String player : getGui().getUiModel().getPlayerBoards().keySet()){
             System.out.println(player);
+
+            Board board = getGui().getUiModel().getPlayerBoards().get(player);
+
+            ArrayList<Coordinates> possibleCoordinates = board.getAvailablePlaces();
+
+            for(Coordinates possibleCoordinate: possibleCoordinates){
+                x = possibleCoordinate.getX();
+                y = possibleCoordinate.getY();
+                getGamePageController().setPossibleOptions(x,y);
+            }
+
             allCards = getGui().getUiModel().getPlayerBoards().get(player).getCards(); // hashmap <coordinate, playedcard>
-            for (polimi.ingsoft.server.model.Coordinates coordinates: allCards.keySet()){
+            for (Coordinates coordinates: allCards.keySet()){
                 x = coordinates.getX();
                 y = coordinates.getY();
                 System.out.println(x+":"+y);

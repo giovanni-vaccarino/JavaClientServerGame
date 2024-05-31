@@ -1,10 +1,10 @@
 package polimi.ingsoft.client.ui.gui;
 
-public class Coordinates {
+public class CoordinatesGUI {
     private int x;
     private int y;
 
-    public Coordinates(int x, int y) {
+    public CoordinatesGUI(int x, int y) {
         this.x = x;
         this.y = y;
     }

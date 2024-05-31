@@ -209,7 +209,7 @@ public class GUI extends UI{
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
         System.out.println("REFRESH BOARD IN GUI");
         getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
-        GUIsingleton.getInstance().getGamePageController().refreshBoard();
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().refreshBoard());
     }
 
     @Override

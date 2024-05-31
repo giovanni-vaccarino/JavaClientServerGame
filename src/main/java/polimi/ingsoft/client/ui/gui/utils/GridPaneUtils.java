@@ -5,6 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GridPaneUtils {
 
     public GridPaneUtils() {}
@@ -30,17 +33,14 @@ public class GridPaneUtils {
     public static void removeImageViewIfExists(GridPane gridPane, int row, int col) {
         Node node = getNodeFromGridPane(gridPane, row, col);
         if (node != null && node instanceof ImageView) {
-            //gridPane.getChildren().remove(node);
-            if (Platform.isFxApplicationThread()) {
-                gridPane.getChildren().remove(node);
-            } else {
-                Platform.runLater(() -> gridPane.getChildren().remove(node));
-            }
+            gridPane.getChildren().remove(node);
         }
     }
 
     private static Node getNodeFromGridPane(GridPane gridPane, int row, int col) {
-        for (Node node : gridPane.getChildren()) {
+        List<Node> childrenCopy = new ArrayList<>(gridPane.getChildren());
+
+        for (Node node : childrenCopy) {
             if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
                 return node;
             }

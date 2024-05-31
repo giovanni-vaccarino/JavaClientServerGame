@@ -24,15 +24,15 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-import polimi.ingsoft.client.ui.gui.Coordinates;
+import polimi.ingsoft.client.ui.gui.CoordinatesGUI;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.utils.*;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.model.Chat;
+import polimi.ingsoft.server.model.Coordinates;
 import polimi.ingsoft.server.model.Message;
 import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlayedCard;
 
 import java.util.*;
 
@@ -90,14 +90,14 @@ public class GamePageController implements Initializable{
 
     private List<Integer> score;
     private HashMap <String, PlayerColor> nicknameColor;
-    private HashMap<String, HashMap<String, Coordinates> > boardCoordinates;
+    private HashMap<String, HashMap<String, CoordinatesGUI> > boardCoordinates;
     private HashMap<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
     private String myName;
 
     private ImageView[][] boardAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
 
-    private List<Coordinates> possibleCoordintes;
+    private List<CoordinatesGUI> possibleCoordintes;
 
     private int CenterBoardX;
     private int CenterBoardY;
@@ -209,8 +209,7 @@ public class GamePageController implements Initializable{
         // Free places on Board
         //Example:
         possibleCoordintes =new ArrayList<>();
-        setPossibleOptions(0,2);
-        setPossibleOptions(-1,-1);
+
 
         // Load Hashmap
         setBoard();
@@ -374,19 +373,19 @@ public class GamePageController implements Initializable{
     }
 
     public void setBoardCoordinatesOrder(Integer x, Integer y, String cardPath, int order, String player){
-        Coordinates coordinates = new Coordinates(x,y);
+        CoordinatesGUI coordinatesGUI = new CoordinatesGUI(x,y);
 
         // BoardCoordinates set
         if(boardCoordinates.containsKey(player)){
 
             if(boardCoordinates.get(player) != null){
-                boardCoordinates.get(player).put(cardPath,coordinates);
+                boardCoordinates.get(player).put(cardPath, coordinatesGUI);
             }else {
                 // ... crea oggetto Hashmap in quella board
             }
         }else {
-            HashMap<String, Coordinates> cardPlace = new HashMap<>();
-            cardPlace.put(cardPath, coordinates);
+            HashMap<String, CoordinatesGUI> cardPlace = new HashMap<>();
+            cardPlace.put(cardPath, coordinatesGUI);
             boardCoordinates.put(player, cardPlace);
         }
 
@@ -419,17 +418,17 @@ public class GamePageController implements Initializable{
 
     public void setPossibleOptions(int x, int y){
 
-        possibleCoordintes.add(new Coordinates(x,y));
+        possibleCoordintes.add(new CoordinatesGUI(x,y));
 
         // margins:
         /*coloredCell(0,0);
         coloredCell(4,8);*/
     }
 
-    public polimi.ingsoft.server.model.Coordinates getPosFromTableToGraph(int xt, int yt){
+    public Coordinates getPosFromTableToGraph(int xt, int yt){
         int xg = - CenterBoardX + xt;
         int yg = CenterBoardY - yt;
-        return new polimi.ingsoft.server.model.Coordinates(xg,yg);
+        return new Coordinates(xg,yg);
     }
 
     public void refreshBoard(){
@@ -447,7 +446,7 @@ public class GamePageController implements Initializable{
 
     public void selectBoardPlacePlayedCard(int x, int y){
         String nickname = getGui().getNickname();
-        polimi.ingsoft.server.model.Coordinates coordinates = GUIsingleton.getInstance().getGamePageController().getPosFromTableToGraph(x,y);
+        Coordinates coordinates = GUIsingleton.getInstance().getGamePageController().getPosFromTableToGraph(x,y);
         if(mixedCard!=null){
             try {
                 System.out.println("Mixed card inviata: "+coordinates.getX()+":"+coordinates.getY());
@@ -459,6 +458,7 @@ public class GamePageController implements Initializable{
             System.out.println("Mixed card NON inviata");
         }
     }
+
     public void coloredCell(int x, int y){
         // TO COLOR BOARD FREE POSITIONS
 
@@ -472,11 +472,6 @@ public class GamePageController implements Initializable{
         // Add the ImageView to the specific cell in the GridPane
 
         board.add(possiblePosition, x, y);
-        /*if (Platform.isFxApplicationThread()) {
-            board.add(possiblePosition, x, y);
-        } else {
-            Platform.runLater(() -> board.add(possiblePosition, x, y));
-        }*/
     }
 
     public void resetCenterBoard(){
@@ -491,7 +486,7 @@ public class GamePageController implements Initializable{
     // METHOD THAT SHOWS THE CURRENT BOARD NICKNAME
     public void loadBoardCards(){
 
-        Coordinates coordinates = new Coordinates(0,0);
+        CoordinatesGUI coordinatesGUI = new CoordinatesGUI(0,0);
         GridPaneUtils gridPaneUtils = new GridPaneUtils();
         boolean breakLoop = false;
         Integer order = 1,i = 0, j=0; // order for order
@@ -515,19 +510,19 @@ public class GamePageController implements Initializable{
             imagePath= boardOrder.get(boardNickname).get(order);
 
             // From board to table reference system
-            coordinates.setX(boardCoordinates.get(boardNickname).get(imagePath).getX());
-            coordinates.setY(-boardCoordinates.get(boardNickname).get(imagePath).getY()); // different SI
-            coordinates.addX(CenterBoardX); // x = xCentro + xCoordinate
-            coordinates.addY(CenterBoardY); // y = yCentro - yCoordinate
+            coordinatesGUI.setX(boardCoordinates.get(boardNickname).get(imagePath).getX());
+            coordinatesGUI.setY(-boardCoordinates.get(boardNickname).get(imagePath).getY()); // different SI
+            coordinatesGUI.addX(CenterBoardX); // x = xCentro + xCoordinate
+            coordinatesGUI.addY(CenterBoardY); // y = yCentro - yCoordinate
 
             //System.out.println(coordinates.getX());
             //System.out.println(coordinates.getY());
 
-            if(coordinates.getX()>=0 && coordinates.getX()<colNum
-                    && coordinates.getY()>=0 && coordinates.getY()<rowNum){
+            if(coordinatesGUI.getX()>=0 && coordinatesGUI.getX()<colNum
+                    && coordinatesGUI.getY()>=0 && coordinatesGUI.getY()<rowNum){
 
-                i= coordinates.getX();
-                j= coordinates.getY();
+                i= coordinatesGUI.getX();
+                j= coordinatesGUI.getY();
 
                 boardAppo[i][j] = new ImageView(new Image(imagePath));
 
@@ -552,7 +547,7 @@ public class GamePageController implements Initializable{
         if(Objects.equals(myName, boardNickname)){
             // Load possible options
 
-            for (Coordinates c : possibleCoordintes) {
+            for (CoordinatesGUI c : possibleCoordintes) {
                 //System.out.println(c.getX());
                 //System.out.println(c.getY());
 
@@ -740,13 +735,7 @@ public class GamePageController implements Initializable{
 
         // Add the ImageView to the specific cell in the GridPane
 
-        //gridPane.add(imageView, x, y);
-
-        if (Platform.isFxApplicationThread()) {
-            gridPane.add(imageView, x, y);
-        } else {
-            Platform.runLater(() -> gridPane.add(imageView, x, y));
-        }
+        gridPane.add(imageView, x, y);
     }
 
     /*public void loadCard(ImageView imageView, String imagePath) {
