@@ -103,7 +103,7 @@ public class GamePageController implements Initializable{
     private int colNum;
 
     private Map<String, Chat> chatHashMap;
-    private String openedChat;
+    private String openedChat = null;
     private int chatSelected;
 
     private MixedCard mixedCard;
@@ -250,6 +250,15 @@ public class GamePageController implements Initializable{
     public void setNumTable() {
         rowNum = board.getRowConstraints().size(); // 9
         colNum = board.getColumnConstraints().size(); // 5
+    }
+
+    public void updateChat(){
+        if(openedChat != null){
+            if(chatHashMap.get(openedChat)!=null){
+                openChat(openedChat);
+            }
+        }
+        setChat();
     }
 
     public void setChat() {
@@ -900,7 +909,7 @@ public class GamePageController implements Initializable{
             }else {
                 getGui().sendPrivateMessage(openedChat,messageInput.getText());
             }
-            chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName).toString(),messageInput.getText());
+            //chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName).toString(),messageInput.getText());
             openChat(openedChat);
             messageInput.setText("");
         }

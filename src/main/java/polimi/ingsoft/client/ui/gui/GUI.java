@@ -238,13 +238,13 @@ public class GUI extends UI{
     @Override
     public void updateBroadcastChat(Message message){
         uiModel.addBroadcastMessage(message);
-        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setChat());
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateChat());
     }
 
     @Override
     public void updatePrivateChat(String receiver, Message message){
         uiModel.addPrivateMessage(receiver, message);
-        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setChat());
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateChat());
     }
 
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){
