@@ -191,7 +191,7 @@ public class GUI extends UI{
                     nextGamePageEnable = false;
                     GUIsingleton.getInstance().getQuestCardPageController().nextPage();
                 }else {
-                    //javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setPublicBoard());
+                    javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
                 }
             }
         }

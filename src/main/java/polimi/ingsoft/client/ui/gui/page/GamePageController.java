@@ -215,7 +215,7 @@ public class GamePageController implements Initializable{
         setClickBoardHandler();
 
         // Set Nickname Player Turn
-        //setCurrentPlayerName();
+        setCurrentPlayerName();
     }
 
     public void setCurrentPlayerName(){
