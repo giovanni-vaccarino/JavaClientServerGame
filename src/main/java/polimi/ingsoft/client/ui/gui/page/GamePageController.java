@@ -85,7 +85,7 @@ public class GamePageController implements Initializable{
 
     @FXML private Label currentPlayerName;
 
-    private List<Integer> score;
+    private Map<PlayerColor, Integer> score;
     private HashMap <String, PlayerColor> nicknameColor;
     private HashMap<String, HashMap<String, CoordinatesGUI> > boardCoordinates;
     private HashMap<String, HashMap<Integer,String> > boardOrder;
@@ -216,14 +216,14 @@ public class GamePageController implements Initializable{
         placeArrow("N", arrowN);
 
         // Set score positions
-        score = new ArrayList<>();
-        List<Integer> s = new ArrayList<>();
-        s.add(16);
-        s.add(4);
-        s.add(16);
-        s.add(18);
-        setScore(s);
-        placeScore();
+        score = new HashMap<>();
+//        List<Integer> s = new ArrayList<>();
+//        s.add(16);
+//        s.add(4);
+//        s.add(16);
+//        s.add(18);
+
+        setScore();
 
         // Load FXML page (board)
         loadBoardCards();
@@ -312,10 +312,18 @@ public class GamePageController implements Initializable{
         this.myName=n;
     }
 
-    public void setScore(List<Integer> s){
-        if(s.size()<=4) {
-            this.score = s;
+    public void setScore(){
+        Board board = null;
+
+        for(String player: getGui().getUiModel().getPlayerBoards().keySet()){
+
+            board = getGui().getUiModel().getPlayerBoards().get(player);
+            score.put(board.getColor(), board.getScore());
+
+            System.out.println("NEW SCORE: "+board.getColor().toString()+"//"+ board.getScore());
         }
+
+        placeScore();
     }
 
     public void setBoard(){
@@ -683,45 +691,40 @@ public class GamePageController implements Initializable{
         }
     }
     public void placeScore(){
-        /*
-        1.blue
-        2.green
-        3.red
-        4.yellow
-         */
-
         ImageView imageView = null;
         String imageUrl = null;
         int x=41,y=331;
+        List<Integer> scoresAlreadySeen = new ArrayList<>();
 
         if(score != null){
             if(score.size()<=4){
-                for(int i=0; i<score.size(); i++){
-                    switch (i){
-                        case 0:
+                for(PlayerColor playerColor : score.keySet()){
+                    switch (playerColor){
+                        case BLUE:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
                             imageView = blueScoreImg;
                             break;
-                        case 1:
+                        case GREEN:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
                             imageView = greenScoreImg;
                             break;
-                        case 2:
+                        case RED:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
                             imageView = redScoreImg;
                             break;
-                        case 3:
+                        case YELLOW:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
                             imageView = yellowScoreImg;
                             break;
                     }
 
-                    x = ScoreUtils.GetXFromScore(score.get(i));
-                    y = ScoreUtils.GetYFromScore(score.get(i));
+                    x = ScoreUtils.GetXFromScore(score.get(playerColor));
+                    y = ScoreUtils.GetYFromScore(score.get(playerColor));
 
-                    x += (-4)*countSameScore(i);
-                    y += (-6)*countSameScore(i);
+                    x += (-4)*countSameScore(scoresAlreadySeen, score.get(playerColor));
+                    y += (-6)*countSameScore(scoresAlreadySeen, score.get(playerColor));
 
+                    scoresAlreadySeen.add(score.get(playerColor));
 
                     ScoreUtils.placeSingolScore(x,y,imageUrl, imageView);
                 }
@@ -731,16 +734,24 @@ public class GamePageController implements Initializable{
         }
     }
 
-    public int countSameScore(int s){
+    public int countSameScore(List<Integer> scoresAlreadySeen,int s){
         int counter = 0;
 
-        if(s<score.size() && s>0){
-            for(int i=s-1; i>=0; i--){
-                if(score.get(i).equals(score.get(s))){
-                    counter++;
+        if(scoresAlreadySeen!=null){
+            for (Integer score: scoresAlreadySeen){
+                if(s == score){
+                    counter ++;
                 }
             }
         }
+
+//        if(s<score.size() && s>0){
+//            for(int i=s-1; i>=0; i--){
+//                if(score.get(i).equals(score.get(s))){
+//                    counter++;
+//                }
+//            }
+//        }
 
         return counter;
     }

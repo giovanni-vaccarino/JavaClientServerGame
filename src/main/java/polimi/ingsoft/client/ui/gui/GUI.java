@@ -226,6 +226,7 @@ public class GUI extends UI{
         System.out.println("REFRESH BOARD IN GUI");
         getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateBoard());
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setScore());
     }
 
     @Override
