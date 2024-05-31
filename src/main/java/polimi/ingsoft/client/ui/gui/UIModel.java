@@ -144,7 +144,7 @@ public class UIModel {
     public void setPlayerBoards(Map<String, Board> playerBoards) {
         this.playerBoards = playerBoards;
         for(String player: playerBoards.keySet()){
-            if(player != getGui().getNickname()){
+            if(!player.equals(getGui().getNickname())){
                 privateChat.put(player, new Chat());
             }
         }
