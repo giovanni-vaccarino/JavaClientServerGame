@@ -64,16 +64,8 @@ public class GUI extends UI{
                 GUIsingleton.getInstance().getColorPageController().showError(errorMessage);
             }
 
-            case WRONG_PLAYER_TURN -> {
-                //GUIsingleton.getInstance().getGamePageController().showError(errorMessage);
-            }
-
-            case NOT_ENOUGH_RESOURCES -> {
-                //GUIsingleton.getInstance().getGamePageController().showError(errorMessage);
-            }
-
-            case COORDINATE_NOT_VALID -> {
-                //GUIsingleton.getInstance().getGamePageController().showError(errorMessage);
+            case WRONG_PLAYER_TURN, NOT_ENOUGH_RESOURCES, COORDINATE_NOT_VALID -> {
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().showError(errorMessage));
             }
         }
     }

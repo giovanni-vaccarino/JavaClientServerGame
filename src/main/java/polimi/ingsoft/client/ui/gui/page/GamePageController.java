@@ -1,6 +1,7 @@
 
 package polimi.ingsoft.client.ui.gui.page;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,11 +21,13 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 import polimi.ingsoft.client.ui.gui.CoordinatesGUI;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.utils.*;
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
@@ -84,6 +87,7 @@ public class GamePageController implements Initializable{
     @FXML private TextField messageInput;
 
     @FXML private Label currentPlayerName;
+    @FXML Button errButton;
 
     private Map<PlayerColor, Integer> score;
     private Map <String, PlayerColor> nicknameColor;
@@ -117,6 +121,9 @@ public class GamePageController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // Error button initialize
+        errButton.setVisible(false);
 
         // Chat
         chatHashMap = new HashMap<>();
@@ -913,6 +920,15 @@ public class GamePageController implements Initializable{
             openChat(openedChat);
             messageInput.setText("");
         }
+    }
+
+    public void showError(ERROR_MESSAGES errorMessages){
+        errButton.setText(errorMessages.getValue());
+        errButton.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+        pause.setOnFinished(event -> errButton.setVisible(false));
+        pause.play();
     }
 
 
