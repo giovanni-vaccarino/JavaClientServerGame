@@ -11,6 +11,7 @@ import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.PlayedCard;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SetGamePage {
@@ -127,7 +128,7 @@ public class SetGamePage {
 
             Board board = getGui().getUiModel().getPlayerBoards().get(player);
 
-            ArrayList<Coordinates> possibleCoordinates = board.getAvailablePlaces();
+            List<Coordinates> possibleCoordinates = board.getAvailablePlaces();
 
             for(Coordinates possibleCoordinate: possibleCoordinates){
                 x = possibleCoordinate.getX();

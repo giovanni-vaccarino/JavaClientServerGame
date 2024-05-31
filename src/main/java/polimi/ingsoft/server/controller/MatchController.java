@@ -263,7 +263,7 @@ public class MatchController implements Serializable {
         if(card.getPlayability(board) > 0){
             boolean isAdded = board.add(coordinates, card, facingUp);
             if(isAdded){
-                board.updatePoints(card.getPoints(board,coordinates)*card.getScore(facingUp));
+                board.updatePoints(card.getPoints(board,coordinates) * card.getScore(facingUp));
                 player.removeFromHand(card);
             }else{
                 throw new CoordinateNotValidException();
