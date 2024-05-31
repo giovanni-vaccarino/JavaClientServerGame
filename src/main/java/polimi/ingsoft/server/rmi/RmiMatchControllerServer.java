@@ -400,7 +400,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
     @Override
     public void sendPrivateMessage(String player, String recipient, String message) throws RemoteException {
         try {
-            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST, new Object[]{player, message}));
+            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST, new Object[]{player, recipient, message}));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
