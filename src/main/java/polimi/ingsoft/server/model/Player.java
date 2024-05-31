@@ -26,6 +26,8 @@ public class Player implements Serializable {
 
     public String getNickname(){return this.nickname;}
 
+    public QuestCard getQuestCard(){return this.questCard;}
+
     public void setQuestCard(QuestCard questCard){this.questCard = questCard;}
 
     public PlayerHand getHand() {
