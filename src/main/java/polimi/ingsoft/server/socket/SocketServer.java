@@ -166,12 +166,12 @@ public class SocketServer implements ConnectionsClient {
         }
     }
 
-    public void matchUpdatePlayerBoard(Integer matchId, String nickname, Coordinates coordinates, PlayedCard playedCard) {
+    public void matchUpdatePlayerBoard(Integer matchId, String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
         List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
-                    client.showUpdateBoard(nickname, coordinates, playedCard);
+                    client.showUpdateBoard(nickname, coordinates, playedCard, score);
                 } catch (IOException ignored) { }
             }
         }

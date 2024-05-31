@@ -306,12 +306,13 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                     // Get of the played card
                     PlayedCard playedCard = player.getBoard().getCard(coordinates);
+                    Integer score = player.getBoard().getScore();
 
                     synchronized (this.clients){
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE,
                                 new Object[]{gameState});
                         RmiMethodCall rmiMethodCallBoardUpdate = new RmiMethodCall(MessageCodes.MATCH_BOARD_UPDATE,
-                                new Object[]{playerNickname, coordinates, playedCard});
+                                new Object[]{playerNickname, coordinates, playedCard, score});
                         RmiMethodCall rmiMethodCallPlayerHand = new RmiMethodCall(MessageCodes.MATCH_PLAYER_HAND_UPDATE,
                                 new Object[]{playerHand});
 

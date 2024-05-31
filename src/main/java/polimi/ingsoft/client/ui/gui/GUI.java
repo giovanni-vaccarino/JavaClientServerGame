@@ -222,9 +222,9 @@ public class GUI extends UI{
     }
 
     @Override
-    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score){
         System.out.println("REFRESH BOARD IN GUI");
-        getUiModel().updatePlayerBoard(nickname, coordinates, playedCard);
+        getUiModel().updatePlayerBoard(nickname, coordinates, playedCard, score);
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateBoard());
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setScore());
     }

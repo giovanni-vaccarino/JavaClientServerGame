@@ -131,10 +131,11 @@ public class UIModel {
         this.playerBoards = playerBoards;
     }
 
-    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard){
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score){
         Board playerBoard = playerBoards.get(nickname);
 
         playerBoard.getCards().put(coordinates, playedCard);
+        playerBoard.updatePoints(score - playerBoard.getScore());
 
         if(playedCard == null){
             System.out.println("Played Card NULL");

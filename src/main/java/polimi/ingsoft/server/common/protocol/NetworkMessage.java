@@ -11,7 +11,7 @@ import java.util.Map;
 public class NetworkMessage implements Serializable {
     public record DrawCardPayload(TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) implements Serializable { }
     public record PlaceCardPayload(MixedCard card, Coordinates coordinates, Boolean isFacingUp) implements Serializable { }
-    public record BoardUpdatePayload(String nickname, Coordinates coordinates, PlayedCard playedCard) implements Serializable { }
+    public record BoardUpdatePayload(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) implements Serializable { }
     public record InitialSettings(PlayerInitialSetting playerInitialSetting) implements Serializable { }
     public record PrivateMessagePayload(String sender, String receiver, String message) implements Serializable { }
     public record BroadcastMessagePayload(String sender, String message) implements Serializable { }

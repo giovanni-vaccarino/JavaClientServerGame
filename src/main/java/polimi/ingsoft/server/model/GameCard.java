@@ -37,7 +37,7 @@ public abstract class GameCard extends Card {
     }
 
     public int getScore(boolean isFront){
-        return isFront?0:super.getScore();
+        return isFront ? 0 : super.getScore();
     }
 
     @Override

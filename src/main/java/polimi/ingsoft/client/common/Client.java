@@ -134,8 +134,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
 
     @Override
-    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException{
-        ui.updatePlayerBoard(nickname, coordinates, playedCard);
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) throws IOException{
+        ui.updatePlayerBoard(nickname, coordinates, playedCard, score);
     }
 
     @Override

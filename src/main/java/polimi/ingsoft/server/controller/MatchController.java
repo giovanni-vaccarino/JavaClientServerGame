@@ -263,6 +263,8 @@ public class MatchController implements Serializable {
         if(card.getPlayability(board) > 0){
             boolean isAdded = board.add(coordinates, card, facingUp);
             if(isAdded){
+                System.out.println("VOLTE IN CUI MATCHA" + card.getPoints(board,coordinates));
+                System.out.println("SCORE DELLA CARTA: " + card.getScore(facingUp) + "CON FACINGUP" + facingUp);
                 board.updatePoints(card.getPoints(board,coordinates) * card.getScore(facingUp));
                 player.removeFromHand(card);
             }else{

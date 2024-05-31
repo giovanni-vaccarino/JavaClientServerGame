@@ -176,7 +176,7 @@ public class CLI extends UI {
     }
 
     @Override
-    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) {
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
 
     }
 

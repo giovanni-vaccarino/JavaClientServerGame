@@ -132,10 +132,10 @@ public class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException {
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) throws IOException {
         NetworkMessage message = new NetworkMessage(
                 MessageCodes.MATCH_BOARD_UPDATE,
-                new NetworkMessage.BoardUpdatePayload(nickname, coordinates, playedCard)
+                new NetworkMessage.BoardUpdatePayload(nickname, coordinates, playedCard, score)
         );
         out.writeObject(message);
         out.flush();

@@ -32,7 +32,7 @@ public abstract class UI {
     public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
     public abstract void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards);
     public abstract void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard);
-    public abstract void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard);
+    public abstract void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score);
     public abstract void setPlayerBoards(Map<String, Board> playerBoard);
     public abstract void updatePlayerHand(PlayerHand playerHand);
 

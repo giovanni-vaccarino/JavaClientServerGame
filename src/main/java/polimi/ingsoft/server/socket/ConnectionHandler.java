@@ -263,12 +263,15 @@ public class ConnectionHandler implements Runnable, VirtualView {
                             try {
                                 matchController.placeCard(player, card, coordinates, isFacingUp);
                                 PlayedCard playedCard = player.getBoard().getCard(coordinates);
+                                Integer score = player.getBoard().getScore();
+
                                 this.server.singleUpdatePlayerHand(this, player.getHand());
                                 this.server.matchUpdatePlayerBoard(
                                         matchController.getMatchId(),
                                         nickname,
                                         coordinates,
-                                        playedCard
+                                        playedCard,
+                                        score
                                 );
                                 this.server.matchUpdateGameState(
                                         matchController.getMatchId(),
@@ -424,10 +427,10 @@ public class ConnectionHandler implements Runnable, VirtualView {
     }
 
     @Override
-    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) {
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
         synchronized (this.view) {
             try {
-                this.view.showUpdateBoard(nickname, coordinates, playedCard);
+                this.view.showUpdateBoard(nickname, coordinates, playedCard, score);
             } catch (IOException ignore) { }
         }
     }
