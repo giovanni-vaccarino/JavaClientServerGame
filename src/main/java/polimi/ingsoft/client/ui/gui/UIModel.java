@@ -7,6 +7,7 @@ import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.model.Coordinates;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +23,12 @@ public class UIModel {
     private List<MixedCard> playerHand;
     private QuestCard personalQuestCard;
     private Map<String, Board> playerBoards;
-    private Chat broadcastChat;
-    private Map<String, Chat> privateChat;
+    private Chat broadcastChat = new Chat();
+    private Map<String, Chat> privateChat = new HashMap<>();
 
+    public GUI getGui(){
+        return GUIsingleton.getInstance().getGui();
+    }
     public Integer getMatchId() {
         return matchId;
     }
@@ -43,6 +47,14 @@ public class UIModel {
 
     public CLIENT_STATE getClientState() {
         return clientState;
+    }
+
+    public Chat getBroadcastChat(){
+        return broadcastChat;
+    }
+
+    public Map<String, Chat> getPrivateChat(){
+        return privateChat;
     }
 
     public void setClientState(CLIENT_STATE clientState) {
@@ -131,6 +143,11 @@ public class UIModel {
 
     public void setPlayerBoards(Map<String, Board> playerBoards) {
         this.playerBoards = playerBoards;
+        for(String player: playerBoards.keySet()){
+            if(player != getGui().getNickname()){
+                privateChat.put(player, new Chat());
+            }
+        }
     }
 
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score){
@@ -153,4 +170,7 @@ public class UIModel {
     public void addPrivateMessage(String receiver, Message message){
         privateChat.get(receiver).addMessage(message.getSender(), message.getText());
     }
+
+
+
 }

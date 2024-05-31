@@ -238,11 +238,13 @@ public class GUI extends UI{
     @Override
     public void updateBroadcastChat(Message message){
         uiModel.addBroadcastMessage(message);
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setChat());
     }
 
     @Override
     public void updatePrivateChat(String receiver, Message message){
         uiModel.addPrivateMessage(receiver, message);
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setChat());
     }
 
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){
@@ -277,6 +279,22 @@ public class GUI extends UI{
         System.out.println("TYPE: "+typeHandCard+"/ SLOT: "+slots.toString()+"/ NICKNAME: "+getNickname());
         try {
             getClient().drawCard(getNickname(),typeHandCard,slots);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendBroadCastMessage(String message){
+        try {
+            getClient().sendBroadCastMessage(getNickname(),message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendPrivateMessage(String receiver, String message){
+        try {
+            getClient().sendPrivateMessage(getNickname(),receiver,message);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
