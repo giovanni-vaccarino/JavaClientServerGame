@@ -149,7 +149,7 @@ public class GameState implements Serializable, Cloneable {
                 if(this.turnNumber == this.endRound){
                     this.gamePhase = GAME_PHASE.END;
                     this.calculateFinalScore();
-                    this.getWinner();
+                    Player winner = this.getWinner();
                 }
             }
 
@@ -258,15 +258,17 @@ public class GameState implements Serializable, Cloneable {
 
 
     /**
-     * Checks if it is the last round.
+     * Checks if it is the last round. It is the last round if any player has reached
+     * 20 points or the decks are empty
      *
      * @return true if it is the last round, false otherwise
      */
     private boolean isLastRound() {
-        //TODO case if the deck is empty?
-        return this.matchController.getPlayers().stream()
+        return (this.matchController.getPlayers().stream()
                 .mapToInt(player -> player.getBoard().getScore())
-                .anyMatch(score -> score >= 20);
+                .anyMatch(score -> score >= 20))
+                ||
+                matchController.getPublicBoard().isDecksEmpty();
     }
 
 

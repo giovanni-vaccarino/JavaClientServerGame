@@ -50,4 +50,9 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable {
         }
         return null;
     }
+
+    public Boolean isPlaceInPublicBoardEmpty(){
+        //TODO check if slotA and slotB null are correct
+        return deck.isCardCollectionEmpty() && slotA == null && slotB == null;
+    }
 }
