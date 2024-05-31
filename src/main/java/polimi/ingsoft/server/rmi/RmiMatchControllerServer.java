@@ -294,9 +294,8 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 Player player = matchController.getPlayerByNickname(playerNickname)
                         .orElse(null);
 
-                System.out.println("STO ELABORANDO RICHIESTA PLACE");
-
                 try{
+                    System.out.println("STO ELABORANDO RICHIESTA PLACE");
                     // Add the card to the player board
                     matchController.placeCard(player, card, coordinates, isFacingUp);
 

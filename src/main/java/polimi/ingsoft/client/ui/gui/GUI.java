@@ -57,11 +57,25 @@ public class GUI extends UI{
             case NICKNAME_NOT_AVAILABLE -> {
                 GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
             }
+
             case MATCH_IS_ALREADY_FULL -> {
                 GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);
             }
+
             case COLOR_ALREADY_PICKED -> {
                 GUIsingleton.getInstance().getColorPageController().showError(errorMessage);
+            }
+
+            case WRONG_PLAYER_TURN -> {
+                //GUIsingleton.getInstance().getGamePageController().showError(errorMessage);
+            }
+
+            case NOT_ENOUGH_RESOURCES -> {
+                //GUIsingleton.getInstance().getGamePageController().showError(errorMessage);
+            }
+
+            case COORDINATE_NOT_VALID -> {
+                //GUIsingleton.getInstance().getGamePageController().showError(errorMessage);
             }
         }
     }
