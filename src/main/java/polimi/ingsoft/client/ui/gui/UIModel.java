@@ -119,6 +119,7 @@ public class UIModel {
     }
 
     public void setPlayerHand(List<MixedCard> playerHand) {
+        System.out.println("Adesso hai " + playerHand.size() + " carte in mano");
         this.playerHand = playerHand;
     }
 
