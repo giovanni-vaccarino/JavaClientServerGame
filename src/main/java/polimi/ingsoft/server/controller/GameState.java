@@ -2,10 +2,12 @@ package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.MatchExceptions.*;
+import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
+import polimi.ingsoft.server.model.QuestCard;
 
 import java.io.Serializable;
 import java.util.*;
@@ -146,7 +148,8 @@ public class GameState implements Serializable, Cloneable {
             case GAME_PHASE.LAST_ROUND -> {
                 if(this.turnNumber == this.endRound){
                     this.gamePhase = GAME_PHASE.END;
-                    //TODO this.calculateFinalScore();
+                    this.calculateFinalScore();
+                    this.getWinner();
                 }
             }
 
@@ -315,6 +318,25 @@ public class GameState implements Serializable, Cloneable {
 
 
     /**
+     * Add for each player the points from the quest cards(personal and common)
+     */
+    private void calculateFinalScore(){
+        QuestCard firstCommonQuest = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_A);
+        QuestCard secondCommonQuest = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_B);
+
+        for(var player : matchController.getPlayers()){
+            QuestCard personalQuest = player.getQuestCard();
+
+            Integer pointsFirstCommon = firstCommonQuest.getMatches(player.getBoard());
+            Integer pointsSecondCommon = secondCommonQuest.getMatches(player.getBoard());
+            Integer pointsPersonal = personalQuest.getMatches(player.getBoard());
+
+            player.getBoard().updatePoints(pointsFirstCommon + pointsSecondCommon + pointsPersonal);
+        }
+    }
+
+
+    /**
      * Determines the winner of the game.
      *
      * @return the player with the highest score, or null if no players are present
@@ -323,6 +345,7 @@ public class GameState implements Serializable, Cloneable {
         Optional<Player> winner = this.matchController.getPlayers().stream()
                 .max(Comparator.comparingInt(player -> player.getBoard().getScore()));
 
+        //TODO if there are 2 winners?
         return winner.orElse(null);
     }
 
