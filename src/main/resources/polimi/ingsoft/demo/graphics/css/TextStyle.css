@@ -19,3 +19,15 @@
     -fx-text-background-color: black;
     -fx-text-fill: #323232;
 }
+
+.textCurrentPlayerName {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Old English Text MT';
+    -fx-text-fill: #323232;
+    -fx-background-color: #dfd7b0;
+    -fx-background-radius: 10;
+    -fx-border-color: #705f16;
+    -fx-border-radius: 10;
+    -fx-border-width: 3;
+}

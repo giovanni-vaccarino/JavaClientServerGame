@@ -20,9 +20,9 @@
     <children>
 
         <!-- currentPlayerName -->
-        <StackPane layoutX="0.0" layoutY="0.0" prefWidth="300" prefHeight="100" alignment="CENTER">
+        <StackPane layoutX="0.0" layoutY="0.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
-                <Label styleClass="textBold" stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css"
+                <Label prefHeight="60" styleClass="textCurrentPlayerName" stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css"
                     fx:id="currentPlayerName">
                 </Label>
             </children>
