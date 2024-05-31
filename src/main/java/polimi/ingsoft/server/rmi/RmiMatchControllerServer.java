@@ -188,14 +188,17 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 String playerNickname = (String) args[0];
                 String message = (String) args[1];
 
+                System.out.println("STO AGGIUNGENDO IL MESSAGGIO");
                 Message sentMessage = matchController.writeBroadcastMessage(playerNickname, message);
+                System.out.println("HO AGGIUNTO IL MESSAGGIO");
 
                 synchronized (this.clients){
-                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.MATCH_SEND_BROADCAST_MESSAGE_REQUEST,
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.MATCH_BROADCAST_MESSAGE_UPDATE,
                             new Object[]{sentMessage});
                     for(var client : this.clients){
                         client.handleRmiClientMessages(rmiMethodCall);
                     }
+                    System.out.println("HO INVIATO GLI UPDATEZ");
                 }
             }
 
@@ -207,16 +210,18 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 VirtualView clientReceiverToUpdate = RmiServer.clients.get(reciever);
 
                 try{
+                    System.out.println("STO AGGIUNGENDO IL MESSAGGIO");
                     Message sentMessage = matchController.writePrivateMessage(playerNickame, reciever, message);
-
+                    System.out.println("HO AGGIUNTO IL MESSAGGIO");
                     synchronized (this.clients){
-                        RmiMethodCall rmiMethodCallSender = new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST,
+                        RmiMethodCall rmiMethodCallSender = new RmiMethodCall(MessageCodes.MATCH_PRIVATE_MESSAGE_UPDATE,
                                 new Object[]{reciever, sentMessage});
-                        RmiMethodCall rmiMethodCallReceiver = new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST,
+                        RmiMethodCall rmiMethodCallReceiver = new RmiMethodCall(MessageCodes.MATCH_PRIVATE_MESSAGE_UPDATE,
                                 new Object[]{playerNickame, sentMessage});
 
                         clientSenderToUpdate.handleRmiClientMessages(rmiMethodCallSender);
                         clientReceiverToUpdate.handleRmiClientMessages(rmiMethodCallReceiver);
+                        System.out.println("HO INVIATO GLI UPDATEZ");
                     }
                 } catch (PlayerNotFoundException exception){
                     synchronized (this.clients){
@@ -399,7 +404,11 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
     @Override
     public void sendPrivateMessage(String player, String recipient, String message) throws RemoteException {
-
+        try {
+            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST, new Object[]{player, message}));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override

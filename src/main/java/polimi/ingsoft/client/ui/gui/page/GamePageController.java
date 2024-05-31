@@ -119,19 +119,8 @@ public class GamePageController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         // Chat
-        Chat chat1 = new Chat();
-        Chat chat2 = new Chat();
-        Chat chat3 = new Chat();
-        Chat chat4 = new Chat();
-        chat1.addMessage(PlayerColor.RED.toString(),"testo");
-        chat2.addMessage(PlayerColor.GREEN.toString(),"testo");
-        chat4.addMessage(PlayerColor.BLUE.toString(),"simonnnnnnnn");
         chatHashMap = new HashMap<>();
-        chatHashMap.put("Simon", chat1);
-        chatHashMap.put("Gio", chat2);
-        chatHashMap.put("Andre", chat3);
-        chatHashMap.put("Everyone", chat4);
-        setChatList(chatHashMap.keySet().stream().toList());
+        setChat();
 
         // Personal cards
         setPlayerHand();
@@ -261,6 +250,17 @@ public class GamePageController implements Initializable{
     public void setNumTable() {
         rowNum = board.getRowConstraints().size(); // 9
         colNum = board.getColumnConstraints().size(); // 5
+    }
+
+    public void setChat() {
+        chatHashMap.put("Everyone", getGui().getUiModel().getBroadcastChat());
+        Map<String, Chat> privateChat = getGui().getUiModel().getPrivateChat();
+
+        for(String player: privateChat.keySet()){
+            chatHashMap.put(player, privateChat.get(player));
+        }
+
+        setChatList(chatHashMap.keySet().stream().toList());
     }
 
     public void setChatList(List<String> chat) {
@@ -895,6 +895,11 @@ public class GamePageController implements Initializable{
 
     public void sendMessage(ActionEvent actionEvent) throws IOException {
         if(messageInput != null){
+            if(openedChat.equals("Everyone")){
+                getGui().sendBroadCastMessage(messageInput.getText());
+            }else {
+                getGui().sendPrivateMessage(openedChat,messageInput.getText());
+            }
             chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName).toString(),messageInput.getText());
             openChat(openedChat);
             messageInput.setText("");
