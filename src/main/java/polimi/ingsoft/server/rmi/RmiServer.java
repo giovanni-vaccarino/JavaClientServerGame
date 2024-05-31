@@ -149,6 +149,13 @@ public class RmiServer implements VirtualServerInterface, ConnectionsClient {
                     List<String> players = match.getNamePlayers();
                     GameState gameState = match.getGameState();
 
+                    // To handle if the match was created by a socket player, and there is not a matchcontrollerstub for rmi still
+                    if(!matchControllerServer.containsKey(matchId)){
+                        VirtualMatchServer stubController = this.createMatchControllerServer(match, matchNotificationList.get(matchId), this.logger);
+
+                        matchControllerServer.put(matchId, stubController);
+                    }
+
                     //Adding the client to the match notification list
                     synchronized (matchNotificationList){
                         matchNotificationList.get(matchId).add(clientToUpdate);
