@@ -86,9 +86,9 @@ public class GamePageController implements Initializable{
     @FXML private Label currentPlayerName;
 
     private Map<PlayerColor, Integer> score;
-    private HashMap <String, PlayerColor> nicknameColor;
-    private HashMap<String, HashMap<String, CoordinatesGUI> > boardCoordinates;
-    private HashMap<String, HashMap<Integer,String> > boardOrder;
+    private Map <String, PlayerColor> nicknameColor;
+    private Map<String, HashMap<String, CoordinatesGUI> > boardCoordinates;
+    private Map<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
     private String myName;
 
@@ -102,7 +102,7 @@ public class GamePageController implements Initializable{
     private int rowNum;
     private int colNum;
 
-    private HashMap<String, Chat> chatHashMap;
+    private Map<String, Chat> chatHashMap;
     private String openedChat;
     private int chatSelected;
 
@@ -117,7 +117,6 @@ public class GamePageController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // !!! CREATE HERE ALL THE OBJs -- Hashmap<>(), ... !!!
 
         // Chat
         Chat chat1 = new Chat();
@@ -217,11 +216,6 @@ public class GamePageController implements Initializable{
 
         // Set score positions
         score = new HashMap<>();
-//        List<Integer> s = new ArrayList<>();
-//        s.add(16);
-//        s.add(4);
-//        s.add(16);
-//        s.add(18);
 
         setScore();
 
