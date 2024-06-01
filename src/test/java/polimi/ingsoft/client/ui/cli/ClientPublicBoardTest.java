@@ -13,10 +13,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
  class ClientPublicBoardTest {
-public static ResourceCard res1,res2,res3;
-    public static ClientPublicBoard publicBoard;
+    public static ResourceCard res1,res2,res3;
+    public static PublicBoard publicBoard;
     public static QuestCard quest,quest2;
-public static GoldCard gold;
+    public static GoldCard gold;
+    public static ArrayList<ResourceCard> resources;
+    public static   ArrayList<GoldCard> goldCards;
+    public static   ArrayList<QuestCard> quests;
 
     @BeforeAll
     public static void init(){
@@ -153,11 +156,27 @@ public static GoldCard gold;
         costquest.put(Object.POTION,0);
         costquest.put(Object.FEATHER,0);
         quest2=new QuestCard("id",new ItemPattern(costquest),1);
+
+        resources=new ArrayList<>();
+        resources.add(res1);
+        resources.add(res2);
+        resources.add(res3);
+        goldCards=new ArrayList<>();
+        goldCards.add(gold);
+        goldCards.add(gold);
+        goldCards.add(gold);
+        goldCards.add(gold);
+        quests=new ArrayList<>();
+        quests.add(quest);
+        quests.add(quest2);
+
+
+
     }
 
     @Test
     void printClientPublicBoard() {
-//        PublicBoard=new PublicBoard()
-//        publicBoard.printClientPublicBoard();
+        publicBoard=new PublicBoard(new Deck<>(resources),new Deck<>(goldCards),new Deck<>(quests),null);
+        ClientPublicBoard.printPublicBoard(publicBoard.getPublicBoardResource(),publicBoard.getPublicBoardGold(),publicBoard.getPublicBoardQuest());
     }
 }

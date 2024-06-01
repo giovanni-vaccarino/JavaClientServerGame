@@ -18,23 +18,23 @@ public class ClientPublicBoard {
     public static final String RESET = "\u001B[0m";
 
 
-    public static void printPublicBoard(PublicBoard publicBoard) {
+    public static void printPublicBoard(PlaceInPublicBoard<ResourceCard> resources,PlaceInPublicBoard<GoldCard> gold,PlaceInPublicBoard<QuestCard> quests) {
         ArrayList<MixedCard> resourceCards, goldCards;
         ArrayList<QuestCard> questCards;
 
         resourceCards=new ArrayList<>();
-        resourceCards.add(publicBoard.getResource(PlaceInPublicBoard.Slots.DECK));
-        resourceCards.add(publicBoard.getResource(PlaceInPublicBoard.Slots.SLOT_A));
-        resourceCards.add(publicBoard.getResource(PlaceInPublicBoard.Slots.SLOT_B));
+        resourceCards.add(resources.get(PlaceInPublicBoard.Slots.DECK));
+        resourceCards.add(resources.get(PlaceInPublicBoard.Slots.SLOT_A));
+        resourceCards.add(resources.get(PlaceInPublicBoard.Slots.SLOT_B));
         goldCards=new ArrayList<>();
-        goldCards.add(publicBoard.getGold(PlaceInPublicBoard.Slots.DECK));
-        goldCards.add(publicBoard.getGold(PlaceInPublicBoard.Slots.SLOT_A));
-        goldCards.add(publicBoard.getGold(PlaceInPublicBoard.Slots.SLOT_B));
+        goldCards.add(gold.get(PlaceInPublicBoard.Slots.DECK));
+        goldCards.add(gold.get(PlaceInPublicBoard.Slots.SLOT_A));
+        goldCards.add(gold.get(PlaceInPublicBoard.Slots.SLOT_B));
         printRows(resourceCards);
         printRows(goldCards);
         questCards=new ArrayList<>();
-        questCards.add(publicBoard.getQuest(PlaceInPublicBoard.Slots.SLOT_A));
-        questCards.add(publicBoard.getQuest(PlaceInPublicBoard.Slots.SLOT_B));
+        questCards.add(quests.get(PlaceInPublicBoard.Slots.SLOT_A));
+        questCards.add(quests.get(PlaceInPublicBoard.Slots.SLOT_B));
         printQuests(questCards);
 
     }

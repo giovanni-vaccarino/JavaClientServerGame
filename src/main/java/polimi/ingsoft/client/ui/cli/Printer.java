@@ -34,7 +34,7 @@ public class Printer {
     }
     public void printFromPublicBoard(PublicBoard publicBoard, PlayerHand hand, String argument, QuestCard playerQuest){
         out.print(MESSAGES.CLS.getValue());
-        ClientPublicBoard.printPublicBoard(publicBoard);
+        ClientPublicBoard.printPublicBoard(publicBoard.getPublicBoardResource(),publicBoard.getPublicBoardGold(),publicBoard.getPublicBoardQuest());
         ClientHand.print(hand,playerQuest);
         if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPCLIENTBOARD.getValue());
         else if(argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))out.println(MESSAGES.HELPGETCARDTYPE.getValue());
