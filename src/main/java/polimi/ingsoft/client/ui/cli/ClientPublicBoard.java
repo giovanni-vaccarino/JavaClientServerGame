@@ -16,35 +16,30 @@ public class ClientPublicBoard {
     public static final String YELLOW = "\u001B[43m";
     public static final String BLACKTEXT = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
-    //ArrayList<ResourceCard> resourceCards;
-    ArrayList<MixedCard> resourceCards, goldCards;
-    //ArrayList<GoldCard> goldCards;
-    ArrayList<QuestCard> questCards;
 
-    public ClientPublicBoard(QuestCard questCard1, QuestCard questCard2,
-                             ResourceCard resDeck, ResourceCard res1, ResourceCard res2,
-                             GoldCard goldDeck, GoldCard gold1, GoldCard gold2) {
-        resourceCards = new ArrayList<>();
-        goldCards = new ArrayList<>();
-        questCards = new ArrayList<>();
-        questCards.add(questCard1);
-        questCards.add(questCard2);
-        resourceCards.add(resDeck);
-        resourceCards.add(res1);
-        resourceCards.add(res2);
-        goldCards.add(goldDeck);
-        goldCards.add(gold1);
-        goldCards.add(gold2);
-    }
 
-    public void printClientPublicBoard() {
+    public static void printClientPublicBoard(PublicBoard publicBoard) {
+        ArrayList<MixedCard> resourceCards, goldCards;
+        ArrayList<QuestCard> questCards;
+
+        resourceCards=new ArrayList<>();
+        resourceCards.add(publicBoard.getResource(PlaceInPublicBoard.Slots.DECK));
+        resourceCards.add(publicBoard.getResource(PlaceInPublicBoard.Slots.SLOT_A));
+        resourceCards.add(publicBoard.getResource(PlaceInPublicBoard.Slots.SLOT_B));
+        goldCards=new ArrayList<>();
+        goldCards.add(publicBoard.getGold(PlaceInPublicBoard.Slots.DECK));
+        goldCards.add(publicBoard.getGold(PlaceInPublicBoard.Slots.SLOT_A));
+        goldCards.add(publicBoard.getGold(PlaceInPublicBoard.Slots.SLOT_B));
         printRows(resourceCards);
         printRows(goldCards);
-        printQuests();
+        questCards=new ArrayList<>();
+        questCards.add(publicBoard.getQuest(PlaceInPublicBoard.Slots.SLOT_A));
+        questCards.add(publicBoard.getQuest(PlaceInPublicBoard.Slots.SLOT_B));
+        printQuests(questCards);
 
     }
 
-    private void printRows(ArrayList<MixedCard> mixed) {
+    private static void printRows(ArrayList<MixedCard> mixed) {
         int row = 0, count = 0;
         do {
             System.out.print(YELLOW + "          " + ClientHand.defineColor(mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
@@ -95,8 +90,7 @@ public class ClientPublicBoard {
         System.out.print("\n");
     }
 
-
-    private String printResource(ArrayList<MixedCard> mixed, int index, int corner, int row) {
+    private static String printResource(ArrayList<MixedCard> mixed, int index, int corner, int row) {
         Item color;
         Face back = mixed.get(index).getBack();
         String outColor = "";
@@ -129,8 +123,7 @@ public class ClientPublicBoard {
         else return (outColor + "|        |");
     }
 
-
-    private String printCenter(MixedCard card, int row, String actualColor) {
+    private static String printCenter(MixedCard card, int row, String actualColor) {
         Resource resource;
         CenterSpace center;
         String print = "";
@@ -184,7 +177,7 @@ public class ClientPublicBoard {
         }
     }
 
-    private String printLastRow(MixedCard card, String actualColor) {
+    private static String printLastRow(MixedCard card, String actualColor) {
         int counter = 0;
         String pre, post, output = "";
         if (card.getPlayPattern() != null) {
@@ -243,8 +236,7 @@ public class ClientPublicBoard {
 
     }
 
-
-    private String printFirstRow(MixedCard card, String actualColor) {
+    private static String printFirstRow(MixedCard card, String actualColor) {
         if (card.getPointPattern() == null)
             return actualColor + BLACKTEXT + "     | " + card.getScore(false) + "|     ";
         else if (card.getScore(false) != 0 && card.getPointPattern() != null) {
@@ -263,12 +255,12 @@ public class ClientPublicBoard {
         return actualColor + "              ";
     }
 
-    private void printQuests() {
+    private static void printQuests(ArrayList<QuestCard>questCards) {
         int count = 0;
         int row = 1;
         QuestCard card;
         System.out.print(YELLOW + "                                  " + RESET + "     ");
-        printQuestFirstRow();
+        printQuestFirstRow(questCards);
         do {
             System.out.print(YELLOW + "                                  " + RESET + "     ");
             card = questCards.getFirst();
@@ -278,11 +270,12 @@ public class ClientPublicBoard {
             row++;
         } while (row < 9);
     }
-    public void printInitialQuests(){
+
+    public static void printInitialQuests(ArrayList<QuestCard> questCards){
         int count = 0;
         int row = 1;
         QuestCard card;
-        printQuestFirstRow();
+        printQuestFirstRow(questCards);
         do {
             card = questCards.getFirst();
             System.out.print(printQuestCard(row, card) + RESET + "   ");
@@ -292,7 +285,7 @@ public class ClientPublicBoard {
         } while (row < 9);
     }
 
-    private void printQuestFirstRow() {
+    private static void printQuestFirstRow(ArrayList<QuestCard> questCards) {
         QuestCard card;
         card = questCards.getFirst();
         System.out.print(YELLOW + BLACKTEXT + "               | " + card.getScore() + "|               " + RESET + "   ");
@@ -326,43 +319,5 @@ public class ClientPublicBoard {
                 return "                   QUALCOSA NON VA";
             }
         }
-    }
-
-    public void getCard(PublicBoardArguments argument, PublicBoardArguments argument2, MixedCard changeCard) {
-        switch (argument) {
-            case GOLD -> {
-                switch (argument2) {
-                    case DECK -> {
-                        goldCards.removeFirst();
-                        goldCards.addFirst(changeCard);
-                    }
-                    case LEFT -> {
-                        goldCards.remove(1);
-                        goldCards.add(1, changeCard);
-                    }
-                    case RIGHT -> {
-                        goldCards.remove(2);
-                        goldCards.add(2, changeCard);
-                    }
-                }
-            }
-            case RESOURCE -> {
-                switch (argument2) {
-                    case DECK -> {
-                        resourceCards.removeFirst();
-                        resourceCards.addFirst(changeCard);
-                    }
-                    case LEFT -> {
-                        resourceCards.remove(1);
-                        resourceCards.add(1, changeCard);
-                    }
-                    case RIGHT -> {
-                        resourceCards.remove(2);
-                        resourceCards.add(2, changeCard);
-                    }
-                }
-            }
-        }
-        ;
     }
 }

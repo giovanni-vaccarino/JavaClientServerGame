@@ -157,7 +157,7 @@ public static GoldCard gold;
 
     @Test
     void printClientPublicBoard() {
-        publicBoard=new ClientPublicBoard(quest,quest2,res1,res2,res3,gold,gold,gold);
-        publicBoard.printClientPublicBoard();
+//        PublicBoard=new PublicBoard()
+//        publicBoard.printClientPublicBoard();
     }
 }

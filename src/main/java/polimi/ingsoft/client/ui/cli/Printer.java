@@ -2,9 +2,11 @@ package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.server.model.Board;
 import polimi.ingsoft.server.model.InitialCard;
+import polimi.ingsoft.server.model.PublicBoard;
 import polimi.ingsoft.server.model.QuestCard;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 public class Printer {
     private final PrintStream out;
@@ -34,9 +36,9 @@ public class Printer {
         if(argument.toLowerCase().equals(BoardArgument.PLAYCARD.getValue()))out.println(MESSAGES.PLAYCARDHELP.getValue()+"("+board.getPrintingCoordinates().getX()+","+board.getPrintingCoordinates().getY()+")");
         else out.println(MESSAGES.ERROR.getValue() );
     }
-    public void printFromPublicBoard(ClientPublicBoard board,ClientHand hand,String argument){
+    public void printFromPublicBoard(PublicBoard publicBoard, ClientHand hand, String argument){
         out.print(MESSAGES.CLS.getValue());
-        board.printClientPublicBoard();
+        ClientPublicBoard.printClientPublicBoard(publicBoard);
         hand.print();
         if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPCLIENTBOARD.getValue());
         else if(argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))out.println(MESSAGES.HELPGETCARDTYPE.getValue());
@@ -53,8 +55,10 @@ public class Printer {
     }
     public void printQuestCardChoice(QuestCard quest1, QuestCard quest2){
         out.print(MESSAGES.HELP_QUEST_CARD_CHOICE.getValue());
-        ClientPublicBoard temp=new ClientPublicBoard(quest1,quest2,null,null,null,null,null,null);
-        temp.printInitialQuests();
+        ArrayList<QuestCard> quests=new ArrayList<>();
+        quests.add(quest1);
+        quests.add(quest2);
+        ClientPublicBoard.printInitialQuests(quests);
 
     }
 }
