@@ -13,6 +13,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+/**
+ * The MainClient class is the entry point for the client application.
+ * It initializes the client, chooses the communication protocol, and sets the UI type.
+ */
 public class MainClient {
     private static final PrintStream printStream = System.out;
     private static final Scanner scanner = new Scanner(System.in);
@@ -22,6 +26,12 @@ public class MainClient {
     private static final int rmiServerPort = 1234;
     private static final String rmiServerName = "MatchManagerServer";
 
+
+    /**
+     * The main method initializes the client application, chooses the communication protocol, and sets the UI type.
+     *
+     * @param args command line arguments to specify the UI type (CLI or GUI).
+     */
     public static void main(String[] args) {
         ProtocolChoiceCLI protocolChoiceCLI = new ProtocolChoiceCLI(scanner, printStream);
         Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
@@ -32,8 +42,6 @@ public class MainClient {
         if(args.length == 1){
             if(args[0].toLowerCase().equals("cli") || args[0].toLowerCase().equals("tui")){
                 uiType = UIType.CLI;
-            }else if(args[0].toLowerCase().equals("gui")){
-                uiType = UIType.GUI;
             }
         }
 
@@ -47,14 +55,27 @@ public class MainClient {
             printStream.println("Error: " + e.getMessage());
         }//TODO nullpointer exception se scegli RMI da una rete in cui non c'è nessun server
     }
-    
+
+
+    /**
+     * Creates a client based on the chosen protocol and UI type.
+     *
+     * @param protocol the communication protocol (RMI or Socket).
+     * @param uiType the type of user interface (CLI or GUI).
+     * @return the created Client object.
+     * @throws IOException if an I/O error occurs during client creation.
+     */
     private static Client createClient(Protocols protocol, UIType uiType) throws IOException {
-        if (protocol == Protocols.RMI)
-            return createRmiClient(uiType);
-        else
-            return createSocketClient(uiType);
+        return (protocol == Protocols.RMI) ? createRmiClient(uiType) : createSocketClient(uiType);
     }
 
+
+    /**
+     * Creates an RMI client with the specified UI type.
+     *
+     * @param uiType the type of user interface (CLI or GUI).
+     * @return the created RmiClient object, or null if an error occurs.
+     */
     private static Client createRmiClient(UIType uiType) {
         try {
             return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, uiType, printStream, scanner);
@@ -64,6 +85,14 @@ public class MainClient {
         }
     }
 
+
+    /**
+     * Creates a Socket client with the specified UI type.
+     *
+     * @param uiType the type of user interface (CLI or GUI).
+     * @return the created SocketClient object.
+     * @throws IOException if an I/O error occurs during client creation.
+     */
     private static Client createSocketClient(UIType uiType) throws IOException {
         return new SocketClient(socketServerHostName, socketServerPort, uiType, printStream, scanner);
     }

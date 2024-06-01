@@ -2,10 +2,12 @@ package polimi.ingsoft.server.controller;
 
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.exceptions.MatchExceptions.*;
+import polimi.ingsoft.server.model.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
+import polimi.ingsoft.server.model.QuestCard;
 
 import java.io.Serializable;
 import java.util.*;
@@ -146,7 +148,8 @@ public class GameState implements Serializable, Cloneable {
             case GAME_PHASE.LAST_ROUND -> {
                 if(this.turnNumber == this.endRound){
                     this.gamePhase = GAME_PHASE.END;
-                    //TODO this.calculateFinalScore();
+                    this.calculateFinalScore();
+                    Player winner = this.getWinner();
                 }
             }
 
@@ -255,15 +258,17 @@ public class GameState implements Serializable, Cloneable {
 
 
     /**
-     * Checks if it is the last round.
+     * Checks if it is the last round. It is the last round if any player has reached
+     * 20 points or the decks are empty
      *
      * @return true if it is the last round, false otherwise
      */
     private boolean isLastRound() {
-        //TODO case if the deck is empty?
-        return this.matchController.getPlayers().stream()
+        return (this.matchController.getPlayers().stream()
                 .mapToInt(player -> player.getBoard().getScore())
-                .anyMatch(score -> score >= 20);
+                .anyMatch(score -> score >= 20))
+                ||
+                matchController.getPublicBoard().isDecksEmpty();
     }
 
 
@@ -273,6 +278,7 @@ public class GameState implements Serializable, Cloneable {
     private void setLastRound(){
         boolean isLastRound = this.isLastRound();
 
+        // TODO ensures that this is not done multiple times
         if (isLastRound){
             gamePhase = GAME_PHASE.LAST_ROUND;
             this.endRound = this.turnNumber + 2;
@@ -309,6 +315,26 @@ public class GameState implements Serializable, Cloneable {
 
         this.updateTurnNumber();
         this.updateTurnStep();
+        this.updateState();
+    }
+
+
+    /**
+     * Add for each player the points from the quest cards(personal and common)
+     */
+    private void calculateFinalScore(){
+        QuestCard firstCommonQuest = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_A);
+        QuestCard secondCommonQuest = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_B);
+
+        for(var player : matchController.getPlayers()){
+            QuestCard personalQuest = player.getQuestCard();
+
+            Integer pointsFirstCommon = firstCommonQuest.getMatches(player.getBoard());
+            Integer pointsSecondCommon = secondCommonQuest.getMatches(player.getBoard());
+            Integer pointsPersonal = personalQuest.getMatches(player.getBoard());
+
+            player.getBoard().updatePoints(pointsFirstCommon + pointsSecondCommon + pointsPersonal);
+        }
     }
 
 
@@ -321,6 +347,7 @@ public class GameState implements Serializable, Cloneable {
         Optional<Player> winner = this.matchController.getPlayers().stream()
                 .max(Comparator.comparingInt(player -> player.getBoard().getScore()));
 
+        //TODO if there are 2 winners?
         return winner.orElse(null);
     }
 

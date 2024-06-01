@@ -176,7 +176,17 @@ public class CLI extends UI {
     }
 
     @Override
-    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) {
+    public void updateBroadcastChat(Message message) {
+
+    }
+
+    @Override
+    public void updatePrivateChat(String receiver, Message message) {
+
+    }
+
+    @Override
+    public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
 
     }
 

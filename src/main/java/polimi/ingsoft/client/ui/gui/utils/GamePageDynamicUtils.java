@@ -33,7 +33,7 @@ public class GamePageDynamicUtils {
                 throw new RuntimeException(e);
             }
         }else{
-            System.out.println("Mixed card NON inviata");
+            System.out.println("Mixed card NON inviata 1");
         }
     }
 }

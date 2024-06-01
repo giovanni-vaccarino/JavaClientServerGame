@@ -191,7 +191,7 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 Message sentMessage = matchController.writeBroadcastMessage(playerNickname, message);
 
                 synchronized (this.clients){
-                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.MATCH_SEND_BROADCAST_MESSAGE_REQUEST,
+                    RmiMethodCall rmiMethodCall = new RmiMethodCall(MessageCodes.MATCH_BROADCAST_MESSAGE_UPDATE,
                             new Object[]{sentMessage});
                     for(var client : this.clients){
                         client.handleRmiClientMessages(rmiMethodCall);
@@ -210,9 +210,9 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                     Message sentMessage = matchController.writePrivateMessage(playerNickame, reciever, message);
 
                     synchronized (this.clients){
-                        RmiMethodCall rmiMethodCallSender = new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST,
+                        RmiMethodCall rmiMethodCallSender = new RmiMethodCall(MessageCodes.MATCH_PRIVATE_MESSAGE_UPDATE,
                                 new Object[]{reciever, sentMessage});
-                        RmiMethodCall rmiMethodCallReceiver = new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST,
+                        RmiMethodCall rmiMethodCallReceiver = new RmiMethodCall(MessageCodes.MATCH_PRIVATE_MESSAGE_UPDATE,
                                 new Object[]{playerNickame, sentMessage});
 
                         clientSenderToUpdate.handleRmiClientMessages(rmiMethodCallSender);
@@ -294,9 +294,8 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
                 Player player = matchController.getPlayerByNickname(playerNickname)
                         .orElse(null);
 
-                System.out.println("STO ELABORANDO RICHIESTA PLACE");
-
                 try{
+                    System.out.println("STO ELABORANDO RICHIESTA PLACE");
                     // Add the card to the player board
                     matchController.placeCard(player, card, coordinates, isFacingUp);
 
@@ -307,12 +306,13 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
                     // Get of the played card
                     PlayedCard playedCard = player.getBoard().getCard(coordinates);
+                    Integer score = player.getBoard().getScore();
 
                     synchronized (this.clients){
                         RmiMethodCall rmiMethodCallGameState = new RmiMethodCall(MessageCodes.MATCH_GAME_STATE_UPDATE,
                                 new Object[]{gameState});
                         RmiMethodCall rmiMethodCallBoardUpdate = new RmiMethodCall(MessageCodes.MATCH_BOARD_UPDATE,
-                                new Object[]{playerNickname, coordinates, playedCard});
+                                new Object[]{playerNickname, coordinates, playedCard, score});
                         RmiMethodCall rmiMethodCallPlayerHand = new RmiMethodCall(MessageCodes.MATCH_PLAYER_HAND_UPDATE,
                                 new Object[]{playerHand});
 
@@ -399,7 +399,11 @@ public class RmiMatchControllerServer implements VirtualMatchServer {
 
     @Override
     public void sendPrivateMessage(String player, String recipient, String message) throws RemoteException {
-
+        try {
+            methodQueue.put(new RmiMethodCall(MessageCodes.MATCH_SEND_PRIVATE_MESSAGE_REQUEST, new Object[]{player, recipient, message}));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override

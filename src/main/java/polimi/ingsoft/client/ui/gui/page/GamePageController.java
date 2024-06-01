@@ -1,7 +1,7 @@
 
 package polimi.ingsoft.client.ui.gui.page;
 
-import javafx.application.Platform;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -24,15 +21,16 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-import polimi.ingsoft.client.ui.gui.Coordinates;
+import javafx.util.Duration;
+import polimi.ingsoft.client.ui.gui.CoordinatesGUI;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.utils.*;
+import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.Chat;
-import polimi.ingsoft.server.model.Message;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlayedCard;
+import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
+import polimi.ingsoft.server.model.*;
 
 import java.util.*;
 
@@ -88,16 +86,19 @@ public class GamePageController implements Initializable{
     @FXML private Line chatLine3;
     @FXML private TextField messageInput;
 
-    private List<Integer> score;
-    private HashMap <String, PlayerColor> nicknameColor;
-    private HashMap<String, HashMap<String, Coordinates> > boardCoordinates;
-    private HashMap<String, HashMap<Integer,String> > boardOrder;
+    @FXML private Label currentPlayerName;
+    @FXML Button errButton;
+
+    private Map<PlayerColor, Integer> score;
+    private Map <String, PlayerColor> nicknameColor;
+    private Map<String, HashMap<String, CoordinatesGUI> > boardCoordinates;
+    private Map<String, HashMap<Integer,String> > boardOrder;
     private String boardNickname; // board <=> nickname
     private String myName;
 
     private ImageView[][] boardAppo; // ADD INT VAL TO DEFINE IF IT'S UPON/UNDER
 
-    private List<Coordinates> possibleCoordintes;
+    private List<CoordinatesGUI> possibleCoordintes;
 
     private int CenterBoardX;
     private int CenterBoardY;
@@ -105,8 +106,8 @@ public class GamePageController implements Initializable{
     private int rowNum;
     private int colNum;
 
-    private HashMap<String, Chat> chatHashMap;
-    private String openedChat;
+    private Map<String, Chat> chatHashMap;
+    private String openedChat = null;
     private int chatSelected;
 
     private MixedCard mixedCard;
@@ -120,22 +121,13 @@ public class GamePageController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // !!! CREATE HERE ALL THE OBJs -- Hashmap<>(), ... !!!
+
+        // Error button initialize
+        errButton.setVisible(false);
 
         // Chat
-        Chat chat1 = new Chat();
-        Chat chat2 = new Chat();
-        Chat chat3 = new Chat();
-        Chat chat4 = new Chat();
-        chat1.addMessage(PlayerColor.RED.toString(),"testo");
-        chat2.addMessage(PlayerColor.GREEN.toString(),"testo");
-        chat4.addMessage(PlayerColor.BLUE.toString(),"simonnnnnnnn");
         chatHashMap = new HashMap<>();
-        chatHashMap.put("Simon", chat1);
-        chatHashMap.put("Gio", chat2);
-        chatHashMap.put("Andre", chat3);
-        chatHashMap.put("Everyone", chat4);
-        setChatList(chatHashMap.keySet().stream().toList());
+        setChat();
 
         // Personal cards
         setPlayerHand();
@@ -207,20 +199,10 @@ public class GamePageController implements Initializable{
         boardAppo = new ImageView[colNum][rowNum];
 
         // Free places on Board
-        //Example:
         possibleCoordintes =new ArrayList<>();
-        setPossibleOptions(0,2);
-        setPossibleOptions(-1,-1);
 
-        // Load Hashmap
+        // Load Data
         setBoard();
-
-
-        /*String initialCardPath = "/polimi/ingsoft/demo/graphics/img/card/frontCard/initialCard/frontInitialCard(1).jpg";
-        String cardPath = "polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg";
-        setBoardCoordinatesOrder(0,0,initialCardPath,0);
-        setBoardCoordinatesOrder(1,1,cardPath,1);*/
-
 
         // Set arrows
         placeArrow("S", arrowS);
@@ -229,55 +211,31 @@ public class GamePageController implements Initializable{
         placeArrow("N", arrowN);
 
         // Set score positions
-        score = new ArrayList<>();
-        List<Integer> s = new ArrayList<>();
-        s.add(16);
-        s.add(4);
-        s.add(16);
-        s.add(18);
-        setScore(s);
-        placeScore();
+        score = new HashMap<>();
 
+        setScore();
+
+        // Load FXML page (board)
         loadBoardCards();
 
+        // Set card handler
+        setClickBoardHandler();
 
-        // Choose a card from a personal deck
-        for (Node node : personalDeck.getChildren()) {
-            int y = GridPane.getRowIndex(node);
-            int x = GridPane.getColumnIndex(node);
+        // Set Nickname Player Turn
+        setCurrentPlayerName();
+    }
 
-            node.setOnMouseClicked(event -> {
-                drawPlayerHand(x,y);
-            });
-        }
-
-        // Choose a card from Public board
-        for (Node node : visibleDrawableDeck.getChildren()) {
-            int y = GridPane.getRowIndex(node);
-            int x = GridPane.getColumnIndex(node);
-
-            node.setOnMouseClicked(event -> {
-                // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
-                System.out.println(x);
-                System.out.println(y);
-            });
-        }
-
-        // Choose a card from Public board (covered cards)
-        for (Node node : coveredDrawableDeck1.getChildren()) {
-            int y = GridPane.getRowIndex(node);
-            int x = GridPane.getColumnIndex(node);
-
-            node.setOnMouseClicked(event -> {
-                // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
-                System.out.println(x);
-                System.out.println(y);
-            });
-        }
+    public void setCurrentPlayerName(){
+        GameState gameState = getGui().getUiModel().getGameState();
+        currentPlayerName.setText("Turn: "+ gameState.getCurrentPlayerNickname());
     }
 
     public void setPublicBoard(){
         setVisiblePublicBoard();
+        setCoveredPublicBoard();
+    }
+
+    public void setCoveredPublicBoard(){
         SetGamePage.setCoveredPublicBoard(coveredDrawableDeck1);
     }
 
@@ -299,6 +257,26 @@ public class GamePageController implements Initializable{
     public void setNumTable() {
         rowNum = board.getRowConstraints().size(); // 9
         colNum = board.getColumnConstraints().size(); // 5
+    }
+
+    public void updateChat(){
+        if(openedChat != null){
+            if(chatHashMap.get(openedChat)!=null){
+                openChat(openedChat);
+            }
+        }
+        setChat();
+    }
+
+    public void setChat() {
+        chatHashMap.put("Everyone", getGui().getUiModel().getBroadcastChat());
+        Map<String, Chat> privateChat = getGui().getUiModel().getPrivateChat();
+
+        for(String player: privateChat.keySet()){
+            chatHashMap.put(player, privateChat.get(player));
+        }
+
+        setChatList(chatHashMap.keySet().stream().toList());
     }
 
     public void setChatList(List<String> chat) {
@@ -344,10 +322,18 @@ public class GamePageController implements Initializable{
         this.myName=n;
     }
 
-    public void setScore(List<Integer> s){
-        if(s.size()<=4) {
-            this.score = s;
+    public void setScore(){
+        Board board = null;
+
+        for(String player: getGui().getUiModel().getPlayerBoards().keySet()){
+
+            board = getGui().getUiModel().getPlayerBoards().get(player);
+            score.put(board.getColor(), board.getScore());
+
+            System.out.println("NEW SCORE: "+board.getColor().toString()+"//"+ board.getScore());
         }
+
+        placeScore();
     }
 
     public void setBoard(){
@@ -374,19 +360,19 @@ public class GamePageController implements Initializable{
     }
 
     public void setBoardCoordinatesOrder(Integer x, Integer y, String cardPath, int order, String player){
-        Coordinates coordinates = new Coordinates(x,y);
+        CoordinatesGUI coordinatesGUI = new CoordinatesGUI(x,y);
 
         // BoardCoordinates set
         if(boardCoordinates.containsKey(player)){
 
             if(boardCoordinates.get(player) != null){
-                boardCoordinates.get(player).put(cardPath,coordinates);
+                boardCoordinates.get(player).put(cardPath, coordinatesGUI);
             }else {
                 // ... crea oggetto Hashmap in quella board
             }
         }else {
-            HashMap<String, Coordinates> cardPlace = new HashMap<>();
-            cardPlace.put(cardPath, coordinates);
+            HashMap<String, CoordinatesGUI> cardPlace = new HashMap<>();
+            cardPlace.put(cardPath, coordinatesGUI);
             boardCoordinates.put(player, cardPlace);
         }
 
@@ -419,22 +405,66 @@ public class GamePageController implements Initializable{
 
     public void setPossibleOptions(int x, int y){
 
-        possibleCoordintes.add(new Coordinates(x,y));
+        possibleCoordintes.add(new CoordinatesGUI(x,y));
 
         // margins:
         /*coloredCell(0,0);
         coloredCell(4,8);*/
     }
 
-    public polimi.ingsoft.server.model.Coordinates getPosFromTableToGraph(int xt, int yt){
-        int xg = - CenterBoardX + xt;
-        int yg = CenterBoardY - yt;
-        return new polimi.ingsoft.server.model.Coordinates(xg,yg);
+    public void setClickBoardHandler(){
+        // Choose a card from a personal deck
+        for (Node node : personalDeck.getChildren()) {
+            int y = GridPane.getRowIndex(node);
+            int x = GridPane.getColumnIndex(node);
+
+            node.setOnMouseClicked(event -> {
+                drawPlayerHand(x,y);
+            });
+        }
+
+        // Choose a card from Public board
+        for (Node node : visibleDrawableDeck.getChildren()) {
+            int y = GridPane.getRowIndex(node);
+            int x = GridPane.getColumnIndex(node);
+
+            node.setOnMouseClicked(event -> {
+                drawVisiblePublicBoard(x,y);
+                System.out.println(x);
+                System.out.println(y);
+            });
+        }
+
+        // Choose a card from Public board (covered cards)
+        for (Node node : coveredDrawableDeck1.getChildren()) {
+            int y = GridPane.getRowIndex(node);
+            int x = GridPane.getColumnIndex(node);
+
+            node.setOnMouseClicked(event -> {
+                drawCoveredPublicBoard(x,y);
+                System.out.println(x);
+                System.out.println(y);
+            });
+        }
     }
 
-    public void refreshBoard(){
+    public Coordinates getPosFromTableToGraph(int xt, int yt){
+        int xg = - CenterBoardX + xt;
+        int yg = CenterBoardY - yt;
+        return new Coordinates(xg,yg);
+    }
+
+    public void updatePublicBoard(){
+        setPublicBoard();
+        setPlayerHand();
+
+        setClickBoardHandler();
+    }
+
+    public void updateBoard(){
         System.out.println("REFRESHING BOARD");
         SetGamePage.setBoardData();
+        SetGamePage.setPlayerHand(personalDeck);
         loadBoardCards();
     }
 
@@ -445,9 +475,45 @@ public class GamePageController implements Initializable{
         System.out.println(xPlayedCard+":"+yPlayedCard);
     }
 
+    public void drawVisiblePublicBoard(int x, int y){
+        TYPE_HAND_CARD typeHandCard = null;
+        PlaceInPublicBoard.Slots slots = null;
+
+        if(x == 0){
+            slots= PlaceInPublicBoard.Slots.SLOT_A;
+        } else if (x == 1) {
+            slots= PlaceInPublicBoard.Slots.SLOT_B;
+        }
+
+        if (y == 0){
+            typeHandCard = TYPE_HAND_CARD.RESOURCE;
+        } else if (y == 1) {
+            typeHandCard = TYPE_HAND_CARD.GOLD;
+        }
+
+        drawPublicBoard(typeHandCard, slots);
+    }
+
+    public void drawCoveredPublicBoard(int x, int y){
+        TYPE_HAND_CARD typeHandCard = null;
+        PlaceInPublicBoard.Slots slots = PlaceInPublicBoard.Slots.DECK;
+
+        if (y == 0){
+            typeHandCard = TYPE_HAND_CARD.RESOURCE;
+        } else if (y == 1) {
+            typeHandCard = TYPE_HAND_CARD.GOLD;
+        }
+
+        drawPublicBoard(typeHandCard, slots);
+    }
+
+    public void drawPublicBoard(TYPE_HAND_CARD typeHandCard, PlaceInPublicBoard.Slots slots){
+        getGui().drawPublicBoard(typeHandCard, slots);
+    }
+
     public void selectBoardPlacePlayedCard(int x, int y){
         String nickname = getGui().getNickname();
-        polimi.ingsoft.server.model.Coordinates coordinates = GUIsingleton.getInstance().getGamePageController().getPosFromTableToGraph(x,y);
+        Coordinates coordinates = GUIsingleton.getInstance().getGamePageController().getPosFromTableToGraph(x,y);
         if(mixedCard!=null){
             try {
                 System.out.println("Mixed card inviata: "+coordinates.getX()+":"+coordinates.getY());
@@ -456,10 +522,11 @@ public class GamePageController implements Initializable{
                 throw new RuntimeException(e);
             }
         }else{
-            System.out.println("Mixed card NON inviata");
+            System.out.println("Mixed card NON inviata 2");
         }
     }
-    public void coloredCell(int x, int y){
+
+    public void placePossibleCoordinates(int x, int y){
         // TO COLOR BOARD FREE POSITIONS
 
         ImageView possiblePosition = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/possiblePosition.png"));
@@ -472,11 +539,6 @@ public class GamePageController implements Initializable{
         // Add the ImageView to the specific cell in the GridPane
 
         board.add(possiblePosition, x, y);
-        /*if (Platform.isFxApplicationThread()) {
-            board.add(possiblePosition, x, y);
-        } else {
-            Platform.runLater(() -> board.add(possiblePosition, x, y));
-        }*/
     }
 
     public void resetCenterBoard(){
@@ -491,7 +553,7 @@ public class GamePageController implements Initializable{
     // METHOD THAT SHOWS THE CURRENT BOARD NICKNAME
     public void loadBoardCards(){
 
-        Coordinates coordinates = new Coordinates(0,0);
+        CoordinatesGUI coordinatesGUI = new CoordinatesGUI(0,0);
         GridPaneUtils gridPaneUtils = new GridPaneUtils();
         boolean breakLoop = false;
         Integer order = 1,i = 0, j=0; // order for order
@@ -515,19 +577,19 @@ public class GamePageController implements Initializable{
             imagePath= boardOrder.get(boardNickname).get(order);
 
             // From board to table reference system
-            coordinates.setX(boardCoordinates.get(boardNickname).get(imagePath).getX());
-            coordinates.setY(-boardCoordinates.get(boardNickname).get(imagePath).getY()); // different SI
-            coordinates.addX(CenterBoardX); // x = xCentro + xCoordinate
-            coordinates.addY(CenterBoardY); // y = yCentro - yCoordinate
+            coordinatesGUI.setX(boardCoordinates.get(boardNickname).get(imagePath).getX());
+            coordinatesGUI.setY(-boardCoordinates.get(boardNickname).get(imagePath).getY()); // different SI
+            coordinatesGUI.addX(CenterBoardX); // x = xCentro + xCoordinate
+            coordinatesGUI.addY(CenterBoardY); // y = yCentro - yCoordinate
 
             //System.out.println(coordinates.getX());
             //System.out.println(coordinates.getY());
 
-            if(coordinates.getX()>=0 && coordinates.getX()<colNum
-                    && coordinates.getY()>=0 && coordinates.getY()<rowNum){
+            if(coordinatesGUI.getX()>=0 && coordinatesGUI.getX()<colNum
+                    && coordinatesGUI.getY()>=0 && coordinatesGUI.getY()<rowNum){
 
-                i= coordinates.getX();
-                j= coordinates.getY();
+                i= coordinatesGUI.getX();
+                j= coordinatesGUI.getY();
 
                 boardAppo[i][j] = new ImageView(new Image(imagePath));
 
@@ -552,7 +614,7 @@ public class GamePageController implements Initializable{
         if(Objects.equals(myName, boardNickname)){
             // Load possible options
 
-            for (Coordinates c : possibleCoordintes) {
+            for (CoordinatesGUI c : possibleCoordintes) {
                 //System.out.println(c.getX());
                 //System.out.println(c.getY());
 
@@ -561,7 +623,7 @@ public class GamePageController implements Initializable{
 
                 if(xc>=0 && xc<colNum && yc>=0 && yc<rowNum) {
 
-                    coloredCell(xc,yc);
+                    placePossibleCoordinates(xc,yc);
 
                     // Make position editable (only for board)
                     for (Node node : board.getChildren()) {
@@ -639,45 +701,40 @@ public class GamePageController implements Initializable{
         }
     }
     public void placeScore(){
-        /*
-        1.blue
-        2.green
-        3.red
-        4.yellow
-         */
-
         ImageView imageView = null;
         String imageUrl = null;
         int x=41,y=331;
+        List<Integer> scoresAlreadySeen = new ArrayList<>();
 
         if(score != null){
             if(score.size()<=4){
-                for(int i=0; i<score.size(); i++){
-                    switch (i){
-                        case 0:
+                for(PlayerColor playerColor : score.keySet()){
+                    switch (playerColor){
+                        case BLUE:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/blueScore.png";
                             imageView = blueScoreImg;
                             break;
-                        case 1:
+                        case GREEN:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/greenScore.png";
                             imageView = greenScoreImg;
                             break;
-                        case 2:
+                        case RED:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/redScore.png";
                             imageView = redScoreImg;
                             break;
-                        case 3:
+                        case YELLOW:
                             imageUrl = "/polimi/ingsoft/demo/graphics/img/score/yellowScore.png";
                             imageView = yellowScoreImg;
                             break;
                     }
 
-                    x = ScoreUtils.GetXFromScore(score.get(i));
-                    y = ScoreUtils.GetYFromScore(score.get(i));
+                    x = ScoreUtils.GetXFromScore(score.get(playerColor));
+                    y = ScoreUtils.GetYFromScore(score.get(playerColor));
 
-                    x += (-4)*countSameScore(i);
-                    y += (-6)*countSameScore(i);
+                    x += (-4)*countSameScore(scoresAlreadySeen, score.get(playerColor));
+                    y += (-6)*countSameScore(scoresAlreadySeen, score.get(playerColor));
 
+                    scoresAlreadySeen.add(score.get(playerColor));
 
                     ScoreUtils.placeSingolScore(x,y,imageUrl, imageView);
                 }
@@ -687,16 +744,24 @@ public class GamePageController implements Initializable{
         }
     }
 
-    public int countSameScore(int s){
+    public int countSameScore(List<Integer> scoresAlreadySeen,int s){
         int counter = 0;
 
-        if(s<score.size() && s>0){
-            for(int i=s-1; i>=0; i--){
-                if(score.get(i).equals(score.get(s))){
-                    counter++;
+        if(scoresAlreadySeen!=null){
+            for (Integer score: scoresAlreadySeen){
+                if(s == score){
+                    counter ++;
                 }
             }
         }
+
+//        if(s<score.size() && s>0){
+//            for(int i=s-1; i>=0; i--){
+//                if(score.get(i).equals(score.get(s))){
+//                    counter++;
+//                }
+//            }
+//        }
 
         return counter;
     }
@@ -740,13 +805,7 @@ public class GamePageController implements Initializable{
 
         // Add the ImageView to the specific cell in the GridPane
 
-        //gridPane.add(imageView, x, y);
-
-        if (Platform.isFxApplicationThread()) {
-            gridPane.add(imageView, x, y);
-        } else {
-            Platform.runLater(() -> gridPane.add(imageView, x, y));
-        }
+        gridPane.add(imageView, x, y);
     }
 
     /*public void loadCard(ImageView imageView, String imagePath) {
@@ -852,10 +911,24 @@ public class GamePageController implements Initializable{
 
     public void sendMessage(ActionEvent actionEvent) throws IOException {
         if(messageInput != null){
-            chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName).toString(),messageInput.getText());
+            if(openedChat.equals("Everyone")){
+                getGui().sendBroadCastMessage(messageInput.getText());
+            }else {
+                getGui().sendPrivateMessage(openedChat,messageInput.getText());
+            }
+            //chatHashMap.get(openedChat).addMessage(nicknameColor.get(myName).toString(),messageInput.getText());
             openChat(openedChat);
             messageInput.setText("");
         }
+    }
+
+    public void showError(ERROR_MESSAGES errorMessages){
+        errButton.setText(errorMessages.getValue());
+        errButton.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+        pause.setOnFinished(event -> errButton.setVisible(false));
+        pause.play();
     }
 
 

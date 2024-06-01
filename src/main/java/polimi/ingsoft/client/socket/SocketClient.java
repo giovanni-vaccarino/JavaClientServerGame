@@ -124,7 +124,8 @@ public class SocketClient extends Client {
                     String nickname = boardUpdatePayload.nickname();
                     Coordinates coordinates = boardUpdatePayload.coordinates();
                     PlayedCard playedCard = boardUpdatePayload.playedCard();
-                    this.showUpdateBoard(nickname, coordinates, playedCard);
+                    Integer score = boardUpdatePayload.score();
+                    this.showUpdateBoard(nickname, coordinates, playedCard, score);
                 }
                 case MATCH_PLAYER_HAND_UPDATE -> {
                     PlayerHand playerHand = (PlayerHand) payload;

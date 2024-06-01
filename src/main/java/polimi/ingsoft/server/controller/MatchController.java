@@ -263,7 +263,9 @@ public class MatchController implements Serializable {
         if(card.getPlayability(board) > 0){
             boolean isAdded = board.add(coordinates, card, facingUp);
             if(isAdded){
-                board.updatePoints(card.getPoints(board,coordinates)*card.getScore(facingUp));
+                System.out.println("VOLTE IN CUI MATCHA" + card.getPoints(board,coordinates));
+                System.out.println("SCORE DELLA CARTA: " + card.getScore(facingUp) + "CON FACINGUP" + facingUp);
+                board.updatePoints(card.getPoints(board,coordinates) * card.getScore(facingUp));
                 player.removeFromHand(card);
             }else{
                 throw new CoordinateNotValidException();
@@ -273,7 +275,7 @@ public class MatchController implements Serializable {
             throw new NotEnoughResourcesException();
         }
 
-        gameState.updateState();
+        gameState.updateTurnStep();
     }
 
 
@@ -332,7 +334,7 @@ public class MatchController implements Serializable {
 
         gameState.goToNextPlayer();
 
-        player.addToHand(publicBoard.getResource(slot));
+        player.addToHand(publicBoard.getGold(slot));
     }
 
 

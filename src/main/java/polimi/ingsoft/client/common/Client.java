@@ -134,23 +134,26 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
 
     @Override
-    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException{
-        ui.updatePlayerBoard(nickname, coordinates, playedCard);
+    public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) throws IOException{
+        ui.updatePlayerBoard(nickname, coordinates, playedCard, score);
     }
 
     @Override
     public void showUpdateBroadcastChat(Message message) throws IOException {
-
+        System.out.println(message.getSender()+": "+message.getText());
+        ui.updateBroadcastChat(message);
     }
 
     @Override
     public void showUpdatePrivateChat(String recipient, Message message) throws IOException {
-
+        System.out.println("From: "+message.getSender()+"/ To: "+recipient+"/ "+message.getText());
+        ui.updatePrivateChat(recipient, message);
     }
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
         ui.reportError(errorMessage);
+        System.out.println(errorMessage);
     }
 
 
@@ -248,6 +251,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
      * @throws IOException If an I/O error occurs.
      */
     public void sendBroadCastMessage(String sender, String message) throws IOException {
+        System.out.println(sender+": "+message);
         getMatchServer().sendBroadcastMessage(sender, message);
     }
 
@@ -261,6 +265,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
      * @throws IOException If an I/O error occurs.
      */
     public void sendPrivateMessage(String sender, String receiver, String message) throws IOException {
+        System.out.println("From: "+sender+"/ To: "+receiver+"/ "+message);
         getMatchServer().sendPrivateMessage(sender, receiver, message);
     }
 

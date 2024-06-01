@@ -19,6 +19,25 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1350.0" styleClass="gamePage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polimi.ingsoft.client.ui.gui.page.GamePageController">
     <children>
 
+        <!-- Error -->
+        <StackPane layoutX="1100.0" layoutY="40.0" prefWidth="200" prefHeight="120" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" prefHeight="120" styleClass="errorPane"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        fx:id="errButton">
+                </Button>
+            </children>
+        </StackPane>
+
+        <!-- currentPlayerName -->
+        <StackPane layoutX="0.0" layoutY="0.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
+            <children>
+                <Label prefHeight="60" styleClass="textCurrentPlayerName" stylesheets="/polimi/ingsoft/demo/graphics/css/TextStyle.css"
+                    fx:id="currentPlayerName">
+                </Label>
+            </children>
+        </StackPane>
+
         <!-- Score Board -->
         <AnchorPane layoutX="10.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="564.0" stylesheets="/polimi/ingsoft/demo/graphics/css/CardStyle.css">
             <children>

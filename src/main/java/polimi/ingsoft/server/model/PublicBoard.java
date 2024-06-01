@@ -46,4 +46,8 @@ public class PublicBoard implements Serializable {
     public QuestCard getQuest(PlaceInPublicBoard.Slots spaceSlot) {
         return placeQuest.draw(spaceSlot);
     }
+
+    public Boolean isDecksEmpty(){
+        return placeResource.isPlaceInPublicBoardEmpty() && placeGold.isPlaceInPublicBoardEmpty();
+    }
 }

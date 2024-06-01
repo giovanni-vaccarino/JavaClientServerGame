@@ -120,8 +120,9 @@ public class RmiClient extends Client {
                 String nickname = (String) args[0];
                 Coordinates coordinates = (Coordinates) args[1];
                 PlayedCard playedCard = (PlayedCard) args[2];
+                Integer score = (Integer) args[3];
 
-                this.showUpdateBoard(nickname, coordinates, playedCard);
+                this.showUpdateBoard(nickname, coordinates, playedCard, score);
             }
 
             case MATCH_PLAYER_HAND_UPDATE -> {

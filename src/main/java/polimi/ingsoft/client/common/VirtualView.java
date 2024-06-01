@@ -142,7 +142,7 @@ public interface VirtualView extends Remote {
      * @param playedCard The played card.
      * @throws IOException If an I/O error occurs.
      */
-    void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard) throws IOException;
+    void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) throws IOException;
 
 
     /**

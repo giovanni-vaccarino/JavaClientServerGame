@@ -10,4 +10,8 @@ public abstract class CardCollection<T extends Drawable> implements Serializable
     public void shuffle(){
         Collections.shuffle(cards);
     }
+
+    public Boolean isCardCollectionEmpty(){
+        return cards.isEmpty();
+    }
 }
