@@ -10,8 +10,6 @@ import java.util.HashMap;
 import static polimi.ingsoft.server.enumerations.Object.*;
 
 public class ClientBoard {
-    HashMap<Coordinates, PlayedCard> board;
-    private Coordinates actualCoordinates;
     private final static String UPLEFTARROW = "↖";
     private final static String UPRIGHTARROW = "↗";
     private final static String DOWNLEFTARROW = "↙";
@@ -31,46 +29,36 @@ public class ClientBoard {
     public static final String RESET = "\u001B[0m";
     public static final String WHITETEXT = "\u001B[37m";
 
-    public ClientBoard(PlayedCard initial) {
-        this.board = new HashMap<>();
-        this.actualCoordinates = new Coordinates(0, 0);
-        board.put(new Coordinates(0, 0), initial);
-    }
-
-    public void put(Coordinates coordinates, PlayedCard playedCard) {
-        board.put(coordinates, playedCard);
-    }
-
-    public void printBoard() {
+    public static void printBoard(Board board,Coordinates actualCoordinates) {
         PlayedCard card;
         int count = 0, row = 0;
         String color = "";
         System.out.print(RESET);
-        if (getCardAtRespective(-2, 2) != null ||
-                getCardAtRespective(-3, 3) != null ||
-                getCardAtRespective(-1, 3) != null ||
-                getCardAtRespective(-3, 1) != null) System.out.print(UPLEFTARROW+"         |              ");
+        if (getCardAtRespective(board,-2, 2,actualCoordinates) != null ||
+                getCardAtRespective(board,-3, 3,actualCoordinates) != null ||
+                getCardAtRespective(board,-1, 3,actualCoordinates) != null ||
+                getCardAtRespective(board,-3, 1,actualCoordinates) != null) System.out.print(UPLEFTARROW+"         |              ");
         else System.out.print("                         ");
-        if (getCardAtRespective(0, 2) != null ||
-                getCardAtRespective(-1, 3) != null ||
-                getCardAtRespective(1, 3) != null) System.out.print("|               "+UPARROW+"                |              ");
+        if (getCardAtRespective(board,0, 2,actualCoordinates) != null ||
+                getCardAtRespective(board,-1, 3,actualCoordinates) != null ||
+                getCardAtRespective(board,1, 3,actualCoordinates) != null) System.out.print("|               "+UPARROW+"                |              ");
         else System.out.print("                                                ");
-        if (getCardAtRespective(2, 2) != null ||
-                getCardAtRespective(3, 3) != null ||
-                getCardAtRespective(1, 3) != null ||
-                getCardAtRespective(3, 1) != null) System.out.print("|         "+UPRIGHTARROW);
+        if (getCardAtRespective(board,2, 2,actualCoordinates) != null ||
+                getCardAtRespective(board,3, 3,actualCoordinates) != null ||
+                getCardAtRespective(board,1, 3,actualCoordinates) != null ||
+                getCardAtRespective(board,3, 1,actualCoordinates) != null) System.out.print("|         "+UPRIGHTARROW);
         else System.out.print("          ");
         System.out.print(RESET + "\n");
 
 
         do {
-            card = getCardAtRespective(-1, 1);
-            if (card != null || getCardAtRespective(-2, 2) != null || getCardAtRespective(0, 2) != null) {
+            card = getCardAtRespective(board,-1, 1,actualCoordinates);
+            if (card != null || getCardAtRespective(board,-2,2,actualCoordinates ) != null || getCardAtRespective(board,0, 2,actualCoordinates) != null) {
                 if (card != null && card.getCenter().getItems().size() > 1) color = YELLOW;
                 else color = defineColor(card);
-                System.out.print(printLeftUpLeftCorner(card, count));
+                System.out.print(printLeftUpLeftCorner(board,card, count,actualCoordinates));
                 System.out.print(printCenter(row, card, color));
-                System.out.print(printLeftUpRightCorner(card, count));
+                System.out.print(printLeftUpRightCorner(board,card, count,actualCoordinates));
             } else {
                 System.out.print(RESET);
                 for (int i = 0; i < 35; i++) System.out.print(" ");
@@ -78,18 +66,18 @@ public class ClientBoard {
             System.out.print(RESET);
             for (int i = 0; i < 14; i++) System.out.print(" ");
 
-            card = getCardAtRespective(1, 1);
-            if (card != null || getCardAtRespective(2, 2) != null || getCardAtRespective(0, 2) != null) {
+            card = getCardAtRespective(board,1, 1,actualCoordinates);
+            if (card != null || getCardAtRespective(board,2, 2,actualCoordinates) != null || getCardAtRespective(board,0, 2,actualCoordinates) != null) {
                 if (card != null && card.getCenter().getItems().size() > 1) color = YELLOW;
                 else color = defineColor(card);
-                System.out.print(printRightUpLeftCorner(card, count));
+                System.out.print(printRightUpLeftCorner(board,card, count,actualCoordinates));
                 System.out.print(printCenter(row, card, color));
-                System.out.print(printRightUpRightCorner(card, count));
+                System.out.print(printRightUpRightCorner(board,card, count,actualCoordinates));
             } else {
                 System.out.print(RESET);
                 for (int i = 0; i < 33; i++) System.out.print(" ");
             }
-            if (count == 2 && getCardAtRespective(2, 2) != null) System.out.print(RESET + "_");
+            if (count == 2 && getCardAtRespective(board,2, 2,actualCoordinates) != null) System.out.print(RESET + "_");
             else System.out.print(RESET + " ");
             count++;
             row++;
@@ -99,8 +87,8 @@ public class ClientBoard {
 
         count = 0;
         do {
-            card = getCardAtRespective(-1, 1);
-            if (card != null || getCardAtRespective(-2, 2) != null || getCardAtRespective(0, 2) != null) {
+            card = getCardAtRespective(board,-1, 1,actualCoordinates);
+            if (card != null || getCardAtRespective(board,-2, 2,actualCoordinates) != null || getCardAtRespective(board,0, 2,actualCoordinates) != null) {
                 printCentralRows(card, row);
                 System.out.print(RESET);
                 for (int i = 0; i < 13; i++) System.out.print(" ");
@@ -109,8 +97,8 @@ public class ClientBoard {
                 for (int i = 0; i < 48; i++) System.out.print(" ");
             }
 
-            card = getCardAtRespective(1, 1);
-            if (card != null || getCardAtRespective(2, 2) != null || getCardAtRespective(0, 2) != null) {
+            card = getCardAtRespective(board,1, 1,actualCoordinates);
+            if (card != null || getCardAtRespective(board,2, 2,actualCoordinates) != null || getCardAtRespective(board,0, 2,actualCoordinates) != null) {
                 printCentralRows(card, row);
             } else {
                 System.out.print(RESET);
@@ -124,61 +112,61 @@ public class ClientBoard {
 
         count = 0;
         do {
-            card = getCardAtRespective(-1, 1);
+            card = getCardAtRespective(board,-1, 1,actualCoordinates);
             color = defineColor(card);
-            if (getCardAtRespective(-2, 0) != null && count == 0) System.out.print(RESET + "‾");
+            if (getCardAtRespective(board,-2, 0,actualCoordinates) != null && count == 0) System.out.print(RESET + "‾");
             else System.out.print(" ");
-            System.out.print(printLeftBottomLeftCorner(card, count));
+            System.out.print(printLeftBottomLeftCorner(board,card, count,actualCoordinates));
             System.out.print(printCenter(row, card, color));
-            System.out.print(printLeftBottomRightCorner(card, count));
-            card = getCardAtRespective(0, 0);
+            System.out.print(printLeftBottomRightCorner(board,card, count,actualCoordinates));
+            card = getCardAtRespective(board,0, 0,actualCoordinates);
             color = defineColor(card);
             System.out.print(printCenter(row - 6, card, color));
-            card = getCardAtRespective(1, 1);
+            card = getCardAtRespective(board,1, 1,actualCoordinates);
             color = defineColor(card);
-            System.out.print(printRightBottomLeftCorner(card, count));
+            System.out.print(printRightBottomLeftCorner(board,card, count,actualCoordinates));
             System.out.print(printCenter(row, card, color));
-            System.out.print(printRightBottomRightCorner(card, count));
-            if (count == 0 && getCardAtRespective(2, 0) != null) System.out.print(RESET + "‾");
+            System.out.print(printRightBottomRightCorner(board,card, count,actualCoordinates));
+            if (count == 0 && getCardAtRespective(board,2, 0,actualCoordinates) != null) System.out.print(RESET + "‾");
             System.out.print(RESET + "\n");
             row++;
             count++;
         } while (count < 3);
         row = 3;
-        card = getCardAtRespective(0, 0);
+        card = getCardAtRespective(board,0, 0,actualCoordinates);
         do {
             if (row == 4 &&
-                    (getCardAtRespective(-2, 0) != null ||
-                    getCardAtRespective(-3, 1) != null ||
-                    getCardAtRespective(-3, -1) != null))
+                    (getCardAtRespective(board,-2, 0,actualCoordinates) != null ||
+                    getCardAtRespective(board,-3, 1,actualCoordinates) != null ||
+                    getCardAtRespective(board,-3, -1,actualCoordinates) != null))
                 System.out.print(LEFTARROW);
             else System.out.print(" ");
             System.out.print(RESET + "                       ");
             printCentralRows(card, row);
             if (row == 4 &&
-                    (getCardAtRespective(2, 0) != null ||
-                    getCardAtRespective(3, 1) != null ||
-                    getCardAtRespective(3, -1) != null))
+                    (getCardAtRespective(board,2, 0,actualCoordinates) != null ||
+                    getCardAtRespective(board,3, 1,actualCoordinates) != null ||
+                    getCardAtRespective(board,3, -1,actualCoordinates) != null))
                 System.out.print(RESET + "                        " + RIGHTARROW);
             System.out.print(RESET + "\n");
             row++;
         } while (row < 6);
         count = 0;
         do {
-            card = getCardAtRespective(-1, -1);
-            if (count == 2 && getCardAtRespective(-2, 0) != null) System.out.print("_");
+            card = getCardAtRespective(board,-1, -1,actualCoordinates);
+            if (count == 2 && getCardAtRespective(board,-2, 0,actualCoordinates) != null) System.out.print("_");
             else System.out.print(" ");
-            System.out.print(printBottomLeftUpLeftCorner(card, count));
+            System.out.print(printBottomLeftUpLeftCorner(board,card, count,actualCoordinates));
             System.out.print(printCenter(row - 6, card, defineColor(card)));
-            System.out.print(printBottomLeftUpRightCorner(card, count));
-            card = getCardAtRespective(0, 0);
+            System.out.print(printBottomLeftUpRightCorner(board,card, count,actualCoordinates));
+            card = getCardAtRespective(board,0, 0,actualCoordinates);
             System.out.print(printCenter(row, card, defineColor(card)));
-            card = getCardAtRespective(1, -1);
+            card = getCardAtRespective(board,1, -1,actualCoordinates);
 
-            System.out.print(printBottomRightUpLeftCorner(card, count));
+            System.out.print(printBottomRightUpLeftCorner(board,card, count,actualCoordinates));
             System.out.print(printCenter(row - 6, card, defineColor(card)));
-            System.out.print(printBottomRightUpRightCorner(card, count));
-            if (count == 2 && getCardAtRespective(2, 0) != null) System.out.print(RESET + "_");
+            System.out.print(printBottomRightUpRightCorner(board,card, count,actualCoordinates));
+            if (count == 2 && getCardAtRespective(board,2, 0,actualCoordinates) != null) System.out.print(RESET + "_");
 
             System.out.print(RESET + "\n");
             row++;
@@ -187,10 +175,10 @@ public class ClientBoard {
         row = row - 6;
         count = 0;
         do {
-            card = getCardAtRespective(-1, -1);
+            card = getCardAtRespective(board,-1, -1,actualCoordinates);
             printCentralRows(card, row);
             System.out.print(RESET + "             ");
-            card = getCardAtRespective(1, -1);
+            card = getCardAtRespective(board,1, -1,actualCoordinates);
             printCentralRows(card, row);
             row++;
             count++;
@@ -198,107 +186,107 @@ public class ClientBoard {
         } while (count < 3);
         count = 0;
         do {
-            card = getCardAtRespective(-1, -1);
+            card = getCardAtRespective(board,-1, -1,actualCoordinates);
             color=defineColor(card);
-            if(count==0&&getCardAtRespective(-2,-2)!=null)System.out.print("‾");
+            if(count==0&&getCardAtRespective(board,-2,-2,actualCoordinates)!=null)System.out.print("‾");
             else System.out.print(" ");
-            System.out.print(printBottomLeftBottomLeftCorner(card, count));
+            System.out.print(printBottomLeftBottomLeftCorner(card, count,board,actualCoordinates));
             System.out.print(printCenter(row,card,color));
-            System.out.print(printBottomLeftBottomRightCorner(card, count));
+            System.out.print(printBottomLeftBottomRightCorner(card, count,board,actualCoordinates));
             System.out.print(RESET+"              ");
-            card = getCardAtRespective(1, -1);
+            card = getCardAtRespective(board,1, -1,actualCoordinates);
             color=defineColor(card);
-            System.out.print(printBottomRightBottomLeftCorner(card, count));
+            System.out.print(printBottomRightBottomLeftCorner(card, count,board,actualCoordinates));
             System.out.print(printCenter(row,card,color));
-            System.out.print(printBottomRightBottomRightCorner(card, count));
-            if(count==0&&getCardAtRespective(2,-2)!=null)System.out.print(RESET+"‾");
+            System.out.print(printBottomRightBottomRightCorner(card, count,board,actualCoordinates));
+            if(count==0&&getCardAtRespective(board,2,-2,actualCoordinates)!=null)System.out.print(RESET+"‾");
             else System.out.print(RESET+" ");
             System.out.print(RESET + "\n");
             row++;
             count++;
         } while (count < 3);
-        if(getCardAtRespective(-2,-2)!=null||
-                getCardAtRespective(-1,-3)!=null||
-                getCardAtRespective(-3,-3)!=null||
-                getCardAtRespective(-3,-1)!=null)System.out.print(DOWNLEFTARROW+"         |");
+        if(getCardAtRespective(board,-2,-2,actualCoordinates)!=null||
+                getCardAtRespective(board,-1,-3,actualCoordinates)!=null||
+                getCardAtRespective(board,-3,-3,actualCoordinates)!=null||
+                getCardAtRespective(board,-3,-1,actualCoordinates)!=null)System.out.print(DOWNLEFTARROW+"         |");
         else System.out.print("           ");
         System.out.print("              ");
-        if(getCardAtRespective(0,-2)!=null||
-                getCardAtRespective(-1,-3)!=null||
-                getCardAtRespective(1,-3)!=null)System.out.print("|               "+DOWNARROW+"                |              ");
+        if(getCardAtRespective(board,0,-2,actualCoordinates)!=null||
+                getCardAtRespective(board,-1,-3,actualCoordinates)!=null||
+                getCardAtRespective(board,1,-3,actualCoordinates)!=null)System.out.print("|               "+DOWNARROW+"                |              ");
         else System.out.print("                                                ");
-        if(getCardAtRespective(2,-2)!=null||
-                getCardAtRespective(3,-1)!=null||
-                getCardAtRespective(3,-3)!=null||
-                getCardAtRespective(1,-3)!=null)System.out.print("|         "+DOWNRIGHTARROW);
+        if(getCardAtRespective(board,2,-2,actualCoordinates)!=null||
+                getCardAtRespective(board,3,-1,actualCoordinates)!=null||
+                getCardAtRespective(board,3,-3,actualCoordinates)!=null||
+                getCardAtRespective(board,1,-3,actualCoordinates)!=null)System.out.print("|         "+DOWNRIGHTARROW);
         else System.out.print("           ");
     }
 
-    private String printBottomLeftBottomLeftCorner(PlayedCard card, int count) {
+    private static String printBottomLeftBottomLeftCorner(PlayedCard card, int count, Board board,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(-2, -2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(-2, -2) != null && card != null &&
-                getCardAtRespective(-2, -2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,-2, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,-2, -2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,-2, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(-2, -2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,-2, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(-2, -2).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(-2, -2)) + "          ";
+            corner = getCardAtRespective(board,-2, -2,actualCoordinates).getUpRightCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,-2, -2,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printBottomLeftBottomRightCorner(PlayedCard card, int count) {
+    private static String printBottomLeftBottomRightCorner(PlayedCard card, int count,Board board, Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, -2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, -2) != null && card != null &&
-                getCardAtRespective(0, -2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, -2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, -2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, -2).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, -2)) + "          ";
+            corner = getCardAtRespective(board,0, -2,actualCoordinates).getUpLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, -2,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printBottomRightBottomRightCorner(PlayedCard card, int count) {
+    private static String printBottomRightBottomRightCorner(PlayedCard card, int count,Board board,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(2, -2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(2, -2) != null && card != null &&
-                getCardAtRespective(2, -2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,2, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,2, -2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,2, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(2, -2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,2, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(2, -2).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(2, -2)) + "          ";
+            corner = getCardAtRespective(board,2, -2,actualCoordinates).getUpLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,2, -2,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printBottomRightBottomLeftCorner(PlayedCard card, int count) {
+    private static String printBottomRightBottomLeftCorner(PlayedCard card, int count,Board board, Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, -2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, -2) != null && card != null &&
-                getCardAtRespective(0, -2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, -2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, -2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, -2).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, -2)) + "          ";
+            corner = getCardAtRespective(board,0, -2,actualCoordinates).getUpRightCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, -2,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private void printCentralRows(PlayedCard card, int row) {
+    private static void printCentralRows(PlayedCard card, int row) {
         String color;
         if (card != null && card.getCenter().getItems().size() > 1) color = YELLOW;
         else color = defineColor(card);
@@ -307,189 +295,187 @@ public class ClientBoard {
         System.out.print(color + "          ");
     }
 
-    private PlayedCard getCardAtRespective(int x, int y) {
-        return board.get(actualCoordinates.sum(new Coordinates(x, y)));
+    private static PlayedCard getCardAtRespective(Board board,int x, int y,Coordinates actualCoordinates) {
+        return board.getCard(actualCoordinates.sum(new Coordinates(x, y)));
     }
 
-    private String printBottomRightUpRightCorner(PlayedCard card, int count) {
+    private static String printBottomRightUpRightCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(2, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(2, 0) != null && card != null &&
-                getCardAtRespective(2, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,2, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(2, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(2, 0).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(2, 0)) + "          ";
+            corner = getCardAtRespective(board,2, 0,actualCoordinates).getBottomLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,2, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printBottomRightUpLeftCorner(PlayedCard card, int count) {
+    private static String printBottomRightUpLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, 0) != null && card != null &&
-                getCardAtRespective(0, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, 0).getBottomRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, 0)) + "          ";
+            corner = getCardAtRespective(board,0, 0,actualCoordinates).getBottomRightCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printBottomLeftUpRightCorner(PlayedCard card, int count) {
+    private static String printBottomLeftUpRightCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, 0) != null && card != null &&
-                getCardAtRespective(0, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, 0).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, 0)) + "          ";
+            corner = getCardAtRespective(board,0, 0,actualCoordinates).getBottomLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printBottomLeftUpLeftCorner(PlayedCard card, int count) {
+    private static String printBottomLeftUpLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(-2, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(-2, 0) != null && card != null &&
-                getCardAtRespective(-2, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,-2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,-2, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,-2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(-2, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,-2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(-2, 0).getBottomRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(-2, 0)) + "          ";
+            corner = getCardAtRespective(board,-2, 0,actualCoordinates).getBottomRightCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,-2, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printRightBottomLeftCorner(PlayedCard card, int count) {
+    private static String printRightBottomLeftCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, 0) != null && card != null &&
-                getCardAtRespective(0, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, 0).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, 0)) + "          ";
+            corner = getCardAtRespective(board,0, 0,actualCoordinates).getUpRightCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printRightBottomRightCorner(PlayedCard card, int count) {
+    private static String printRightBottomRightCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(2, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(2, 0) != null && card != null &&
-                getCardAtRespective(2, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,2, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(2, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(2, 0).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(2, 0)) + "          ";
+            corner = getCardAtRespective(board,2, 0,actualCoordinates).getUpLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,2, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printLeftBottomRightCorner(PlayedCard card, int count) {
+    private static String printLeftBottomRightCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, 0) != null && card != null &&
-                getCardAtRespective(0, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, 0).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, 0)) + "          ";
+            corner = getCardAtRespective(board,0, 0,actualCoordinates).getUpLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printLeftBottomLeftCorner(PlayedCard card, int count) {
+    private static String printLeftBottomLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(-2, 0) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(-2, 0) != null && card != null &&
-                getCardAtRespective(-2, 0).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,-2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,-2, 0,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,-2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(-2, 0) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,-2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(-2, 0).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(-2, 0)) + "          ";
+            corner = getCardAtRespective(board,-2, 0,actualCoordinates).getUpRightCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,-2, 0,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printRightUpLeftCorner(PlayedCard card, int count) {
+    private static String printRightUpLeftCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, 2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, 2) != null && card != null &&
-                getCardAtRespective(0, 2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, 2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, 2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, 2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, 2).getBottomRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, 2)) + "          ";
+            corner = getCardAtRespective(board,0, 2,actualCoordinates).getBottomRightCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 2,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-    private String printRightUpRightCorner(PlayedCard card, int count) {
+    private static String printRightUpRightCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(2, 2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(2, 2) != null && card != null &&
-                getCardAtRespective(2, 2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,2, 2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,2, 2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,2, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(2, 2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,2, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(2, 2).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(2, 2)) + "          ";
+            corner = getCardAtRespective(board,2, 2,actualCoordinates).getBottomLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,2, 2,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-
-    private String printLeftUpRightCorner(PlayedCard card, int count) {
+    private static String printLeftUpRightCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
-        if (getCardAtRespective(0, 2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(0, 2) != null && card != null &&
-                getCardAtRespective(0, 2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,0, 2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,0, 2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,0, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
             if (corner == null) return defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(0, 2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,0, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(0, 2).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(0, 2)) + "          ";
+            corner = getCardAtRespective(board,0, 2,actualCoordinates).getBottomLeftCorner();
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 2,actualCoordinates)) + "          ";
         }
         return printCorner("", corner, count);
     }
 
-
-    private String printLeftUpLeftCorner(PlayedCard card, int count) {
+    private static String printLeftUpLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         String pre = "";
         CornerSpace corner;
         switch (count) {
@@ -497,26 +483,26 @@ public class ClientBoard {
                 pre = " ";
                 break;
             case 2:
-                if (getCardAtRespective(-2, 2) == null) pre = " ";
+                if (getCardAtRespective(board,-2, 2,actualCoordinates) == null) pre = " ";
                 else pre = "_";
                 break;
         }
         //carta 22si carta 11si   //carta 22si carta11 no
-        if (getCardAtRespective(-2, 2) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
-                || (getCardAtRespective(-2, 2) != null && card != null &&
-                getCardAtRespective(-2, 2).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
+        if (getCardAtRespective(board,-2, 2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
+                || (getCardAtRespective(board,-2, 2,actualCoordinates) != null && card != null &&
+                getCardAtRespective(board,-2, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
             if (corner == null) return pre + defineColor(card) + "          ";
-        } else if (card == null && getCardAtRespective(-2, 2) == null) {//carta 22 no carta 11 no
+        } else if (card == null && getCardAtRespective(board,-2, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
-            corner = getCardAtRespective(-2, 2).getBottomRightCorner();
-            if (corner == null) return pre + defineColor(getCardAtRespective(-2, 2)) + "          ";
+            corner = getCardAtRespective(board,-2, 2,actualCoordinates).getBottomRightCorner();
+            if (corner == null) return pre + defineColor(getCardAtRespective(board,-2, 2,actualCoordinates)) + "          ";
         }
         return printCorner(pre, corner, count);
     }
 
-    private String printCorner(String pre, CornerSpace corner, int count) {
+    private static String printCorner(String pre, CornerSpace corner, int count) {
         String color = "";
         if (corner.isEmpty()) return pre + YELLOW + "          ";
         else {
@@ -541,24 +527,7 @@ public class ClientBoard {
         return "";
     }
 
-//    public void printUpperResource(int place, CornerSpace corner, String actualColor, int pos) {
-//        String color = "";
-//        System.out.print(RESET + "          " + color + "          ");
-//        System.out.print(RESET + "__________" + color + "          ");
-//        System.out.print(color + "          " + RESET + "          ");
-//        System.out.print(color + "          " + RESET + "__________");
-//        System.out.print(color + "          ");
-//        System.out.print(RESET + "          " + color + "¡‾‾‾‾‾‾‾‾¡");
-//        System.out.print(RESET + "          " + color + printObject(corner.getItems().getFirst()));
-//        System.out.print(RESET + "          " + color + "!________!");
-//        System.out.print(RESET + "__________" + color + "!________!");
-//        System.out.print(color + "¡‾‾‾‾‾‾‾‾¡" + RESET + "          ");
-//        System.out.print(color + printObject(corner.getItems().getFirst()) + RESET + "          ");
-//        System.out.print(color + "!________!" + RESET + "          ");
-//        System.out.print(color + "!________!" + RESET + "__________");
-//    }
-
-    private String printCenter(int row, PlayedCard card, String actualColor) {
+    private static String printCenter(int row, PlayedCard card, String actualColor) {
         String pre = "";
         Resource resource = null;
         if (card == null) return RESET + "              ";
@@ -625,7 +594,7 @@ public class ClientBoard {
         return RESET + "              ";
     }
 
-    private String defineColor(PlayedCard card) {
+    private static String defineColor(PlayedCard card) {
         if (card != null && card.getCenter().getItems().size() != 1) return YELLOW;
         return card == null ? "" : switch (card.getColor()) {
             case Resource.BUTTERFLY -> PURPLE;
@@ -635,7 +604,7 @@ public class ClientBoard {
         };
     }
 
-    private String printObject(Item object) {
+    private static String printObject(Item object) {
         return switch (object) {
             case SCROLL -> BLACKTEXT + "| SCROLL |";
             case POTION -> BLACKTEXT + "| POTION |";
@@ -644,8 +613,7 @@ public class ClientBoard {
         };
     }
 
-
-    private String printLastRow(PlayedCard card, String actualColor) {
+    private static String printLastRow(PlayedCard card, String actualColor) {
         MixedCard newCard;
         try {
             newCard = (MixedCard) card.getCard();
@@ -709,65 +677,64 @@ public class ClientBoard {
         } else return actualColor + "              ";
 
     }
-    public void printBoard(BoardArgument argument) {
+
+    public static void printBoard(Board board,BoardArgument argument,Coordinates actualCoordinates) {
         String error="ERROR: place not avaiable!";
         switch (argument) {
-            case UPLEFT:
-                if (getCardAtRespective(-2, 2) != null ||
-                        getCardAtRespective(-3, 3) != null ||
-                        getCardAtRespective(-1, 3) != null ||
-                        getCardAtRespective(-3, 1) != null) actualCoordinates.sum(new Coordinates(-1,1));
+            case BoardArgument.UPLEFT:
+                if (getCardAtRespective(board,-2, 2,actualCoordinates) != null ||
+                        getCardAtRespective(board,-3, 3,actualCoordinates) != null ||
+                        getCardAtRespective(board,-1, 3,actualCoordinates) != null ||
+                        getCardAtRespective(board,-3, 1,actualCoordinates) != null) board.updatePrintingCoordinates(-1,1);
                 else System.out.print(error);
                 break;
-            case UP:
-                if (getCardAtRespective(0, 2) != null ||
-                        getCardAtRespective(-1, 3) != null ||
-                        getCardAtRespective(1, 3) != null)actualCoordinates.sum(new Coordinates(0,2));
+            case BoardArgument.UP:
+                if (getCardAtRespective(board,0, 2,actualCoordinates) != null ||
+                        getCardAtRespective(board,-1, 3,actualCoordinates) != null ||
+                        getCardAtRespective(board,1, 3,actualCoordinates) != null)board.updatePrintingCoordinates(0,2);
                 else System.out.print(error);
                 break;
-            case UPRIGHT:
-                if (getCardAtRespective(2, 2) != null ||
-                        getCardAtRespective(3, 3) != null ||
-                        getCardAtRespective(1, 3) != null ||
-                        getCardAtRespective(3, 1) != null)actualCoordinates.sum(new Coordinates(1,1));
+            case BoardArgument.UPRIGHT:
+                if (getCardAtRespective(board,2, 2,actualCoordinates) != null ||
+                        getCardAtRespective(board,3, 3,actualCoordinates) != null ||
+                        getCardAtRespective(board,1, 3,actualCoordinates) != null ||
+                        getCardAtRespective(board,3, 1,actualCoordinates) != null)board.updatePrintingCoordinates(1,1);
                 else System.out.print(error);
                 break;
-            case LEFT:
-                if(getCardAtRespective(-2, 0) != null ||
-                        getCardAtRespective(-3, 1) != null ||
-                        getCardAtRespective(-3, -1) != null)actualCoordinates.sum(new Coordinates(-2,0));
+            case BoardArgument.LEFT:
+                if(getCardAtRespective(board,-2, 0,actualCoordinates) != null ||
+                        getCardAtRespective(board,-3, 1,actualCoordinates) != null ||
+                        getCardAtRespective(board,-3, -1,actualCoordinates) != null)board.updatePrintingCoordinates(-2,0);
                 else System.out.print(error);
                 break;
-            case RIGHT:
-                if(getCardAtRespective(2, 0) != null ||
-                        getCardAtRespective(3, 1) != null ||
-                        getCardAtRespective(3, -1) != null)actualCoordinates.sum(new Coordinates(2,0));
+            case BoardArgument.RIGHT:
+                if(getCardAtRespective(board,2, 0,actualCoordinates) != null ||
+                        getCardAtRespective(board,3, 1,actualCoordinates) != null ||
+                        getCardAtRespective(board,3, -1,actualCoordinates) != null)board.updatePrintingCoordinates(2,0);
                 else System.out.print(error);
                 break;
-            case DOWNLEFT:
-                if(getCardAtRespective(-2,-2)!=null||
-                        getCardAtRespective(-1,-3)!=null||
-                        getCardAtRespective(-3,-3)!=null||
-                        getCardAtRespective(-3,-1)!=null)actualCoordinates.sum(new Coordinates(-2,-2));
+            case BoardArgument.DOWNLEFT:
+                if(getCardAtRespective(board,-2,-2,actualCoordinates)!=null||
+                        getCardAtRespective(board,-1,-3,actualCoordinates)!=null||
+                        getCardAtRespective(board,-3,-3,actualCoordinates)!=null||
+                        getCardAtRespective(board,-3,-1,actualCoordinates)!=null)board.updatePrintingCoordinates(-2, -2);
                 else System.out.print(error);
                 break;
-            case DOWN:
-                if(getCardAtRespective(0,-2)!=null||
-                        getCardAtRespective(-1,-3)!=null||
-                        getCardAtRespective(1,-3)!=null)actualCoordinates.sum(new Coordinates(0,-2));
+            case BoardArgument.DOWN:
+                if(getCardAtRespective(board,0,-2,actualCoordinates)!=null||
+                        getCardAtRespective(board,-1,-3,actualCoordinates)!=null||
+                        getCardAtRespective(board,1,-3,actualCoordinates)!=null)board.updatePrintingCoordinates(0,-2);
                 else System.out.print(error);
                 break;
             case DOWNRIGHT:
-                if(getCardAtRespective(2,-2)!=null||
-                        getCardAtRespective(3,-1)!=null||
-                        getCardAtRespective(3,-3)!=null||
-                        getCardAtRespective(1,-3)!=null)actualCoordinates.sum(new Coordinates(2,-2));
+                if(getCardAtRespective(board,2,-2,actualCoordinates)!=null||
+                        getCardAtRespective(board,3,-1,actualCoordinates)!=null||
+                        getCardAtRespective(board,3,-3,actualCoordinates)!=null||
+                        getCardAtRespective(board,1,-3,actualCoordinates)!=null)board.updatePrintingCoordinates(2,-2);
                 else System.out.print(error);
                 break;
         }
-        printBoard();
+        printBoard(board,board.getPrintingCoordinates());
     }
-    public Coordinates getActualCoordinates(){
-        return this.actualCoordinates;
-    }
+    
 }

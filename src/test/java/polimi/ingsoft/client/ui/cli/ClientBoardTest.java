@@ -3,6 +3,7 @@ package polimi.ingsoft.client.ui.cli;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.enumerations.Object;
+import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 class ClientBoardTest {
-    static ClientBoard board;
+    static Board board;
     static InitialCard a;
     static GoldCard gold;
     static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
@@ -254,7 +255,7 @@ class ClientBoardTest {
         back=new Face(upleft,null,bottomleft,bottomright);
 
         a=new InitialCard("lol",front,back,0);
-        board=new ClientBoard(new PlayedCard(a,true,0));
+        board=new Board(a,true,true, PlayerColor.RED);
 
         list=new ArrayList<>();
         list2=new ArrayList<>();
@@ -292,12 +293,13 @@ class ClientBoardTest {
 
     @Test
     void printBoard() {
-        board.put(new Coordinates(1,1),new PlayedCard(gold,true,2));
-        board.put(new Coordinates(-1,1),new PlayedCard(gold,false,1));
-        board.put(new Coordinates(-1,-1),new PlayedCard(res1,true,3));
-        board.put(new Coordinates(1,-1),new PlayedCard(res2,false,4));
-        board.put(new Coordinates(-2,-2),new PlayedCard(res3,true,5));
-        board.printBoard();
+        board.add(new Coordinates(1,1),gold,true);
+        board.add(new Coordinates(-1,1),gold,false);
+        board.add(new Coordinates(-1,-1),res1,true);
+        board.add(new Coordinates(1,-1),res2,false);
+        board.add(new Coordinates(-2,-2),res3,true);
+        ClientBoard.printBoard(board,board.getPrintingCoordinates());
+        ClientBoard.printBoard(board,BoardArgument.DOWNLEFT,board.getPrintingCoordinates());
     }
 }
 

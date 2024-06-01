@@ -16,6 +16,8 @@ public class Board implements Serializable {
     private final Map<Coordinates, PlayedCard> cards;
     private final Map<Item,Integer> resources;
 
+    private Coordinates printingCoordinates;
+
     /**
      * Board builder
      * @param initialCard defines the player's first card, always to be put at coordinates 0,0
@@ -37,6 +39,7 @@ public class Board implements Serializable {
         resources.put(Object.FEATHER,0);
         this.add(new Coordinates(0,0),initialCard,isFaceUp);
         this.score=0;
+        this.printingCoordinates=new Coordinates(0,0);
     }
 
     /**
@@ -248,5 +251,22 @@ public class Board implements Serializable {
      */
     public Boolean getFirstPlayer() {
         return isFirstPlayer;
+    }
+
+    /**
+     * returns board's printing coordinates
+     * @return board's printing coordinates
+     */
+    public Coordinates getPrintingCoordinates(){
+        return this.printingCoordinates;
+    }
+
+    /**
+     * Changes board's printing coordinates adding specified X and Y values
+     * @param x parameter to add printingCoordinates' position X
+     * @param y parameter to add printingCoordinates' position Y
+     */
+    public void updatePrintingCoordinates(int x,int y){
+        this.printingCoordinates=this.printingCoordinates.sum(new Coordinates(x,y));
     }
 }

@@ -1,5 +1,6 @@
 package polimi.ingsoft.client.ui.cli;
 
+import polimi.ingsoft.server.model.Board;
 import polimi.ingsoft.server.model.InitialCard;
 import polimi.ingsoft.server.model.QuestCard;
 
@@ -17,20 +18,20 @@ public class Printer {
             out.println(MESSAGES.HELPMAIN.getValue());
         }else out.println(MESSAGES.ERROR.getValue());
     }
-    public void printFromBoard(ClientBoard board, ClientHand hand, String argument){
+    public void printFromBoard(Board board, ClientHand hand, String argument){
         out.print(MESSAGES.CLS.getValue());
-        if(argument.equals(BoardArgument.UP.getValue()))board.printBoard(BoardArgument.UP);
-        else if(argument.equals(BoardArgument.DOWN.getValue()))board.printBoard(BoardArgument.DOWN);
-        else if(argument.equals(BoardArgument.LEFT.getValue()))board.printBoard(BoardArgument.LEFT);
-        else if(argument.equals(BoardArgument.RIGHT.getValue()))board.printBoard(BoardArgument.RIGHT);
-        else if(argument.equals(BoardArgument.UPRIGHT.getValue()))board.printBoard(BoardArgument.UPRIGHT);
-        else if(argument.equals(BoardArgument.UPLEFT.getValue()))board.printBoard(BoardArgument.UPLEFT);
-        else if(argument.equals(BoardArgument.DOWNLEFT.getValue()))board.printBoard(BoardArgument.DOWNLEFT);
-        else if(argument.equals(BoardArgument.DOWNRIGHT.getValue()))board.printBoard(BoardArgument.DOWNRIGHT);
-        else board.printBoard();
+        if(argument.equals(BoardArgument.UP.getValue()))ClientBoard.printBoard(board,BoardArgument.UP,board.getPrintingCoordinates());
+        else if(argument.equals(BoardArgument.DOWN.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWN,board.getPrintingCoordinates());
+        else if(argument.equals(BoardArgument.LEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.LEFT,board.getPrintingCoordinates());
+        else if(argument.equals(BoardArgument.RIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.RIGHT,board.getPrintingCoordinates());
+        else if(argument.equals(BoardArgument.UPRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPRIGHT,board.getPrintingCoordinates());
+        else if(argument.equals(BoardArgument.UPLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPLEFT,board.getPrintingCoordinates());
+        else if(argument.equals(BoardArgument.DOWNLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNLEFT,board.getPrintingCoordinates());
+        else if(argument.equals(BoardArgument.DOWNRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNRIGHT,board.getPrintingCoordinates());
+        else ClientBoard.printBoard(board,board.getPrintingCoordinates());
         if(hand!=null)hand.print();
         if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPBOARD.getValue());
-        if(argument.toLowerCase().equals(BoardArgument.PLAYCARD.getValue()))out.println(MESSAGES.PLAYCARDHELP.getValue()+"("+board.getActualCoordinates().getX()+","+board.getActualCoordinates().getY()+")");
+        if(argument.toLowerCase().equals(BoardArgument.PLAYCARD.getValue()))out.println(MESSAGES.PLAYCARDHELP.getValue()+"("+board.getPrintingCoordinates().getX()+","+board.getPrintingCoordinates().getY()+")");
         else out.println(MESSAGES.ERROR.getValue() );
     }
     public void printFromPublicBoard(ClientPublicBoard board,ClientHand hand,String argument){
