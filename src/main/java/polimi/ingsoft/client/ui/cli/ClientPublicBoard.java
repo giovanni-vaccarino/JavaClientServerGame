@@ -18,7 +18,7 @@ public class ClientPublicBoard {
     public static final String RESET = "\u001B[0m";
 
 
-    public static void printClientPublicBoard(PublicBoard publicBoard) {
+    public static void printPublicBoard(PublicBoard publicBoard) {
         ArrayList<MixedCard> resourceCards, goldCards;
         ArrayList<QuestCard> questCards;
 

@@ -38,7 +38,7 @@ public class Printer {
     }
     public void printFromPublicBoard(PublicBoard publicBoard, ClientHand hand, String argument){
         out.print(MESSAGES.CLS.getValue());
-        ClientPublicBoard.printClientPublicBoard(publicBoard);
+        ClientPublicBoard.printPublicBoard(publicBoard);
         hand.print();
         if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPCLIENTBOARD.getValue());
         else if(argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))out.println(MESSAGES.HELPGETCARDTYPE.getValue());
