@@ -1,9 +1,6 @@
 package polimi.ingsoft.client.ui.cli.pages;
 
-import polimi.ingsoft.client.ui.cli.CLI;
-import polimi.ingsoft.client.ui.cli.ClientBoard;
-import polimi.ingsoft.client.ui.cli.MESSAGES;
-import polimi.ingsoft.client.ui.cli.Printer;
+import polimi.ingsoft.client.ui.cli.*;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.model.*;
@@ -141,9 +138,12 @@ public class GameManager implements CLIPhaseManager {
                 playTurn(turnStep);
             else
                 showTurn(turnStep);
-
             if (turnStep == TURN_STEP.PLACE) {
-
+                //do {
+                    runPlaceCard(model.personalQuestCard);
+                    printer.printFromBoard(model.playerBoards.get(model.currentPlayerNickname), model.hand,null, model.personalQuestCard);
+                    //TODO add a waiter for played card confirmation
+                //}while(state==State.WAITING_FOR_PLACE);
             } else if (turnStep == TURN_STEP.DRAW) {
 
             }
@@ -160,7 +160,7 @@ public class GameManager implements CLIPhaseManager {
 
     private void playTurn(TURN_STEP turnStep) {
         if (turnStep == TURN_STEP.PLACE && state == State.PLACE) {
-            runPlaceCard();
+            runPlaceCard(model.personalQuestCard);
         } else if (turnStep == TURN_STEP.DRAW && state == State.DRAW) {
             runDrawCard();
         }
@@ -174,21 +174,53 @@ public class GameManager implements CLIPhaseManager {
         }
     }
 
-    private void runPlaceCard() {
+    private void runPlaceCard(QuestCard questCard) {
+        int card,x,y,side;
+        boolean facingUp=true;
+        MixedCard chosenCard;
         // Print board
         Board board = model.playerBoards.get(model.currentPlayerNickname);
-
-        // Print player hand
-        PlayerHand hand = model.hand;
-
-        // Get card choice
-        in.nextLine();
-        // Get coords choice
-        in.nextLine();
+//        do {
+            ClientBoard.printBoard(board);
+            String choice,secondChoice;
+            // Print player hand
+            PlayerHand hand = model.hand;
+            ClientHand.print(hand, questCard);
+            out.println(MESSAGES.PLAYCARDHELP1.getValue());
+            // Get card choice
+            do{
+                choice=in.nextLine();
+                if(choice.toLowerCase()=="flip"){
+                    do {
+                        System.out.print(MESSAGES.GETFLIPCHOICE.getValue());
+                        secondChoice = in.nextLine();
+                        if(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")))out.print(MESSAGES.ERROR.getValue());
+                    }while(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")));
+                    hand.flip(Integer.parseInt(secondChoice));
+                }
+                else if(!(choice.equals("1")||choice.equals("2")||choice.equals("3")))out.print(MESSAGES.ERROR.getValue());
+            }while(choice.toLowerCase()=="flip"&&!(choice.equals("1")||choice.equals("2")||choice.equals("3")));
+            card = Integer.parseInt((choice));
+            // Get coords choice
+            out.println(MESSAGES.PLAYCARDHELP2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
+            out.println(MESSAGES.PLAYCARDHELPX.getValue());
+            x = Integer.parseInt((in.nextLine()));
+            out.println(MESSAGES.PLAYCARDHELPY.getValue());
+            y = Integer.parseInt((in.nextLine()));
+            chosenCard = hand.get(card);
+            // Get side choice
+            out.println(MESSAGES.PLAYCARDHELPORIENTATION.getValue());
+            side = Integer.parseInt((in.nextLine()));
+            if (side == 1) facingUp = true;
+            else facingUp = false;
+//            facingUp = board.add(new Coordinates(x, y), chosenCard, facingUp);
+//            if(facingUp)out.println(MESSAGES.CARD_SUCCESSFULLY_PLACED);
+//            else out.println(MESSAGES.ERROR);
+//        }while(!facingUp);
+        //in.nextLine();
 
         try {
-            // TODO put real args
-            cli.getClient().placeCard(cli.getNickname(), model.hand.get(0), new Coordinates(0, 0), true);
+            cli.getClient().placeCard(cli.getNickname(),chosenCard, new Coordinates(x, y), facingUp);
         } catch (IOException e) {
             parseError(ERROR_MESSAGES.UNABLE_TO_PLACE_CARD);
         }
@@ -203,7 +235,6 @@ public class GameManager implements CLIPhaseManager {
 
         // Print player hand
         PlayerHand hand = model.hand;
-
         // Get card choice
         in.nextLine();
 

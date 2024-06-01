@@ -9,7 +9,7 @@ public class PlayerHand extends CardCollection<MixedCard> implements Serializabl
     public PlayerHand(ResourceCard firstResourceCard, ResourceCard secondResourceCard, GoldCard goldCard){
         this.cards.add(firstResourceCard);
         this.cards.add(secondResourceCard);
-        this.cards.add(goldCard);
+        if(goldCard!=null)this.cards.add(goldCard);
         this.isFlipped=new ArrayList<>();
         isFlipped.add(true);
         isFlipped.add(true);

@@ -19,7 +19,8 @@ public class Printer {
     }
     public void printFromBoard(Board board, PlayerHand hand, String argument, QuestCard playerQuest){
         out.print(MESSAGES.CLS.getValue());
-        if(argument.equals(BoardArgument.UP.getValue()))ClientBoard.printBoard(board,BoardArgument.UP);
+        if(argument==null)ClientBoard.printBoard(board);
+        else if(argument.equals(BoardArgument.UP.getValue()))ClientBoard.printBoard(board,BoardArgument.UP);
         else if(argument.equals(BoardArgument.DOWN.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWN);
         else if(argument.equals(BoardArgument.LEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.LEFT);
         else if(argument.equals(BoardArgument.RIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.RIGHT);
@@ -27,10 +28,8 @@ public class Printer {
         else if(argument.equals(BoardArgument.UPLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPLEFT);
         else if(argument.equals(BoardArgument.DOWNLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNLEFT);
         else if(argument.equals(BoardArgument.DOWNRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNRIGHT);
-        else ClientBoard.printBoard(board);
         if(hand!=null)ClientHand.print(hand,playerQuest);
-        if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPBOARD.getValue());
-        if(argument.toLowerCase().equals(BoardArgument.PLAYCARD.getValue()))out.println(MESSAGES.PLAYCARDHELP.getValue()+"("+board.getPrintingCoordinates().getX()+","+board.getPrintingCoordinates().getY()+")");
+        if(argument!=null&&argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPBOARD.getValue());
         else out.println(MESSAGES.ERROR.getValue() );
     }
     public void printFromPublicBoard(PublicBoard publicBoard, PlayerHand hand, String argument, QuestCard playerQuest){
@@ -46,9 +45,7 @@ public class Printer {
     }
     public void printInitialCardChoice(InitialCard initialCard){
         out.print(MESSAGES.HELP_INITIAL_CARD_CHOICE.getValue());
-        ClientHand hand=new ClientHand();
-        hand.initialPrint(initialCard);
-        hand=null;
+        ClientHand.initialPrint(initialCard);
     }
     public void printQuestCardChoice(QuestCard quest1, QuestCard quest2){
         out.print(MESSAGES.HELP_QUEST_CARD_CHOICE.getValue());
@@ -56,6 +53,5 @@ public class Printer {
         quests.add(quest1);
         quests.add(quest2);
         ClientPublicBoard.printInitialQuests(quests);
-
     }
 }

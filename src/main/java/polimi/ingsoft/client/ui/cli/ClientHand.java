@@ -19,11 +19,6 @@ public class ClientHand {
     public static final String BLACKTEXT = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
     //private ArrayList<Boolean> isFlipped; //true: visualizzo back false:visualizzo front
-    private QuestCard questCard;
-
-    public void addQuestCard(QuestCard questCard){
-        this.questCard=questCard;
-    }
 
     public static String defineColor(List<MixedCard>cards,MixedCard card) {
         if(cards!=null&&cards.get(0)==cards.get(1))return YELLOW;
