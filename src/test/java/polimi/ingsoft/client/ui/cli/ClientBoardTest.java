@@ -298,8 +298,8 @@ class ClientBoardTest {
         board.add(new Coordinates(-1,-1),res1,true);
         board.add(new Coordinates(1,-1),res2,false);
         board.add(new Coordinates(-2,-2),res3,true);
-        ClientBoard.printBoard(board,board.getPrintingCoordinates());
-        ClientBoard.printBoard(board,BoardArgument.DOWNLEFT,board.getPrintingCoordinates());
+        ClientBoard.printBoard(board);
+        ClientBoard.printBoard(board,BoardArgument.DOWNLEFT);
     }
 }
 

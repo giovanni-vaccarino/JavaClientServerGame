@@ -29,7 +29,8 @@ public class ClientBoard {
     public static final String RESET = "\u001B[0m";
     public static final String WHITETEXT = "\u001B[37m";
 
-    public static void printBoard(Board board,Coordinates actualCoordinates) {
+    public static void printBoard(Board board) {
+        Coordinates actualCoordinates=board.getPrintingCoordinates();
         PlayedCard card;
         int count = 0, row = 0;
         String color = "";
@@ -220,6 +221,7 @@ public class ClientBoard {
                 getCardAtRespective(board,3,-3,actualCoordinates)!=null||
                 getCardAtRespective(board,1,-3,actualCoordinates)!=null)System.out.print("|         "+DOWNRIGHTARROW);
         else System.out.print("           ");
+        System.out.print("\n");
     }
 
     private static String printBottomLeftBottomLeftCorner(PlayedCard card, int count, Board board,Coordinates actualCoordinates) {
@@ -678,7 +680,8 @@ public class ClientBoard {
 
     }
 
-    public static void printBoard(Board board,BoardArgument argument,Coordinates actualCoordinates) {
+    public static void printBoard(Board board,BoardArgument argument) {
+        Coordinates actualCoordinates=board.getPrintingCoordinates();
         String error="ERROR: place not avaiable!";
         switch (argument) {
             case BoardArgument.UPLEFT:
@@ -734,7 +737,7 @@ public class ClientBoard {
                 else System.out.print(error);
                 break;
         }
-        printBoard(board,board.getPrintingCoordinates());
+        printBoard(board);
     }
     
 }

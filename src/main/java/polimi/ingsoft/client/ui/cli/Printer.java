@@ -20,15 +20,15 @@ public class Printer {
     }
     public void printFromBoard(Board board, ClientHand hand, String argument){
         out.print(MESSAGES.CLS.getValue());
-        if(argument.equals(BoardArgument.UP.getValue()))ClientBoard.printBoard(board,BoardArgument.UP,board.getPrintingCoordinates());
-        else if(argument.equals(BoardArgument.DOWN.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWN,board.getPrintingCoordinates());
-        else if(argument.equals(BoardArgument.LEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.LEFT,board.getPrintingCoordinates());
-        else if(argument.equals(BoardArgument.RIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.RIGHT,board.getPrintingCoordinates());
-        else if(argument.equals(BoardArgument.UPRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPRIGHT,board.getPrintingCoordinates());
-        else if(argument.equals(BoardArgument.UPLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPLEFT,board.getPrintingCoordinates());
-        else if(argument.equals(BoardArgument.DOWNLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNLEFT,board.getPrintingCoordinates());
-        else if(argument.equals(BoardArgument.DOWNRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNRIGHT,board.getPrintingCoordinates());
-        else ClientBoard.printBoard(board,board.getPrintingCoordinates());
+        if(argument.equals(BoardArgument.UP.getValue()))ClientBoard.printBoard(board,BoardArgument.UP);
+        else if(argument.equals(BoardArgument.DOWN.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWN);
+        else if(argument.equals(BoardArgument.LEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.LEFT);
+        else if(argument.equals(BoardArgument.RIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.RIGHT);
+        else if(argument.equals(BoardArgument.UPRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPRIGHT);
+        else if(argument.equals(BoardArgument.UPLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPLEFT);
+        else if(argument.equals(BoardArgument.DOWNLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNLEFT);
+        else if(argument.equals(BoardArgument.DOWNRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNRIGHT);
+        else ClientBoard.printBoard(board);
         if(hand!=null)hand.print();
         if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPBOARD.getValue());
         if(argument.toLowerCase().equals(BoardArgument.PLAYCARD.getValue()))out.println(MESSAGES.PLAYCARDHELP.getValue()+"("+board.getPrintingCoordinates().getX()+","+board.getPrintingCoordinates().getY()+")");
