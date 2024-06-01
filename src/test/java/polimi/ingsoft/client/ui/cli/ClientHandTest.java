@@ -11,9 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 
 class ClientHandTest {
-    private static MixedCard a,b,c,d;
+    private static ResourceCard a,b,d;
+            private static GoldCard c;
     private static QuestCard quest,quest2;
-    ClientHand hand=new ClientHand();
+    private static PlayerHand hand;
     @BeforeAll
     public static void init(){
         CornerSpace upleft,upright,bottomleft,bottomright;
@@ -74,7 +75,6 @@ class ClientHandTest {
 
         b=new ResourceCard("lol",front,back,0);
 
-
         list = new ArrayList<>();
         list2 =new ArrayList<>();
         upleft=new CornerSpace(list);
@@ -102,7 +102,7 @@ class ClientHandTest {
         cost.put(Object.FEATHER,1);
         itemcost.put(Resource.MUSHROOM,0);
         itemcost.put(Resource.BUTTERFLY,1);
-        itemcost.put(Resource.WOLF,0);
+        itemcost.put(Resource.WOLF,2);
         itemcost.put(Resource.LEAF,0);
         c=new GoldCard("lol",front,back,new ItemPattern(itemcost),null,/*new CornerPattern(),new ItemPattern(cost),*/2);
 
@@ -152,22 +152,19 @@ class ClientHandTest {
     }
     @Test
     void print() {
-        hand.addCard(a);
-        hand.addCard(b);
-        hand.addCard(c);
-        hand.addQuestCard(quest);
-        //hand.addCard(d);
-        hand.print();
+        hand=new PlayerHand(a,a,c);
         System.out.print("\n\n\n");
+        ClientHand.print(hand,null);
+        ClientHand.print(hand,quest2);
+        ClientHand.print(hand,quest);
         hand.flip(0);
         hand.flip(1);
         hand.flip(2);
-        hand.addQuestCard(quest2);
-        hand.print();
+        ClientHand.print(hand,null);
         System.out.print("\n\n\n");
         hand.flip(1);
         hand.flip(2);
-        hand.print();
+        ClientHand.print(hand,null);
 
     }
 }

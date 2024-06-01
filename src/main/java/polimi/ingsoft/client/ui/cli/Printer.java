@@ -1,9 +1,6 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.server.model.Board;
-import polimi.ingsoft.server.model.InitialCard;
-import polimi.ingsoft.server.model.PublicBoard;
-import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.model.*;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ public class Printer {
             out.println(MESSAGES.HELPMAIN.getValue());
         }else out.println(MESSAGES.ERROR.getValue());
     }
-    public void printFromBoard(Board board, ClientHand hand, String argument){
+    public void printFromBoard(Board board, PlayerHand hand, String argument, QuestCard playerQuest){
         out.print(MESSAGES.CLS.getValue());
         if(argument.equals(BoardArgument.UP.getValue()))ClientBoard.printBoard(board,BoardArgument.UP);
         else if(argument.equals(BoardArgument.DOWN.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWN);
@@ -31,15 +28,15 @@ public class Printer {
         else if(argument.equals(BoardArgument.DOWNLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNLEFT);
         else if(argument.equals(BoardArgument.DOWNRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNRIGHT);
         else ClientBoard.printBoard(board);
-        if(hand!=null)hand.print();
+        if(hand!=null)ClientHand.print(hand,playerQuest);
         if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPBOARD.getValue());
         if(argument.toLowerCase().equals(BoardArgument.PLAYCARD.getValue()))out.println(MESSAGES.PLAYCARDHELP.getValue()+"("+board.getPrintingCoordinates().getX()+","+board.getPrintingCoordinates().getY()+")");
         else out.println(MESSAGES.ERROR.getValue() );
     }
-    public void printFromPublicBoard(PublicBoard publicBoard, ClientHand hand, String argument){
+    public void printFromPublicBoard(PublicBoard publicBoard, PlayerHand hand, String argument, QuestCard playerQuest){
         out.print(MESSAGES.CLS.getValue());
         ClientPublicBoard.printPublicBoard(publicBoard);
-        hand.print();
+        ClientHand.print(hand,playerQuest);
         if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPCLIENTBOARD.getValue());
         else if(argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))out.println(MESSAGES.HELPGETCARDTYPE.getValue());
         else if(argument.toLowerCase().equals(PublicBoardArguments.GOLD.getValue())||

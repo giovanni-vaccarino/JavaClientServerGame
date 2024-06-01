@@ -42,46 +42,46 @@ public class ClientPublicBoard {
     private static void printRows(ArrayList<MixedCard> mixed) {
         int row = 0, count = 0;
         do {
-            System.out.print(YELLOW + "          " + ClientHand.defineColor(mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            System.out.print(YELLOW + "          " + ClientHand.defineColor(null,mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
             System.out.print(printResource(mixed, 1, 1, row));
-            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(mixed.get(1))));
+            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null,mixed.get(1))));
             System.out.print(printResource(mixed, 1, 2, row) + RESET + "   ");
 
             System.out.print(printResource(mixed, 2, 1, row));
-            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(mixed.get(2))));
+            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(null,mixed.get(2))));
             System.out.print(printResource(mixed, 2, 2, row));
             count++;
             row++;
             System.out.print(RESET + "\n");
         } while (count < 3);
-        System.out.print(ClientHand.defineColor(mixed.getFirst()) + BLACKTEXT + "            ¡‾‾‾‾‾‾‾‾¡            ");
+        System.out.print(ClientHand.defineColor(null,mixed.getFirst()) + BLACKTEXT + "            ¡‾‾‾‾‾‾‾‾¡            ");
         System.out.print(RESET + "     ");
-        System.out.print(ClientHand.defineColor(mixed.get(1)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null,mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
-        System.out.print(ClientHand.defineColor(mixed.get(2)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null,mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
-        System.out.print(ClientHand.defineColor(mixed.getFirst()) + BLACKTEXT + "            |        |            ");
+        System.out.print(ClientHand.defineColor(null,mixed.getFirst()) + BLACKTEXT + "            |        |            ");
         System.out.print(RESET + "     ");
-        System.out.print(ClientHand.defineColor(mixed.get(1)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null,mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
-        System.out.print(ClientHand.defineColor(mixed.get(2)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null,mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
-        System.out.print(ClientHand.defineColor(mixed.getFirst()) + BLACKTEXT + "            !________!            ");
+        System.out.print(ClientHand.defineColor(null,mixed.getFirst()) + BLACKTEXT + "            !________!            ");
         System.out.print(RESET + "     ");
-        System.out.print(ClientHand.defineColor(mixed.get(1)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null,mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
-        System.out.print(ClientHand.defineColor(mixed.get(2)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null,mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
         row = 6;
         count = 0;
         do {
-            System.out.print(YELLOW + "          " + ClientHand.defineColor(mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            System.out.print(YELLOW + "          " + ClientHand.defineColor(null,mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
             System.out.print(printResource(mixed, 1, 3, row));
-            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(mixed.get(1))));
+            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null,mixed.get(1))));
             System.out.print(printResource(mixed, 1, 4, row) + RESET + "   ");
 
             System.out.print(printResource(mixed, 2, 3, row));
-            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(mixed.get(2))));
+            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(null,mixed.get(2))));
             System.out.print(printResource(mixed, 2, 4, row));
             count++;
             row++;
@@ -108,7 +108,7 @@ public class ClientPublicBoard {
             else if (row == 6 || row == 0) return (outColor + "¡‾‾‾‾‾‾‾‾¡");
             else return (outColor + "|        |");
         } catch (NullPointerException f) {
-            return ClientHand.defineColor(mixed.get(index)) + "          ";
+            return ClientHand.defineColor(null,mixed.get(index)) + "          ";
         }
         if (color == Object.POTION && (row == 1 || row == 7)) return (YELLOW + BLACKTEXT + "| POTION |");
         else if (color == Object.SCROLL && (row == 1 || row == 7)) return (YELLOW + BLACKTEXT + "| SCROLL |");

@@ -4,6 +4,7 @@ import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static polimi.ingsoft.client.ui.cli.ClientPublicBoard.*;
@@ -17,31 +18,16 @@ public class ClientHand {
     public static final String YELLOW = "\u001B[43m";
     public static final String BLACKTEXT = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
-    private String color;
-    private static ArrayList<MixedCard> cards;
-    private ArrayList<Boolean> isFlipped; //true: visualizzo back false:visualizzo front
+    //private ArrayList<Boolean> isFlipped; //true: visualizzo back false:visualizzo front
     private QuestCard questCard;
 
-    public ClientHand() {
-        this.cards = new ArrayList<>();
-        this.isFlipped = new ArrayList<>();
-    }
-
-
-    public void addCard(MixedCard card) {
-        if (cards.size() < 3) {
-            this.cards.add(card);
-            this.isFlipped.add(true);
-        }
-    }
     public void addQuestCard(QuestCard questCard){
         this.questCard=questCard;
     }
 
-    public static String defineColor(MixedCard card) {
-        if(cards.get(0)==cards.get(1))return YELLOW;
+    public static String defineColor(List<MixedCard>cards,MixedCard card) {
+        if(cards!=null&&cards.get(0)==cards.get(1))return YELLOW;
         if (card.getFront().getCenter().getItems().size() != 1) return YELLOW;
-        else if(cards.getFirst()==cards.get(1))return YELLOW;
         return switch (card.getFront().getCenter().getItems().getFirst()) {
             case Resource.BUTTERFLY -> PURPLE;
             case Resource.LEAF -> GREEN;
@@ -49,30 +35,31 @@ public class ClientHand {
             case Resource.WOLF -> BLUE;
         };
     }
-    public void initialPrint(InitialCard initial){
-        cards.add(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0));
-        cards.add(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0));
-        isFlipped.add(true);
-        isFlipped.add(false);
-        print();
-        this.cards=new ArrayList<>();
+    public static void initialPrint(InitialCard initial){
+        PlayerHand hand=new PlayerHand(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0),new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0),null);
+        hand.flip(1);
+        print(hand,null);
     }
-    public void print() {
+    public static void print(PlayerHand hand,QuestCard questCard) {
+        List<MixedCard> cards=hand.getCards();
+        ArrayList<Boolean> isFlipped=hand.getIsFlipped();
+
+        String color;
         for (int j = 0; j < 9; j++) {
             for (int i = 0; i < cards.size(); i++) {
-                this.color = defineColor(cards.get(i));
+                color = defineColor(cards,cards.get(i));
                 if (j < 3) {
-                    System.out.print(printResource(i, j, 1));
-                    System.out.print(printCenter(cards.get(i), i, j, color));
-                    System.out.print(printResource(i, j, 2));
+                    System.out.print(printResource(cards,i, j, 1,isFlipped));
+                    System.out.print(printCenter(cards,cards.get(i), i, j, color,isFlipped));
+                    System.out.print(printResource(cards,i, j, 2,isFlipped));
                 } else if (j < 6) {
                     System.out.print(color + "          ");
-                    System.out.print(printCenter(cards.get(i), i, j, color));
+                    System.out.print(printCenter(cards,cards.get(i), i, j, color,isFlipped));
                     System.out.print(color + "          ");
                 } else {
-                    System.out.print(printResource(i, j, 3));
-                    System.out.print(printCenter(cards.get(i), i, j, color));
-                    System.out.print(printResource(i, j, 4));
+                    System.out.print(printResource(cards,i, j, 3,isFlipped));
+                    System.out.print(printCenter(cards,cards.get(i), i, j, color,isFlipped));
+                    System.out.print(printResource(cards,i, j, 4,isFlipped));
                 }
                 System.out.print(RESET + "    ");
             }
@@ -83,9 +70,10 @@ public class ClientHand {
             }
             System.out.print(RESET+"\n");
         }
+        System.out.print(RESET+"\n");
     }
 
-    private String printResource(int i, int j, int corner) {
+    private static String printResource(List<MixedCard> cards,int i, int j, int corner,ArrayList<Boolean> isFlipped) {
         Item color = null;
         Face front = cards.get(i).getFront(),
                 back = cards.get(i).getBack();
@@ -143,13 +131,14 @@ public class ClientHand {
         if(tempCorner==null){
             if(front.getCenter().getItems().size()==1) {
                 color = front.getCenter().getItems().getFirst();
-                if (color.equals(Resource.LEAF)) return GREEN + "          ";
-                else if (color.equals(Resource.MUSHROOM)) return RED + "          ";
-                else if (color.equals(Resource.WOLF)) return BLUE + "          ";
-                else return PURPLE + "          ";
+                return switch (color) {
+                    case Resource.LEAF -> GREEN + "          ";
+                    case Resource.MUSHROOM -> RED + "          ";
+                    case Resource.WOLF -> BLUE + "          ";
+                    default -> PURPLE + "          ";
+                };
             }else return YELLOW+"          ";
         }
-
         if(color == Object.POTION && (j == 1 || j == 7)) return (YELLOW + BLACKTEXT + "| POTION |");
         else if (color == Object.SCROLL && (j == 1 || j == 7)) return (YELLOW + BLACKTEXT + "| SCROLL |");
         else if (color == Object.FEATHER && (j == 1 || j == 7)) return (YELLOW + BLACKTEXT + "|FEATHER |");
@@ -163,18 +152,12 @@ public class ClientHand {
         else return (outColor + "|        |");
     }
 
-    public void flip(int i) {
-        Boolean flip = !this.isFlipped.get(i);
-        this.isFlipped.remove(i);
-        this.isFlipped.add(i, flip);
-    }
-
-    private String printCenter(MixedCard card, int i, int j, String actualColor) {
+    private static String printCenter(List<MixedCard> cards,MixedCard card, int i, int j, String actualColor, ArrayList<Boolean>isFlipped) {
         Resource resource;
         CenterSpace center;
         String print="";
-        if (j == 0 && !isFlipped.get(i)) return printFirstRow(card, i, actualColor);
-        else if (j == 8 && !isFlipped.get(i))return printLastRow(card,i,j,actualColor);
+        if (j == 0 && !isFlipped.get(i)) return printFirstRow(cards,card, i, actualColor,isFlipped);
+        else if (j == 8 && !isFlipped.get(i))return printLastRow(card,i,j,actualColor,isFlipped);
         else if (isFlipped.get(i) && (j == 0 || j == 8))return actualColor + "              ";
         else if(!isFlipped.get(i)&&j!=0&&j!=8)return actualColor + "              ";
         else {
@@ -225,11 +208,7 @@ public class ClientHand {
         }
     }
 
-    public ArrayList<Boolean> getIsFlipped() {
-        return this.isFlipped;
-    }
-
-    private String printFirstRow(MixedCard card, int i, String actualColor) {
+    private static String printFirstRow(List<MixedCard> cards,MixedCard card, int i, String actualColor,ArrayList<Boolean> isFlipped) {
         if (card.getScore(isFlipped.get(i)) != 0 && card.getPointPattern() == null)
             return actualColor + BLACKTEXT + "     | " + card.getScore(isFlipped.get(i)) + "|     ";
         else if (cards.get(i).getScore(isFlipped.get(i)) != 0 && card.getPointPattern() != null) {
@@ -248,7 +227,7 @@ public class ClientHand {
         return actualColor + "              ";
     }
 
-    private String printLastRow(MixedCard card, int i, int j, String actualColor) {
+    private static String printLastRow(MixedCard card, int i, int j, String actualColor,ArrayList<Boolean> isFlipped) {
         int counter = 0;
         String pre, post, output = "";
         if (!isFlipped.get(i) && card.getPlayPattern() != null) {
@@ -306,9 +285,4 @@ public class ClientHand {
         } else return actualColor + "              ";
 
     }
-
-    private void removeCard(int index) {
-        cards.remove(index);
-    }
-
 }
