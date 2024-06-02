@@ -11,9 +11,9 @@ public class PlayerHand extends CardCollection<MixedCard> implements Serializabl
         this.cards.add(secondResourceCard);
         if(goldCard!=null)this.cards.add(goldCard);
         this.isFlipped=new ArrayList<>();
-        isFlipped.add(true);
-        isFlipped.add(true);
-        isFlipped.add(true);
+        isFlipped.add(false);
+        isFlipped.add(false);
+        isFlipped.add(false);
     }
     public MixedCard get(int index){
         return this.cards.get(index);
@@ -25,10 +25,13 @@ public class PlayerHand extends CardCollection<MixedCard> implements Serializabl
 
     public void add(MixedCard card) {
         this.cards.addLast(card);
+        this.isFlipped.add(false);
     }
 
     public void remove(MixedCard card){
+        int index=this.cards.indexOf(card);
         this.cards.remove(card);
+        this.isFlipped.remove(index);
     }
     public void flip(int i){
         Boolean flip = !isFlipped.get(i);

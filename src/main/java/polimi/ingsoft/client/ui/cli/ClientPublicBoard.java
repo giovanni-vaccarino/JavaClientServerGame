@@ -36,7 +36,7 @@ public class ClientPublicBoard {
         questCards.add(quests.get(PlaceInPublicBoard.Slots.SLOT_A));
         questCards.add(quests.get(PlaceInPublicBoard.Slots.SLOT_B));
         printQuests(questCards);
-
+        System.out.print("\n\n");
     }
 
     private static void printRows(ArrayList<MixedCard> mixed) {

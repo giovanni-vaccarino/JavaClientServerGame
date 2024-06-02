@@ -32,12 +32,12 @@ public class Printer {
         if(argument!=null&&argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPBOARD.getValue());
         else out.println(MESSAGES.ERROR.getValue() );
     }
-    public void printFromPublicBoard(PublicBoard publicBoard, PlayerHand hand, String argument, QuestCard playerQuest){
+    public void printFromPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards,PlaceInPublicBoard<GoldCard> goldCards,PlaceInPublicBoard<QuestCard> questCards, PlayerHand hand, String argument, QuestCard playerQuest){
         out.print(MESSAGES.CLS.getValue());
-        ClientPublicBoard.printPublicBoard(publicBoard.getPublicBoardResource(),publicBoard.getPublicBoardGold(),publicBoard.getPublicBoardQuest());
+        ClientPublicBoard.printPublicBoard(resourceCards,goldCards,questCards);
         ClientHand.print(hand,playerQuest);
-        if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPCLIENTBOARD.getValue());
-        else if(argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))out.println(MESSAGES.HELPGETCARDTYPE.getValue());
+        /*if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPCLIENTBOARD.getValue());
+        else */if(argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))out.println(MESSAGES.HELPGETCARDTYPE.getValue());
         else if(argument.toLowerCase().equals(PublicBoardArguments.GOLD.getValue())||
                 argument.toLowerCase().equals(PublicBoardArguments.RESOURCE.getValue()))
             out.println(MESSAGES.HELPGETCARDPLACE.getValue());

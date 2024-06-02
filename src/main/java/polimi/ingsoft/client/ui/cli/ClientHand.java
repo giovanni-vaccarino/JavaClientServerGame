@@ -31,7 +31,8 @@ public class ClientHand {
         };
     }
     public static void initialPrint(InitialCard initial){
-        PlayerHand hand=new PlayerHand(new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0),new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0),null);
+        ResourceCard card=new ResourceCard(initial.getID(),initial.getFront(),initial.getBack(),0);
+        PlayerHand hand=new PlayerHand(card,card,null);
         hand.flip(1);
         print(hand,null);
     }
@@ -232,23 +233,23 @@ public class ClientHand {
             counter += card.getPlayPattern().getCost().get(Resource.BUTTERFLY);
             switch (counter) {
                 case 1:
-                    pre = "     |";
+                    pre =BLACKTEXT+ "     |";
                     post = "      ";
                     break;
                 case 2:
-                    pre = "    |";
+                    pre =BLACKTEXT+ "    |";
                     post = "     ";
                     break;
                 case 3:
-                    pre = "   |";
+                    pre =BLACKTEXT+ "   |";
                     post = "    ";
                     break;
                 case 4:
-                    pre = "  |";
+                    pre =BLACKTEXT+ "  |";
                     post = "   ";
                     break;
                 case 5:
-                    pre = " |";
+                    pre =BLACKTEXT+ " |";
                     post = "  ";
                     break;
                 default:
@@ -258,22 +259,22 @@ public class ClientHand {
             post = actualColor + post;
             int c = 0;
             while (c < card.getPlayPattern().getCost().get(Resource.MUSHROOM)) {
-                output = output + RED + " " + actualColor + "|";
+                output = output + RED + " " + actualColor +BLACKTEXT+ "|";
                 c++;
             }
             c = 0;
             while (c < card.getPlayPattern().getCost().get(Resource.LEAF)) {
-                output = output + GREEN + " " + actualColor + "|";
+                output = output + GREEN + " " + actualColor +BLACKTEXT+ "|";
                 c++;
             }
             c = 0;
             while (c < card.getPlayPattern().getCost().get(Resource.WOLF)) {
-                output = output + BLUE + " " + actualColor + "|";
+                output = output + BLUE + " " + actualColor +BLACKTEXT+ "|";
                 c++;
             }
             c = 0;
             while (c < card.getPlayPattern().getCost().get(Resource.BUTTERFLY)) {
-                output = output + PURPLE + " " + actualColor + "|";
+                output = output + PURPLE + " " + actualColor +BLACKTEXT+ "|";
                 c++;
             }
             return pre + output + post;

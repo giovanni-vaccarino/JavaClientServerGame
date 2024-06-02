@@ -58,12 +58,14 @@ public class MatchManager implements CLIPhaseManager{
     }
 
     private void setMatchId() {
+        String choice;
         if (state == State.SET_MATCH_ID) {
             showMatchesList();
 
             boolean isValid = false;
             do {
                 out.print(MESSAGES.CHOOSE_MATCH.getValue());
+                //TODO invalid input throws exception
                 matchId = in.nextInt();
                 in.nextLine();
                 if (matchIds.contains(matchId) || matchId == 0) {

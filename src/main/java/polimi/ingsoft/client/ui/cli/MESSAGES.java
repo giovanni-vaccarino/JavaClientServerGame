@@ -26,12 +26,14 @@ public enum MESSAGES {
     CARD_SUCCESSFULLY_DRAWN("Card was drawn successfully"),
     OTHER_PLAYER_PERFORMING_PLACE(" has to place her/his card"),
     OTHER_PLAYER_PERFORMING_DRAW(" has to draw her/his card"),
-    HELPMAIN("HERE'S WHAT YOU CAN DO !\n" +
-            "->BOARD:ENTER THE BOARD MENU\n" +
-            "->PUBLICBOARD: ENTER THE PUBLICBOARD MENU\n" +
-            "->CHAT: ACCESS CHAT MENU!\n" +
-            "->MESSAGE: CHAT PRIVATELY WITH A PLAYER\n" +
-            "->HELP: PRINT THIS LIST AGAIN!\n"),
+    HELPMAIN("""
+            HERE'S WHAT YOU CAN DO !
+            ->BOARD:ENTER THE BOARD MENU
+            ->PUBLICBOARD: ENTER THE PUBLICBOARD MENU
+            ->CHAT: ACCESS CHAT MENU!
+            ->MESSAGE: CHAT PRIVATELY WITH A PLAYER
+            ->HELP: PRINT THIS LIST AGAIN!
+            """),
     HELPBOARD("""
             HERE'S WHAT YOU CAN DO !
             ->[UP,DOWN,LEFT,RIGHT,UPRIGHT,UPLEFT,DOWNRIGHT,DOWNLEFT]: SHOW THE BOARD FROM ONE OF THESE POSITIONS !
@@ -39,13 +41,17 @@ public enum MESSAGES {
             ->BACK: GO BACK TO THE MAIN MENU !
             ->HELP: PRINT THIS LIST AGAIN!
             """),
-    HELP_INITIAL_CARD_CHOICE("SELECT WHICH SIDE OF THE CARD TO KEEP FACE UP\n" +
-            "-> F: PICK THE FRONT (on the left)\n" +
-            "-> B: PICK THE BOTTOM (on the right)\n"),
-    HELP_QUEST_CARD_CHOICE("SELECT WHICH QUEST UP TO KEEP \n" +
-            "THINK CAREFULLY, AS YOU WON'T BE ABLE TO CHANGE IT LATER \n" +
-            "-> 1: Pick the one on the left \n" +
-            "-> 2: Pick the one on the right \n"),
+    HELP_INITIAL_CARD_CHOICE("""
+            SELECT WHICH SIDE OF THE CARD TO KEEP FACE UP
+            -> F: PICK THE FRONT (on the left)
+            -> B: PICK THE BOTTOM (on the right)
+            """),
+    HELP_QUEST_CARD_CHOICE("""
+            SELECT WHICH QUEST UP TO KEEP\s
+            THINK CAREFULLY, AS YOU WON'T BE ABLE TO CHANGE IT LATER\s
+            -> 1: Pick the one on the left\s
+            -> 2: Pick the one on the right\s
+            """),
     PLAYCARDHELP1("""
             WHICH CARD WOULD YOU LIKE TO PLAY ? YOU CAN FLIP ANY CARD BY WRITING "FLIP"
             1->LEFT
@@ -68,9 +74,24 @@ public enum MESSAGES {
             1-> FRONT
             2-> BACK
             """),
-    HELPCLIENTBOARD("HERE'S WHAT YOU CAN DO !\n->GETCARD:TELL ME YOU WANT TO PICK A CARD !\n->BACK: GO BACK TO THE MAIN MENU !\n->HELP: PRINT THIS LIST AGAIN!\n"),
-    HELPGETCARDTYPE("TELL ME WHERE YOU WANT TO PICK YOUR CAR FROM!\n->[RESOURCE,GOLD]: SELECT WHICH KIND OF CARD TO PICK !\n"),
-    HELPGETCARDPLACE("TELL ME WHICH CARD YOU WANT TO PICK !\n->[LEFT,RIGHT,DECK]: SELECT FROM WHERE TO PICK THE CHOSEN TYPE OF CARD !\n"),
+    HELPCLIENTBOARD("""
+    HERE'S WHAT YOU CAN DO !
+    ->GETCARD:TELL ME YOU WANT TO PICK A CARD !
+    ->BACK: GO BACK TO THE MAIN MENU !
+    ->HELP: PRINT THIS LIST AGAIN!
+    """),
+    HELPGETCARDTYPE("""
+        TELL ME WHERE YOU WANT TO PICK YOUR CAR FROM!
+        ->RESOURCE: PICK ONE OF THE RESOUCE CARDS !
+        ->GOLD: PICK ONE OF THE GOLD CARDS !
+        """),
+    HELPGETCARDPLACE("""
+    TELL ME WHICH CARD YOU WANT TO PICK !
+    ->CENTER: PICK THE CENTRAL CARD !
+    ->RIGHT: PICK THE CARD ON THE RIGHT !
+    ->DECK: PICK THE HIDDEN CARD FROM THE DECK !
+    ->BACK: GO BACK TO CHOOSING THE CARD TYPE !
+    """),
     HELPCHAT(""),
     CLS("\033[H\033[2J"),
     ERROR("SOMETHING WENT WRONG, PLEASE TRY WITH ANOTHER COMMAND !\n"),

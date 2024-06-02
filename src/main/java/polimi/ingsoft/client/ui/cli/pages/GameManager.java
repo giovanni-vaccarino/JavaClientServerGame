@@ -181,38 +181,43 @@ public class GameManager implements CLIPhaseManager {
         // Print board
         Board board = model.playerBoards.get(model.currentPlayerNickname);
 //        do {
-            ClientBoard.printBoard(board);
             String choice,secondChoice;
-            // Print player hand
             PlayerHand hand = model.hand;
-            ClientHand.print(hand, questCard);
-            out.println(MESSAGES.PLAYCARDHELP1.getValue());
+
             // Get card choice
             do{
+                ClientBoard.printBoard(board);
+                ClientHand.print(hand, questCard);
+                out.println(MESSAGES.PLAYCARDHELP1.getValue());
                 choice=in.nextLine();
-                if(choice.toLowerCase()=="flip"){
+                if(choice.equalsIgnoreCase("flip")){
                     do {
-                        System.out.print(MESSAGES.GETFLIPCHOICE.getValue());
+                        System.out.println(MESSAGES.GETFLIPCHOICE.getValue());
                         secondChoice = in.nextLine();
-                        if(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")))out.print(MESSAGES.ERROR.getValue());
+                        if(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")))out.println(MESSAGES.ERROR.getValue());
                     }while(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")));
-                    hand.flip(Integer.parseInt(secondChoice));
+                    hand.flip(Integer.parseInt(secondChoice)-1);
+                    ClientHand.print(hand,questCard);
                 }
                 else if(!(choice.equals("1")||choice.equals("2")||choice.equals("3")))out.print(MESSAGES.ERROR.getValue());
-            }while(choice.toLowerCase()=="flip"&&!(choice.equals("1")||choice.equals("2")||choice.equals("3")));
+            }while(choice.equalsIgnoreCase("flip")||!(choice.equals("1")||choice.equals("2")||choice.equals("3")));
             card = Integer.parseInt((choice));
             // Get coords choice
             out.println(MESSAGES.PLAYCARDHELP2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
+            //TODO add a catcher for wrong inputs
             out.println(MESSAGES.PLAYCARDHELPX.getValue());
             x = Integer.parseInt((in.nextLine()));
             out.println(MESSAGES.PLAYCARDHELPY.getValue());
             y = Integer.parseInt((in.nextLine()));
-            chosenCard = hand.get(card);
+            //TODO until here
+            chosenCard = hand.get(card-1);
             // Get side choice
-            out.println(MESSAGES.PLAYCARDHELPORIENTATION.getValue());
-            side = Integer.parseInt((in.nextLine()));
-            if (side == 1) facingUp = true;
-            else facingUp = false;
+            do {
+                out.println(MESSAGES.PLAYCARDHELPORIENTATION.getValue());
+                if(!(choice.equals(("1"))||choice.equals("2")))out.println(MESSAGES.ERROR.getValue());
+            }while(!(choice.equals(("1"))||choice.equals("2")));
+            side = Integer.parseInt(choice);
+            if (side == 2) facingUp = false;
 //            facingUp = board.add(new Coordinates(x, y), chosenCard, facingUp);
 //            if(facingUp)out.println(MESSAGES.CARD_SUCCESSFULLY_PLACED);
 //            else out.println(MESSAGES.ERROR);
@@ -231,16 +236,40 @@ public class GameManager implements CLIPhaseManager {
         // Print public board
         PlaceInPublicBoard<ResourceCard> resourceCards = model.resourceCards;
         PlaceInPublicBoard<GoldCard> goldCards = model.goldCards;
-
-
-        // Print player hand
+        PlaceInPublicBoard<QuestCard> questCards=model.questCards;
+        PlaceInPublicBoard.Slots slot;
+        TYPE_HAND_CARD type;
+        String choice,choice2;
         PlayerHand hand = model.hand;
         // Get card choice
-        in.nextLine();
+        do {
+            choice = "getcard";
+            do {
+                printer.printFromPublicBoard(resourceCards, goldCards, questCards, hand, choice, model.personalQuestCard);
+                choice = in.nextLine();
+                if (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold")) {
+                    choice = "getcard";
+                    out.println(MESSAGES.ERROR.getValue());
+                }
+            } while (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold"));
+            choice2=choice;
+            do {
+                printer.printFromPublicBoard(resourceCards, goldCards, questCards, hand, choice2, model.personalQuestCard);
+                choice2 = in.nextLine();
+                if (!choice2.equalsIgnoreCase("back") && !choice2.equalsIgnoreCase("center") && !choice2.equalsIgnoreCase("right") && !choice2.equalsIgnoreCase("deck")) {
+                    choice2 = "getcard";
+                    out.println(MESSAGES.ERROR.getValue());
+                }
+            } while (!choice2.equalsIgnoreCase("back") && !choice2.equalsIgnoreCase("center") && !choice2.equalsIgnoreCase("right") && !choice2.equalsIgnoreCase("deck"));
+        }while(choice2.equalsIgnoreCase("back"));
+        if (choice.equalsIgnoreCase("gold"))type=TYPE_HAND_CARD.GOLD;
+        else type=TYPE_HAND_CARD.RESOURCE;
+        if(choice2.equalsIgnoreCase("center"))slot= PlaceInPublicBoard.Slots.SLOT_A;
+        else if(choice2.equalsIgnoreCase("deck"))slot= PlaceInPublicBoard.Slots.DECK;
+        else slot= PlaceInPublicBoard.Slots.SLOT_B;
 
         try {
-            // TODO put real args
-            cli.getClient().drawCard(cli.getNickname(), TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_A);
+            cli.getClient().drawCard(cli.getNickname(), type, slot);
         } catch (IOException e) {
             parseError(ERROR_MESSAGES.UNABLE_TO_DRAW_CARD);
         }
