@@ -145,7 +145,7 @@ public class GameManager implements CLIPhaseManager {
                     //TODO add a waiter for played card confirmation
                 //}while(state==State.WAITING_FOR_PLACE);
             } else if (turnStep == TURN_STEP.DRAW) {
-
+                runDrawCard();
             }
         } else if (gamePhase == GAME_PHASE.LAST_ROUND) {
 
