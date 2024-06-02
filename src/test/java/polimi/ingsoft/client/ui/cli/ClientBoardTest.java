@@ -237,9 +237,9 @@ class ClientBoardTest {
         //list2.add(Resource.LEAF);
         //list2.add(Resource.MUSHROOM);
         //list2=new ArrayList<>();
-        list2.add(Resource.BUTTERFLY);
+        //list2.add(Resource.BUTTERFLY);
         center=new CenterSpace(list2);
-        front=new Face(upleft,upright,bottomleft,bottomright,center);
+        front=new Face(upleft,null/*upright*/,bottomleft,bottomright,center);
 
         list=new ArrayList<>();
         list.add(Object.SCROLL);
