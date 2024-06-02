@@ -6,7 +6,6 @@ import polimi.ingsoft.client.ui.gui.page.*;
 public class GUIsingleton {
     private static GUIsingleton instance;
 
-    private ConnectionPageController connectionPageController;
     private NicknamePageController nicknamePageController;
     private StartingPageController startingPageController;
     private NewGamePageController newGamePageController;
@@ -29,14 +28,6 @@ public class GUIsingleton {
             instance = new GUIsingleton();
         }
         return instance;
-    }
-
-    public ConnectionPageController getConnectionPageController() {
-        return connectionPageController;
-    }
-
-    public void setConnectionPageController(ConnectionPageController connectionPageController) {
-        this.connectionPageController = connectionPageController;
     }
 
     public NicknamePageController getNicknamePageController() {

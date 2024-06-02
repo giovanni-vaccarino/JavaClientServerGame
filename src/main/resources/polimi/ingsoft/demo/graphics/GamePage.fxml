@@ -220,12 +220,12 @@
       </GridPane>
 
         <!-- Board arrows -->
-        <StackPane alignment="CENTER" layoutX="960.0" layoutY="686.0" prefHeight="100" prefWidth="60.0">
+        <StackPane alignment="CENTER" layoutX="990.0" layoutY="686.0" prefHeight="100" prefWidth="60.0">
             <children>
                 <ImageView fx:id="arrowS" />
             </children>
         </StackPane>
-        <StackPane alignment="CENTER" layoutX="960.0" layoutY="155.0" prefHeight="100" prefWidth="60.0">
+        <StackPane alignment="CENTER" layoutX="990.0" layoutY="155.0" prefHeight="100" prefWidth="60.0">
             <children>
                 <ImageView fx:id="arrowN" />
             </children>
@@ -235,7 +235,7 @@
                 <ImageView fx:id="arrowO" />
             </children>
         </StackPane>
-        <StackPane alignment="CENTER_RIGHT" layoutX="1222.0" layoutY="425.0" prefHeight="100" prefWidth="60.0">
+        <StackPane alignment="CENTER_RIGHT" layoutX="1282.0" layoutY="425.0" prefHeight="100" prefWidth="60.0">
             <children>
                 <ImageView fx:id="arrowE" />
             </children>
