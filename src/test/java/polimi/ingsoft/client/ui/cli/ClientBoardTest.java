@@ -235,7 +235,8 @@ class ClientBoardTest {
 
         res8=new ResourceCard("lol",front,back,0);
         //list2.add(Resource.LEAF);
-        list2.add(Resource.MUSHROOM);
+        //list2.add(Resource.MUSHROOM);
+        //list2=new ArrayList<>();
         list2.add(Resource.BUTTERFLY);
         center=new CenterSpace(list2);
         front=new Face(upleft,upright,bottomleft,bottomright,center);
@@ -293,7 +294,7 @@ class ClientBoardTest {
 
     @Test
     void printBoard() {
-        board.add(new Coordinates(1,1),gold,true);
+        //board.add(new Coordinates(1,1),gold,true);
         board.add(new Coordinates(-1,1),gold,false);
         board.add(new Coordinates(-1,-1),res1,true);
         board.add(new Coordinates(1,-1),res2,false);

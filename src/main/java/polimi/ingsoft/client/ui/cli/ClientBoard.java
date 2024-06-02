@@ -56,7 +56,7 @@ public class ClientBoard {
             card = getCardAtRespective(board,-1, 1,actualCoordinates);
             if (card != null || getCardAtRespective(board,-2,2,actualCoordinates ) != null || getCardAtRespective(board,0, 2,actualCoordinates) != null) {
                 if (card != null && card.getCenter().getItems().size() > 1) color = YELLOW;
-                else color = defineColor(card);
+                else color = defineColor(card,2);
                 System.out.print(printLeftUpLeftCorner(board,card, count,actualCoordinates));
                 System.out.print(printCenter(row, card, color));
                 System.out.print(printLeftUpRightCorner(board,card, count,actualCoordinates));
@@ -70,7 +70,7 @@ public class ClientBoard {
             card = getCardAtRespective(board,1, 1,actualCoordinates);
             if (card != null || getCardAtRespective(board,2, 2,actualCoordinates) != null || getCardAtRespective(board,0, 2,actualCoordinates) != null) {
                 if (card != null && card.getCenter().getItems().size() > 1) color = YELLOW;
-                else color = defineColor(card);
+                else color = defineColor(card,2);
                 System.out.print(printRightUpLeftCorner(board,card, count,actualCoordinates));
                 System.out.print(printCenter(row, card, color));
                 System.out.print(printRightUpRightCorner(board,card, count,actualCoordinates));
@@ -114,17 +114,17 @@ public class ClientBoard {
         count = 0;
         do {
             card = getCardAtRespective(board,-1, 1,actualCoordinates);
-            color = defineColor(card);
+            color = defineColor(card,2);
             if (getCardAtRespective(board,-2, 0,actualCoordinates) != null && count == 0) System.out.print(RESET + "‾");
             else System.out.print(" ");
             System.out.print(printLeftBottomLeftCorner(board,card, count,actualCoordinates));
             System.out.print(printCenter(row, card, color));
             System.out.print(printLeftBottomRightCorner(board,card, count,actualCoordinates));
             card = getCardAtRespective(board,0, 0,actualCoordinates);
-            color = defineColor(card);
+            color = defineColor(card,2);
             System.out.print(printCenter(row - 6, card, color));
             card = getCardAtRespective(board,1, 1,actualCoordinates);
-            color = defineColor(card);
+            color = defineColor(card,2);
             System.out.print(printRightBottomLeftCorner(board,card, count,actualCoordinates));
             System.out.print(printCenter(row, card, color));
             System.out.print(printRightBottomRightCorner(board,card, count,actualCoordinates));
@@ -158,14 +158,14 @@ public class ClientBoard {
             if (count == 2 && getCardAtRespective(board,-2, 0,actualCoordinates) != null) System.out.print("_");
             else System.out.print(" ");
             System.out.print(printBottomLeftUpLeftCorner(board,card, count,actualCoordinates));
-            System.out.print(printCenter(row - 6, card, defineColor(card)));
+            System.out.print(printCenter(row - 6, card, defineColor(card,2)));
             System.out.print(printBottomLeftUpRightCorner(board,card, count,actualCoordinates));
             card = getCardAtRespective(board,0, 0,actualCoordinates);
-            System.out.print(printCenter(row, card, defineColor(card)));
+            System.out.print(printCenter(row, card, defineColor(card,2)));
             card = getCardAtRespective(board,1, -1,actualCoordinates);
 
             System.out.print(printBottomRightUpLeftCorner(board,card, count,actualCoordinates));
-            System.out.print(printCenter(row - 6, card, defineColor(card)));
+            System.out.print(printCenter(row - 6, card, defineColor(card,2)));
             System.out.print(printBottomRightUpRightCorner(board,card, count,actualCoordinates));
             if (count == 2 && getCardAtRespective(board,2, 0,actualCoordinates) != null) System.out.print(RESET + "_");
 
@@ -188,7 +188,7 @@ public class ClientBoard {
         count = 0;
         do {
             card = getCardAtRespective(board,-1, -1,actualCoordinates);
-            color=defineColor(card);
+            color=defineColor(card,2);
             if(count==0&&getCardAtRespective(board,-2,-2,actualCoordinates)!=null)System.out.print("‾");
             else System.out.print(" ");
             System.out.print(printBottomLeftBottomLeftCorner(card, count,board,actualCoordinates));
@@ -196,7 +196,7 @@ public class ClientBoard {
             System.out.print(printBottomLeftBottomRightCorner(card, count,board,actualCoordinates));
             System.out.print(RESET+"              ");
             card = getCardAtRespective(board,1, -1,actualCoordinates);
-            color=defineColor(card);
+            color=defineColor(card,2);
             System.out.print(printBottomRightBottomLeftCorner(card, count,board,actualCoordinates));
             System.out.print(printCenter(row,card,color));
             System.out.print(printBottomRightBottomRightCorner(card, count,board,actualCoordinates));
@@ -230,12 +230,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,-2, -2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,-2, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,-2, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,-2, -2,actualCoordinates).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,-2, -2,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,-2, -2,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -246,12 +246,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, -2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, -2,actualCoordinates).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, -2,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, -2,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -262,12 +262,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,2, -2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,2, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,2, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,2, -2,actualCoordinates).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,2, -2,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,2, -2,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -278,20 +278,19 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, -2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, -2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, -2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, -2,actualCoordinates).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, -2,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, -2,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
 
     private static void printCentralRows(PlayedCard card, int row) {
         String color;
-        if (card != null && card.getCenter().getItems().size() > 1) color = YELLOW;
-        else color = defineColor(card);
+        color = defineColor(card,2);
         System.out.print(" " + color + "          ");
         System.out.print(printCenter(row, card, color));
         System.out.print(color + "          ");
@@ -307,12 +306,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,2, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,2, 0,actualCoordinates).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,2, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,2, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -323,12 +322,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, 0,actualCoordinates).getBottomRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -339,12 +338,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, 0,actualCoordinates).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -355,12 +354,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,-2, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,-2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,-2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,-2, 0,actualCoordinates).getBottomRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,-2, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,-2, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -371,12 +370,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, 0,actualCoordinates).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -387,12 +386,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,2, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,2, 0,actualCoordinates).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,2, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,2, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -403,12 +402,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, 0,actualCoordinates).getUpLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -419,12 +418,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,-2, 0,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,-2, 0,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getBottomLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,-2, 0,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,-2, 0,actualCoordinates).getUpRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,-2, 0,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,-2, 0,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -435,12 +434,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, 2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, 2,actualCoordinates).getBottomRightCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, 2,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 2,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -451,12 +450,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,2, 2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,2, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,2, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,2, 2,actualCoordinates).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,2, 2,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,2, 2,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -467,12 +466,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,0, 2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,0, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpRightCorner();
-            if (corner == null) return defineColor(card) + "          ";
+            if (corner == null) return defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,0, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,0, 2,actualCoordinates).getBottomLeftCorner();
-            if (corner == null) return defineColor(getCardAtRespective(board,0, 2,actualCoordinates)) + "          ";
+            if (corner == null) return defineColor(getCardAtRespective(board,0, 2,actualCoordinates),2) + "          ";
         }
         return printCorner("", corner, count);
     }
@@ -494,12 +493,12 @@ public class ClientBoard {
                 || (getCardAtRespective(board,-2, 2,actualCoordinates) != null && card != null &&
                 getCardAtRespective(board,-2, 2,actualCoordinates).getOrder() < card.getOrder())) {//caso in cui l'angolo in alto a sx non sia coperto
             corner = card.getUpLeftCorner();
-            if (corner == null) return pre + defineColor(card) + "          ";
+            if (corner == null) return pre + defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,-2, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
             return RESET + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,-2, 2,actualCoordinates).getBottomRightCorner();
-            if (corner == null) return pre + defineColor(getCardAtRespective(board,-2, 2,actualCoordinates)) + "          ";
+            if (corner == null) return pre + defineColor(getCardAtRespective(board,-2, 2,actualCoordinates),2) + "          ";
         }
         return printCorner(pre, corner, count);
     }
@@ -558,9 +557,9 @@ public class ClientBoard {
             switch (card.getCenter().getItems().size()) {
                 case 1:
                     return switch (row) {
-                        case 3 -> actualColor + BLACKTEXT + "  ¡‾‾‾‾‾‾‾‾¡  ";
-                        case 4 -> actualColor + BLACKTEXT + "  |        |  ";
-                        case 5 -> actualColor + BLACKTEXT + "  !________!  ";
+                        case 3 -> actualColor+"  "+defineColor(card,1) + BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡"+actualColor+"  ";
+                        case 4 -> actualColor+"  "+defineColor(card,1) + BLACKTEXT + "|        |"+actualColor+"  ";
+                        case 5 -> actualColor+"  "+defineColor(card,1) + BLACKTEXT + "!________!"+actualColor+"  ";
                         default -> actualColor + "              ";
                     };
                 case 2:
@@ -596,8 +595,8 @@ public class ClientBoard {
         return RESET + "              ";
     }
 
-    private static String defineColor(PlayedCard card) {
-        if (card != null && card.getCenter().getItems().size() != 1) return YELLOW;
+    private static String defineColor(PlayedCard card,int index) {//0=corner,1=centerspace,2=everything else
+        if (card != null && index==2 && card.getCard().getClass()==InitialCard.class) return YELLOW;
         return card == null ? "" : switch (card.getColor()) {
             case Resource.BUTTERFLY -> PURPLE;
             case Resource.LEAF -> GREEN;
@@ -620,7 +619,7 @@ public class ClientBoard {
         try {
             newCard = (MixedCard) card.getCard();
         } catch (ClassCastException e) {
-            return defineColor(card) + "              ";
+            return defineColor(card,2) + "              ";
         }
         int counter = 0;
         String pre, post, output = "";
