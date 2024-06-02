@@ -505,7 +505,12 @@ public class ClientBoard {
 
     private static String printCorner(String pre, CornerSpace corner, int count) {
         String color = "";
-        if (corner.isEmpty()) return pre + YELLOW + "          ";
+        pre=pre+BLACKTEXT;
+        if (corner.isEmpty()) return switch(count){
+            case 0->pre + YELLOW + "¡‾‾‾‾‾‾‾‾¡";
+            case 1->pre + YELLOW + "|        |";
+                default->pre + YELLOW + "!________!";
+        };
         else {
             color = switch (corner.getItems().getFirst()) {
                 case Resource.LEAF -> GREEN;
@@ -567,7 +572,7 @@ public class ClientBoard {
                         case 1, 4 -> pre = BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡" + actualColor + "  ";
                         case 2, 5 -> pre = BLACKTEXT + "|        |" + actualColor + "  ";
                         case 3, 6 -> pre = BLACKTEXT + "!________!" + actualColor + "  ";
-                        default-> pre=actualColor + "              ";
+                        default-> pre=actualColor + "            ";
                     }
                     if (row < 4) resource = card.getCenter().getItems().getFirst();
                     else resource = card.getCenter().getItems().get(1);
