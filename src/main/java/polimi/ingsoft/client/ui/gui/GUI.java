@@ -204,7 +204,6 @@ public class GUI extends UI{
     public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard){
         System.out.println("STO RICEVENDO UN AGGIORNAMENTO DI PUBLIC BOARD DI TIPO: "+ deckType);
 
-        //TODO check playerHand update --> must be before
         if (deckType == TYPE_HAND_CARD.RESOURCE) {
             getUiModel().setPlaceInPublicBoardResource((PlaceInPublicBoard<ResourceCard>) placeInPublicBoard);
         } else {

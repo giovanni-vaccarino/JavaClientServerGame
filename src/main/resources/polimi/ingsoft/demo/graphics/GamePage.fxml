@@ -19,16 +19,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1350.0" styleClass="gamePage" stylesheets="/polimi/ingsoft/demo/graphics/css/PageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polimi.ingsoft.client.ui.gui.page.GamePageController">
     <children>
 
-        <!-- Error -->
-        <StackPane layoutX="1100.0" layoutY="40.0" prefWidth="200" prefHeight="120" alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" prefHeight="120" styleClass="errorPane"
-                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
-                        fx:id="errButton">
-                </Button>
-            </children>
-        </StackPane>
-
         <!-- currentPlayerName -->
         <StackPane layoutX="0.0" layoutY="0.0" prefWidth="1350" prefHeight="100" alignment="CENTER">
             <children>
@@ -230,22 +220,22 @@
       </GridPane>
 
         <!-- Board arrows -->
-        <StackPane alignment="CENTER" layoutX="960.0" layoutY="686.0" prefHeight="100" prefWidth="120.0">
+        <StackPane alignment="CENTER" layoutX="960.0" layoutY="686.0" prefHeight="100" prefWidth="60.0">
             <children>
                 <ImageView fx:id="arrowS" />
             </children>
         </StackPane>
-        <StackPane alignment="CENTER" layoutX="960.0" layoutY="155.0" prefHeight="100" prefWidth="120.0">
+        <StackPane alignment="CENTER" layoutX="960.0" layoutY="155.0" prefHeight="100" prefWidth="60.0">
             <children>
                 <ImageView fx:id="arrowN" />
             </children>
         </StackPane>
-        <StackPane alignment="CENTER_LEFT" layoutX="725.0" layoutY="425.0" prefHeight="100" prefWidth="120.0">
+        <StackPane alignment="CENTER_LEFT" layoutX="725.0" layoutY="425.0" prefHeight="100" prefWidth="60.0">
             <children>
                 <ImageView fx:id="arrowO" />
             </children>
         </StackPane>
-        <StackPane alignment="CENTER_RIGHT" layoutX="1222.0" layoutY="425.0" prefHeight="100" prefWidth="120.0">
+        <StackPane alignment="CENTER_RIGHT" layoutX="1222.0" layoutY="425.0" prefHeight="100" prefWidth="60.0">
             <children>
                 <ImageView fx:id="arrowE" />
             </children>
@@ -352,6 +342,16 @@
             <children>
                 <TextField fx:id="messageInput" promptText="Enter here"
                            styleClass="chatTextBar" stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"/>
+            </children>
+        </StackPane>
+
+        <!-- Error -->
+        <StackPane layoutX="800.0" layoutY="40.0" prefWidth="500" prefHeight="80" alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" prefHeight="80" styleClass="errorPane"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        fx:id="errButton">
+                </Button>
             </children>
         </StackPane>
 

@@ -27,12 +27,12 @@ public class SetGamePage {
 
         // Resource Covered
         String id = getGui().getResourceCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
-        String path= CardPathUtils.backMixedCard(id);
+        String path= CardPathUtils.frontMixedCard(id);
         PlaceCardUtils.placeCardString(0,0,coveredDrawableDeck1, path);
 
         // Gold Covered
         id = getGui().getGoldCardPublicBoard().get(PlaceInPublicBoard.Slots.DECK).getID();
-        path= CardPathUtils.backMixedCard(id);
+        path= CardPathUtils.frontMixedCard(id);
         PlaceCardUtils.placeCardString(0,1,coveredDrawableDeck1, path);
 
         // Quest Covered
