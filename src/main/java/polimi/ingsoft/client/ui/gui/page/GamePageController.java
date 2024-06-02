@@ -412,6 +412,10 @@ public class GamePageController implements Initializable{
         coloredCell(4,8);*/
     }
 
+    public void resetPossibleOptions(){
+        possibleCoordintes.clear();
+    }
+
     public void setClickBoardHandler(){
         // Choose a card from a personal deck
         for (Node node : personalDeck.getChildren()) {

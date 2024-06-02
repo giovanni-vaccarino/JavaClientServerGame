@@ -128,12 +128,15 @@ public class SetGamePage {
 
             Board board = getGui().getUiModel().getPlayerBoards().get(player);
 
-            List<Coordinates> possibleCoordinates = board.getAvailablePlaces();
+            if(player.equals(getGui().getNickname())){
+                List<Coordinates> possibleCoordinates = board.getAvailablePlaces();
+                getGamePageController().resetPossibleOptions();
 
-            for(Coordinates possibleCoordinate: possibleCoordinates){
-                x = possibleCoordinate.getX();
-                y = possibleCoordinate.getY();
-                getGamePageController().setPossibleOptions(x,y);
+                for(Coordinates possibleCoordinate: possibleCoordinates){
+                    x = possibleCoordinate.getX();
+                    y = possibleCoordinate.getY();
+                    getGamePageController().setPossibleOptions(x,y);
+                }
             }
 
             allCards = getGui().getUiModel().getPlayerBoards().get(player).getCards(); // hashmap <coordinate, playedcard>
