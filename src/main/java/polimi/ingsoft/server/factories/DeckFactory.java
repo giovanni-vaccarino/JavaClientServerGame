@@ -14,10 +14,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class DeckFactory {
-private static final String RESOURCE="resourceCards.json";
-    private static final String GOLD="goldCards.json";
-    private static final String QUEST="questCards.json";
-    private static final String INITIAL="initialCards.json";
+    private static final String PATHCARDSJSON = "src/main/resources/polimi/ingsoft/demo/graphics/cards/";
+    private static final String RESOURCE = PATHCARDSJSON + "resourceCards.json";
+    private static final String GOLD = PATHCARDSJSON + "goldCards.json";
+    private static final String QUEST = PATHCARDSJSON + "questCards.json";
+    private static final String INITIAL = PATHCARDSJSON + "initialCards.json";
     static ObjectMapper cardCreator;
     static File file;
     static Scanner fileReader;
