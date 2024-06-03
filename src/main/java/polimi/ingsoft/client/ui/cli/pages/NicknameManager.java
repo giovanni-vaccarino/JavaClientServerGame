@@ -11,8 +11,8 @@ public class NicknameManager implements CLIPhaseManager {
     private String nickname;
 
     private final CLI cli;
-    private final Scanner in;
-    private final PrintStream out;
+    private transient final Scanner in;
+    private transient final PrintStream out;
 
     enum State {
         NONE, SET_NICKNAME, WAITING_FOR_NICKNAME

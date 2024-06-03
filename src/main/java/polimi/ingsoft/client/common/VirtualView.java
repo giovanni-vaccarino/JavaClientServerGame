@@ -1,21 +1,22 @@
 package polimi.ingsoft.client.common;
 
 
+import polimi.ingsoft.server.common.command.ClientCommand;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
-import polimi.ingsoft.server.rmi.RmiMethodCall;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.util.List;
 import java.util.Map;
 
-public interface VirtualView extends Remote {
-    void handleRmiClientMessages(RmiMethodCall rmiMethodCall) throws IOException;
+public interface VirtualView extends Remote, Serializable {
+    void sendMessage(ClientCommand command) throws IOException;
 
 
     /**
@@ -152,5 +153,5 @@ public interface VirtualView extends Remote {
      * @throws IOException If an I/O error occurs.
      */
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;
-    void setMatchControllerServer(VirtualMatchServer server) throws IOException;
+    void setMatchServer(VirtualMatchServer server) throws IOException;
 }

@@ -28,7 +28,7 @@ public class GamePageDynamicUtils {
         if(mixedCard!=null){
             try {
                 System.out.println("Mixed card inviata: "+coordinates.getX()+":"+coordinates.getY());
-                getGui().getClient().placeCard(nickname,mixedCard,coordinates, PlaceCardUtils.getIsFrontPlayerHandCard(xPlayedCard,yPlayedCard));
+                getGui().getMatchServer().placeCard(nickname,mixedCard,coordinates, PlaceCardUtils.getIsFrontPlayerHandCard(xPlayedCard,yPlayedCard));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

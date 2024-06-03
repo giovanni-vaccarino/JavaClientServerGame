@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class LobbyManager implements CLIPhaseManager {
     private final PrintStream out;
-    private final CLI cli;
+    private transient final CLI cli;
 
     public LobbyManager(PrintStream out, CLI cli) {
         this.out = out;

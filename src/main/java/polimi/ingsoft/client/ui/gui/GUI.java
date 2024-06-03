@@ -73,7 +73,7 @@ public class GUI extends UI{
     public void createMatch(int numPlayers){
         try {
             getUiModel().setClientState(CLIENT_STATE.NEWGAME);
-            getClient().createMatch(getNickname(),numPlayers);
+            getServer().createMatch(getNickname(),numPlayers);
         } catch (IOException ignore) {
         }
     }
@@ -81,14 +81,14 @@ public class GUI extends UI{
     public void joinMatch(Integer matchId) {
         try {
             getUiModel().setClientState(CLIENT_STATE.JOINGAME);
-            getClient().joinMatch(getNickname(), matchId);
+            getServer().joinMatch(getNickname(), matchId);
         } catch (IOException ignore) {
         }
     }
 
     public void getClientMatches(){
         try {
-            getClient().getMatches(this.getClient());
+            getServer().getMatches(this.getNickname());
         } catch (IOException ignore) {
         }
     }
@@ -118,7 +118,7 @@ public class GUI extends UI{
     public void showMatchCreate(Integer matchId) {
         getUiModel().setMatchId(matchId);
         try {
-            getClient().joinMatch(getNickname(),matchId);
+            getServer().joinMatch(getNickname(),matchId);
         } catch (IOException ignore) {
         }
     }
@@ -269,7 +269,7 @@ public class GUI extends UI{
     public void drawPublicBoard(TYPE_HAND_CARD typeHandCard, PlaceInPublicBoard.Slots slots){
         System.out.println("TYPE: "+typeHandCard+"/ SLOT: "+slots.toString()+"/ NICKNAME: "+getNickname());
         try {
-            getClient().drawCard(getNickname(),typeHandCard,slots);
+            getMatchServer().drawCard(getNickname(),typeHandCard,slots);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -277,7 +277,7 @@ public class GUI extends UI{
 
     public void sendBroadCastMessage(String message){
         try {
-            getClient().sendBroadCastMessage(getNickname(),message);
+            getMatchServer().sendBroadcastMessage(getNickname(),message);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -285,7 +285,7 @@ public class GUI extends UI{
 
     public void sendPrivateMessage(String receiver, String message){
         try {
-            getClient().sendPrivateMessage(getNickname(),receiver,message);
+            getMatchServer().sendPrivateMessage(getNickname(),receiver,message);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

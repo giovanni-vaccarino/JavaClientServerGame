@@ -1,6 +1,6 @@
 package polimi.ingsoft.server;
 
-import polimi.ingsoft.server.common.VirtualServerInterface;
+import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.rmi.RmiServer;
 import polimi.ingsoft.server.socket.SocketServer;
@@ -50,7 +50,7 @@ public class MainServer {
     private static void runRmiServer() {
         try {
             //System.setProperty("java.rmi.server.hostname", "192.168.195.134");
-            VirtualServerInterface stub = (VirtualServerInterface) UnicastRemoteObject.exportObject(rmiServer, 0);
+            VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(rmiServer, 0);
 
             Registry registry = LocateRegistry.createRegistry(1234);
             registry.rebind("MatchManagerServer", stub);

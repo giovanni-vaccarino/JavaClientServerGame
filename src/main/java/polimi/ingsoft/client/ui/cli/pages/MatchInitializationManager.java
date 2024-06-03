@@ -52,10 +52,10 @@ public class MatchInitializationManager implements CLIPhaseManager {
     }
 
     private State state = State.NONE;
-    private final Scanner in;
+    private transient final Scanner in;
     private final PrintStream out;
-    private final CLI cli;
-    private final Printer printer;
+    private transient final CLI cli;
+    private transient final Printer printer;
 
     public MatchInitializationManager(Scanner in, PrintStream out, CLI cli) {
         this.in = in;

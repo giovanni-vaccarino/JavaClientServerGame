@@ -1,7 +1,9 @@
 package polimi.ingsoft.client.ui;
 
 import polimi.ingsoft.client.common.Client;
-import polimi.ingsoft.client.ui.gui.UIModel;
+import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.common.VirtualMatchServer;
+import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
@@ -10,14 +12,15 @@ import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public abstract class UI {
-    private final Client client;
+public abstract class UI implements Serializable {
+    private transient final Client client;
     private String nickname;
 
-    public  UI (Client client){
+    public  UI (Client client) {
         this.client = client;
     }
 
@@ -38,8 +41,14 @@ public abstract class UI {
     public abstract void updateBroadcastChat(Message message);
     public abstract void updatePrivateChat(String receiver, Message message);
 
-    public Client getClient(){
+    public VirtualView getClient(){
         return client;
+    }
+    public VirtualServer getServer() {
+        return client.getServer();
+    }
+    public VirtualMatchServer getMatchServer() {
+        return client.getMatchServer();
     }
 
     public String getNickname() {
@@ -49,7 +58,7 @@ public abstract class UI {
     public void setNickname(String nickname) {
         this.nickname = nickname;
         try {
-            getClient().setNickname(nickname);
+            getServer().setNickname(nickname, "");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +66,7 @@ public abstract class UI {
 
     public void setColor(PlayerColor playerColor){
         try {
-            this.client.setColor(nickname, playerColor);
+            getMatchServer().setColor(nickname, playerColor);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -65,7 +74,7 @@ public abstract class UI {
 
     public void setIsFaceInitialCardUp(boolean isFaceInitialCardUp){
         try {
-            this.client.setIsInitialCardFaceUp(nickname, isFaceInitialCardUp);
+            getMatchServer().setIsInitialCardFacingUp(nickname, isFaceInitialCardUp);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -73,7 +82,7 @@ public abstract class UI {
 
     public void setQuestCard(QuestCard questCard) {
         try {
-            this.client.setQuestCard(nickname, questCard);
+            getMatchServer().setQuestCard(nickname, questCard);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

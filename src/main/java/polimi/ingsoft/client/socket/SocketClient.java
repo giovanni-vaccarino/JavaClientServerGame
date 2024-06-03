@@ -4,27 +4,18 @@ import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
-import polimi.ingsoft.server.controller.GameState;
-import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.model.*;
-import polimi.ingsoft.server.rmi.RmiMethodCall;
-import polimi.ingsoft.server.common.protocol.MessageCodes;
-import polimi.ingsoft.server.common.protocol.NetworkMessage;
+import polimi.ingsoft.server.common.command.ClientCommand;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class SocketClient extends Client {
-    private final Socket socket;
-    private final ObjectOutputStream out;
-    private final ObjectInputStream in;
-    private final VirtualServer server;
+    private transient final Socket socket;
+    private transient final ObjectInputStream in;
+    private transient final VirtualServer server;
 
-    private VirtualMatchServer matchServer;
+    private transient VirtualMatchServer matchServer;
 
     public SocketClient(
             String hostName,
@@ -35,10 +26,10 @@ public class SocketClient extends Client {
     ) throws IOException {
         super(uiType, printStream, scanner);
         socket = new Socket(hostName, port);
-        out = new ObjectOutputStream(socket.getOutputStream());
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
-        server = new ServerProxy(out);
-        matchServer = new MatchServerProxy(out);
+        server = new SocketServerProxy(out);
+        matchServer = new SocketMatchServerProxy(out);
     }
 
     @Override
@@ -47,109 +38,30 @@ public class SocketClient extends Client {
     }
 
     @Override
-    protected VirtualMatchServer getMatchServer() {
+    public VirtualMatchServer getMatchServer() {
         return matchServer;
     }
 
     @Override
-    public void handleRmiClientMessages(RmiMethodCall rmiMethodCall) {
+    public void sendMessage(ClientCommand command) throws IOException {
 
     }
 
     @Override
-    public void setMatchControllerServer(VirtualMatchServer controller) {
+    public void setMatchServer(VirtualMatchServer controller) {
         this.matchServer = controller;
     }
 
+    @Override
     public void run() {
         new Thread(() -> {
             try {
-                runVirtualServer();
+                ClientCommand command;
+                while ((command = (ClientCommand) in.readObject()) != null)
+                    command.execute(this);
             } catch (IOException | ClassNotFoundException e) {
                 // TODO handle
             }
         }).start();
-    }
-
-    private void runVirtualServer() throws IOException, ClassNotFoundException {
-        NetworkMessage item;
-        while ((item = (NetworkMessage) in.readObject()) != null) {
-            MessageCodes type = item.type;
-            Object payload = item.payload;
-            // Read message and perform action
-            switch (type) {
-                case SET_NICKNAME_UPDATE -> {
-                    this.showNicknameUpdate();
-                }
-                case MATCHES_LIST_UPDATE -> {
-                    List<Integer> matches = (List<Integer>) payload;
-                    this.showUpdateMatchesList(matches);
-                }
-                case MATCH_JOIN_UPDATE -> {
-                    this.showUpdateMatchJoin();
-                }
-                case MATCH_CREATE_UPDATE -> {
-                    Integer matchId = (Integer) payload;
-                    this.showUpdateMatchCreate(matchId);
-                }
-                case LOBBY_PLAYERS_UPDATE -> {
-                    List<String> nicknames = (List<String>) payload;
-                    this.showUpdateLobbyPlayers(nicknames);
-                }
-                case SET_INITIAL_SETTINGS_UPDATE -> {
-                    // TODO remove record and use plain obj
-                    NetworkMessage.InitialSettings initialSettings = (NetworkMessage.InitialSettings) payload;
-                    PlayerInitialSetting playerInitialSetting = initialSettings.playerInitialSetting();
-                    this.showUpdateInitialSettings(playerInitialSetting);
-                }
-                case MATCH_GAME_STATE_UPDATE -> {
-                    NetworkMessage.GameStatePayload gameStatePayload = (NetworkMessage.GameStatePayload) payload;
-                    GameState gameState = gameStatePayload.gameState();
-                    this.showUpdateGameState(gameState);
-                }
-                case GAME_START_UPDATE -> {
-                    NetworkMessage.GameStartUpdate gameStartUpdate = (NetworkMessage.GameStartUpdate) payload;
-                    Map<String, Board> boards = gameStartUpdate.boards();
-                    PlaceInPublicBoard<ResourceCard> resource = gameStartUpdate.resource();
-                    PlaceInPublicBoard<GoldCard> gold = gameStartUpdate.gold();
-                    PlaceInPublicBoard<QuestCard> quest = gameStartUpdate.quest();
-                    this.showUpdateGameStart(resource, gold, quest, boards);
-                }
-                case MATCH_PUBLIC_BOARD_UPDATE -> {
-                    PublicBoard publicBoard = (PublicBoard) payload;
-                    //TODO
-                }
-                case MATCH_BOARD_UPDATE -> {
-                    NetworkMessage.BoardUpdatePayload boardUpdatePayload = (NetworkMessage.BoardUpdatePayload) payload;
-                    String nickname = boardUpdatePayload.nickname();
-                    Coordinates coordinates = boardUpdatePayload.coordinates();
-                    PlayedCard playedCard = boardUpdatePayload.playedCard();
-                    Integer score = boardUpdatePayload.score();
-                    this.showUpdateBoard(nickname, coordinates, playedCard, score);
-                }
-                case MATCH_PLAYER_HAND_UPDATE -> {
-                    PlayerHand playerHand = (PlayerHand) payload;
-                    this.showUpdatePlayerHand(playerHand);
-                }
-                case MATCH_BROADCAST_MESSAGE_UPDATE -> {
-                    NetworkMessage.BroadcastMessageUpdatePayload broadcastMessagePayload = (NetworkMessage.BroadcastMessageUpdatePayload) payload;
-                    Message message = broadcastMessagePayload.message();
-
-                    this.showUpdateBroadcastChat(message);
-                }
-                case MATCH_PRIVATE_MESSAGE_UPDATE -> {
-                    NetworkMessage.PrivateMessageUpdatePayload privateMessagePayload = (NetworkMessage.PrivateMessageUpdatePayload) payload;
-                    String recipient = privateMessagePayload.receiver();
-                    Message message = privateMessagePayload.message();
-
-                    this.showUpdatePrivateChat(recipient, message);
-                }
-                case ERROR -> {
-                    ERROR_MESSAGES errorMessage= (ERROR_MESSAGES) payload;
-                    this.reportError(errorMessage);
-                }
-                default -> System.err.println("[INVALID MESSAGE]");
-            }
-        }
     }
 }

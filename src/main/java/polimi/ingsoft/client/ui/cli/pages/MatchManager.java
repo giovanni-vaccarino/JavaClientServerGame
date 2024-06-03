@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MatchManager implements CLIPhaseManager{
-    private final Scanner in;
-    private final PrintStream out;
-    private final CLI cli;
+    private transient final Scanner in;
+    private transient final PrintStream out;
+    private transient final CLI cli;
 
     enum State {
         NONE, WAITING_FOR_MATCHES, SET_MATCH_ID, WAITING_FOR_JOIN, WAITING_FOR_CREATE
@@ -32,7 +32,7 @@ public class MatchManager implements CLIPhaseManager{
     public void start() {
         state = State.WAITING_FOR_MATCHES;
         try {
-            cli.getClient().getMatches(cli.getClient());
+            cli.getServer().getMatches(cli.getNickname());
         } catch (IOException e) {
             parseError(ERROR_MESSAGES.UNABLE_TO_LIST_MATCHES);
         }
@@ -84,7 +84,7 @@ public class MatchManager implements CLIPhaseManager{
         if (state == State.SET_MATCH_ID || state == State.WAITING_FOR_CREATE) {
             out.println(MESSAGES.JOINING_MATCH.getValue());
             try {
-                cli.getClient().joinMatch(cli.getNickname(), matchId);
+                cli.getServer().joinMatch(cli.getNickname(), matchId);
                 state = State.WAITING_FOR_JOIN;
             } catch (IOException e) {
                 parseError(ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH);
@@ -110,7 +110,7 @@ public class MatchManager implements CLIPhaseManager{
             } while (!isValid);
 
             try {
-                cli.getClient().createMatch(cli.getNickname(), requestedNumPlayers);
+                cli.getServer().createMatch(cli.getNickname(), requestedNumPlayers);
                 state = State.WAITING_FOR_CREATE;
             } catch (IOException e) {
                 parseError(ERROR_MESSAGES.UNABLE_TO_CREATE_MATCH);

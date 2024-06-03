@@ -225,7 +225,7 @@ public class GameManager implements CLIPhaseManager {
         //in.nextLine();
 
         try {
-            cli.getClient().placeCard(cli.getNickname(),chosenCard, new Coordinates(x, y), facingUp);
+            cli.getMatchServer().placeCard(cli.getNickname(),chosenCard, new Coordinates(x, y), facingUp);
         } catch (IOException e) {
             parseError(ERROR_MESSAGES.UNABLE_TO_PLACE_CARD);
         }
@@ -269,7 +269,7 @@ public class GameManager implements CLIPhaseManager {
         else slot= PlaceInPublicBoard.Slots.SLOT_B;
 
         try {
-            cli.getClient().drawCard(cli.getNickname(), type, slot);
+            cli.getMatchServer().drawCard(cli.getNickname(), type, slot);
         } catch (IOException e) {
             parseError(ERROR_MESSAGES.UNABLE_TO_DRAW_CARD);
         }

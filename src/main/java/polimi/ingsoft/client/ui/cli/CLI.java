@@ -18,7 +18,7 @@ public class CLI extends UI {
         WELCOME, NICKNAME_CHOICE, MATCH_CHOICE, LOBBY, GAME_INIT, GAME
     }
 
-    private final PrintStream out;
+    private transient final PrintStream out;
     private CLIPhase phase = CLIPhase.WELCOME;
 
     private final NicknameManager nicknameManager;
@@ -139,7 +139,6 @@ public class CLI extends UI {
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) {
-        out.println("Incoming error");
         currentManager.parseError(errorMessage);
     }
 

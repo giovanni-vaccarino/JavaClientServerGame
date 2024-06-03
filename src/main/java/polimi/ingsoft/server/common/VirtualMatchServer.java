@@ -1,16 +1,20 @@
 package polimi.ingsoft.server.common;
 
+import polimi.ingsoft.server.common.command.MatchServerCommand;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.Remote;
 
 /**
  * The VirtualMatchServer interface defines the methods for effectively play a match.
  */
-public interface VirtualMatchServer extends Remote {
+public interface VirtualMatchServer extends Remote, Serializable {
+    void sendMessage(MatchServerCommand command) throws IOException;
+
     void setColor(String nickname, PlayerColor color) throws IOException;
 
     void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException;
