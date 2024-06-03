@@ -19,6 +19,7 @@ import java.util.Map;
 public abstract class UI implements Serializable {
     private transient final Client client;
     private String nickname;
+    private String stub;
 
     public  UI (Client client) {
         this.client = client;
@@ -55,10 +56,14 @@ public abstract class UI implements Serializable {
         return nickname;
     }
 
+    public void setStubNickname(String stubNickname) {
+        this.stub = stubNickname;
+    }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
         try {
-            getServer().setNickname(nickname, "");
+            getServer().setNickname(nickname, this.stub);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -17,7 +17,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class RmiServer extends Server {
     private final BlockingQueue<ServerCommand> methodQueue = new LinkedBlockingQueue<>();
     private final Map<Integer, VirtualMatchServer> matchServers = new HashMap<>();
-    private String stub;
 
     public RmiServer(MainController mainController, PrintStream logger) {
         super(logger, mainController);
@@ -33,17 +32,6 @@ public class RmiServer extends Server {
                 }
             }
         }).start();
-    }
-
-    @Override
-    public void connect(VirtualView client) throws RemoteException {
-        stub = Utils.getRandomNickname();
-        this.addClient(new RmiClientProxy(client), stub);
-    }
-
-    @Override
-    public void setNickname(String nickname, String stub) throws IOException {
-        super.setNickname(nickname, this.stub);
     }
 
     @Override

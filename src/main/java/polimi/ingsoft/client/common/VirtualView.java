@@ -20,6 +20,17 @@ public interface VirtualView extends Remote, Serializable {
 
 
     /**
+     * Updates the client that the connection was
+     * established successfully
+     *
+     * @param stubNickname The random string assigned to the client
+     *                     until its nickname is set explicitly
+     * @throws IOException If an I/O error occurs.
+     */
+    void showConnectUpdate(String stubNickname) throws IOException;
+
+
+    /**
      * Updates the nickname in the UI.
      *
      * @throws IOException If an I/O error occurs.

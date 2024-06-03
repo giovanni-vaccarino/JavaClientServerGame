@@ -18,6 +18,11 @@ public abstract class ClientProxy implements VirtualView {
     public abstract void sendMessage(ClientCommand command) throws IOException;
 
     @Override
+    public void showConnectUpdate(String stubNickname) throws IOException {
+        sendMessage((ClientCommand) client -> client.showConnectUpdate(stubNickname));
+    }
+
+    @Override
     public void showNicknameUpdate() throws IOException {
         sendMessage((ClientCommand) VirtualView::showNicknameUpdate);
     }
@@ -54,6 +59,7 @@ public abstract class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting) throws IOException {
+        // clone must be run on this side because it needs to happen BEFORE serialization
         PlayerInitialSetting playerInitialSettingClone = playerInitialSetting.clone();
         sendMessage((ClientCommand) client -> client.showUpdateInitialSettings(playerInitialSettingClone));
     }

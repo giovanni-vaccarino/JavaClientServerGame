@@ -33,10 +33,18 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     protected abstract Map<Integer, VirtualMatchServer> getMatchServers();
 
     @Override
-    public abstract void connect(VirtualView client) throws IOException;
+    public void connect(VirtualView client) throws IOException {
+        String stub = Utils.getRandomNickname();
+        logger.println("SERVER: generated stub " + stub);
+        synchronized (this.clients) {
+            this.clients.put(stub, client);
+        }
+        client.showConnectUpdate(stub);
+    }
 
     @Override
     public void setNickname(String nickname, String stub) throws IOException {
+        logger.println("SERVER: " + nickname + " " + stub);
         VirtualView clientToUpdate = clients.get(stub);
 
         try {
@@ -115,13 +123,6 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     @Override
     public void reJoinMatch(Integer matchId, String nickname) throws IOException {
 
-    }
-
-    // TODO unify with connect
-    protected void addClient(VirtualView client, String nickname){
-        synchronized (this.clients) {
-            this.clients.put(nickname, client);
-        }
     }
 
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {

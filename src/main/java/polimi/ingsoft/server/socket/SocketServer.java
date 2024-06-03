@@ -31,7 +31,6 @@ public class SocketServer extends Server {
     public void handleIncomingConnections() {
         logger.println("SOCKET: Starting server");
         ServerSocket server;
-        String stub;
         List<Thread> handlers = new ArrayList<>();
         try {
             server = new ServerSocket(port);
@@ -39,9 +38,8 @@ public class SocketServer extends Server {
             while (true) {
                 try {
                     Socket socket = server.accept();
-                    stub = Utils.getRandomNickname();
-                    ConnectionHandler handler = new ConnectionHandler(socket, this, logger, stub);
-                    this.addClient(handler, stub);
+                    ConnectionHandler handler = new ConnectionHandler(socket, this, logger);
+                    this.connect(handler);
 
                     Thread handlerThread = new Thread(handler);
                     handlers.add(handlerThread);
@@ -68,11 +66,6 @@ public class SocketServer extends Server {
     @Override
     protected Map<Integer, VirtualMatchServer> getMatchServers() {
         return matchServers;
-    }
-
-    @Override
-    public void connect(VirtualView client) throws IOException {
-
     }
 
     @Override

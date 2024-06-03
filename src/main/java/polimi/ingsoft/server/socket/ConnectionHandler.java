@@ -11,10 +11,7 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.*;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +25,13 @@ public class ConnectionHandler implements Runnable, VirtualView {
 
     private final PrintStream logger;
 
-    public ConnectionHandler(Socket socket, SocketServer server, PrintStream logger, String stubNickname) throws IOException {
+    public ConnectionHandler(Socket socket, SocketServer server, PrintStream logger) throws IOException {
         this.socket = socket;
         this.in = new ObjectInputStream(socket.getInputStream());
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.view = new SocketClientProxy(out);
         this.logger = logger;
-        this.dispatcher = new Dispatcher(new ServerLocalProxy(server, stubNickname));
+        this.dispatcher = new Dispatcher(server);
     }
 
     @Override
@@ -53,15 +50,27 @@ public class ConnectionHandler implements Runnable, VirtualView {
             in.close();
             out.close();
             socket.close();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (EOFException e) {
             // TODO handle disconnection here
+            logger.println("SOCKET: Connection closed");
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void sendMessage(ClientCommand command) throws IOException {
-        this.view.sendMessage(command);
+        synchronized (this.view) {
+            this.view.sendMessage(command);
+        }
+    }
+
+    @Override
+    public void showConnectUpdate(String stubNickname) throws IOException {
+        logger.println("SOCKET: Sending connect update");
+        synchronized (this.view) {
+            this.view.showConnectUpdate(stubNickname);
+        }
     }
 
     @Override
