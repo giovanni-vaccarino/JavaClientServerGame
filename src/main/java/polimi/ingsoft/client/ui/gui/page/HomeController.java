@@ -19,7 +19,8 @@ import java.util.TimerTask;
 public class HomeController extends Application {
     int waitingTime = 1;
     private static GUI gui;
-    private ConnectionPageController connectionController;
+    private NicknamePageController nicknamePageController;
+
 
     public HomeController() {
         gui = GUIsingleton.getInstance().getGui();
@@ -74,9 +75,10 @@ public class HomeController extends Application {
     public void nextPage(Stage stage) throws IOException {
 
         //RIGHT ONE:
-        connectionController = new ConnectionPageController();
+        nicknamePageController = new NicknamePageController();
+
         try {
-            connectionController.start(true);
+            nicknamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

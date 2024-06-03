@@ -73,6 +73,8 @@ public class PlaceCardUtils {
         //System.out.println(isCartFrontPublicBoard);
 
         GUIsingleton.getInstance().getGamePageController().setVisiblePublicBoard();
+
+        GUIsingleton.getInstance().getGamePageController().setClickBoardHandler();
     }
 
     public static void flipCardPlayerHand(int x, int y){
@@ -86,6 +88,8 @@ public class PlaceCardUtils {
         //System.out.println(isCartFrontPlayerHand);
 
         GUIsingleton.getInstance().getGamePageController().setPlayerHand();
+
+        GUIsingleton.getInstance().getGamePageController().setClickBoardHandler();
     }
 
 

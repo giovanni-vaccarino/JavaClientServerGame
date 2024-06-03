@@ -422,9 +422,11 @@ public class GamePageController implements Initializable{
             int y = GridPane.getRowIndex(node);
             int x = GridPane.getColumnIndex(node);
 
-            node.setOnMouseClicked(event -> {
-                drawPlayerHand(x,y);
-            });
+            if(x!=0){
+                node.setOnMouseClicked(event -> {
+                    drawPlayerHand(x,y);
+                });
+            }
         }
 
         // Choose a card from Public board
@@ -432,11 +434,13 @@ public class GamePageController implements Initializable{
             int y = GridPane.getRowIndex(node);
             int x = GridPane.getColumnIndex(node);
 
-            node.setOnMouseClicked(event -> {
-                drawVisiblePublicBoard(x,y);
-                System.out.println(x);
-                System.out.println(y);
-            });
+            if(y!=2) {
+                node.setOnMouseClicked(event -> {
+                    drawVisiblePublicBoard(x,y);
+                    System.out.println(x);
+                    System.out.println(y);
+                });
+            }
         }
 
         // Choose a card from Public board (covered cards)
@@ -444,11 +448,13 @@ public class GamePageController implements Initializable{
             int y = GridPane.getRowIndex(node);
             int x = GridPane.getColumnIndex(node);
 
-            node.setOnMouseClicked(event -> {
-                drawCoveredPublicBoard(x,y);
-                System.out.println(x);
-                System.out.println(y);
-            });
+            if(y!=2){
+                node.setOnMouseClicked(event -> {
+                    drawCoveredPublicBoard(x,y);
+                    System.out.println(x);
+                    System.out.println(y);
+                });
+            }
         }
     }
 
@@ -459,14 +465,22 @@ public class GamePageController implements Initializable{
     }
 
     public void updatePublicBoard(){
+        PlaceCardUtils.initializeFaceCards();
         setPublicBoard();
         setPlayerHand();
+
+        // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
+        buttonPersonalDeck30.setVisible(true);
 
         setClickBoardHandler();
     }
 
     public void updateBoard(){
         System.out.println("REFRESHING BOARD");
+        if(mixedCard!=null){
+            // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
+            buttonPersonalDeck30.setVisible(false);
+        }
         SetGamePage.setBoardData();
         SetGamePage.setPlayerHand(personalDeck);
         loadBoardCards();
