@@ -260,7 +260,7 @@ public class MatchController implements Serializable {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
 
-        if(card.getPlayability(board) > 0){
+        if(facingUp||card.getPlayability(board) > 0){
             boolean isAdded = board.add(coordinates, card, facingUp);
             if(isAdded){
                 System.out.println("VOLTE IN CUI MATCHA" + card.getPoints(board,coordinates));
