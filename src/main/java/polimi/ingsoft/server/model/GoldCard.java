@@ -29,6 +29,7 @@ public class GoldCard extends MixedCard {
 
     @Override
     public int getPlayability(Board board) {
+        //TODO see how to improve this
         return this.getMatches(board);
     }
 

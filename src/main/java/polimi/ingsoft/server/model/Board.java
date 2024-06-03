@@ -184,7 +184,7 @@ public class Board implements Serializable {
      */
     public List<Coordinates> getAvailablePlaces(){
         List<Coordinates> freePlaces = new ArrayList<>();
-        Map<Coordinates,Boolean> visited = new HashMap<>();
+        HashMap<Coordinates,Boolean> visited = new HashMap<>();
 
         return this.getAvailablePlaces(visited, freePlaces, new Coordinates(0,0));
     }
@@ -196,7 +196,7 @@ public class Board implements Serializable {
      * @param actualCoordinates defines the position that is now being checked
      * @return a list containing all positions available for card placing in board
      */
-    private List<Coordinates>getAvailablePlaces(Map<Coordinates,Boolean> visited, List<Coordinates>freePlaces, Coordinates actualCoordinates){
+    private List<Coordinates>getAvailablePlaces(HashMap<Coordinates,Boolean> visited, List<Coordinates>freePlaces, Coordinates actualCoordinates){
         visited.put(actualCoordinates, true);
         Coordinates next = actualCoordinates.sum(new Coordinates(-1,1));
 
@@ -204,28 +204,32 @@ public class Board implements Serializable {
             freePlaces = getAvailablePlaces(visited, freePlaces, next);
 
         if(check(next))
-            freePlaces.add(next);
+            if(!freePlaces.contains(next))
+                    freePlaces.add(next);
 
         next=actualCoordinates.sum(new Coordinates(1,1));
         if(cards.containsKey(next) && !visited.containsKey(next))
             freePlaces=getAvailablePlaces(visited,freePlaces,next);
 
         if(check(next))
-            freePlaces.add(next);
+            if(!freePlaces.contains(next))
+                    freePlaces.add(next);
 
         next = actualCoordinates.sum(new Coordinates(-1,-1));
         if(cards.containsKey(next) && !visited.containsKey(next))
             freePlaces=getAvailablePlaces(visited,freePlaces,next);
 
         if(check(next))
-            freePlaces.add(next);
+            if(!freePlaces.contains(next))
+                    freePlaces.add(next);
 
         next=actualCoordinates.sum(new Coordinates(1,-1));
         if(cards.containsKey(next) && !visited.containsKey(next))
             freePlaces=getAvailablePlaces(visited,freePlaces,next);
 
         if(check(next))
-            freePlaces.add(next);
+            if(!freePlaces.contains(next))
+                    freePlaces.add(next);
 
         return freePlaces;
     }
