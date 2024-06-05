@@ -97,12 +97,13 @@ public class MatchServer implements VirtualMatchServer {
                     clientToUpdate,
                     settings
             );
-            if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
-                this.startGameUpdate();
             this.server.matchUpdateGameState(
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
+
+            if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
+                this.startGameUpdate();
         } catch (NullPointerException exception) {
             this.server.reportError(clientToUpdate, ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
         } catch (WrongGamePhaseException exception) {
@@ -126,10 +127,11 @@ public class MatchServer implements VirtualMatchServer {
     @Override
     public void sendPrivateMessage(String player, String recipient, String message) throws IOException {
         VirtualView clientToUpdate = server.clients.get(player);
-
+        System.out.println("Sto mandando messaggio 2");
         try {
             Message _message = matchController.writePrivateMessage(player, recipient, message);
-            this.server.singleUpdatePrivateMessage(player, player, _message);
+            System.out.println("Sto mandando messaggio 3");
+            this.server.singleUpdatePrivateMessage(player, recipient, _message);
             this.server.singleUpdatePrivateMessage(recipient, player, _message);
         } catch (PlayerNotFoundException e) {
             this.server.reportError(clientToUpdate, ERROR_MESSAGES.PLAYER_NOT_FOUND);

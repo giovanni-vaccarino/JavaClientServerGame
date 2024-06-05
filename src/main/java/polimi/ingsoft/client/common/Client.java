@@ -124,7 +124,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameStart(PlaceInPublicBoard<ResourceCard> resource, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quest, Map<String, Board> boards) throws IOException {
-        // Do not change this order
+        // TODO remove this - Do not change this order
         ui.createPublicBoard(resource, gold, quest);
         ui.setPlayerBoards(boards);
     }
@@ -149,12 +149,12 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateBroadcastChat(Message message) throws IOException {
-
+        ui.updateBroadcastChat(message);
     }
 
     @Override
     public void showUpdatePrivateChat(String recipient, Message message) throws IOException {
-
+        ui.updatePrivateChat(recipient, message);
     }
 
     @Override

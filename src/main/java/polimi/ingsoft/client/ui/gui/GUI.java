@@ -39,7 +39,6 @@ public class GUI extends UI{
 
     @Override
     public void showWelcomeScreen() throws IOException {
-        getClientMatches();
         homeController = new HomeController();
         HomeController.main(new String[]{});
     }
@@ -47,6 +46,7 @@ public class GUI extends UI{
     @Override
     public void updateNickname() {
         GUIsingleton.getInstance().getNicknamePageController().nextPage();
+        getClientMatches();
     }
 
     @Override
@@ -148,6 +148,7 @@ public class GUI extends UI{
     }
 
     public void updateView(){
+        System.out.println("Mi è arrivato un updateGameState con phase: " + getUiModel().getGameState().getGamePhase());
         switch (getUiModel().getGameState().getGamePhase()){
             case INITIALIZATION -> {
                 switch (getUiModel().getGameState().getCurrentInitialStep()){
