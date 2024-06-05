@@ -7,6 +7,9 @@ import polimi.ingsoft.server.enumerations.Resource;
 
 import java.io.Serializable;
 
+/**
+ * Interface used from all Objects that can be present in Corner or Center spaces
+ */
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As./*WRAPPER_ARRAY */WRAPPER_OBJECT, property="items", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value= Resource.class, name="RESOURCE"),

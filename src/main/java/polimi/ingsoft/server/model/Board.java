@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 // TODO refactor
+
+/**
+ * Player's Board: every card placed from a player ends in this object
+ */
 public class Board implements Serializable {
     private final Boolean isFirstPlayer;
     private final PlayerColor color;

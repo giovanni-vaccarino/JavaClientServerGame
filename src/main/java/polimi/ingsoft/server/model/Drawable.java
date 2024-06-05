@@ -3,7 +3,7 @@ package polimi.ingsoft.server.model;
 import java.io.Serializable;
 
 /**
- * Pescabilità della carta / possibilità di appartenere ad un mazzo di carte
+ * Interface that represents a card's chance to be put in a card collection and drawn from it
  */
 public interface Drawable extends Serializable {
 }

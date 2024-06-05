@@ -13,10 +13,16 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * Class that represents a play or point pattern that requires the player to own a certain variety and amount of Items
+ */
 public class ItemPattern implements Pattern, Serializable {
 
     //@JsonSubTypes.Type(value=ItemPattern.class, name="")
 
+    /**
+     * Deserializer for ItemPattern class
+     */
     public static class MapDeserializer extends JsonDeserializer<HashMap> {
 //        @Override
 //        public HashMap<Item, Integer> deserializeKey(String s, DeserializationContext deserializationContext) throws IOException {
@@ -24,6 +30,13 @@ public class ItemPattern implements Pattern, Serializable {
 //            return new HashMap<Item, Integer>();
 //        }
 
+        /**
+         * Deserializes a JSON string
+         * @param jsonParser jsonParser
+         * @param deserializationContext deserializationContext
+         * @return the ItemPattern's relative cost HashMap
+         * @throws IOException when IOException happens
+         */
         @Override
         public HashMap<Item,Integer> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
 //            ObjectMapper mapper = new ObjectMapper();
@@ -56,13 +69,24 @@ public class ItemPattern implements Pattern, Serializable {
             return cost;//mapper.readValue(jsonParser, HashMap.class);
         }
     }
+
     @JsonDeserialize(using = MapDeserializer.class)
     private final HashMap<Item,Integer> cost;
 
+    /**
+     * Creates an ItemPattern
+     * @param cost the HashMap representing the amount of each Item required to fulfill the ItemPattern's requirements
+     */
     public ItemPattern(@JsonProperty("cost") HashMap<Item, Integer> cost) {
         this.cost = cost;
     }
 
+    /**
+     * Returns the amount of times a player's Board fulfills the ItemPattern's requirements
+     * @param board the board that has to be checked
+     * @param coordinates the coordinates of the ItemPattern's card's placement
+     * @return the amount of times a player's Board fulfills the ItemPattern's requirements
+     */
     @Override
     public int getMatch(Board board,Coordinates coordinates) {
         int count=0;
@@ -91,6 +115,14 @@ public class ItemPattern implements Pattern, Serializable {
         }
         else return 0;
     }
+
+    /**
+     * Returns the amount of times a certain Item can fulfill an ItemPattern request
+     * @param board the board that has to be checked
+     * @param cost the HashMap representing the ItemPattern
+     * @param item the Item that has to be checked
+     * @return the amount of times a certain Item can fulfill an ItemPattern request
+     */
     private int getValue(Board board,HashMap<Item,Integer> cost,Item item){
         return switch (item) {
             case Object.FEATHER -> Math.floorDiv(board.getFeathers(), cost.get(Object.FEATHER));
@@ -103,6 +135,11 @@ public class ItemPattern implements Pattern, Serializable {
             default -> 0;
         };
     }
+
+    /**
+     * Returns a HashMap representing the ItemPattern's required Items
+     * @return a HashMap representing the ItemPattern's required Items
+     */
     public HashMap<Item,Integer> getCost(){
         return this.cost;
     }
