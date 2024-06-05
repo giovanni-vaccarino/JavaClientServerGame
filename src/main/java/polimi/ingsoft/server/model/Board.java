@@ -65,6 +65,14 @@ public class Board implements Serializable {
     }
 
     /**
+     * Returns a Board's resources
+     * @return a Board's resources
+     */
+    public Map<Item, Integer> getResources() {
+        return resources;
+    }
+
+    /**
      * Adds a card in board after proper controls
      * @param position defines coordinates where the card would be put
      * @param card defines the card that should be put in board
