@@ -51,7 +51,7 @@ public abstract class Space<T extends Item> implements Serializable {
 
     /**
      * Returns a Space's HashCode
-     * @return
+     * @return a Space's HashCode
      */
     @Override
     public int hashCode() {

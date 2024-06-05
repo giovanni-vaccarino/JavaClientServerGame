@@ -3,7 +3,6 @@ package polimi.ingsoft.server.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Represents the game's QuestCards
