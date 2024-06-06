@@ -1,5 +1,7 @@
 package polimi.ingsoft.server.enumerations;
-
+/**
+ * Enumerations that lists all possible error messages
+ */
 public enum ERROR_MESSAGES {
     // General errors
     PROTOCOL_NUMBER_OUT_OF_BOUND("Protocol does not exist"),

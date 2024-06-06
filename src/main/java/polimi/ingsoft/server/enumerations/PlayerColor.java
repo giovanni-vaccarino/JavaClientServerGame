@@ -1,9 +1,16 @@
 package polimi.ingsoft.server.enumerations;
 
+/**
+ * Enumerations that lists all possible player colors
+ */
 public enum PlayerColor {
     RED, YELLOW, BLUE, GREEN;
     String describe;
 
+    /**
+     * Converts a player color to String
+     * @return a PlayerColor's respective string
+     */
     @Override
     public String toString() {
         return switch (this){
