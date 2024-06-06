@@ -299,7 +299,6 @@ public class ClientPublicBoard {
      * @param questCards an ArrayList containing the QuestCards that have to be printed
      */
     private static void printQuests(ArrayList<QuestCard>questCards) {
-        int count = 0;
         int row = 1;
         QuestCard card;
         System.out.print(YELLOW + "                                  " + RESET + "     ");
@@ -319,7 +318,6 @@ public class ClientPublicBoard {
      * @param questCards an ArrayList containing the QuestCards that have to be printed
      */
     public static void printInitialQuests(ArrayList<QuestCard> questCards){
-        int count = 0;
         int row = 1;
         QuestCard card;
         printQuestFirstRow(questCards);
