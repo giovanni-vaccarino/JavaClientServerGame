@@ -113,7 +113,7 @@ public class ClientPublicBoard {
     private static String printResource(ArrayList<MixedCard> mixed, int index, int corner, int row) {
         Item color;
         Face back = mixed.get(index).getBack();
-        String outColor = "";
+        String outColor;
         try {
             color = switch (corner) {
                 case 1 -> back.getUpLeft().getItems().getFirst();
