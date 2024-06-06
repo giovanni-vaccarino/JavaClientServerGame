@@ -1,13 +1,11 @@
 package polimi.ingsoft.client.ui.cli;
 
+import static polimi.ingsoft.server.enumerations.Object.*;
 import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
-//EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
-import javax.swing.*;
 import java.util.HashMap;
-
-import static polimi.ingsoft.server.enumerations.Object.*;
+//EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
 
 /**
  * Object that prints a given player's Board

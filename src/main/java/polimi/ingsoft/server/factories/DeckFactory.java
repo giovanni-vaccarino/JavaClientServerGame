@@ -7,10 +7,7 @@ import polimi.ingsoft.server.model.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import polimi.ingsoft.server.enumerations.Resource;
-
-import java.util.Map;
 import java.util.Scanner;
 
 /**

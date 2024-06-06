@@ -1,10 +1,7 @@
 package polimi.ingsoft.client.ui.cli;
-
 import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.Resource;
 import polimi.ingsoft.server.model.*;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 import static polimi.ingsoft.client.ui.cli.ClientPublicBoard.*;
@@ -250,7 +247,7 @@ public class ClientHand {
      * @param i the index of the given card in the player hand
      * @param actualColor the card's base color
      * @param isFlipped an array that defined whether front of back of each card should be printed
-     * @return
+     * @return a string containing all information to print card's first row
      */
     private static String printFirstRow(List<MixedCard> cards,MixedCard card, int i, String actualColor,ArrayList<Boolean> isFlipped) {
         if (card.getScore(isFlipped.get(i)) != 0 && card.getPointPattern() == null)
