@@ -2,17 +2,28 @@ package polimi.ingsoft.client.ui.cli;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.Link;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CenterSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.CornerSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.Face;
+import polimi.ingsoft.server.model.decks.Deck;
+import polimi.ingsoft.server.model.items.Item;
+import polimi.ingsoft.server.model.patterns.CornerPattern;
+import polimi.ingsoft.server.model.patterns.ItemPattern;
+import polimi.ingsoft.server.model.patterns.SchemePattern;
+import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
- class ClientPublicBoardTest {
+class ClientPublicBoardTest {
     public static ResourceCard res1,res2,res3;
     public static PublicBoard publicBoard;
     public static QuestCard quest,quest2;

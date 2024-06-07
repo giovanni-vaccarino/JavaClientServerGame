@@ -4,13 +4,11 @@ import javafx.scene.layout.GridPane;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.page.GamePageController;
-import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.Board;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-import polimi.ingsoft.server.model.PlayedCard;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
+import polimi.ingsoft.server.model.boards.PlayedCard;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

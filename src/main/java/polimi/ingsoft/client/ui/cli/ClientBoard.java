@@ -1,9 +1,17 @@
 package polimi.ingsoft.client.ui.cli;
 
-import static polimi.ingsoft.server.enumerations.Object.*;
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
+import static polimi.ingsoft.server.model.items.Object.*;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.PlayedCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CornerSpace;
+import polimi.ingsoft.server.model.items.Item;
+import polimi.ingsoft.server.model.patterns.ItemPattern;
+
 import java.util.HashMap;
 //EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
 
@@ -767,7 +775,7 @@ public class ClientBoard {
      * @return a string which identifies a card's color
      */
     private static String defineColor(PlayedCard card,int index) {//0=corner,1=centerspace,2=everything else
-        if (card != null && index==2 && card.getCard().getClass()==InitialCard.class) return YELLOW;
+        if (card != null && index==2 && card.getCard().getClass()== InitialCard.class) return YELLOW;
         return card == null ? "" : switch (card.getColor()) {
             case Resource.BUTTERFLY -> PURPLE;
             case Resource.LEAF -> GREEN;

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.player.PlayerColor;
 
 import java.io.IOException;
 import java.net.URL;

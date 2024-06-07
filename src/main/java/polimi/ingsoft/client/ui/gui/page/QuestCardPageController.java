@@ -12,8 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.client.ui.gui.UIModel;
-import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
 
 import java.io.IOException;
 import java.net.URL;

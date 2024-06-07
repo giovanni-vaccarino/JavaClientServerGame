@@ -2,8 +2,8 @@ package polimi.ingsoft.client.ui.gui.utils;
 
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.MixedCard;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.cards.MixedCard;
 
 import java.io.IOException;
 

@@ -1,8 +1,19 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Link;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CenterSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.Face;
+import polimi.ingsoft.server.model.items.Item;
+import polimi.ingsoft.server.model.patterns.ItemPattern;
+import polimi.ingsoft.server.model.patterns.Pattern;
+import polimi.ingsoft.server.model.patterns.SchemePattern;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +37,7 @@ public class ClientPublicBoard {
      * @param gold the GoldCard place
      * @param quests the QuestCard place
      */
-    public static void printPublicBoard(PlaceInPublicBoard<ResourceCard> resources,PlaceInPublicBoard<GoldCard> gold,PlaceInPublicBoard<QuestCard> quests) {
+    public static void printPublicBoard(PlaceInPublicBoard<ResourceCard> resources, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quests) {
         ArrayList<MixedCard> resourceCards, goldCards;
         ArrayList<QuestCard> questCards;
 

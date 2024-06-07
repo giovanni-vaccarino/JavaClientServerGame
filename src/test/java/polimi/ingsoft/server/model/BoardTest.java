@@ -2,9 +2,18 @@ package polimi.ingsoft.server.model;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.enumerations.Resource;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.player.PlayerColor;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CenterSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.CornerSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.Face;
+import polimi.ingsoft.server.model.items.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;

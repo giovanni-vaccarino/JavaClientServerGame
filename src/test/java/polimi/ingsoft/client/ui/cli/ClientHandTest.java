@@ -2,9 +2,20 @@ package polimi.ingsoft.client.ui.cli;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.Link;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CenterSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.CornerSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.Face;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.items.Item;
+import polimi.ingsoft.server.model.patterns.ItemPattern;
+import polimi.ingsoft.server.model.patterns.SchemePattern;
 
 import java.util.ArrayList;
 import java.util.HashMap;

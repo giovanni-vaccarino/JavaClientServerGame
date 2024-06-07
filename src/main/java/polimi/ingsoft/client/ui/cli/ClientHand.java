@@ -1,7 +1,17 @@
 package polimi.ingsoft.client.ui.cli;
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CenterSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.CornerSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.Face;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.items.Item;
+import polimi.ingsoft.server.model.patterns.ItemPattern;
+
 import java.util.*;
 
 import static polimi.ingsoft.client.ui.cli.ClientPublicBoard.*;
@@ -26,7 +36,7 @@ public class ClientHand {
      * @param card the card that has to be checked
      * @return a string representing a card's color
      */
-    public static String defineColor(List<MixedCard>cards,MixedCard card) {
+    public static String defineColor(List<MixedCard>cards, MixedCard card) {
         if(cards!=null&&cards.get(0)==cards.get(1))return YELLOW;
         if (card.getFront().getCenter().getItems().size() != 1) return YELLOW;
         return switch (card.getFront().getCenter().getItems().getFirst()) {
@@ -53,7 +63,7 @@ public class ClientHand {
      * @param hand the PlayerHand that has to be printed
      * @param questCard the Player's personal QuestCard
      */
-    public static void print(PlayerHand hand,QuestCard questCard) {
+    public static void print(PlayerHand hand, QuestCard questCard) {
         List<MixedCard> cards=hand.getCards();
         ArrayList<Boolean> isFlipped=hand.getIsFlipped();
 

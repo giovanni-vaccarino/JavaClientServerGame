@@ -1,10 +1,11 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.player.PlayerColor;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.decks.PlayerHand;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * This class represents the initial settings for a player in the game.

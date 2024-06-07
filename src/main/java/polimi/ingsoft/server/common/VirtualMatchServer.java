@@ -1,9 +1,12 @@
 package polimi.ingsoft.server.common;
 
 import polimi.ingsoft.server.common.command.MatchServerCommand;
-import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.Serializable;

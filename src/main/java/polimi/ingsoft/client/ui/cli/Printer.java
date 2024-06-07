@@ -1,6 +1,12 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -60,7 +66,7 @@ public class Printer {
      * @param argument player's input
      * @param playerQuest player's personal quest card
      */
-    public void printFromPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards,PlaceInPublicBoard<GoldCard> goldCards,PlaceInPublicBoard<QuestCard> questCards, PlayerHand hand, String argument, QuestCard playerQuest){
+    public void printFromPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards, PlayerHand hand, String argument, QuestCard playerQuest){
         out.print(MESSAGES.CLS.getValue());
         ClientPublicBoard.printPublicBoard(resourceCards,goldCards,questCards);
         ClientHand.print(hand,playerQuest);

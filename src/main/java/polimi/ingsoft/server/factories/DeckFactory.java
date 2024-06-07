@@ -3,11 +3,20 @@ package polimi.ingsoft.server.factories;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import polimi.ingsoft.server.model.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import polimi.ingsoft.server.enumerations.Resource;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.Link;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.decks.Deck;
+import polimi.ingsoft.server.model.patterns.SchemePattern;
+
 import java.util.Scanner;
 
 /**

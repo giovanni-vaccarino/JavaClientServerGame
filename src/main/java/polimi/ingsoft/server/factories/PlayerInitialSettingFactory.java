@@ -1,7 +1,13 @@
 package polimi.ingsoft.server.factories;
 
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
+import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
 public class PlayerInitialSettingFactory {
     public static PlayerInitialSetting createPlayerInitialSetting(PublicBoard publicBoard, String nickname){

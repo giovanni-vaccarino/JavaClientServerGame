@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.server.model.Coordinates;
+import polimi.ingsoft.server.model.boards.Coordinates;
 
 import java.util.HashMap;
 import java.util.Map;

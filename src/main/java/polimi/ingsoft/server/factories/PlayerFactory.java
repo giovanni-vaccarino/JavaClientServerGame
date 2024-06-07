@@ -1,9 +1,12 @@
 package polimi.ingsoft.server.factories;
 
-import polimi.ingsoft.server.model.Player;
+import polimi.ingsoft.server.model.player.Player;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.player.PlayerColor;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.decks.PlayerHand;
 
 public class PlayerFactory {
     public static Player createPlayer(PlayerInitialSetting playerInitialSetting, Boolean isFirstPlayer) {

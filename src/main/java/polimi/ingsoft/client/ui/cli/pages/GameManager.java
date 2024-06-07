@@ -3,7 +3,12 @@ package polimi.ingsoft.client.ui.cli.pages;
 import polimi.ingsoft.client.ui.cli.*;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.*;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.PlayedCard;
+import polimi.ingsoft.server.model.cards.*;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -37,8 +42,8 @@ public class GameManager implements CLIPhaseManager {
         GameState initialGameState;
     }
 
-    private GameModel model = new GameModel();
-    private TemporaryModel temporaryModel = new TemporaryModel();
+    private final GameModel model = new GameModel();
+    private final TemporaryModel temporaryModel = new TemporaryModel();
 
     enum State {
         WAITING_FOR_PUBLIC_BOARDS,

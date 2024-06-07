@@ -1,7 +1,7 @@
 package polimi.ingsoft.server.model;
 
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.model.Coordinates;
+import polimi.ingsoft.server.model.boards.Coordinates;
 
 import static org.junit.jupiter.api.Assertions.*;
 

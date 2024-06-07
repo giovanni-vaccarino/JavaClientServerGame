@@ -28,9 +28,14 @@ import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.utils.*;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.chat.Chat;
+import polimi.ingsoft.server.model.chat.Message;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.*;
 
