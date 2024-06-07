@@ -22,6 +22,10 @@ public class InitialCardPageController implements Initializable {
     private ImageView initialCard;
     @FXML
     Button waitButton;
+    @FXML
+    Button selectButton;
+    @FXML
+    Button flipButton;
     private String frontInitialCardPath;
     private String backInitialCardPath;
 
@@ -120,6 +124,8 @@ public class InitialCardPageController implements Initializable {
 
     public void showWait(){
         waitButton.setVisible(true);
+        flipButton.setVisible(false);
+        selectButton.setVisible(false);
     }
 
     public void nextPage(){

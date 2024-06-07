@@ -29,6 +29,7 @@ public class ColorPageController implements Initializable {
     private String color;
     private boolean selected;
     private boolean wait =false;
+    private boolean colorSend = false;
     @FXML
     SplitMenuButton colorList;
     @FXML
@@ -37,6 +38,10 @@ public class ColorPageController implements Initializable {
     Button waitButton;
     @FXML
     ImageView colorSelected;
+    @FXML
+    Button updateButton;
+    @FXML
+    Button selectButton;
 
     // Default constructor
     public ColorPageController() {
@@ -132,7 +137,9 @@ public class ColorPageController implements Initializable {
         setGameList(items);
     }
     public void selectColor(ActionEvent actionEvent) throws IOException {
-        if(selected){
+        if(selected && !colorSend){
+            colorSend=true;
+
             getGui().setColor(myColor);
             showWait();
         }else{
@@ -152,6 +159,9 @@ public class ColorPageController implements Initializable {
         if(!wait){
             errButton.setVisible(false);
             waitButton.setVisible(true);
+            colorList.setVisible(false);
+            selectButton.setVisible(false);
+            updateButton.setVisible(false);
             wait =true;
         }
     }

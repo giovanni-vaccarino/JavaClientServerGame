@@ -27,7 +27,7 @@
 
         <StackPane layoutX="0.0" layoutY="490.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Flip"
+                <Button fx:id="flipButton" mnemonicParsing="false" text="Flip"
                         prefWidth="100" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#flip">
@@ -37,7 +37,7 @@
 
         <StackPane layoutX="0.0" layoutY="570.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Select"
+                <Button fx:id="selectButton" mnemonicParsing="false" text="Select"
                         prefWidth="120" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#select">

@@ -25,6 +25,10 @@ public class QuestCardPageController implements Initializable {
     private ImageView questCard2;
     @FXML
     Button waitButton;
+    @FXML
+    Button questCard1Button;
+    @FXML
+    Button questCard2Button;
     private String firstQuestCardPath;
     private String secondQuestCardPath;
     private QuestCard firstQuestCard;
@@ -111,11 +115,13 @@ public class QuestCardPageController implements Initializable {
 
     public void questCard1Selected(ActionEvent actionEvent) throws IOException {
         selected = false;
+        questCard2.setVisible(false);
         select(1);
     }
 
     public void questCard2Selected(ActionEvent actionEvent) throws IOException {
         selected = true;
+        questCard1.setVisible(false);
         select(2);
     }
 
@@ -125,6 +131,9 @@ public class QuestCardPageController implements Initializable {
         } else if (questNumber == 2) {
             getGui().setQuestCard(secondQuestCard);
         }
+
+        questCard1Button.setVisible(false);
+        questCard2Button.setVisible(false);
 
         showWait();
     }

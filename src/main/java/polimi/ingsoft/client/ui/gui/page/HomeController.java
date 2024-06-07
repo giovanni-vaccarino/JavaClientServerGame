@@ -43,6 +43,8 @@ public class HomeController extends Application {
         stage.setScene(new Scene(root));
         stage.show();
 
+        //System.setProperty("javafx.verbose", "false");
+
         GUIsingleton.getInstance().setStage(stage);
 
         Timer timer = new Timer();
