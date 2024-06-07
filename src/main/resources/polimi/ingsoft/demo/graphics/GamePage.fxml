@@ -346,7 +346,7 @@
         </StackPane>
 
         <!-- Error -->
-        <StackPane layoutX="800.0" layoutY="40.0" prefWidth="500" prefHeight="80" alignment="CENTER">
+        <StackPane layoutX="30.0" layoutY="10.0" prefHeight="80" alignment="CENTER_LEFT">
             <children>
                 <Button mnemonicParsing="false" prefHeight="80" styleClass="errorPane"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"

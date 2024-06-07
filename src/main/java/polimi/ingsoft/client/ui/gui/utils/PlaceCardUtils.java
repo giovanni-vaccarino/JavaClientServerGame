@@ -136,4 +136,29 @@ public class PlaceCardUtils {
 //            }
 //        });
     }
+
+    public static void placePossibleCoordinates(int x, int y){
+        ImageView possiblePosition = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/possiblePosition.png"));
+
+        possiblePosition.setFitWidth(140);
+        possiblePosition.setFitHeight(100);
+
+        possiblePosition.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+
+        // Add the ImageView to the specific cell in the GridPane
+
+        GUIsingleton.getInstance().getGamePageController().getBoard().add(possiblePosition, x, y);
+
+        possiblePosition.setOnMouseEntered(event -> {
+            possiblePosition.setFitWidth(170);
+            possiblePosition.setFitHeight(120);
+            possiblePosition.setTranslateX(-20);
+        });
+
+        possiblePosition.setOnMouseExited(event -> {
+            possiblePosition.setFitWidth(140);
+            possiblePosition.setFitHeight(100);
+            possiblePosition.setTranslateX(0);
+        });
+    }
 }

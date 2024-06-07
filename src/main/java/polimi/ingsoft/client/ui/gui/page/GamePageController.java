@@ -230,6 +230,10 @@ public class GamePageController implements Initializable{
         setCurrentPlayerName();
     }
 
+    public GridPane getBoard(){
+        return board;
+    }
+
     public void setCurrentPlayerName(){
         GameState gameState = getGui().getUiModel().getGameState();
         currentPlayerName.setText("Turn: "+ gameState.getCurrentPlayerNickname());
@@ -550,18 +554,7 @@ public class GamePageController implements Initializable{
     }
 
     public void placePossibleCoordinates(int x, int y){
-        // TO COLOR BOARD FREE POSITIONS
-
-        ImageView possiblePosition = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/possiblePosition.png"));
-
-        possiblePosition.setFitWidth(140);
-        possiblePosition.setFitHeight(100);
-
-        possiblePosition.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-
-        // Add the ImageView to the specific cell in the GridPane
-
-        board.add(possiblePosition, x, y);
+        PlaceCardUtils.placePossibleCoordinates(x,y);
     }
 
     public void resetCenterBoard(){
@@ -912,7 +905,7 @@ public class GamePageController implements Initializable{
         errButton.setText(errorMessages.getValue());
         errButton.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+        PauseTransition pause = new PauseTransition(Duration.seconds(6));
         pause.setOnFinished(event -> errButton.setVisible(false));
         pause.play();
     }
