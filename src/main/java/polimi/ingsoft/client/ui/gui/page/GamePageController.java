@@ -469,10 +469,6 @@ public class GamePageController implements Initializable{
         return new Coordinates(xg,yg);
     }
 
-    public void showSelectedPlayerHand(int x){
-
-    }
-
     public void updatePublicBoard(){
         PlaceCardUtils.initializeFaceCards();
         setPublicBoard();
@@ -496,7 +492,6 @@ public class GamePageController implements Initializable{
     }
 
     public void drawPlayerHand(int x, int y){
-        showSelectedPlayerHand(x-1);
         mixedCard = getGui().getUiModel().getPlayerHand().get(x-1);
         xPlayedCard=x;
         yPlayedCard=y;

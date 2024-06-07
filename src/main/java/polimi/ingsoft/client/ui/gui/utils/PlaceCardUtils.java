@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.CardClickedEvent;
+import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.CardClickedEventDispatcher;
+import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.ShowSelectedCardUtils;
 import polimi.ingsoft.server.model.boards.Coordinates;
 
 import java.util.HashMap;
@@ -40,11 +43,9 @@ public class PlaceCardUtils {
         // Add the ImageView to the specific cell in the GridPane
         gridPane.add(imageView, x, y);
 
-        imageView.setOnMouseEntered(event -> imageView.setStyle(""));
-        imageView.setOnMouseExited(event -> imageView.setStyle(
-                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);"
-        ));
-
+        if(y!=2){
+            showSelectedCard(imageView);
+        }
     }
 
     public static void initializeFaceCards(){
@@ -96,5 +97,43 @@ public class PlaceCardUtils {
         GUIsingleton.getInstance().getGamePageController().setPlayerHand();
 
         GUIsingleton.getInstance().getGamePageController().setClickBoardHandler();
+    }
+
+    public static void showSelectedCard(ImageView imageView){
+
+//        int key = ShowSelectedCardUtils.newKey();
+
+        imageView.setOnMouseEntered(event -> {
+            //imageView.setStyle("");
+            imageView.setFitWidth(170);
+            imageView.setFitHeight(120);
+            imageView.setTranslateX(-20);
+        });
+
+        imageView.setOnMouseExited(event -> {
+            //imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+            imageView.setFitWidth(140);
+            imageView.setFitHeight(100);
+            imageView.setTranslateX(0);
+        });
+
+        imageView.setOnMouseClicked(event -> {
+//            ShowSelectedCardUtils.setCurrentKey(key);
+
+//            CardClickedEvent cardClickedEvent = new CardClickedEvent();
+//            CardClickedEventDispatcher.dispatchEvent(cardClickedEvent);
+
+            imageView.setFitWidth(170);
+            imageView.setFitHeight(120);
+            imageView.setTranslateX(-20);
+        });
+
+//        CardClickedEventDispatcher.registerListener(event -> {
+//            if(!ShowSelectedCardUtils.isCurrentKey(key)){
+//                imageView.setFitWidth(140);
+//                imageView.setFitHeight(100);
+//                imageView.setTranslateX(0);
+//            }
+//        });
     }
 }
