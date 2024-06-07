@@ -68,7 +68,6 @@ public class GameManager implements CLIPhaseManager {
     @Override
     public void start() {
         out.println(MESSAGES.GAME_START.getValue());
-
         updateGameState(temporaryModel.initialGameState);
     }
 
@@ -282,6 +281,22 @@ public class GameManager implements CLIPhaseManager {
 
     private void showDrawCard() {
         out.println(model.currentPlayerNickname + MESSAGES.OTHER_PLAYER_PERFORMING_DRAW.getValue());
+    }
+
+    public void updatePlayerHand(PlayerHand hand) {
+        model.hand = hand;
+    }
+
+    public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) {
+        switch (deckType) {
+            case RESOURCE -> model.resourceCards = (PlaceInPublicBoard<ResourceCard>) placeInPublicBoard;
+            case GOLD -> model.goldCards = (PlaceInPublicBoard<GoldCard>) placeInPublicBoard;
+        }
+    }
+
+    public void updateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
+       Board board = model.playerBoards.get(nickname);
+       board.add(coordinates, playedCard.getCard(), playedCard.isFacingUp());
     }
 
     @Override
