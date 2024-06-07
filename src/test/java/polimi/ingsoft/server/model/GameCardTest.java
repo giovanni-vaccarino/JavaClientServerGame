@@ -2,7 +2,6 @@ package polimi.ingsoft.server.model;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
 
 import java.util.ArrayList;
 

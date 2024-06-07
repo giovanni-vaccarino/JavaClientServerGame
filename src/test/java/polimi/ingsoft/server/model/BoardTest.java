@@ -5,13 +5,8 @@ import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.enumerations.Object;
 import polimi.ingsoft.server.enumerations.PlayerColor;
 import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
-import polimi.ingsoft.server.*;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
