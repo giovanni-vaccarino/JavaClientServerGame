@@ -31,13 +31,13 @@ class GameCardTest {
         back3=new CornerSpace(h);
         back4=new CornerSpace(i);
         back=new Face(back1,back2,back3,back4,center);
-        //t=new GameCard(front,back,score);
+        t=new ResourceCard("id",front,back,score);
     }
 
     @Test
     void getScore() {
-        assertEquals(1,t.getScore(true));
-        assertEquals(0,t.getScore(false));
+        assertEquals(1,t.getScore(false));
+        assertEquals(0,t.getScore(true));
     }
 
     @Test
