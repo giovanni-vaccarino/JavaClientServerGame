@@ -469,6 +469,10 @@ public class GamePageController implements Initializable{
         return new Coordinates(xg,yg);
     }
 
+    public void showSelectedPlayerHand(int x){
+
+    }
+
     public void updatePublicBoard(){
         PlaceCardUtils.initializeFaceCards();
         setPublicBoard();
@@ -492,6 +496,7 @@ public class GamePageController implements Initializable{
     }
 
     public void drawPlayerHand(int x, int y){
+        showSelectedPlayerHand(x-1);
         mixedCard = getGui().getUiModel().getPlayerHand().get(x-1);
         xPlayedCard=x;
         yPlayedCard=y;
@@ -621,7 +626,7 @@ public class GamePageController implements Initializable{
                     // ImageView found
 
                     //gridPaneUtils.removeImageViewIfExists(board,i,j);
-                    placeCard(i,j,board, boardAppo[i][j]);
+                    PlaceCardUtils.placeCard(i,j,board, boardAppo[i][j]);
                 } else {
                     // ImageView not found at the specified coordinates
                 }
@@ -804,43 +809,6 @@ public class GamePageController implements Initializable{
             }
         });
     }
-
-    public void placeSameCard(int x, int y, GridPane gridPane){
-        ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg"));
-        placeCard(x,y,gridPane,cardImg);
-    }
-    public void placeCardString(int x,int y, GridPane gridPane, String path){
-        ImageView cardImg = new ImageView(new Image(path));
-        placeCard(x,y,gridPane,cardImg);
-    }
-
-    public void placeCardBoard(int x, int y, ImageView imageView){
-        placeCard(x,y,board,imageView);
-    }
-
-    public void placeCard(int x, int y, GridPane gridPane, ImageView imageView){
-
-        imageView.setFitWidth(140);
-        imageView.setFitHeight(100);
-
-        imageView.setViewport(new Rectangle2D(61, 64, 908, 628));
-        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-
-        // Add the ImageView to the specific cell in the GridPane
-
-        gridPane.add(imageView, x, y);
-    }
-
-    /*public void loadCard(ImageView imageView, String imagePath) {
-        Image image = new Image(imagePath);
-        imageView.setImage(image);
-
-        imageView.setFitWidth(140);
-        imageView.setFitHeight(100);
-
-        imageView.setViewport(new javafx.geometry.Rectangle2D(61, 64, 908, 628));
-        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-    }*/
 
     public void moveBoardHandler_N(){
         moveBoard(0,-2);

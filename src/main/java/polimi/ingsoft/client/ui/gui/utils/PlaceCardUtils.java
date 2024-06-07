@@ -39,6 +39,12 @@ public class PlaceCardUtils {
 
         // Add the ImageView to the specific cell in the GridPane
         gridPane.add(imageView, x, y);
+
+        imageView.setOnMouseEntered(event -> imageView.setStyle(""));
+        imageView.setOnMouseExited(event -> imageView.setStyle(
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);"
+        ));
+
     }
 
     public static void initializeFaceCards(){
@@ -91,6 +97,4 @@ public class PlaceCardUtils {
 
         GUIsingleton.getInstance().getGamePageController().setClickBoardHandler();
     }
-
-
 }
