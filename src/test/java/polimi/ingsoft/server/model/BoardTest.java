@@ -9,6 +9,7 @@ import polimi.ingsoft.server.model.*;
 import polimi.ingsoft.server.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -284,6 +285,144 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
 
     @Test
     void check() {
+        this.add();
+        assertTrue(a.check(new Coordinates(3, 3)));
+        assertFalse(a.check(new Coordinates(4, 4)));
+    }
 
+    @Test
+    void getCard() {
+        this.add();
+        assertEquals(res7,a.getCard(new Coordinates(3,1)).getCard());
+        assertNull(a.getCard(new Coordinates(24, 1)));
+    }
+
+    @Test
+    void getCards() {
+        this.add();
+        assertEquals(res1,a.getCards().get(new Coordinates(-1,1)).getCard());
+        assertEquals(res2,a.getCards().get(new Coordinates(1,1)).getCard());
+        assertEquals(res3,a.getCards().get(new Coordinates(0,2)).getCard());
+        assertEquals(res4,a.getCards().get(new Coordinates(-2,0)).getCard());
+        assertEquals(res5,a.getCards().get(new Coordinates(2,2)).getCard());
+        assertEquals(res6,a.getCards().get(new Coordinates(2,0)).getCard());
+        assertEquals(res8,a.getCards().get(new Coordinates(-3,1)).getCard());
+        assertEquals(res7,a.getCards().get(new Coordinates(3,1)).getCard());
+    }
+
+    @Test
+    void getResources() {
+        this.add();
+        assertEquals(2,a.getResources().get(Resource.BUTTERFLY));
+        assertEquals(4,a.getResources().get(Resource.LEAF));
+        assertEquals(3,a.getResources().get(Resource.WOLF));
+        assertEquals(2,a.getResources().get(Resource.MUSHROOM));
+        assertEquals(0,a.getResources().get(Object.POTION));
+        assertEquals(0,a.getResources().get(Object.SCROLL));
+        assertEquals(1,a.getResources().get(Object.FEATHER));
+    }
+
+    @Test
+    void updatePoints() {
+        this.add();
+        a.updatePoints(5);
+        assertEquals(5,a.getScore());
+        a.updatePoints(5);
+        assertEquals(10,a.getScore());
+    }
+
+    @Test
+    void getScore() {
+        this.add();
+        a.updatePoints(5);
+        a.updatePoints(5);
+        assertEquals(10,a.getScore());
+
+
+    }
+
+    @Test
+    void getColor() {
+        this.add();
+        assertEquals(PlayerColor.RED,a.getColor());
+    }
+
+    @Test
+    void getAvailablePlaces() {
+        this.add();
+        System.out.print(a.getAvailablePlaces());
+    }
+
+    @Test
+    void isNotBlocked() {
+        this.add();
+        assertTrue(a.isNotBlocked());
+    }
+
+    @Test
+    void getNumCards() {
+        this.add();
+        assertEquals(a.getCards().size(),a.getNumCards());
+    }
+
+    @Test
+    void getWolfs() {
+        this.add();
+        assertEquals(3,a.getWolfs());
+    }
+
+    @Test
+    void getLeaves() {
+        this.add();
+        assertEquals(4,a.getLeaves());
+    }
+
+    @Test
+    void getMushrooms() {
+        this.add();
+        assertEquals(2,a.getMushrooms());
+    }
+
+    @Test
+    void getButterflies() {
+        this.add();
+        assertEquals(2,a.getButterflies());
+    }
+
+    @Test
+    void getFeathers() {
+        this.add();
+        assertEquals(1,a.getFeathers());
+    }
+
+    @Test
+    void getScrolls() {
+        this.add();
+        assertEquals(0,a.getScrolls());
+    }
+
+    @Test
+    void getPotions() {
+        this.add();
+        assertEquals(0,a.getPotions());
+    }
+
+    @Test
+    void getFirstPlayer() {
+        this.add();
+        assertTrue(a.getFirstPlayer());
+    }
+
+    @Test
+    void getPrintingCoordinates() {
+        this.add();
+        assertEquals(new Coordinates(0,0),a.getPrintingCoordinates());
+    }
+
+    @Test
+    void updatePrintingCoordinates() {
+        this.add();
+        a.updatePrintingCoordinates(1,1);
+        assertEquals(new Coordinates(1,1),a.getPrintingCoordinates());
     }
 }
