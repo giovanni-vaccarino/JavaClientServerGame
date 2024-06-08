@@ -146,7 +146,6 @@ public class GUI extends UI{
     @Override
     public void setPlayerBoards(Map<String, Board> playerBoard){
         getUiModel().setPlayerBoards(playerBoard);
-        GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
     }
 
 
@@ -191,6 +190,8 @@ public class GUI extends UI{
                 if(nextGamePageEnable){
                     nextGamePageEnable = false;
                     GUIsingleton.getInstance().getQuestCardPageController().nextPage();
+                    javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
+                    GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
                 }else {
                     javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
                 }
