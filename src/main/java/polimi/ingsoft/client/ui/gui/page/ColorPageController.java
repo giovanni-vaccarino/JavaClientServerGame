@@ -173,6 +173,10 @@ public class ColorPageController implements Initializable {
             setColorText("Select another color");
             waitButton.setVisible(false);
             errButton.setVisible(true);
+            colorList.setVisible(true);
+            selectButton.setVisible(true);
+            updateButton.setVisible(true);
+            colorSend = false;
         }
     }
     public void start() {
