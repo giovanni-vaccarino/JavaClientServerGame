@@ -5,7 +5,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.server.model.Coordinates;
+import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.CardClickedEvent;
+import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.CardClickedEventDispatcher;
+import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.ShowSelectedCardUtils;
+import polimi.ingsoft.server.model.boards.Coordinates;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +42,10 @@ public class PlaceCardUtils {
 
         // Add the ImageView to the specific cell in the GridPane
         gridPane.add(imageView, x, y);
+
+        if(y!=2){
+            showSelectedCard(imageView);
+        }
     }
 
     public static void initializeFaceCards(){
@@ -92,5 +99,66 @@ public class PlaceCardUtils {
         GUIsingleton.getInstance().getGamePageController().setClickBoardHandler();
     }
 
+    public static void showSelectedCard(ImageView imageView){
 
+//        int key = ShowSelectedCardUtils.newKey();
+
+        imageView.setOnMouseEntered(event -> {
+            //imageView.setStyle("");
+            imageView.setFitWidth(170);
+            imageView.setFitHeight(120);
+            imageView.setTranslateX(-20);
+        });
+
+        imageView.setOnMouseExited(event -> {
+            //imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+            imageView.setFitWidth(140);
+            imageView.setFitHeight(100);
+            imageView.setTranslateX(0);
+        });
+
+        imageView.setOnMouseClicked(event -> {
+//            ShowSelectedCardUtils.setCurrentKey(key);
+
+//            CardClickedEvent cardClickedEvent = new CardClickedEvent();
+//            CardClickedEventDispatcher.dispatchEvent(cardClickedEvent);
+
+            imageView.setFitWidth(170);
+            imageView.setFitHeight(120);
+            imageView.setTranslateX(-20);
+        });
+
+//        CardClickedEventDispatcher.registerListener(event -> {
+//            if(!ShowSelectedCardUtils.isCurrentKey(key)){
+//                imageView.setFitWidth(140);
+//                imageView.setFitHeight(100);
+//                imageView.setTranslateX(0);
+//            }
+//        });
+    }
+
+    public static void placePossibleCoordinates(int x, int y){
+        ImageView possiblePosition = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/possiblePosition.png"));
+
+        possiblePosition.setFitWidth(140);
+        possiblePosition.setFitHeight(100);
+
+        possiblePosition.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
+
+        // Add the ImageView to the specific cell in the GridPane
+
+        GUIsingleton.getInstance().getGamePageController().getBoard().add(possiblePosition, x, y);
+
+        possiblePosition.setOnMouseEntered(event -> {
+            possiblePosition.setFitWidth(170);
+            possiblePosition.setFitHeight(120);
+            possiblePosition.setTranslateX(-20);
+        });
+
+        possiblePosition.setOnMouseExited(event -> {
+            possiblePosition.setFitWidth(140);
+            possiblePosition.setFitHeight(100);
+            possiblePosition.setTranslateX(0);
+        });
+    }
 }

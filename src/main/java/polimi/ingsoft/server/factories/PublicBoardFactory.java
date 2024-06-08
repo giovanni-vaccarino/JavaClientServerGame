@@ -1,11 +1,14 @@
 package polimi.ingsoft.server.factories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.decks.Deck;
+import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PublicBoardFactory {
     public static PublicBoard createPublicBoard() {

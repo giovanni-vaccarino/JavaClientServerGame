@@ -28,9 +28,14 @@ import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.utils.*;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.chat.Chat;
+import polimi.ingsoft.server.model.chat.Message;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.*;
 
@@ -223,6 +228,10 @@ public class GamePageController implements Initializable{
 
         // Set Nickname Player Turn
         setCurrentPlayerName();
+    }
+
+    public GridPane getBoard(){
+        return board;
     }
 
     public void setCurrentPlayerName(){
@@ -545,18 +554,7 @@ public class GamePageController implements Initializable{
     }
 
     public void placePossibleCoordinates(int x, int y){
-        // TO COLOR BOARD FREE POSITIONS
-
-        ImageView possiblePosition = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/possiblePosition.png"));
-
-        possiblePosition.setFitWidth(140);
-        possiblePosition.setFitHeight(100);
-
-        possiblePosition.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-
-        // Add the ImageView to the specific cell in the GridPane
-
-        board.add(possiblePosition, x, y);
+        PlaceCardUtils.placePossibleCoordinates(x,y);
     }
 
     public void resetCenterBoard(){
@@ -616,7 +614,7 @@ public class GamePageController implements Initializable{
                     // ImageView found
 
                     //gridPaneUtils.removeImageViewIfExists(board,i,j);
-                    placeCard(i,j,board, boardAppo[i][j]);
+                    PlaceCardUtils.placeCard(i,j,board, boardAppo[i][j]);
                 } else {
                     // ImageView not found at the specified coordinates
                 }
@@ -800,43 +798,6 @@ public class GamePageController implements Initializable{
         });
     }
 
-    public void placeSameCard(int x, int y, GridPane gridPane){
-        ImageView cardImg = new ImageView(new Image("/polimi/ingsoft/demo/graphics/img/card/frontCard/mixedCard/frontResourceCard(1).jpg"));
-        placeCard(x,y,gridPane,cardImg);
-    }
-    public void placeCardString(int x,int y, GridPane gridPane, String path){
-        ImageView cardImg = new ImageView(new Image(path));
-        placeCard(x,y,gridPane,cardImg);
-    }
-
-    public void placeCardBoard(int x, int y, ImageView imageView){
-        placeCard(x,y,board,imageView);
-    }
-
-    public void placeCard(int x, int y, GridPane gridPane, ImageView imageView){
-
-        imageView.setFitWidth(140);
-        imageView.setFitHeight(100);
-
-        imageView.setViewport(new Rectangle2D(61, 64, 908, 628));
-        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-
-        // Add the ImageView to the specific cell in the GridPane
-
-        gridPane.add(imageView, x, y);
-    }
-
-    /*public void loadCard(ImageView imageView, String imagePath) {
-        Image image = new Image(imagePath);
-        imageView.setImage(image);
-
-        imageView.setFitWidth(140);
-        imageView.setFitHeight(100);
-
-        imageView.setViewport(new javafx.geometry.Rectangle2D(61, 64, 908, 628));
-        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
-    }*/
-
     public void moveBoardHandler_N(){
         moveBoard(0,-2);
     }
@@ -944,7 +905,7 @@ public class GamePageController implements Initializable{
         errButton.setText(errorMessages.getValue());
         errButton.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+        PauseTransition pause = new PauseTransition(Duration.seconds(6));
         pause.setOnFinished(event -> errButton.setVisible(false));
         pause.play();
     }

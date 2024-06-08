@@ -6,7 +6,16 @@ import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.client.ui.UI;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.PlayedCard;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.chat.Message;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -171,22 +180,30 @@ public class CLI extends UI {
 
     @Override
     public void updatePlayerHand(PlayerHand playerHand) {
-
+        if (phase == CLIPhase.GAME) {
+            gameManager.updatePlayerHand(playerHand);
+        }
     }
 
     @Override
     public void updateBroadcastChat(Message message) {
+        if (phase == CLIPhase.GAME) {
 
+        }
     }
 
     @Override
     public void updatePrivateChat(String receiver, Message message) {
+        if (phase == CLIPhase.GAME) {
 
+        }
     }
 
     @Override
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
-
+        if (phase == CLIPhase.GAME) {
+            gameManager.updateBoard(nickname, coordinates, playedCard, score);
+        }
     }
 
     @Override
@@ -198,6 +215,8 @@ public class CLI extends UI {
 
     @Override
     public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) {
-
+        if (phase == CLIPhase.GAME) {
+            gameManager.updatePublicBoard(deckType, placeInPublicBoard);
+        }
     }
 }

@@ -1,14 +1,23 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
-//EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
-import javax.swing.*;
+import static polimi.ingsoft.server.model.items.Object.*;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.PlayedCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CornerSpace;
+import polimi.ingsoft.server.model.items.Item;
+import polimi.ingsoft.server.model.patterns.ItemPattern;
+
 import java.util.HashMap;
+//EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
 
-import static polimi.ingsoft.server.enumerations.Object.*;
-
+/**
+ * Object that prints a given player's Board
+ */
 public class ClientBoard {
     private final static String UPLEFTARROW = "↖";
     private final static String UPRIGHTARROW = "↗";
@@ -29,6 +38,10 @@ public class ClientBoard {
     public static final String RESET = "\u001B[0m";
     public static final String WHITETEXT = "\u001B[37m";
 
+    /**
+     * Prints a player's Board
+     * @param board the board that has to be printed
+     */
     public static void printBoard(Board board) {
         Coordinates actualCoordinates=board.getPrintingCoordinates();
         PlayedCard card;
@@ -224,6 +237,14 @@ public class ClientBoard {
         System.out.print("\n");
     }
 
+    /**
+     * Prints a Board's Bottom Left card's bottom left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomLeftBottomLeftCorner(PlayedCard card, int count, Board board,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,-2, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -240,6 +261,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Bottom Left card's bottom right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomLeftBottomRightCorner(PlayedCard card, int count,Board board, Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -256,6 +285,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Bottom Right card's bottom right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomRightBottomRightCorner(PlayedCard card, int count,Board board,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,2, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -272,6 +309,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Bottom Right card's bottom left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomRightBottomLeftCorner(PlayedCard card, int count,Board board, Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, -2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -288,6 +333,11 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's card's central rows
+     * @param card the card that has to be printed
+     * @param row the number of row that should be printed of the given card
+     */
     private static void printCentralRows(PlayedCard card, int row) {
         String color;
         color = defineColor(card,2);
@@ -296,10 +346,26 @@ public class ClientBoard {
         System.out.print(color + "          ");
     }
 
+    /**
+     * Returns the card at the respective X and Y Coordinates from the given card
+     * @param board the board that has to be checked
+     * @param x the relative X coordinate from the given actual Coordinates
+     * @param y the relative Y coordinate from the given actual Coordinates
+     * @param actualCoordinates the starting coordinates
+     * @return the card at the respective X and Y Coordinates from the given card
+     */
     private static PlayedCard getCardAtRespective(Board board,int x, int y,Coordinates actualCoordinates) {
         return board.getCard(actualCoordinates.sum(new Coordinates(x, y)));
     }
 
+    /**
+     * Prints a Board's Bottom Right card's upper right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomRightUpRightCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -316,6 +382,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Bottom Right card's upper left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomRightUpLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -332,6 +406,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Bottom Left card's upper right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomLeftUpRightCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -348,6 +430,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Bottom Left card's upper left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printBottomLeftUpLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,-2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -364,6 +454,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Up Right card's bottom left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printRightBottomLeftCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -380,6 +478,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Up Right card's bottom right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printRightBottomRightCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -396,6 +502,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's up left card's bottom right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printLeftBottomRightCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -412,6 +526,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's up left card's bottom left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printLeftBottomLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,-2, 0,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -428,6 +550,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's up right card's up left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printRightUpLeftCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, 2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -444,6 +574,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Up Right card's upper right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printRightUpRightCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,2, 2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -460,6 +598,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's Up left card's upper right corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printLeftUpRightCorner(Board board,PlayedCard card, int count, Coordinates actualCoordinates) {
         CornerSpace corner;
         if (getCardAtRespective(board,0, 2,actualCoordinates) == null && card != null //carta 22no carta 11si //carta 22si carta 11si e 22<11
@@ -476,6 +622,14 @@ public class ClientBoard {
         return printCorner("", corner, count);
     }
 
+    /**
+     * Prints a Board's up left card's upper left corner
+     * @param card the card that has to be printed
+     * @param count the number of row that's being printed
+     * @param board the board of the player that has to be printed
+     * @param actualCoordinates the coordinates of the card that has to be printed
+     * @return a string representing the @count row of the card
+     */
     private static String printLeftUpLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
         String pre = "";
         CornerSpace corner;
@@ -503,6 +657,13 @@ public class ClientBoard {
         return printCorner(pre, corner, count);
     }
 
+    /**
+     * Returns a string containing all information to print the @count row of given CornerSpace
+     * @param pre the prefix of any output string
+     * @param corner the corner that has to be printed
+     * @param count the number of row that's being printed
+     * @return a string containing all information to print the @count row of given CornerSpace
+     */
     private static String printCorner(String pre, CornerSpace corner, int count) {
         String color = "";
         pre=pre+BLACKTEXT;
@@ -533,6 +694,13 @@ public class ClientBoard {
         return "";
     }
 
+    /**
+     * Returns a string containing all information to print the @card CenterSpace
+     * @param row the number of row that has to be printed
+     * @param card the card whose center is to be printed
+     * @param actualColor the card's basic color
+     * @return a string containing all information to print the @card CenterSpace
+     */
     private static String printCenter(int row, PlayedCard card, String actualColor) {
         String pre = "";
         Resource resource = null;
@@ -600,8 +768,14 @@ public class ClientBoard {
         return RESET + "              ";
     }
 
+    /**
+     * Defines a card's color
+     * @param card the card that has to be checked
+     * @param index argument that defines which kind of space is being checked
+     * @return a string which identifies a card's color
+     */
     private static String defineColor(PlayedCard card,int index) {//0=corner,1=centerspace,2=everything else
-        if (card != null && index==2 && card.getCard().getClass()==InitialCard.class) return YELLOW;
+        if (card != null && index==2 && card.getCard().getClass()== InitialCard.class) return YELLOW;
         return card == null ? "" : switch (card.getColor()) {
             case Resource.BUTTERFLY -> PURPLE;
             case Resource.LEAF -> GREEN;
@@ -610,6 +784,11 @@ public class ClientBoard {
         };
     }
 
+    /**
+     * Returns a string containing all information to print a CornerSpace's Item object
+     * @param object the Object contained in a cornerspace
+     * @return a string containing all information to print a CornerSpace's Item object
+     */
     private static String printObject(Item object) {
         return switch (object) {
             case SCROLL -> BLACKTEXT + "| SCROLL |";
@@ -619,6 +798,12 @@ public class ClientBoard {
         };
     }
 
+    /**
+     * Returns a string containing all information to print a card's last row
+     * @param card the card that has to be printed
+     * @param actualColor the card's base color
+     * @return a string containing all information to print a card's last row
+     */
     private static String printLastRow(PlayedCard card, String actualColor) {
         MixedCard newCard;
         try {
@@ -684,6 +869,11 @@ public class ClientBoard {
 
     }
 
+    /**
+     * Prints a board basing on a given BoardArgument
+     * @param board the board that has to be printed
+     * @param argument the nullable board argument
+     */
     public static void printBoard(Board board,BoardArgument argument) {
         Coordinates actualCoordinates=board.getPrintingCoordinates();
         String error="ERROR: place not avaiable!";
@@ -743,5 +933,5 @@ public class ClientBoard {
         }
         printBoard(board);
     }
-    
+
 }

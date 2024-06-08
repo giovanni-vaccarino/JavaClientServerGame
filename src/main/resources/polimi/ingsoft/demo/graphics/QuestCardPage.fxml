@@ -38,13 +38,13 @@
 
         <StackPane layoutX="0.0" layoutY="510.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="First"
+                <Button fx:id="questCard1Button" mnemonicParsing="false" text="First"
                         prefWidth="115" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         translateX="-80"
                         onAction="#questCard1Selected">
                 </Button>
-                <Button mnemonicParsing="false" text="Second"
+                <Button fx:id="questCard2Button" mnemonicParsing="false" text="Second"
                         prefWidth="115" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         translateX="80"

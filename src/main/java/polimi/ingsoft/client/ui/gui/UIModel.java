@@ -3,8 +3,16 @@ package polimi.ingsoft.client.ui.gui;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
-import polimi.ingsoft.server.model.*;
-import polimi.ingsoft.server.model.Coordinates;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.PlayedCard;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.chat.Chat;
+import polimi.ingsoft.server.model.chat.Message;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.ArrayList;
 import java.util.HashMap;

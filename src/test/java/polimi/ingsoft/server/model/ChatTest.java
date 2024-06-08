@@ -3,6 +3,7 @@ package polimi.ingsoft.server.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.exceptions.MatchExceptions.NotValidMessageException;
+import polimi.ingsoft.server.model.chat.Chat;
 
 import static org.junit.jupiter.api.Assertions.*;
 

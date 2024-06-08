@@ -3,13 +3,6 @@ package polimi.ingsoft.server.common;
 import polimi.ingsoft.server.common.command.Command;
 import polimi.ingsoft.server.common.command.MatchServerCommand;
 import polimi.ingsoft.server.common.command.ServerCommand;
-import polimi.ingsoft.client.common.VirtualView;
-import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
-import polimi.ingsoft.server.model.Coordinates;
-import polimi.ingsoft.server.model.MixedCard;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-import polimi.ingsoft.server.model.QuestCard;
 
 import java.io.IOException;
 

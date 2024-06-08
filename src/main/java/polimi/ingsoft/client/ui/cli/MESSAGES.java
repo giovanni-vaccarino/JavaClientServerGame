@@ -1,5 +1,8 @@
 package polimi.ingsoft.client.ui.cli;
 
+/**
+ * Enumeration that lists all possible game messages
+ */
 public enum MESSAGES {
     CHOOSE_PROTOCOL_LIST("Before starting, choose which communication protocol you want to use: "),
     CHOOSE_PROTOCOL("Choose your protocol: "),

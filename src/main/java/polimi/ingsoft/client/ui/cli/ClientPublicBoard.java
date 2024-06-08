@@ -1,13 +1,27 @@
 package polimi.ingsoft.client.ui.cli;
 
-import polimi.ingsoft.server.enumerations.Object;
-import polimi.ingsoft.server.enumerations.Resource;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.items.Object;
+import polimi.ingsoft.server.model.items.Resource;
+import polimi.ingsoft.server.model.boards.Link;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.cards.cardstructure.CenterSpace;
+import polimi.ingsoft.server.model.cards.cardstructure.Face;
+import polimi.ingsoft.server.model.items.Item;
+import polimi.ingsoft.server.model.patterns.ItemPattern;
+import polimi.ingsoft.server.model.patterns.Pattern;
+import polimi.ingsoft.server.model.patterns.SchemePattern;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+/**
+ * Class that implements printing of PublicBoard objects
+ */
 public class ClientPublicBoard {
     public static final String RED = "\u001B[41m";
     public static final String GREEN = "\u001B[42m";
@@ -17,8 +31,13 @@ public class ClientPublicBoard {
     public static final String BLACKTEXT = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
 
-
-    public static void printPublicBoard(PlaceInPublicBoard<ResourceCard> resources,PlaceInPublicBoard<GoldCard> gold,PlaceInPublicBoard<QuestCard> quests) {
+    /**
+     * PublicBoard's print method
+     * @param resources the ResourceCard place
+     * @param gold the GoldCard place
+     * @param quests the QuestCard place
+     */
+    public static void printPublicBoard(PlaceInPublicBoard<ResourceCard> resources, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quests) {
         ArrayList<MixedCard> resourceCards, goldCards;
         ArrayList<QuestCard> questCards;
 
@@ -39,6 +58,10 @@ public class ClientPublicBoard {
         System.out.print("\n\n");
     }
 
+    /**
+     * Prints a Place's rows
+     * @param mixed the list of cards present in a PublicBoard's place's slots. NOTE: this list can contain just one element
+     */
     private static void printRows(ArrayList<MixedCard> mixed) {
         int row = 0, count = 0;
         do {
@@ -90,10 +113,18 @@ public class ClientPublicBoard {
         System.out.print("\n");
     }
 
+    /**
+     * Returns a string containing all information to print a card's CornerSpace
+     * @param mixed the list of cards present in a PublicBoard's place
+     * @param index the number of card that's to be printed
+     * @param corner the reference to the corner that's being printed
+     * @param row the number of row that's to be printed
+     * @return a string containing all information to print a card's corner
+     */
     private static String printResource(ArrayList<MixedCard> mixed, int index, int corner, int row) {
         Item color;
         Face back = mixed.get(index).getBack();
-        String outColor = "";
+        String outColor;
         try {
             color = switch (corner) {
                 case 1 -> back.getUpLeft().getItems().getFirst();
@@ -123,6 +154,13 @@ public class ClientPublicBoard {
         else return (outColor + "|        |");
     }
 
+    /**
+     * Returns a string containing all information to print a card's CenterSpace
+     * @param card the card that's being printed
+     * @param row the row that's being printed
+     * @param actualColor the card's default color
+     * @return a string containing all information to print a card's CenterSpace
+     */
     private static String printCenter(MixedCard card, int row, String actualColor) {
         Resource resource;
         CenterSpace center;
@@ -177,6 +215,12 @@ public class ClientPublicBoard {
         }
     }
 
+    /**
+     * Return a string containing all information to print a card's last row
+     * @param card the card that's being printed
+     * @param actualColor the card's default color
+     * @return a string containing all information to print a card's last row
+     */
     private static String printLastRow(MixedCard card, String actualColor) {
         int counter = 0;
         String pre, post, output = "";
@@ -236,6 +280,12 @@ public class ClientPublicBoard {
 
     }
 
+    /**
+     * Return a string containing all information to print a card's first row
+     * @param card the card that's being printed
+     * @param actualColor the card's default color
+     * @return a string containing all information to print a card's first row
+     */
     private static String printFirstRow(MixedCard card, String actualColor) {
         if (card.getPointPattern() == null)
             return actualColor + BLACKTEXT + "     | " + card.getScore(false) + "|     ";
@@ -255,8 +305,11 @@ public class ClientPublicBoard {
         return actualColor + "              ";
     }
 
+    /**
+     * Prints PublicBoards' QuestCards
+     * @param questCards an ArrayList containing the QuestCards that have to be printed
+     */
     private static void printQuests(ArrayList<QuestCard>questCards) {
-        int count = 0;
         int row = 1;
         QuestCard card;
         System.out.print(YELLOW + "                                  " + RESET + "     ");
@@ -271,8 +324,11 @@ public class ClientPublicBoard {
         } while (row < 9);
     }
 
+    /**
+     * Prints CLI's interface for QuestCards' initial choice
+     * @param questCards an ArrayList containing the QuestCards that have to be printed
+     */
     public static void printInitialQuests(ArrayList<QuestCard> questCards){
-        int count = 0;
         int row = 1;
         QuestCard card;
         printQuestFirstRow(questCards);
@@ -285,6 +341,10 @@ public class ClientPublicBoard {
         } while (row < 9);
     }
 
+    /**
+     * Prints QuestCards' first row
+     * @param questCards an ArrayList containing the QuestCards that have to be printed
+     */
     private static void printQuestFirstRow(ArrayList<QuestCard> questCards) {
         QuestCard card;
         card = questCards.getFirst();
@@ -294,6 +354,12 @@ public class ClientPublicBoard {
         System.out.print(RESET + "\n");
     }
 
+    /**
+     * Return a string containing all information to print the body of a questCard
+     * @param row the row that's being printed
+     * @param card the card that's being printed
+     * @return a string containing all information to print the body of a questCard
+     */
     public static String printQuestCard(int row, QuestCard card) {
         Pattern pattern;
         pattern = card.getPointPattern();

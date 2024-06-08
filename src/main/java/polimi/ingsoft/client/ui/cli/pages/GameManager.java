@@ -3,7 +3,12 @@ package polimi.ingsoft.client.ui.cli.pages;
 import polimi.ingsoft.client.ui.cli.*;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.enumerations.*;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.PlayedCard;
+import polimi.ingsoft.server.model.cards.*;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -37,8 +42,8 @@ public class GameManager implements CLIPhaseManager {
         GameState initialGameState;
     }
 
-    private GameModel model = new GameModel();
-    private TemporaryModel temporaryModel = new TemporaryModel();
+    private final GameModel model = new GameModel();
+    private final TemporaryModel temporaryModel = new TemporaryModel();
 
     enum State {
         WAITING_FOR_PUBLIC_BOARDS,
@@ -68,7 +73,6 @@ public class GameManager implements CLIPhaseManager {
     @Override
     public void start() {
         out.println(MESSAGES.GAME_START.getValue());
-
         updateGameState(temporaryModel.initialGameState);
     }
 
@@ -282,6 +286,22 @@ public class GameManager implements CLIPhaseManager {
 
     private void showDrawCard() {
         out.println(model.currentPlayerNickname + MESSAGES.OTHER_PLAYER_PERFORMING_DRAW.getValue());
+    }
+
+    public void updatePlayerHand(PlayerHand hand) {
+        model.hand = hand;
+    }
+
+    public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) {
+        switch (deckType) {
+            case RESOURCE -> model.resourceCards = (PlaceInPublicBoard<ResourceCard>) placeInPublicBoard;
+            case GOLD -> model.goldCards = (PlaceInPublicBoard<GoldCard>) placeInPublicBoard;
+        }
+    }
+
+    public void updateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
+       Board board = model.playerBoards.get(nickname);
+       board.add(coordinates, playedCard.getCard(), playedCard.isFacingUp());
     }
 
     @Override

@@ -1,6 +1,7 @@
 .splitMenuButtonSmall {
     -fx-font-size: 20px;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: black; /* Add this line */
 }
 
 .buttonBack {

@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.model;
 
 import org.junit.jupiter.api.Test;
+import polimi.ingsoft.server.model.chat.Message;
 
 import static org.junit.jupiter.api.Assertions.*;
 

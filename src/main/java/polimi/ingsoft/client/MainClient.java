@@ -40,7 +40,7 @@ public class MainClient {
         UIType uiType = UIType.GUI;
 
         if(args.length == 1){
-            if(args[0].toLowerCase().equals("cli") || args[0].toLowerCase().equals("tui")){
+            if(args[0].equalsIgnoreCase("cli") || args[0].equalsIgnoreCase("tui")){
                 uiType = UIType.CLI;
             }
         }

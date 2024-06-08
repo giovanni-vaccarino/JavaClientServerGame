@@ -70,7 +70,7 @@
 
         <StackPane layoutX="0.0" layoutY="480.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Update"
+                <Button fx:id="updateButton" mnemonicParsing="false" text="Update"
                         prefWidth="120" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#refreshColors">
@@ -80,7 +80,7 @@
 
         <StackPane layoutX="0.0" layoutY="560.0" prefWidth="1350" prefHeight="65" alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Select"
+                <Button fx:id="selectButton" mnemonicParsing="false" text="Select"
                         prefWidth="140" prefHeight="50" styleClass="buttonRegular"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
                         onAction="#selectColor">

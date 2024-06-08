@@ -9,8 +9,16 @@ import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
-import polimi.ingsoft.server.model.*;
-import polimi.ingsoft.server.model.Coordinates;
+import polimi.ingsoft.server.model.boards.Coordinates;
+import polimi.ingsoft.server.model.boards.Board;
+import polimi.ingsoft.server.model.boards.PlayedCard;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.MixedCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.chat.Message;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,13 +1,13 @@
 package polimi.ingsoft.server.controller;
 
-import polimi.ingsoft.server.enumerations.PlayerColor;
+import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.exceptions.MatchExceptions.*;
-import polimi.ingsoft.server.model.PlaceInPublicBoard;
-import polimi.ingsoft.server.model.Player;
+import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
+import polimi.ingsoft.server.model.player.Player;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
-import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
 
 import java.io.Serializable;
 import java.util.*;

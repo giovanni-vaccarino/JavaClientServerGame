@@ -2,7 +2,11 @@ package polimi.ingsoft.server.factories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
-import polimi.ingsoft.server.model.*;
+import polimi.ingsoft.server.model.cards.GoldCard;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.cards.QuestCard;
+import polimi.ingsoft.server.model.cards.ResourceCard;
+import polimi.ingsoft.server.model.decks.Deck;
 
 import java.io.FileNotFoundException;
 

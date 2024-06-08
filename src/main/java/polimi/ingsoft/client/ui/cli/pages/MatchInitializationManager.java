@@ -8,10 +8,10 @@ import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.INITIAL_STEP;
-import polimi.ingsoft.server.enumerations.PlayerColor;
-import polimi.ingsoft.server.model.InitialCard;
-import polimi.ingsoft.server.model.PlayerHand;
-import polimi.ingsoft.server.model.QuestCard;
+import polimi.ingsoft.server.model.player.PlayerColor;
+import polimi.ingsoft.server.model.cards.InitialCard;
+import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.cards.QuestCard;
 
 import java.io.PrintStream;
 import java.util.InputMismatchException;
