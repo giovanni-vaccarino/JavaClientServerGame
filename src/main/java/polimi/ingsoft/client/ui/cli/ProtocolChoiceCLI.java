@@ -3,6 +3,7 @@ package polimi.ingsoft.client.ui.cli;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ProtocolChoiceCLI {
@@ -20,12 +21,16 @@ public class ProtocolChoiceCLI {
         for (int i = 0; i < protocols.length; i++)
             out.printf("%d. %s%n", i + 1, protocols[i]);
 
-        int protocolIndex;
+        int protocolIndex=5;
         boolean isValid = false;
 
         do {
             out.print(MESSAGES.CHOOSE_PROTOCOL.getValue());
-            protocolIndex = in.nextInt();
+            try {
+                protocolIndex = in.nextInt();
+            }catch(InputMismatchException e){
+                out.print(MESSAGES.ERROR.getValue());
+            }
             in.nextLine();
             if (protocolIndex <= protocols.length) isValid = true;
             else out.println(ERROR_MESSAGES.PROTOCOL_NUMBER_OUT_OF_BOUND.getValue());

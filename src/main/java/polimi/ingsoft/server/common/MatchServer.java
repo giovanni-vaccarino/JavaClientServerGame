@@ -106,13 +106,12 @@ public class MatchServer implements VirtualMatchServer {
                     clientToUpdate,
                     settings
             );
+            if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
+                this.startGameUpdate();
             this.server.matchUpdateGameState(
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
-
-            if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
-                this.startGameUpdate();
         } catch (NullPointerException exception) {
             this.server.reportError(clientToUpdate, ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
         } catch (WrongGamePhaseException exception) {

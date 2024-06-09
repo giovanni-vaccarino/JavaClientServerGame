@@ -18,7 +18,7 @@ public enum MESSAGES {
     CREATED_MATCH("Successfully created match"),
     CHOOSE_COLOR("Select your color id: "),
     COLOR_SUCCESSFULLY_SET("Your color was successfully set"),
-    CHOOSE_INITIAL_CARD_FACE("Select the initial card face you would like to use [F/B]: "),
+    CHOOSE_INITIAL_CARD_FACE("Select the initial card face you would like to use [B/F]: "),
     INITIAL_CARD_FACE_SUCCESSFULLY_SET("The initial card face was successfully set"),
     CHOOSE_QUEST_CARD("Select the quest card you would like to use [1/2]: "),
     QUEST_CARD_SUCCESSFULLY_SET("The quest card was successfully set"),
@@ -46,8 +46,8 @@ public enum MESSAGES {
             """),
     HELP_INITIAL_CARD_CHOICE("""
             SELECT WHICH SIDE OF THE CARD TO KEEP FACE UP
-            -> F: PICK THE FRONT (on the left)
-            -> B: PICK THE BOTTOM (on the right)
+            -> B: PICK THE BOTTOM (on the left)
+            -> F: PICK THE FRONT (on the right)
             """),
     HELP_QUEST_CARD_CHOICE("""
             SELECT WHICH QUEST UP TO KEEP\s

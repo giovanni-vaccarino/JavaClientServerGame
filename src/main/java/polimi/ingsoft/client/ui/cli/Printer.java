@@ -50,7 +50,7 @@ public class Printer {
         else if(argument.equals(BoardArgument.UPLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.UPLEFT);
         else if(argument.equals(BoardArgument.DOWNLEFT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNLEFT);
         else if(argument.equals(BoardArgument.DOWNRIGHT.getValue()))ClientBoard.printBoard(board,BoardArgument.DOWNRIGHT);
-        System.out.print("RESOURCES:"+board.getResources().toString());
+        System.out.println("RESOURCES:"+board.getResources().toString());
         if(hand!=null)ClientHand.print(hand,playerQuest);
         if(argument!=null&&argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPBOARD.getValue());
         else out.println(MESSAGES.ERROR.getValue() );

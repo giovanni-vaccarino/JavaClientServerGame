@@ -190,6 +190,7 @@ public class GameManager implements CLIPhaseManager {
 
             // Get card choice
             do{
+                out.println(MESSAGES.CLS.getValue());
                 ClientBoard.printBoard(board);
                 ClientHand.print(hand, questCard);
                 out.println(MESSAGES.PLAYCARDHELP1.getValue());
@@ -218,6 +219,8 @@ public class GameManager implements CLIPhaseManager {
             // Get side choice
             do {
                 out.println(MESSAGES.PLAYCARDHELPORIENTATION.getValue());
+                choice=in.nextLine();
+                out.println(MESSAGES.CLS.getValue());
                 if(!(choice.equals(("1"))||choice.equals("2")))out.println(MESSAGES.ERROR.getValue());
             }while(!(choice.equals(("1"))||choice.equals("2")));
             side = Integer.parseInt(choice);
@@ -227,7 +230,6 @@ public class GameManager implements CLIPhaseManager {
 //            else out.println(MESSAGES.ERROR);
 //        }while(!facingUp);
         //in.nextLine();
-
         try {
             cli.getMatchServer().placeCard(cli.getNickname(),chosenCard, new Coordinates(x, y), facingUp);
         } catch (IOException e) {
