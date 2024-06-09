@@ -10,6 +10,11 @@ public abstract class ServerProxy implements VirtualServer {
     public abstract void sendMessage(ServerCommand command) throws IOException;
 
     @Override
+    public void connect(VirtualView client) throws IOException {
+        sendMessage((ServerCommand) server -> server.connect(client));
+    }
+
+    @Override
     public void setNickname(String nickname, String stub) throws IOException {
         sendMessage((ServerCommand) server -> server.setNickname(nickname, stub));
     }

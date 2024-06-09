@@ -152,8 +152,6 @@ public class GameManager implements CLIPhaseManager {
             } else if (turnStep == TURN_STEP.DRAW) {
                 runDrawCard();
             }
-        } else if (gamePhase == GAME_PHASE.LAST_ROUND) {
-
         } else if (gamePhase == GAME_PHASE.END) {
 
         }
@@ -193,11 +191,11 @@ public class GameManager implements CLIPhaseManager {
             do{
                 ClientBoard.printBoard(board);
                 ClientHand.print(hand, questCard);
-                out.println(MESSAGES.PLAYCARDHELP1.getValue());
+                out.println(MESSAGES.PLAY_CARD_HELP_1.getValue());
                 choice=in.nextLine();
                 if(choice.equalsIgnoreCase("flip")){
                     do {
-                        System.out.println(MESSAGES.GETFLIPCHOICE.getValue());
+                        System.out.println(MESSAGES.GET_FLIP_CHOICE.getValue());
                         secondChoice = in.nextLine();
                         if(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")))out.println(MESSAGES.ERROR.getValue());
                     }while(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")));
@@ -208,17 +206,17 @@ public class GameManager implements CLIPhaseManager {
             }while(choice.equalsIgnoreCase("flip")||!(choice.equals("1")||choice.equals("2")||choice.equals("3")));
             card = Integer.parseInt((choice));
             // Get coords choice
-            out.println(MESSAGES.PLAYCARDHELP2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
+            out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
             //TODO add a catcher for wrong inputs
-            out.println(MESSAGES.PLAYCARDHELPX.getValue());
+            out.println(MESSAGES.PLAY_CARD_HELP_X.getValue());
             x = Integer.parseInt((in.nextLine()));
-            out.println(MESSAGES.PLAYCARDHELPY.getValue());
+            out.println(MESSAGES.PLAY_CARD_HELP_Y.getValue());
             y = Integer.parseInt((in.nextLine()));
             //TODO until here
             chosenCard = hand.get(card-1);
             // Get side choice
             do {
-                out.println(MESSAGES.PLAYCARDHELPORIENTATION.getValue());
+                out.println(MESSAGES.PLAY_CARD_HELP_ORIENTATION.getValue());
                 if(!(choice.equals(("1"))||choice.equals("2")))out.println(MESSAGES.ERROR.getValue());
             }while(!(choice.equals(("1"))||choice.equals("2")));
             side = Integer.parseInt(choice);

@@ -62,6 +62,6 @@ public class SocketClient extends Client {
             } catch (IOException | ClassNotFoundException e) {
                 // TODO handle
             }
-        }).start();
+        }, "SocketClientCommandReader").start();
     }
 }

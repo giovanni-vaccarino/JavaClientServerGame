@@ -13,6 +13,7 @@ import polimi.ingsoft.server.model.items.Item;
 import polimi.ingsoft.server.model.patterns.ItemPattern;
 
 import java.util.HashMap;
+import java.util.Map;
 //EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
 
 /**
@@ -812,12 +813,15 @@ public class ClientBoard {
             return defineColor(card,2) + "              ";
         }
         int counter = 0;
-        String pre, post, output = "";
+        String pre;
+        String post;
+        StringBuilder output = new StringBuilder();
         if (newCard.getPlayPattern() != null && !card.isFacingUp()) {
-            counter += newCard.getPlayPattern().getCost().get(Resource.MUSHROOM);
-            counter += newCard.getPlayPattern().getCost().get(Resource.WOLF);
-            counter += newCard.getPlayPattern().getCost().get(Resource.LEAF);
-            counter += newCard.getPlayPattern().getCost().get(Resource.BUTTERFLY);
+
+            for (Resource resource : Resource.values()) {
+                counter += newCard.getPlayPattern().getCost().get(resource);
+            }
+
             switch (counter) {
                 case 1:
                     pre = actualColor + BLACKTEXT + "     |";
@@ -844,24 +848,25 @@ public class ClientBoard {
             }
             pre = actualColor + pre;
             post = actualColor + post;
+
             int c = 0;
             while (c < newCard.getPlayPattern().getCost().get(Resource.MUSHROOM)) {
-                output = output + RED + " " + actualColor + "|";
+                output.append(RED).append(" ").append(actualColor).append("|");
                 c++;
             }
             c = 0;
             while (c < newCard.getPlayPattern().getCost().get(Resource.LEAF)) {
-                output = output + GREEN + " " + actualColor + "|";
+                output.append(GREEN).append(" ").append(actualColor).append("|");
                 c++;
             }
             c = 0;
             while (c < newCard.getPlayPattern().getCost().get(Resource.WOLF)) {
-                output = output + BLUE + " " + actualColor + "|";
+                output.append(BLUE).append(" ").append(actualColor).append("|");
                 c++;
             }
             c = 0;
             while (c < newCard.getPlayPattern().getCost().get(Resource.BUTTERFLY)) {
-                output = output + PURPLE + " " + actualColor + "|";
+                output.append(PURPLE).append(" ").append(actualColor).append("|");
                 c++;
             }
             return pre + output + post;
@@ -874,64 +879,27 @@ public class ClientBoard {
      * @param board the board that has to be printed
      * @param argument the nullable board argument
      */
-    public static void printBoard(Board board,BoardArgument argument) {
+    public static void printBoard(Board board, BoardArgument argument) {
         Coordinates actualCoordinates=board.getPrintingCoordinates();
         String error="ERROR: place not avaiable!";
-        switch (argument) {
-            case BoardArgument.UPLEFT:
-                if (getCardAtRespective(board,-2, 2,actualCoordinates) != null ||
-                        getCardAtRespective(board,-3, 3,actualCoordinates) != null ||
-                        getCardAtRespective(board,-1, 3,actualCoordinates) != null ||
-                        getCardAtRespective(board,-3, 1,actualCoordinates) != null) board.updatePrintingCoordinates(-1,1);
-                else System.out.print(error);
-                break;
-            case BoardArgument.UP:
-                if (getCardAtRespective(board,0, 2,actualCoordinates) != null ||
-                        getCardAtRespective(board,-1, 3,actualCoordinates) != null ||
-                        getCardAtRespective(board,1, 3,actualCoordinates) != null)board.updatePrintingCoordinates(0,2);
-                else System.out.print(error);
-                break;
-            case BoardArgument.UPRIGHT:
-                if (getCardAtRespective(board,2, 2,actualCoordinates) != null ||
-                        getCardAtRespective(board,3, 3,actualCoordinates) != null ||
-                        getCardAtRespective(board,1, 3,actualCoordinates) != null ||
-                        getCardAtRespective(board,3, 1,actualCoordinates) != null)board.updatePrintingCoordinates(1,1);
-                else System.out.print(error);
-                break;
-            case BoardArgument.LEFT:
-                if(getCardAtRespective(board,-2, 0,actualCoordinates) != null ||
-                        getCardAtRespective(board,-3, 1,actualCoordinates) != null ||
-                        getCardAtRespective(board,-3, -1,actualCoordinates) != null)board.updatePrintingCoordinates(-2,0);
-                else System.out.print(error);
-                break;
-            case BoardArgument.RIGHT:
-                if(getCardAtRespective(board,2, 0,actualCoordinates) != null ||
-                        getCardAtRespective(board,3, 1,actualCoordinates) != null ||
-                        getCardAtRespective(board,3, -1,actualCoordinates) != null)board.updatePrintingCoordinates(2,0);
-                else System.out.print(error);
-                break;
-            case BoardArgument.DOWNLEFT:
-                if(getCardAtRespective(board,-2,-2,actualCoordinates)!=null||
-                        getCardAtRespective(board,-1,-3,actualCoordinates)!=null||
-                        getCardAtRespective(board,-3,-3,actualCoordinates)!=null||
-                        getCardAtRespective(board,-3,-1,actualCoordinates)!=null)board.updatePrintingCoordinates(-2, -2);
-                else System.out.print(error);
-                break;
-            case BoardArgument.DOWN:
-                if(getCardAtRespective(board,0,-2,actualCoordinates)!=null||
-                        getCardAtRespective(board,-1,-3,actualCoordinates)!=null||
-                        getCardAtRespective(board,1,-3,actualCoordinates)!=null)board.updatePrintingCoordinates(0,-2);
-                else System.out.print(error);
-                break;
-            case DOWNRIGHT:
-                if(getCardAtRespective(board,2,-2,actualCoordinates)!=null||
-                        getCardAtRespective(board,3,-1,actualCoordinates)!=null||
-                        getCardAtRespective(board,3,-3,actualCoordinates)!=null||
-                        getCardAtRespective(board,1,-3,actualCoordinates)!=null)board.updatePrintingCoordinates(2,-2);
-                else System.out.print(error);
-                break;
+
+        boolean canUpdatePrintingCoordinates = true;
+
+        if (argument != null) {
+            for (Coordinates coordinatesToCheck : argument.getPlacesToCheckBeforePrint())
+                if (getCardAtRespective(board, coordinatesToCheck.getX(), coordinatesToCheck.getY(), actualCoordinates) == null)
+                    canUpdatePrintingCoordinates = false;
+        } else {
+            canUpdatePrintingCoordinates = false;
         }
+
+        if (canUpdatePrintingCoordinates) {
+            Coordinates centerCoordinates = argument.getOffset();
+            board.updatePrintingCoordinates(centerCoordinates.getX(), centerCoordinates.getY());
+        } else {
+            System.out.print(error);
+        }
+
         printBoard(board);
     }
-
 }

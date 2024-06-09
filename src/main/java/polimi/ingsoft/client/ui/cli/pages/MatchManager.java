@@ -98,7 +98,7 @@ public class MatchManager implements CLIPhaseManager{
             boolean isValid = false;
 
             do {
-                out.print(MESSAGES.CHOOSE_NUMPLAYERS.getValue());
+                out.print(MESSAGES.CHOOSE_NUMBER_OF_PLAYERS.getValue());
                 requestedNumPlayers = in.nextInt();
                 in.nextLine();
 

@@ -1,5 +1,7 @@
 package polimi.ingsoft.server;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.rmi.RmiServer;
@@ -10,6 +12,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The MainServer class initializes and starts the RMI and Socket servers for the application.
@@ -49,8 +53,8 @@ public class MainServer {
      */
     private static void runRmiServer() {
         try {
-            //System.setProperty("java.rmi.server.hostname", "192.168.197.134");
-            //System.setProperty("java.rmi.server.disableHttp", "true");
+            System.setProperty("java.rmi.server.disableHttp", "true");
+            System.setProperty("java.rmi.server.hostname", "192.168.1.94");
             VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(rmiServer, 0);
 
             Registry registry = LocateRegistry.createRegistry(1234);

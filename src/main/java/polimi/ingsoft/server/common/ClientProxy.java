@@ -26,6 +26,9 @@ public abstract class ClientProxy implements VirtualView {
     public abstract void sendMessage(ClientCommand command) throws IOException;
 
     @Override
+    public abstract void setMatchServer(VirtualMatchServer matchServer) throws IOException;
+
+    @Override
     public void showConnectUpdate(String stubNickname) throws IOException {
         sendMessage((ClientCommand) client -> client.showConnectUpdate(stubNickname));
     }
