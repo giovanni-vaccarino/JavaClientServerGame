@@ -92,47 +92,47 @@ public class Board implements Serializable {
 
             if (cards.containsKey(position.downRight())){
                 cards.get(position.downRight()).setUpLeft();
-                if(!cards.get(position.downRight()).getFace().getUpLeft().getItems().isEmpty()&&
-                        resources.get(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst())>0)
-                    resources.put(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst(),resources.get(cards.get(position.downRight()).getFace().getUpLeft().getItems().getFirst())-1);
+                if(!cards.get(position.downRight()).getUpLeftCorner().getItems().isEmpty()&&
+                        resources.get(cards.get(position.downRight()).getUpLeftCorner().getItems().getFirst())>0)
+                    resources.put(cards.get(position.downRight()).getUpLeftCorner().getItems().getFirst(),resources.get(cards.get(position.downRight()).getUpLeftCorner().getItems().getFirst())-1);
             }
 
             if (cards.containsKey(position.upRight())){
                 cards.get(position.upRight()).setDownLeft();
-                if(!cards.get(position.upRight()).getFace().getBottomLeft().getItems().isEmpty()&&
-                        resources.get(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst())>0)
-                    resources.put(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst(),resources.get(cards.get(position.upRight()).getFace().getBottomLeft().getItems().getFirst())-1);
+                if(!cards.get(position.upRight()).getBottomLeftCorner().getItems().isEmpty()&&
+                        resources.get(cards.get(position.upRight()).getBottomLeftCorner().getItems().getFirst())>0)
+                    resources.put(cards.get(position.upRight()).getBottomLeftCorner().getItems().getFirst(),resources.get(cards.get(position.upRight()).getBottomLeftCorner().getItems().getFirst())-1);
             }
 
             if (cards.containsKey(position.upLeft())){
                 cards.get(position.upLeft()).setDownRight();
-                if(!cards.get(position.upLeft()).getFace().getBottomRight().getItems().isEmpty()&&
-                        resources.get(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst())>0)
-                    resources.put(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst(),resources.get(cards.get(position.upLeft()).getFace().getBottomRight().getItems().getFirst())-1);
+                if(!cards.get(position.upLeft()).getBottomRightCorner().getItems().isEmpty()&&
+                        resources.get(cards.get(position.upLeft()).getBottomRightCorner().getItems().getFirst())>0)
+                    resources.put(cards.get(position.upLeft()).getBottomRightCorner().getItems().getFirst(),resources.get(cards.get(position.upLeft()).getBottomRightCorner().getItems().getFirst())-1);
             }
 
             if (cards.containsKey(position.downLeft())){
                 cards.get(position.downLeft()).setUpRight();
-                if(!cards.get(position.downLeft()).getFace().getUpRight().getItems().isEmpty()&&
-                        resources.get(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst())>0)
-                    resources.put(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst(),resources.get(cards.get(position.downLeft()).getFace().getUpRight().getItems().getFirst())-1);
+                if(!cards.get(position.downLeft()).getUpRightCorner().getItems().isEmpty()&&
+                        resources.get(cards.get(position.downLeft()).getUpRightCorner().getItems().getFirst())>0)
+                    resources.put(cards.get(position.downLeft()).getUpRightCorner().getItems().getFirst(),resources.get(cards.get(position.downLeft()).getUpRightCorner().getItems().getFirst())-1);
             }
 
-            if(cards.get(position).getBottomLeftCorner()!=null&&!cards.get(position).getBottomLeftCorner().getItems().isEmpty())
-                resources.put(cards.get(position).getBottomLeftCorner().getItems().getFirst(),resources.get(cards.get(position).getBottomLeftCorner().getItems().getFirst())+1);
+            if(playedCard.getBottomLeftCorner()!=null&&!playedCard.getBottomLeftCorner().getItems().isEmpty())
+                resources.put(playedCard.getBottomLeftCorner().getItems().getFirst(),resources.get(playedCard.getBottomLeftCorner().getItems().getFirst())+1);
 
-            if(cards.get(position).getBottomRightCorner()!=null&&!cards.get(position).getBottomRightCorner().getItems().isEmpty())
-                resources.put(cards.get(position).getBottomRightCorner().getItems().getFirst(),resources.get(cards.get(position).getBottomRightCorner().getItems().getFirst())+1);
+            if(playedCard.getBottomRightCorner()!=null&&!playedCard.getBottomRightCorner().getItems().isEmpty())
+                resources.put(playedCard.getBottomRightCorner().getItems().getFirst(),resources.get(playedCard.getBottomRightCorner().getItems().getFirst())+1);
 
             if(cards.get(position).getUpLeftCorner()!=null&&!cards.get(position).getUpLeftCorner().getItems().isEmpty())
-                resources.put(cards.get(position).getUpLeftCorner().getItems().getFirst(),resources.get(cards.get(position).getUpLeftCorner().getItems().getFirst())+1);
+                resources.put(playedCard.getUpLeftCorner().getItems().getFirst(),resources.get(playedCard.getUpLeftCorner().getItems().getFirst())+1);
 
             if(cards.get(position).getUpRightCorner() != null && !cards.get(position).getUpRightCorner().getItems().isEmpty())
-                resources.put(cards.get(position).getUpRightCorner().getItems().getFirst(), resources.get(cards.get(position).getUpRightCorner().getItems().getFirst())+1);
+                resources.put(playedCard.getUpRightCorner().getItems().getFirst(), resources.get(playedCard.getUpRightCorner().getItems().getFirst())+1);
 
-            if(cards.get(position).isFacingUp())
-                for(int i = 0 ; i < cards.get(position).getCenter().getItems().size(); i++)
-                    resources.put(cards.get(position).getCenter().getItems().get(i), resources.get(cards.get(position).getCenter().getItems().get(i))+1);
+            if(playedCard.isFacingUp())
+                for(int i = 0 ; i < playedCard.getCenter().getItems().size(); i++)
+                    resources.put(playedCard.getCenter().getItems().get(i), resources.get(playedCard.getCenter().getItems().get(i))+1);
 
             return true;
         }
