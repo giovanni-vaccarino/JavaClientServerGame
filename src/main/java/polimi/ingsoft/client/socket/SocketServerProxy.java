@@ -19,9 +19,4 @@ public class SocketServerProxy extends ServerProxy {
         out.writeObject(command);
         out.flush();
     }
-
-    @Override
-    public void connect(VirtualView client) throws IOException {
-
-    }
 }

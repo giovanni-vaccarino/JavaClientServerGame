@@ -1,11 +1,11 @@
 package polimi.ingsoft.server.socket;
 
-import polimi.ingsoft.server.common.MatchServer;
-import polimi.ingsoft.server.common.command.ServerCommand;
 import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.common.Dispatcher;
+import polimi.ingsoft.server.common.MatchServer;
 import polimi.ingsoft.server.common.Server;
-import polimi.ingsoft.server.common.Utils;
 import polimi.ingsoft.server.common.VirtualMatchServer;
+import polimi.ingsoft.server.common.command.ServerCommand;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.controller.MatchController;
 
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 public class SocketServer extends Server {
-    private final int port;
     private static final String CONNECTION_HANDLER_NAME_PREFIX = "ConnectionHandler-";
+    private final int port;
     private final Map<Integer, VirtualMatchServer> matchServers = new HashMap<>();
 
     public SocketServer(int port, PrintStream logger, MainController controller) {
@@ -31,6 +31,7 @@ public class SocketServer extends Server {
     public void handleIncomingConnections() {
         logger.println("SOCKET: Starting server");
         ServerSocket server;
+        Dispatcher dispatcher;
         List<Thread> handlers = new ArrayList<>();
         try {
             server = new ServerSocket(port);
@@ -38,8 +39,10 @@ public class SocketServer extends Server {
             while (true) {
                 try {
                     Socket socket = server.accept();
-                    ConnectionHandler handler = new ConnectionHandler(socket, this, logger);
-                    this.connect(handler);
+
+                    dispatcher = new Dispatcher(this);
+                    ConnectionHandler handler = new ConnectionHandler(socket, dispatcher, logger);
+                    this.connect(handler.getProxy());
 
                     Thread handlerThread = new Thread(handler);
                     handlers.add(handlerThread);
@@ -69,5 +72,7 @@ public class SocketServer extends Server {
     }
 
     @Override
-    public void sendMessage(ServerCommand command) throws IOException { }
+    public void sendMessage(ServerCommand command) throws IOException {
+
+    }
 }

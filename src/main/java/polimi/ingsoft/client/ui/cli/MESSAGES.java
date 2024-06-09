@@ -11,9 +11,9 @@ public enum MESSAGES {
     NO_MATCHES_TO_SHOW("There are currently no matches being run"),
     CHOOSE_MATCH("Choose your match or create a new one by typing 0: "),
     CHOOSE_NICKNAME("Choose your nickname: "),
-    CHOOSE_NUMPLAYERS("Choose how many players should the game have: "),
+    CHOOSE_NUMBER_OF_PLAYERS("Choose how many players should the game have: "),
     JOINING_MATCH("Joining match..."),
-    JOINED_MATCH("Succesfully joined match"),
+    JOINED_MATCH("Successfully joined match"),
     PLAYERS_IN_LOBBY("Players waiting in lobby: "),
     CREATED_MATCH("Successfully created match"),
     CHOOSE_COLOR("Select your color id: "),
@@ -29,7 +29,7 @@ public enum MESSAGES {
     CARD_SUCCESSFULLY_DRAWN("Card was drawn successfully"),
     OTHER_PLAYER_PERFORMING_PLACE(" has to place her/his card"),
     OTHER_PLAYER_PERFORMING_DRAW(" has to draw her/his card"),
-    HELPMAIN("""
+    HELP_MAIN("""
             HERE'S WHAT YOU CAN DO !
             ->BOARD:ENTER THE BOARD MENU
             ->PUBLICBOARD: ENTER THE PUBLICBOARD MENU
@@ -37,7 +37,7 @@ public enum MESSAGES {
             ->MESSAGE: CHAT PRIVATELY WITH A PLAYER
             ->HELP: PRINT THIS LIST AGAIN!
             """),
-    HELPBOARD("""
+    HELP_BOARD("""
             HERE'S WHAT YOU CAN DO !
             ->[UP,DOWN,LEFT,RIGHT,UPRIGHT,UPLEFT,DOWNRIGHT,DOWNLEFT]: SHOW THE BOARD FROM ONE OF THESE POSITIONS !
             ->PLAYCARD: PLAY A CARD !
@@ -55,13 +55,13 @@ public enum MESSAGES {
             -> 1: Pick the one on the left\s
             -> 2: Pick the one on the right\s
             """),
-    PLAYCARDHELP1("""
+    PLAY_CARD_HELP_1("""
             WHICH CARD WOULD YOU LIKE TO PLAY ? YOU CAN FLIP ANY CARD BY WRITING "FLIP"
             1->LEFT
             2->CENTER
             3->RIGHT
             """),
-    PLAYCARDHELP2("""
+    PLAY_CARD_HELP_2("""
             A CARD THAT'S SHOWN LEFT TO THE CENTRAL SPACE ALWAYS HAS AN X COORDINATE DECREASED BY 1!
             A CARD THAT'S SHOWN RIGHT TO THE CENTRAL SPACE ALWAYS HAS AN X COORDINATE INCREASED BY 1!
             A CARD THAT'S SHOWN ABOVE THE CENTRAL SPACE ALWAYS HAS A Y COORDINATE INCREASED BY 1!
@@ -69,26 +69,26 @@ public enum MESSAGES {
             TELL ME WHERE YOU WOULD LIKE TO PLACE YOUR CARD !
             CENTRAL CARD COORDINATES ARE:
             """),
-    PLAYCARDHELPX("COORDINATE X:"),
-    PLAYCARDHELPY("COORDINATE Y:"),
-    PLAYCARDHELPORIENTATION("""
+    PLAY_CARD_HELP_X("COORDINATE X:"),
+    PLAY_CARD_HELP_Y("COORDINATE Y:"),
+    PLAY_CARD_HELP_ORIENTATION("""
             REMEMBER: THE FRONT SIDE OF A CARD IS THE ONE THAT SHOWS ITS CENTRAL SPACE!
             WHICH SIDE OF THE CARD SHOULD BE FACING UP ?
             1-> FRONT
             2-> BACK
             """),
-    HELPCLIENTBOARD("""
+    HELP_CLIENT_BOARD("""
     HERE'S WHAT YOU CAN DO !
     ->GETCARD:TELL ME YOU WANT TO PICK A CARD !
     ->BACK: GO BACK TO THE MAIN MENU !
     ->HELP: PRINT THIS LIST AGAIN!
     """),
-    HELPGETCARDTYPE("""
+    HELP_GET_CARD_TYPE("""
         TELL ME WHERE YOU WANT TO PICK YOUR CAR FROM!
         ->RESOURCE: PICK ONE OF THE RESOUCE CARDS !
         ->GOLD: PICK ONE OF THE GOLD CARDS !
         """),
-    HELPGETCARDPLACE("""
+    HELP_GET_CARD_PLACE("""
     TELL ME WHICH CARD YOU WANT TO PICK !
     ->CENTER: PICK THE CENTRAL CARD !
     ->RIGHT: PICK THE CARD ON THE RIGHT !
@@ -98,7 +98,7 @@ public enum MESSAGES {
     HELPCHAT(""),
     CLS("\033[H\033[2J"),
     ERROR("SOMETHING WENT WRONG, PLEASE TRY WITH ANOTHER COMMAND !\n"),
-    GETFLIPCHOICE("""
+    GET_FLIP_CHOICE("""
             WHICH CARD WOULD YOU LIKE TO FLIP ?" +
             1->LEFT
             2->CENTER

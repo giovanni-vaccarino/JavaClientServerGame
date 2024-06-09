@@ -10,8 +10,8 @@ import java.io.Serializable;
 /**
  * Class that represents a card that has been played in a player's Board
  */
-public class PlayedCard implements Serializable {
-    private final GameCard card;
+public class PlayedCard implements Serializable, Cloneable {
+    private GameCard card;
     private boolean upRight=true;
     private boolean upLeft=true;
     private boolean downRight=true;
@@ -172,4 +172,15 @@ public class PlayedCard implements Serializable {
         return card.getFront().getCenter();
     }
 
+    @Override
+    public PlayedCard clone() {
+        try {
+            PlayedCard clone = (PlayedCard) super.clone();
+            clone.card = (GameCard) card.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

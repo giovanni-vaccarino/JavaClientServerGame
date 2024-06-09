@@ -26,6 +26,9 @@ public abstract class ClientProxy implements VirtualView {
     public abstract void sendMessage(ClientCommand command) throws IOException;
 
     @Override
+    public abstract void setMatchServer(VirtualMatchServer matchServer) throws IOException;
+
+    @Override
     public void showConnectUpdate(String stubNickname) throws IOException {
         sendMessage((ClientCommand) client -> client.showConnectUpdate(stubNickname));
     }
@@ -85,17 +88,21 @@ public abstract class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdatePlayerHand(PlayerHand playerHand) throws IOException {
-        sendMessage((ClientCommand) client -> client.showUpdatePlayerHand(playerHand));
+        PlayerHand playerHandClone = playerHand.clone();
+        sendMessage((ClientCommand) client -> client.showUpdatePlayerHand(playerHandClone));
     }
 
     @Override
-    public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException{
-        sendMessage((ClientCommand) client -> client.showUpdatePublicBoard(deckType, placeInPublicBoard));
+    public void showUpdatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) throws IOException {
+        PlaceInPublicBoard<?> placeInPublicBoardClone = placeInPublicBoard.clone();
+        sendMessage((ClientCommand) client -> client.showUpdatePublicBoard(deckType, placeInPublicBoardClone));
     }
 
     @Override
     public void showUpdateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) throws IOException {
-        sendMessage((ClientCommand) client -> client.showUpdateBoard(nickname, coordinates, playedCard, score));
+        Coordinates coordinatesClone = coordinates.clone();
+        PlayedCard playedCardClone = playedCard.clone();
+        sendMessage((ClientCommand) client -> client.showUpdateBoard(nickname, coordinatesClone, playedCardClone, score));
     }
 
     @Override

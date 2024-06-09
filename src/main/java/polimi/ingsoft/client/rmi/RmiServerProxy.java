@@ -18,9 +18,4 @@ public class RmiServerProxy extends ServerProxy {
     public void sendMessage(ServerCommand command) throws IOException {
         server.sendMessage(command);
     }
-
-    @Override
-    public void connect(VirtualView client) throws IOException {
-        server.connect(client);
-    }
 }

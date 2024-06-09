@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Class that represents a Public Board's rows - each distinguished from its card type
  * @param <T> Public Board's rows' card type
  */
-public class PlaceInPublicBoard<T extends Drawable> implements Serializable {
+public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Cloneable {
     /**
      * Enumeration that defines the kind and amount of slots a Public Board's row can have
      */
@@ -82,5 +82,16 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable {
     public Boolean isPlaceInPublicBoardEmpty(){
         //TODO check if slotA and slotB null are correct
         return deck.isCardCollectionEmpty() && slotA == null && slotB == null;
+    }
+
+    @Override
+    public PlaceInPublicBoard<T> clone() {
+        try {
+            PlaceInPublicBoard<T> clone = (PlaceInPublicBoard<T>) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
