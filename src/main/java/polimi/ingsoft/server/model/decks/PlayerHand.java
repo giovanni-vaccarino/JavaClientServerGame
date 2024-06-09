@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Class that represent a player's hand
  */
-public class PlayerHand extends CardCollection<MixedCard> implements Serializable {
+public class PlayerHand extends CardCollection<MixedCard> implements Serializable, Cloneable {
     private ArrayList<Boolean> isFlipped;
 
     /**
@@ -83,5 +83,17 @@ public class PlayerHand extends CardCollection<MixedCard> implements Serializabl
      */
     public ArrayList<Boolean> getIsFlipped(){
         return this.isFlipped;
+    }
+
+    @Override
+    public PlayerHand clone() {
+        try {
+            PlayerHand clone = (PlayerHand) super.clone();
+            clone.cards = (ArrayList<MixedCard>) cards.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

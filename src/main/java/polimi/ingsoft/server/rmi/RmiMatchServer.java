@@ -27,7 +27,7 @@ public class RmiMatchServer extends MatchServer {
                     break;
                 }
             }
-        }).start();
+        }, "RmiMatchServerCommandReader-" + controller.getMatchId()).start();
     }
 
     @Override

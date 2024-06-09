@@ -64,7 +64,7 @@ public class RmiClient extends Client {
                         break;
                     }
                 }
-            }).start();
+            }, "RmiClientCommandReader").start();
         } catch (IOException e) {
             // TODO handle
         }

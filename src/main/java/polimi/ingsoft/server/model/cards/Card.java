@@ -2,7 +2,7 @@ package polimi.ingsoft.server.model.cards;
 
 import java.io.Serializable;
 
-public abstract class Card implements Drawable, Serializable {
+public abstract class Card implements Drawable, Serializable, Cloneable {
     private final int score;
     private final String iD;
 
@@ -30,5 +30,17 @@ public abstract class Card implements Drawable, Serializable {
      */
     public String getID(){
         return this.iD;
+    }
+
+
+    @Override
+    public Card clone() {
+        try {
+            Card clone = (Card) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

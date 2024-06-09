@@ -37,7 +37,6 @@ public abstract class MatchServerProxy implements VirtualMatchServer {
 
     @Override
     public void sendPrivateMessage(String player, String recipient, String _message) throws IOException {
-        System.out.println("Sto mandando messaggio 1");
         sendMessage((MatchServerCommand) server -> server.sendPrivateMessage(player, recipient, _message));
     }
 

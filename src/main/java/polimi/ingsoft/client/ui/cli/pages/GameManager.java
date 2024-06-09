@@ -83,6 +83,7 @@ public class GameManager implements CLIPhaseManager {
         boolean isInitialCardFacingUp,
         GameState gameState
     ) {
+        out.println("Init model: " + state);
         if (state == State.WAITING_FOR_INITIALIZATION) {
             model.hand = hand;
             model.personalQuestCard = personalQuestCard;

@@ -21,6 +21,7 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class ConnectionHandler implements Runnable, VirtualView {
             in.close();
             out.close();
             socket.close();
-        } catch (EOFException e) {
+        } catch (EOFException | SocketException e) {
             // TODO handle disconnection here
             logger.println("SOCKET: Connection closed");
         } catch (IOException | ClassNotFoundException e) {

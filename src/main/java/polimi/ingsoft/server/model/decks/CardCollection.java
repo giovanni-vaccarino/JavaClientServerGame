@@ -12,7 +12,7 @@ import java.util.Collections;
  * @param <T> an object of that extends the drawable interface
  */
 public abstract class CardCollection<T extends Drawable> implements Serializable {
-    List<T> cards = new ArrayList<>();
+    ArrayList<T> cards = new ArrayList<>();
 
     /**
      * changes the cards' draw order

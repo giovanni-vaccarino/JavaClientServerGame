@@ -31,7 +31,12 @@ public class RmiServer extends Server {
                     break;
                 }
             }
-        }).start();
+        }, "RmiServerCommandReader").start();
+    }
+
+    @Override
+    public void connect(VirtualView client) throws IOException {
+        super.connect(new RmiClientProxy(client));
     }
 
     @Override

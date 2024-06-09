@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Object that identifies each and every of a Board's positions, representing a board as a cartesian plane
  */
-public class Coordinates implements Serializable {
+public class Coordinates implements Serializable, Cloneable {
     private final int x;
     private final int y;
 
@@ -143,5 +143,16 @@ public class Coordinates implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public Coordinates clone() {
+        try {
+            Coordinates clone = (Coordinates) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
