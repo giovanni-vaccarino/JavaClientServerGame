@@ -268,14 +268,12 @@ public class MatchController implements Serializable {
         Board board = player.getBoard();
 
         if(facingUp||card.getPlayability(board) > 0){
-            int numberOfMatches = card.getPoints(board,coordinates);
-            int potentialScore = numberOfMatches * card.getScore(facingUp);
             boolean isAdded = board.add(coordinates, card, facingUp);
             if(isAdded){
                 System.out.println("BOARD:"+board.getResources().toString());
-                System.out.println("VOLTE IN CUI MATCHA" + numberOfMatches );
+                System.out.println("VOLTE IN CUI MATCHA" + card.getPoints(board,coordinates) );
                 System.out.println("SCORE DELLA CARTA: " + card.getScore(facingUp) + "CON FACINGUP" + facingUp);
-                board.updatePoints(potentialScore);
+                board.updatePoints(card.getPoints(board,coordinates) * card.getScore(facingUp));
                 player.removeFromHand(card);
             }else{
                 throw new CoordinateNotValidException();
