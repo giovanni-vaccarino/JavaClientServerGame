@@ -124,10 +124,10 @@ public class Board implements Serializable {
             if(playedCard.getBottomRightCorner()!=null&&!playedCard.getBottomRightCorner().getItems().isEmpty())
                 resources.put(playedCard.getBottomRightCorner().getItems().getFirst(),resources.get(playedCard.getBottomRightCorner().getItems().getFirst())+1);
 
-            if(cards.get(position).getUpLeftCorner()!=null&&!cards.get(position).getUpLeftCorner().getItems().isEmpty())
+            if(playedCard.getUpLeftCorner()!=null&&!playedCard.getUpLeftCorner().getItems().isEmpty())
                 resources.put(playedCard.getUpLeftCorner().getItems().getFirst(),resources.get(playedCard.getUpLeftCorner().getItems().getFirst())+1);
 
-            if(cards.get(position).getUpRightCorner() != null && !cards.get(position).getUpRightCorner().getItems().isEmpty())
+            if(playedCard.getUpRightCorner() != null && !playedCard.getUpRightCorner().getItems().isEmpty())
                 resources.put(playedCard.getUpRightCorner().getItems().getFirst(), resources.get(playedCard.getUpRightCorner().getItems().getFirst())+1);
 
             if(playedCard.isFacingUp())
@@ -212,7 +212,7 @@ public class Board implements Serializable {
      */
     private List<Coordinates>getAvailablePlaces(HashMap<Coordinates,Boolean> visited, List<Coordinates>freePlaces, Coordinates actualCoordinates){
         visited.put(actualCoordinates, true);
-        Coordinates next = actualCoordinates.sum(new Coordinates(-1,1));
+        Coordinates next = actualCoordinates.upLeft();
 
         if(cards.containsKey(next) && !visited.containsKey(next))
             freePlaces = getAvailablePlaces(visited, freePlaces, next);
@@ -221,7 +221,7 @@ public class Board implements Serializable {
             if(!freePlaces.contains(next))
                     freePlaces.add(next);
 
-        next=actualCoordinates.sum(new Coordinates(1,1));
+        next=actualCoordinates.upRight();
         if(cards.containsKey(next) && !visited.containsKey(next))
             freePlaces=getAvailablePlaces(visited,freePlaces,next);
 
@@ -229,7 +229,7 @@ public class Board implements Serializable {
             if(!freePlaces.contains(next))
                     freePlaces.add(next);
 
-        next = actualCoordinates.sum(new Coordinates(-1,-1));
+        next = actualCoordinates.downLeft();
         if(cards.containsKey(next) && !visited.containsKey(next))
             freePlaces=getAvailablePlaces(visited,freePlaces,next);
 
@@ -237,7 +237,7 @@ public class Board implements Serializable {
             if(!freePlaces.contains(next))
                     freePlaces.add(next);
 
-        next=actualCoordinates.sum(new Coordinates(1,-1));
+        next=actualCoordinates.downRight();
         if(cards.containsKey(next) && !visited.containsKey(next))
             freePlaces=getAvailablePlaces(visited,freePlaces,next);
 
