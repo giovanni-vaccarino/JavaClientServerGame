@@ -15,7 +15,6 @@ import polimi.ingsoft.server.model.cards.QuestCard;
 
 import java.io.PrintStream;
 import java.util.InputMismatchException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class MatchInitializationManager implements CLIPhaseManager {
@@ -180,26 +179,29 @@ public class MatchInitializationManager implements CLIPhaseManager {
             out.print(MESSAGES.CHOOSE_INITIAL_CARD_FACE.getValue());
             face = in.nextLine();
 
-            if (Objects.equals(face, "F") || Objects.equals(face, "B")) {
+            if (face.equalsIgnoreCase("f") || face.equalsIgnoreCase("b")) {
                 isValid = true;
             } else {
                 out.println(ERROR_MESSAGES.INVALID_FACE.getValue());
             }
         } while (!isValid);
-        cli.setIsFaceInitialCardUp(face.equals("F"));
+        cli.setIsFaceInitialCardUp(face.equalsIgnoreCase("f"));
         state = State.WAITING_FOR_INITIAL_CARD_FACE;
     }
 
     private void selectQuestCard() {
         printer.printQuestCardChoice(model.firstQuestCard, model.secondQuestCard);
 
-        int questCard;
+        int questCard = -1;
         boolean isValid = false;
 
         do {
             out.print(MESSAGES.CHOOSE_QUEST_CARD.getValue());
-            questCard = in.nextInt();
-            in.nextLine();
+            try {
+                questCard = in.nextInt();
+                in.nextLine();
+            }catch(InputMismatchException ignored){
+            }
 
             if (questCard == 1 || questCard == 2){
                 isValid = true;

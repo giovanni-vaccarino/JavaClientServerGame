@@ -77,11 +77,11 @@ public class GameManager implements CLIPhaseManager {
     }
 
     public void initializeModel(
-        PlayerHand hand,
-        QuestCard personalQuestCard,
-        InitialCard initialCard,
-        boolean isInitialCardFacingUp,
-        GameState gameState
+            PlayerHand hand,
+            QuestCard personalQuestCard,
+            InitialCard initialCard,
+            boolean isInitialCardFacingUp,
+            GameState gameState
     ) {
         out.println("Init model: " + state);
         if (state == State.WAITING_FOR_INITIALIZATION) {
@@ -138,22 +138,16 @@ public class GameManager implements CLIPhaseManager {
         if (!Objects.equals(currentPlayerNickname, model.currentPlayerNickname))
             out.println(MESSAGES.CURRENT_PLAYER.getValue() + currentPlayerNickname);
 
-        if (gamePhase == GAME_PHASE.PLAY) {
+        if (gamePhase == GAME_PHASE.PLAY || turnStep == TURN_STEP.PLACE) {
             if (isYourTurn)
                 playTurn(turnStep);
             else
-                showTurn(turnStep);
-            if (turnStep == TURN_STEP.PLACE) {
-                //do {
-                    runPlaceCard(model.personalQuestCard);
-                    printer.printFromBoard(model.playerBoards.get(model.currentPlayerNickname), model.hand,null, model.personalQuestCard);
-                    //TODO add a waiter for played card confirmation
-                //}while(state==State.WAITING_FOR_PLACE);
-            } else if (turnStep == TURN_STEP.DRAW) {
-                runDrawCard();
-            }
-        } else if (gamePhase == GAME_PHASE.END) {
+                out.println("Wait for your turn!");
+            //showTurn(turnStep);
 
+        } else if (turnStep == TURN_STEP.DRAW) {
+            runDrawCard();
+        } else if (gamePhase == GAME_PHASE.END) {
         }
 
         model.gamePhase = gamePhase;
@@ -178,49 +172,65 @@ public class GameManager implements CLIPhaseManager {
     }
 
     private void runPlaceCard(QuestCard questCard) {
-        int card,x,y,side;
-        boolean facingUp=true;
+        int card, x=0, y=0, side;
+        boolean facingUp = true;
         MixedCard chosenCard;
         // Print board
         Board board = model.playerBoards.get(model.currentPlayerNickname);
 //        do {
-            String choice,secondChoice;
-            PlayerHand hand = model.hand;
+        String choice, secondChoice;
+        PlayerHand hand = model.hand;
 
-            // Get card choice
-            do{
-                ClientBoard.printBoard(board);
+        // Get card choice
+        do {
+            ClientBoard.printBoard(board);
+            ClientHand.print(hand, questCard);
+            out.println(MESSAGES.PLAY_CARD_HELP_1.getValue());
+            choice = in.nextLine();
+            if (choice.equalsIgnoreCase("flip")) {
+                do {
+                    System.out.println(MESSAGES.GET_FLIP_CHOICE.getValue());
+                    secondChoice = in.nextLine();
+                    if (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")))
+                        out.println(MESSAGES.ERROR.getValue());
+                } while (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")));
+                hand.flip(Integer.parseInt(secondChoice) - 1);
                 ClientHand.print(hand, questCard);
-                out.println(MESSAGES.PLAY_CARD_HELP_1.getValue());
-                choice=in.nextLine();
-                if(choice.equalsIgnoreCase("flip")){
-                    do {
-                        System.out.println(MESSAGES.GET_FLIP_CHOICE.getValue());
-                        secondChoice = in.nextLine();
-                        if(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")))out.println(MESSAGES.ERROR.getValue());
-                    }while(!(secondChoice.equals("1")||secondChoice.equals("2")||secondChoice.equals("3")));
-                    hand.flip(Integer.parseInt(secondChoice)-1);
-                    ClientHand.print(hand,questCard);
-                }
-                else if(!(choice.equals("1")||choice.equals("2")||choice.equals("3")))out.print(MESSAGES.ERROR.getValue());
-            }while(choice.equalsIgnoreCase("flip")||!(choice.equals("1")||choice.equals("2")||choice.equals("3")));
-            card = Integer.parseInt((choice));
-            // Get coords choice
-            out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
-            //TODO add a catcher for wrong inputs
+            } else if (!(choice.equals("1") || choice.equals("2") || choice.equals("3")))
+                out.print(MESSAGES.ERROR.getValue());
+        } while (choice.equalsIgnoreCase("flip") || !(choice.equals("1") || choice.equals("2") || choice.equals("3")));
+        card = Integer.parseInt((choice));
+        // Get coords choice
+        out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
+        do {
             out.println(MESSAGES.PLAY_CARD_HELP_X.getValue());
-            x = Integer.parseInt((in.nextLine()));
+            choice = in.nextLine();
+            try {
+                x = Integer.parseInt(choice);
+            } catch (NumberFormatException e) {
+                out.println(MESSAGES.ERROR.getValue());
+                choice = "err";
+            }
+        } while (!choice.equals("err"));
+        do {
             out.println(MESSAGES.PLAY_CARD_HELP_Y.getValue());
-            y = Integer.parseInt((in.nextLine()));
-            //TODO until here
-            chosenCard = hand.get(card-1);
-            // Get side choice
-            do {
-                out.println(MESSAGES.PLAY_CARD_HELP_ORIENTATION.getValue());
-                if(!(choice.equals(("1"))||choice.equals("2")))out.println(MESSAGES.ERROR.getValue());
-            }while(!(choice.equals(("1"))||choice.equals("2")));
-            side = Integer.parseInt(choice);
-            if (side == 2) facingUp = false;
+            choice = in.nextLine();
+            try {
+                y = Integer.parseInt(choice);
+            } catch (NumberFormatException e) {
+                out.println(MESSAGES.ERROR.getValue());
+                choice = "err";
+            }
+        } while (!choice.equals("err"));
+        chosenCard = hand.get(card - 1);
+        // Get side choice
+        do {
+            out.println(MESSAGES.PLAY_CARD_HELP_ORIENTATION.getValue());
+            choice = in.nextLine();
+            if (!(choice.equals(("1")) || choice.equals("2"))) out.println(MESSAGES.ERROR.getValue());
+        } while (!(choice.equals(("1")) || choice.equals("2")));
+        side = Integer.parseInt(choice);
+        if (side == 2) facingUp = false;
 //            facingUp = board.add(new Coordinates(x, y), chosenCard, facingUp);
 //            if(facingUp)out.println(MESSAGES.CARD_SUCCESSFULLY_PLACED);
 //            else out.println(MESSAGES.ERROR);
@@ -228,7 +238,7 @@ public class GameManager implements CLIPhaseManager {
         //in.nextLine();
 
         try {
-            cli.getMatchServer().placeCard(cli.getNickname(),chosenCard, new Coordinates(x, y), facingUp);
+            cli.getMatchServer().placeCard(cli.getNickname(), chosenCard, new Coordinates(x, y), facingUp);
         } catch (IOException e) {
             parseError(ERROR_MESSAGES.UNABLE_TO_PLACE_CARD);
         }
@@ -239,10 +249,10 @@ public class GameManager implements CLIPhaseManager {
         // Print public board
         PlaceInPublicBoard<ResourceCard> resourceCards = model.resourceCards;
         PlaceInPublicBoard<GoldCard> goldCards = model.goldCards;
-        PlaceInPublicBoard<QuestCard> questCards=model.questCards;
+        PlaceInPublicBoard<QuestCard> questCards = model.questCards;
         PlaceInPublicBoard.Slots slot;
         TYPE_HAND_CARD type;
-        String choice,choice2;
+        String choice, choice2;
         PlayerHand hand = model.hand;
         // Get card choice
         do {
@@ -255,7 +265,7 @@ public class GameManager implements CLIPhaseManager {
                     out.println(MESSAGES.ERROR.getValue());
                 }
             } while (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold"));
-            choice2=choice;
+            choice2 = choice;
             do {
                 printer.printFromPublicBoard(resourceCards, goldCards, questCards, hand, choice2, model.personalQuestCard);
                 choice2 = in.nextLine();
@@ -264,12 +274,12 @@ public class GameManager implements CLIPhaseManager {
                     out.println(MESSAGES.ERROR.getValue());
                 }
             } while (!choice2.equalsIgnoreCase("back") && !choice2.equalsIgnoreCase("center") && !choice2.equalsIgnoreCase("right") && !choice2.equalsIgnoreCase("deck"));
-        }while(choice2.equalsIgnoreCase("back"));
-        if (choice.equalsIgnoreCase("gold"))type=TYPE_HAND_CARD.GOLD;
-        else type=TYPE_HAND_CARD.RESOURCE;
-        if(choice2.equalsIgnoreCase("center"))slot= PlaceInPublicBoard.Slots.SLOT_A;
-        else if(choice2.equalsIgnoreCase("deck"))slot= PlaceInPublicBoard.Slots.DECK;
-        else slot= PlaceInPublicBoard.Slots.SLOT_B;
+        } while (choice2.equalsIgnoreCase("back"));
+        if (choice.equalsIgnoreCase("gold")) type = TYPE_HAND_CARD.GOLD;
+        else type = TYPE_HAND_CARD.RESOURCE;
+        if (choice2.equalsIgnoreCase("center")) slot = PlaceInPublicBoard.Slots.SLOT_A;
+        else if (choice2.equalsIgnoreCase("deck")) slot = PlaceInPublicBoard.Slots.DECK;
+        else slot = PlaceInPublicBoard.Slots.SLOT_B;
 
         try {
             cli.getMatchServer().drawCard(cli.getNickname(), type, slot);
@@ -299,8 +309,8 @@ public class GameManager implements CLIPhaseManager {
     }
 
     public void updateBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
-       Board board = model.playerBoards.get(nickname);
-       board.add(coordinates, playedCard.getCard(), playedCard.isFacingUp());
+        Board board = model.playerBoards.get(nickname);
+        board.add(coordinates, playedCard.getCard(), playedCard.isFacingUp());
     }
 
     @Override

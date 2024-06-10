@@ -6,10 +6,11 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class MatchManager implements CLIPhaseManager{
+public class MatchManager implements CLIPhaseManager {
     private transient final Scanner in;
     private transient final PrintStream out;
     private transient final CLI cli;
@@ -65,13 +66,21 @@ public class MatchManager implements CLIPhaseManager{
             boolean isValid = false;
             do {
                 out.print(MESSAGES.CHOOSE_MATCH.getValue());
-                //TODO invalid input throws exception
-                matchId = in.nextInt();
-                in.nextLine();
-                if (matchIds.contains(matchId) || matchId == 0) {
-                    isValid = true;
+                choice = in.nextLine();
+                if (choice.equalsIgnoreCase("update")) {
+                    //TODO insert matches list updater
+                    showMatchesList();
                 } else {
-                    out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
+                    try {
+                        matchId = Integer.parseInt(choice);
+                    } catch (NumberFormatException exception) {
+                        matchId = -1;
+                    }
+                    if (matchIds.contains(matchId) || matchId == 0) {
+                        isValid = true;
+                    } else {
+                        out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
+                    }
                 }
             } while (!isValid);
 
