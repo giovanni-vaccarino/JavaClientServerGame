@@ -6,7 +6,6 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
