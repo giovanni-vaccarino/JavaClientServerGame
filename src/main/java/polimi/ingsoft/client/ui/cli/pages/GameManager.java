@@ -214,7 +214,7 @@ public class GameManager implements CLIPhaseManager {
                 out.println(MESSAGES.ERROR.getValue());
                 choice = "err";
             }
-        } while (!choice.equals("err"));
+        } while (choice.equals("err"));
         do {
             out.println(MESSAGES.PLAY_CARD_HELP_Y.getValue());
             choice = in.nextLine();
@@ -224,7 +224,7 @@ public class GameManager implements CLIPhaseManager {
                 out.println(MESSAGES.ERROR.getValue());
                 choice = "err";
             }
-        } while (!choice.equals("err"));
+        } while (choice.equals("err"));
         chosenCard = hand.get(card - 1);
         // Get side choice
         do {

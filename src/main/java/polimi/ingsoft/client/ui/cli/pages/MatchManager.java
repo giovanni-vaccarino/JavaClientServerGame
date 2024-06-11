@@ -101,15 +101,19 @@ public class MatchManager implements CLIPhaseManager {
     }
 
     private void runCreateMatch() {
+        String choice;
         if (state == State.SET_MATCH_ID) {
             int requestedNumPlayers;
             boolean isValid = false;
 
             do {
                 out.print(MESSAGES.CHOOSE_NUMBER_OF_PLAYERS.getValue());
-                requestedNumPlayers = in.nextInt();
-                in.nextLine();
-
+                choice=in.nextLine();
+                try {
+                    requestedNumPlayers = Integer.parseInt(choice);
+                }catch(NumberFormatException e){
+                    requestedNumPlayers=-1;
+                }
                 if (isValidNumberOfPlayers(requestedNumPlayers)) {
                     isValid = true;
                 } else {

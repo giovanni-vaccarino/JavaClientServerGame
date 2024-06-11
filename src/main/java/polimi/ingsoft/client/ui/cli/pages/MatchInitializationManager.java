@@ -84,11 +84,11 @@ public class MatchInitializationManager implements CLIPhaseManager {
         } else if (gamePhase == GAME_PHASE.PLAY && state == State.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD) {
             state = State.NONE;
             cli.returnMatchInitializationManager(
-                model.hand,
-                model.selectedQuestCard,
-                model.initialCard,
-                model.isInitialCardFaceUp,
-                gameState
+                    model.hand,
+                    model.selectedQuestCard,
+                    model.initialCard,
+                    model.isInitialCardFaceUp,
+                    gameState
             );
         }
     }
@@ -138,30 +138,30 @@ public class MatchInitializationManager implements CLIPhaseManager {
     }
 
     private boolean isValidColor(int colorId) {
-        return colorId < PlayerColor.values().length  && colorId >= 0;
+        return colorId < PlayerColor.values().length && colorId >= 0;
     }
 
-    private  void selectColor() {
+    private void selectColor() {
         int i = 1;
         for (PlayerColor color : PlayerColor.values())
-            out.println((i++) + ". "  + color.toString());
+            out.println((i++) + ". " + color.toString());
 
         int colorId = 0;
         boolean isValid = false;
-
+        String choice;
         do {
             out.print(MESSAGES.CHOOSE_COLOR.getValue());
+            choice = in.nextLine();
             try {
-                colorId = in.nextInt();
-                in.nextLine();
-
+                colorId = Integer.parseInt(choice);
                 if (isValidColor(colorId - 1)) {
                     isValid = true;
                 } else {
                     out.println(ERROR_MESSAGES.COLOR_ID_OUT_OF_BOUND.getValue());
                 }
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 out.println(ERROR_MESSAGES.BAD_INPUT.getValue());
+                colorId = 0;
             }
         } while (!isValid);
 
@@ -192,18 +192,20 @@ public class MatchInitializationManager implements CLIPhaseManager {
     private void selectQuestCard() {
         printer.printQuestCardChoice(model.firstQuestCard, model.secondQuestCard);
 
-        int questCard = -1;
+        int questCard;
         boolean isValid = false;
+        String choice;
 
         do {
             out.print(MESSAGES.CHOOSE_QUEST_CARD.getValue());
+            choice=in.nextLine();
             try {
-                questCard = in.nextInt();
-                in.nextLine();
-            }catch(InputMismatchException ignored){
+                questCard = Integer.parseInt(choice);
+            } catch (NumberFormatException e) {
+                questCard = -1;
             }
 
-            if (questCard == 1 || questCard == 2){
+            if (questCard == 1 || questCard == 2) {
                 isValid = true;
             } else {
                 out.println(ERROR_MESSAGES.INVALID_QUEST_CARD.getValue());
