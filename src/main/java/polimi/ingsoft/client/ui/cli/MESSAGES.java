@@ -56,7 +56,8 @@ public enum MESSAGES {
             -> 2: Pick the one on the right\s
             """),
     PLAY_CARD_HELP_1("""
-            WHICH CARD WOULD YOU LIKE TO PLAY ? YOU CAN FLIP ANY CARD BY WRITING "FLIP"
+            WHICH CARD WOULD YOU LIKE TO PLAY ? YOU CAN FLIP ANY CARD BY TYPING "FLIP",
+            OR CHAT WITH ANOTHER PLAYER BY TYPING "CHAT"
             1->LEFT
             2->CENTER
             3->RIGHT
@@ -103,9 +104,23 @@ public enum MESSAGES {
             1->LEFT
             2->CENTER
             3->RIGHT
-            """);
+            """),
+    LAST_ROUND("""
+            LAST ROUND !
+            """),
 
+    GAME_END("""
+            THE MATCH IS FINISHED !
+            """),
+    HELP_GET_MESSAGE_TYPE("""
+            WOULD YOU LIKE YOUR MESSAGE TO BE BROADCASTED OR SENT TO A SPECIFIED PLAYER ?
+            1-> BROADCAST MESSAGE
+            2-> PRIVATE MESSAGE
+            """),
 
+    HELP_GET_PLAYER_NAME("TYPE THE RECEIVING PLAYER'S NAME:"),
+
+    HELP_GET_MESSAGE("WHAT WOULD YOU LIKE TO SAY ?");
     private final String value;
 
     MESSAGES(String value) {

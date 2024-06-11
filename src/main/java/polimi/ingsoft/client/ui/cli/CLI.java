@@ -186,7 +186,7 @@ public class CLI extends UI {
     }
 
     @Override
-    public void updateBroadcastChat(Message message) {
+    public void updateBroadcastChat(Message message){
         if (phase == CLIPhase.GAME) {
 
         }

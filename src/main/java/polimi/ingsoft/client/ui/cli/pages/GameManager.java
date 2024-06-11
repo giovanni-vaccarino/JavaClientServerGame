@@ -7,6 +7,7 @@ import polimi.ingsoft.server.model.boards.Board;
 import polimi.ingsoft.server.model.boards.Coordinates;
 import polimi.ingsoft.server.model.boards.PlayedCard;
 import polimi.ingsoft.server.model.cards.*;
+import polimi.ingsoft.server.model.chat.Message;
 import polimi.ingsoft.server.model.decks.PlayerHand;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
@@ -138,18 +139,19 @@ public class GameManager implements CLIPhaseManager {
         if (!Objects.equals(currentPlayerNickname, model.currentPlayerNickname))
             out.println(MESSAGES.CURRENT_PLAYER.getValue() + currentPlayerNickname);
 
-        if (gamePhase == GAME_PHASE.PLAY || turnStep == TURN_STEP.PLACE) {
-            if (isYourTurn)
+        if (gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND || turnStep == TURN_STEP.PLACE) {
+            if (isYourTurn) {
+                if (gamePhase == GAME_PHASE.LAST_ROUND) out.println(MESSAGES.LAST_ROUND);
                 playTurn(turnStep);
-            else
+            } else
                 out.println("Wait for your turn!");
-            //showTurn(turnStep);
-
         } else if (turnStep == TURN_STEP.DRAW) {
             runDrawCard();
         } else if (gamePhase == GAME_PHASE.END) {
+            out.println(MESSAGES.GAME_END);
+            out.println("IL VINCITORE E' ANCORA DA CODIFICARE, GRAZIE PER AVER GIOCATO !");
+            //TODO FINISH THIS PART
         }
-
         model.gamePhase = gamePhase;
         model.turnStep = turnStep;
         model.currentPlayerNickname = currentPlayerNickname;
@@ -172,7 +174,7 @@ public class GameManager implements CLIPhaseManager {
     }
 
     private void runPlaceCard(QuestCard questCard) {
-        int card, x=0, y=0, side;
+        int card, x = 0, y = 0, side;
         boolean facingUp = true;
         MixedCard chosenCard;
         // Print board
@@ -187,7 +189,8 @@ public class GameManager implements CLIPhaseManager {
             ClientHand.print(hand, questCard);
             out.println(MESSAGES.PLAY_CARD_HELP_1.getValue());
             choice = in.nextLine();
-            if (choice.equalsIgnoreCase("flip")) {
+            if (choice.equalsIgnoreCase("chat")) runChatIter();
+            else if (choice.equalsIgnoreCase("flip")) {
                 do {
                     System.out.println(MESSAGES.GET_FLIP_CHOICE.getValue());
                     secondChoice = in.nextLine();
@@ -196,9 +199,9 @@ public class GameManager implements CLIPhaseManager {
                 } while (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")));
                 hand.flip(Integer.parseInt(secondChoice) - 1);
                 ClientHand.print(hand, questCard);
-            } else if (!(choice.equals("1") || choice.equals("2") || choice.equals("3")))
+            } else if (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equalsIgnoreCase("chat")))
                 out.print(MESSAGES.ERROR.getValue());
-        } while (choice.equalsIgnoreCase("flip") || !(choice.equals("1") || choice.equals("2") || choice.equals("3")));
+        } while (choice.equalsIgnoreCase("flip") || choice.equalsIgnoreCase("chat") || !(choice.equals("1") || choice.equals("2") || choice.equals("3")));
         card = Integer.parseInt((choice));
         // Get coords choice
         out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
@@ -260,7 +263,11 @@ public class GameManager implements CLIPhaseManager {
             do {
                 printer.printFromPublicBoard(resourceCards, goldCards, questCards, hand, choice, model.personalQuestCard);
                 choice = in.nextLine();
-                if (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold")) {
+                if (choice.equalsIgnoreCase("chat")) {
+                    runChatIter();
+                    choice = "getcard";
+                }
+                if (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold") && !choice.equalsIgnoreCase("chat")) {
                     choice = "getcard";
                     out.println(MESSAGES.ERROR.getValue());
                 }
@@ -287,6 +294,36 @@ public class GameManager implements CLIPhaseManager {
             parseError(ERROR_MESSAGES.UNABLE_TO_DRAW_CARD);
         }
         state = State.WAITING_FOR_DRAW;
+    }
+
+    private void runChatIter() {
+        String choice, receiver = null;
+        int type = -1;
+        do {
+            out.println(MESSAGES.HELP_GET_MESSAGE_TYPE.getValue());
+            choice = in.nextLine();
+            try {
+                type = Integer.parseInt(choice);
+            } catch (NumberFormatException exception) {
+                choice = "err";
+            }
+        } while (!choice.equalsIgnoreCase("err"));
+        if (type == 2) {
+            do {
+                out.println(MESSAGES.HELP_GET_PLAYER_NAME.getValue());
+                receiver = in.nextLine();
+                if (!model.nicknames.contains(receiver)) out.println(MESSAGES.ERROR.getValue());
+            } while (!model.nicknames.contains(receiver));
+        }
+        out.println(MESSAGES.HELP_GET_MESSAGE.getValue());
+        choice = in.nextLine();
+        Message message = new Message(cli.getNickname(), choice);
+        try {
+            if (receiver == null) cli.updateBroadcastChat(message);
+            else cli.updatePrivateChat(receiver, message);
+        }catch(Exception/*IOException*/ e){
+            out.println(MESSAGES.ERROR.getValue());
+        }
     }
 
     private void showPlaceCard() {
