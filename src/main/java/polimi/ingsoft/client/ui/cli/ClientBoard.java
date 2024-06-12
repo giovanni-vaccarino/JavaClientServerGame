@@ -896,8 +896,6 @@ public class ClientBoard {
         if (canUpdatePrintingCoordinates) {
             Coordinates centerCoordinates = argument.getOffset();
             board.updatePrintingCoordinates(centerCoordinates.getX(), centerCoordinates.getY());
-        } else {
-            System.out.print(error);
         }
 
         printBoard(board);

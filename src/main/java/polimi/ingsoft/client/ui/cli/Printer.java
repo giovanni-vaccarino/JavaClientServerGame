@@ -27,7 +27,6 @@ public class Printer {
      * @param argument a player's input
      */
     public void printFromMain(String argument) {
-        //System.out.print(MESSAGES.CLS.getValue()); prova per verificare che il cls funzioni
         if (argument.toLowerCase().equals(Arguments.Argument.HELP.getValue())) {
             out.println(MESSAGES.HELP_MAIN.getValue());
         } else out.println(MESSAGES.ERROR.getValue());
@@ -44,7 +43,7 @@ public class Printer {
     public void printFromBoard(Board board, PlayerHand hand, BoardArgument boardArgument, QuestCard playerQuest) {
         out.print(MESSAGES.CLS.getValue());
         ClientBoard.printBoard(board, boardArgument);
-        out.print("RESOURCES: " + board.getResources().toString());
+        out.println("RESOURCES: " + board.getResources().toString());
         ClientHand.print(hand, playerQuest);
     }
 
@@ -63,8 +62,6 @@ public class Printer {
         out.print(MESSAGES.CLS.getValue());
         ClientPublicBoard.printPublicBoard(resourceCards, goldCards, questCards);
         ClientHand.print(hand, playerQuest);
-        /*if(argument.toLowerCase().equals(Arguments.Argument.HELP.getValue()))out.println(MESSAGES.HELPCLIENTBOARD.getValue());
-        else */
         if (argument != null && argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))
             out.println(MESSAGES.HELP_GET_CARD_TYPE.getValue());
         else if (argument != null && (argument.toLowerCase().equals(PublicBoardArguments.GOLD.getValue()) ||

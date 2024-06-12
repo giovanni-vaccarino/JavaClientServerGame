@@ -174,77 +174,77 @@ public class GameManager implements CLIPhaseManager {
     }
 
     private void runPlaceCard(QuestCard questCard) {
+        BoardArgument argument=null;
         int card, x = 0, y = 0, side;
-        boolean facingUp = true;
+        boolean facingUp = true,alreadyprinted=false;
         MixedCard chosenCard;
-        // Print board
-        Board board = model.playerBoards.get(model.currentPlayerNickname);
-//        do {
-        String choice, secondChoice;
-        PlayerHand hand = model.hand;
-
-        // Get card choice
-        do {
-            ClientBoard.printBoard(board);
-            ClientHand.print(hand, questCard);
-            out.println(MESSAGES.PLAY_CARD_HELP_1.getValue());
-            choice = in.nextLine();
-            if (choice.equalsIgnoreCase("chat")) runChatIter();
-            else if (choice.equalsIgnoreCase("flip")) {
-                do {
-                    System.out.println(MESSAGES.GET_FLIP_CHOICE.getValue());
-                    secondChoice = in.nextLine();
-                    if (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")))
-                        out.println(MESSAGES.ERROR.getValue());
-                } while (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")));
-                hand.flip(Integer.parseInt(secondChoice) - 1);
-                ClientHand.print(hand, questCard);
-            } else if (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equalsIgnoreCase("chat")))
-                out.print(MESSAGES.ERROR.getValue());
-        } while (choice.equalsIgnoreCase("flip") || choice.equalsIgnoreCase("chat") || !(choice.equals("1") || choice.equals("2") || choice.equals("3")));
-        card = Integer.parseInt((choice));
-        // Get coords choice
-        out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
-        do {
-            out.println(MESSAGES.PLAY_CARD_HELP_X.getValue());
-            choice = in.nextLine();
+            // Print board
+            Board board = model.playerBoards.get(model.currentPlayerNickname);
+            String choice, secondChoice;
+            PlayerHand hand = model.hand;
+            // Get card choice
+            do {
+                if(!alreadyprinted)printer.printFromBoard(board,hand,null,questCard);
+                alreadyprinted=false;
+//                ClientBoard.printBoard(board);
+//               ClientHand.print(hand, questCard);
+                out.println(MESSAGES.PLAY_CARD_HELP_1.getValue());
+                choice = in.nextLine();
+                if (choice.equalsIgnoreCase("chat")) runChatIter();
+                else if (choice.equalsIgnoreCase("board")) runBoardIter();
+                else if (choice.equalsIgnoreCase("move")) {
+                    runMoveIter(board);
+                    alreadyprinted=true;
+                }
+                else if (choice.equalsIgnoreCase("flip")) {
+                    do {
+                        System.out.println(MESSAGES.GET_FLIP_CHOICE.getValue());
+                        secondChoice = in.nextLine();
+                        if (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")))
+                            out.println(MESSAGES.ERROR.getValue());
+                    } while (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")));
+                    hand.flip(Integer.parseInt(secondChoice) - 1);
+                    ClientHand.print(hand, questCard);
+                } else if (!(choice.equals("1") || choice.equals("2") || choice.equals("3")))
+                    out.print(MESSAGES.ERROR.getValue());
+            } while (!(choice.equals("1") || choice.equals("2") || choice.equals("3")));
+            card = Integer.parseInt((choice));
+            // Get coords choice
+            out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
+            do {
+                out.println(MESSAGES.PLAY_CARD_HELP_X.getValue());
+                choice = in.nextLine();
+                try {
+                    x = Integer.parseInt(choice);
+                } catch (NumberFormatException e) {
+                    out.println(MESSAGES.ERROR.getValue());
+                    choice = "err";
+                }
+            } while (choice.equals("err"));
+            do {
+                out.println(MESSAGES.PLAY_CARD_HELP_Y.getValue());
+                choice = in.nextLine();
+                try {
+                    y = Integer.parseInt(choice);
+                } catch (NumberFormatException e) {
+                    out.println(MESSAGES.ERROR.getValue());
+                    choice = "err";
+                }
+            } while (choice.equals("err"));
+            chosenCard = hand.get(card - 1);
+            // Get side choice
+            do {
+                out.println(MESSAGES.PLAY_CARD_HELP_ORIENTATION.getValue());
+                choice = in.nextLine();
+                if (!(choice.equals(("1")) || choice.equals("2"))) out.println(MESSAGES.ERROR.getValue());
+            } while (!(choice.equals(("1")) || choice.equals("2")));
+            side = Integer.parseInt(choice);
+            if (side == 2) facingUp = false;
             try {
-                x = Integer.parseInt(choice);
-            } catch (NumberFormatException e) {
-                out.println(MESSAGES.ERROR.getValue());
-                choice = "err";
+                cli.getMatchServer().placeCard(cli.getNickname(), chosenCard, new Coordinates(x, y), facingUp);
+            } catch (IOException e) {
+                parseError(ERROR_MESSAGES.UNABLE_TO_PLACE_CARD);
             }
-        } while (choice.equals("err"));
-        do {
-            out.println(MESSAGES.PLAY_CARD_HELP_Y.getValue());
-            choice = in.nextLine();
-            try {
-                y = Integer.parseInt(choice);
-            } catch (NumberFormatException e) {
-                out.println(MESSAGES.ERROR.getValue());
-                choice = "err";
-            }
-        } while (choice.equals("err"));
-        chosenCard = hand.get(card - 1);
-        // Get side choice
-        do {
-            out.println(MESSAGES.PLAY_CARD_HELP_ORIENTATION.getValue());
-            choice = in.nextLine();
-            if (!(choice.equals(("1")) || choice.equals("2"))) out.println(MESSAGES.ERROR.getValue());
-        } while (!(choice.equals(("1")) || choice.equals("2")));
-        side = Integer.parseInt(choice);
-        if (side == 2) facingUp = false;
-//            facingUp = board.add(new Coordinates(x, y), chosenCard, facingUp);
-//            if(facingUp)out.println(MESSAGES.CARD_SUCCESSFULLY_PLACED);
-//            else out.println(MESSAGES.ERROR);
-//        }while(!facingUp);
-        //in.nextLine();
-
-        try {
-            cli.getMatchServer().placeCard(cli.getNickname(), chosenCard, new Coordinates(x, y), facingUp);
-        } catch (IOException e) {
-            parseError(ERROR_MESSAGES.UNABLE_TO_PLACE_CARD);
-        }
         state = State.WAITING_FOR_PLACE;
     }
 
@@ -267,7 +267,11 @@ public class GameManager implements CLIPhaseManager {
                     runChatIter();
                     choice = "getcard";
                 }
-                if (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold") && !choice.equalsIgnoreCase("chat")) {
+                if (choice.equalsIgnoreCase("board")) {
+                    runBoardIter();
+                    choice = "getcard";
+                }
+                if (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold") && !choice.equalsIgnoreCase("chat") && !choice.equalsIgnoreCase("board")) {
                     choice = "getcard";
                     out.println(MESSAGES.ERROR.getValue());
                 }
@@ -307,13 +311,20 @@ public class GameManager implements CLIPhaseManager {
             } catch (NumberFormatException exception) {
                 choice = "err";
             }
-        } while (!choice.equalsIgnoreCase("err"));
+        } while (choice.equalsIgnoreCase("err"));
         if (type == 2) {
             do {
                 out.println(MESSAGES.HELP_GET_PLAYER_NAME.getValue());
+                out.println("PLAYERS:");
+                for(String player :model.nicknames){
+                    if(!player.equalsIgnoreCase(cli.getNickname()))out.print(player+"\t");
+                }
+                out.print("\n");
                 receiver = in.nextLine();
-                if (!model.nicknames.contains(receiver)) out.println(MESSAGES.ERROR.getValue());
-            } while (!model.nicknames.contains(receiver));
+                if (!model.nicknames.contains(receiver)) out.println(MESSAGES.CHAT_RECEIVER_ERROR.getValue());
+                if (receiver.equalsIgnoreCase(cli.getNickname()))
+                    out.println(MESSAGES.CHAT_RECEIVER_IS_SENDER_ERROR.getValue());
+            } while (!model.nicknames.contains(receiver) || receiver.equalsIgnoreCase(cli.getNickname()));
         }
         out.println(MESSAGES.HELP_GET_MESSAGE.getValue());
         choice = in.nextLine();
@@ -321,9 +332,73 @@ public class GameManager implements CLIPhaseManager {
         try {
             if (receiver == null) cli.updateBroadcastChat(message);
             else cli.updatePrivateChat(receiver, message);
-        }catch(Exception/*IOException*/ e){
+        } catch (Exception/*IOException*/ e) {
             out.println(MESSAGES.ERROR.getValue());
         }
+    }
+
+    public void runBoardIter() {
+        BoardArgument argument=null;
+        String observed,input;
+        out.println(MESSAGES.HELP_OTHER_PLAYERS_BOARD.getValue());
+        do {
+            out.println(MESSAGES.HELP_GET_PLAYER_NAME.getValue());
+            out.println("PLAYERS:");
+            for(String player :model.nicknames){
+                if(!player.equalsIgnoreCase(cli.getNickname()))out.print(player+"\t");
+            }
+            out.print("\n");
+            observed = in.nextLine();
+            if (!model.nicknames.contains(observed)) out.println(MESSAGES.BOARD_OBSERVED_ERROR.getValue());
+            if (observed.equalsIgnoreCase(cli.getNickname()))
+                out.println(MESSAGES.BOARD_OBSERVED_IS_OBSERVED_ERROR.getValue());
+        } while (!model.nicknames.contains(observed) || observed.equalsIgnoreCase(cli.getNickname()));
+        Board temp=model.playerBoards.get(observed);
+        do{
+            ClientBoard.printBoard(temp,argument);
+            do {
+                out.println(MESSAGES.HELP_BOARD_NAVIGATE.getValue());
+                input = in.nextLine();
+                if (checkInputForBoardNavigation(input)) out.println(MESSAGES.ERROR.getValue());
+            }while(checkInputForBoardNavigation(input));
+            if(!input.equalsIgnoreCase("back")){
+                argument = getBoardArgument(input);
+            }
+        }while(!input.equalsIgnoreCase("back"));
+    }
+    public boolean checkInputForBoardNavigation(String input){
+        return (!input.equalsIgnoreCase(BoardArgument.UP.getValue()) && !input.equalsIgnoreCase(BoardArgument.DOWN.getValue()) &&
+                !input.equalsIgnoreCase(BoardArgument.LEFT.getValue()) && !input.equalsIgnoreCase(BoardArgument.RIGHT.getValue()) &&
+                        !input.equalsIgnoreCase(BoardArgument.UPRIGHT.getValue()) && !input.equalsIgnoreCase(BoardArgument.UPLEFT.getValue()) &&
+                        !input.equalsIgnoreCase(BoardArgument.DOWNLEFT.getValue()) && !input.equalsIgnoreCase(BoardArgument.DOWNRIGHT.getValue()) &&
+                        !input.equalsIgnoreCase("back"));
+    }
+    public void runMoveIter(Board board){
+        BoardArgument argument=null;
+        String input;
+        do {
+            out.println(MESSAGES.HELP_BOARD_NAVIGATE.getValue());
+            input = in.nextLine();
+            if (checkInputForBoardNavigation(input)) out.println(MESSAGES.ERROR.getValue());
+        }while(checkInputForBoardNavigation(input));
+        if(!input.equalsIgnoreCase("back")){
+            argument = getBoardArgument(input);
+        }
+        printer.printFromBoard(board,model.hand,argument,model.personalQuestCard);
+
+    }
+
+    private BoardArgument getBoardArgument(String input) {
+        BoardArgument argument;
+        if(input.equalsIgnoreCase(BoardArgument.UP.getValue()))argument=BoardArgument.UP;
+        else if(input.equalsIgnoreCase(BoardArgument.DOWN.getValue()))argument=BoardArgument.DOWN;
+        else if(input.equalsIgnoreCase(BoardArgument.LEFT.getValue()))argument=BoardArgument.LEFT;
+        else if(input.equalsIgnoreCase(BoardArgument.RIGHT.getValue()))argument=BoardArgument.RIGHT;
+        else if(input.equalsIgnoreCase(BoardArgument.UPLEFT.getValue()))argument=BoardArgument.UPLEFT;
+        else if(input.equalsIgnoreCase(BoardArgument.UPRIGHT.getValue()))argument=BoardArgument.UPRIGHT;
+        else if(input.equalsIgnoreCase(BoardArgument.DOWNLEFT.getValue()))argument=BoardArgument.DOWNRIGHT;
+        else argument=BoardArgument.DOWNLEFT;
+        return argument;
     }
 
     private void showPlaceCard() {
