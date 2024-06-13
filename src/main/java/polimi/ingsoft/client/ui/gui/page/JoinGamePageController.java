@@ -95,7 +95,6 @@ public class JoinGamePageController implements Initializable {
 
     public void showError(ERROR_MESSAGES errorMessages){
         gameList.setStyle("-fx-background-color: #d34813;");
-        //gameList.setText("Select a game");// ADD ERROR WINDOWS
 
         switch (errorMessages){
             case MATCH_IS_ALREADY_FULL -> {
@@ -115,14 +114,12 @@ public class JoinGamePageController implements Initializable {
             System.out.println("FXML file not found");
             return;
         }
-        //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
 
-        // Load CSS file - DO I NEED THIS?
+        // Load CSS file
         URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
-            //System.out.println("CSS file found");
         } else {
             System.out.println("CSS file not found");
         }

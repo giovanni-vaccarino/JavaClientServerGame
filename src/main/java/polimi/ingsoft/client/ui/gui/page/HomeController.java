@@ -54,11 +54,8 @@ public class HomeController extends Application {
             @Override
             public void run() {
                 if (secondsPassed < waitingTime) {
-                    // print a wait message (?)
                     secondsPassed++;
-                    //System.out.println(secondsPassed);
                 } else {
-                    //System.out.println("FINE FINE FINE");
                     timer.cancel(); // Terminate the timer
                     Platform.runLater(() -> {
                         try {
@@ -76,7 +73,6 @@ public class HomeController extends Application {
 
     public void nextPage(Stage stage) throws IOException {
 
-        //RIGHT ONE:
         nicknamePageController = new NicknamePageController();
 
         try {
@@ -84,13 +80,5 @@ public class HomeController extends Application {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        //TEST ONE:
-        /*GamePageController gamePageController = new GamePageController(stage);
-        try {
-            gamePageController.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
     }
 }
