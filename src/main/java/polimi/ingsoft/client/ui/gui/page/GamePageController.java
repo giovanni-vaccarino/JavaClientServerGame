@@ -339,7 +339,7 @@ public class GamePageController implements Initializable{
             board = getGui().getUiModel().getPlayerBoards().get(player);
             score.put(board.getColor(), board.getScore());
 
-            System.out.println("NEW SCORE: "+board.getColor().toString()+"//"+ board.getScore());
+            //System.out.println("NEW SCORE: "+board.getColor().toString()+"//"+ board.getScore());
         }
 
         placeScore();
@@ -358,7 +358,7 @@ public class GamePageController implements Initializable{
             int finalCol = col;
             button.setOnAction(event -> {
                 // Handle button click, you can implement actions here
-                System.out.println("Button clicked for player: " + playerList.get(finalCol));
+                //System.out.println("Button clicked for player: " + playerList.get(finalCol));
                 setBoardNickname(playerList.get(finalCol));
                 resetCenterBoard();
                 loadBoardCards();
@@ -446,8 +446,8 @@ public class GamePageController implements Initializable{
             if(y!=2) {
                 node.setOnMouseClicked(event -> {
                     drawVisiblePublicBoard(x,y);
-                    System.out.println(x);
-                    System.out.println(y);
+//                    System.out.println(x);
+//                    System.out.println(y);
                 });
             }
         }
@@ -460,8 +460,8 @@ public class GamePageController implements Initializable{
             if(y!=2){
                 node.setOnMouseClicked(event -> {
                     drawCoveredPublicBoard(x,y);
-                    System.out.println(x);
-                    System.out.println(y);
+//                    System.out.println(x);
+//                    System.out.println(y);
                 });
             }
         }
@@ -485,7 +485,7 @@ public class GamePageController implements Initializable{
     }
 
     public void updateBoard(){
-        System.out.println("REFRESHING BOARD");
+//        System.out.println("REFRESHING BOARD");
         if(mixedCard!=null){
             // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
             buttonPersonalDeck30.setVisible(false);
@@ -499,7 +499,7 @@ public class GamePageController implements Initializable{
         mixedCard = getGui().getUiModel().getPlayerHand().get(x-1);
         xPlayedCard=x;
         yPlayedCard=y;
-        System.out.println(xPlayedCard+":"+yPlayedCard);
+//        System.out.println(xPlayedCard+":"+yPlayedCard);
     }
 
     public void drawVisiblePublicBoard(int x, int y){
@@ -545,6 +545,7 @@ public class GamePageController implements Initializable{
             try {
                 System.out.println("Mixed card inviata: "+coordinates.getX()+":"+coordinates.getY());
                 getGui().getMatchServer().placeCard(nickname,mixedCard,coordinates, PlaceCardUtils.getIsFrontPlayerHandCard(xPlayedCard,yPlayedCard));
+                mixedCard = null;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
