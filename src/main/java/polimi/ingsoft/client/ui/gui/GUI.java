@@ -72,7 +72,7 @@ public class GUI extends UI{
                 GUIsingleton.getInstance().getColorPageController().showError(errorMessage);
             }
 
-            case WRONG_PLAYER_TURN, NOT_ENOUGH_RESOURCES, COORDINATE_NOT_VALID -> {
+            case WRONG_GAME_PHASE, WRONG_PLAYER_TURN, NOT_ENOUGH_RESOURCES, COORDINATE_NOT_VALID -> {
                 javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().showError(errorMessage));
             }
         }
@@ -186,6 +186,7 @@ public class GUI extends UI{
                     }
                 }
             }
+
             case PLAY -> {
                 if(nextGamePageEnable){
                     nextGamePageEnable = false;
@@ -195,6 +196,10 @@ public class GUI extends UI{
                 }else {
                     javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
                 }
+            }
+
+            case LAST_ROUND -> {
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
             }
         }
     }

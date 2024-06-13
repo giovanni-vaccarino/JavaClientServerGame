@@ -9,6 +9,7 @@ import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.model.boards.Board;
 import polimi.ingsoft.server.model.boards.Coordinates;
@@ -22,6 +23,7 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.SequenceInputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -125,6 +127,10 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException{
+        System.out.println("Ho ricevuto un game phase: " + gameState.getGamePhase());
+        if(gameState.getGamePhase().equals(GAME_PHASE.END)){
+            System.out.println("Il vincitore è: " + gameState.getWinner().getNickname());
+        }
         ui.showUpdateGameState(gameState);
     }
 

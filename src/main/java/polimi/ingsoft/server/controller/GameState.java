@@ -26,6 +26,7 @@ public class GameState implements Serializable, Cloneable {
     private final Integer requestedNumPlayers;
 
     private int currentPlayerIndex;
+
     private String currentPlayerNickname;
 
     private int firstPlayerIndex;
@@ -33,6 +34,8 @@ public class GameState implements Serializable, Cloneable {
     private int turnNumber = 1;
 
     private int endRound;
+
+    private Player winner;
 
     /**
      * List of players that have already made their initial choice.
@@ -149,7 +152,7 @@ public class GameState implements Serializable, Cloneable {
                 if(this.turnNumber == this.endRound){
                     this.gamePhase = GAME_PHASE.END;
                     this.calculateFinalScore();
-                    Player winner = this.getWinner();
+                    this.calculateWinner();
                 }
             }
 
@@ -266,7 +269,7 @@ public class GameState implements Serializable, Cloneable {
     private boolean isLastRound() {
         return (this.matchController.getPlayers().stream()
                 .mapToInt(player -> player.getBoard().getScore())
-                .anyMatch(score -> score >= 20))
+                .anyMatch(score -> score >= 2))
                 ||
                 matchController.getPublicBoard().isDecksEmpty();
     }
@@ -333,8 +336,19 @@ public class GameState implements Serializable, Cloneable {
             Integer pointsSecondCommon = secondCommonQuest.getMatches(player.getBoard());
             Integer pointsPersonal = personalQuest.getMatches(player.getBoard());
 
+            System.out.println(player.getNickname() + " ha fatto: " + pointsFirstCommon + " e " + pointsSecondCommon + " e " + pointsPersonal);
             player.getBoard().updatePoints(pointsFirstCommon + pointsSecondCommon + pointsPersonal);
         }
+    }
+
+
+    public void setWinner(Player winner){
+        this.winner = winner;
+    }
+
+
+    public Player getWinner(){
+        return this.winner;
     }
 
 
@@ -343,12 +357,12 @@ public class GameState implements Serializable, Cloneable {
      *
      * @return the player with the highest score, or null if no players are present
      */
-    private Player getWinner() {
+    private void calculateWinner() {
         Optional<Player> winner = this.matchController.getPlayers().stream()
                 .max(Comparator.comparingInt(player -> player.getBoard().getScore()));
 
         //TODO if there are 2 winners?
-        return winner.orElse(null);
+        setWinner(winner.orElse(null));
     }
 
     @Override

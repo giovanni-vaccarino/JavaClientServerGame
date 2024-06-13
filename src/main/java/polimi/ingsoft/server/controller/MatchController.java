@@ -270,6 +270,7 @@ public class MatchController implements Serializable {
         if(facingUp||card.getPlayability(board) > 0){
             boolean isAdded = board.add(coordinates, card, facingUp);
             if(isAdded){
+                System.out.println(player.getNickname());
                 System.out.println("BOARD:"+board.getResources().toString());
                 System.out.println("VOLTE IN CUI MATCHA" + card.getPoints(board,coordinates) );
                 System.out.println("SCORE DELLA CARTA: " + card.getScore(facingUp) + "CON FACINGUP" + facingUp);
@@ -347,7 +348,7 @@ public class MatchController implements Serializable {
 
 
     /**
-     * Adds a message in the chat.
+     * Adds a message in the broadcast chat.
      *
      * @param playerSender the nickname of the player sending the message
      * @param message      the message to send
@@ -358,7 +359,7 @@ public class MatchController implements Serializable {
     }
 
     /**
-     * Adds a message in the chat.
+     * Adds a message in a private chat.
      *
      * @param sender the nickname of the player sending the message
      * @param recipient the nickname of the player receiving the message
