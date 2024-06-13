@@ -13,7 +13,6 @@ import polimi.ingsoft.server.model.items.Item;
 import polimi.ingsoft.server.model.patterns.ItemPattern;
 
 import java.util.HashMap;
-import java.util.Map;
 //EACH CARD IS 34 CHARACTERS WIDE AND 9 TALL
 
 /**
@@ -47,7 +46,7 @@ public class ClientBoard {
         Coordinates actualCoordinates=board.getPrintingCoordinates();
         PlayedCard card;
         int count = 0, row = 0;
-        String color = "";
+        String color;
         System.out.print(RESET);
         if (getCardAtRespective(board,-2, 2,actualCoordinates) != null ||
                 getCardAtRespective(board,-3, 3,actualCoordinates) != null ||
@@ -666,7 +665,7 @@ public class ClientBoard {
      * @return a string containing all information to print the @count row of given CornerSpace
      */
     private static String printCorner(String pre, CornerSpace corner, int count) {
-        String color = "";
+        String color;
         pre=pre+BLACKTEXT;
         if (corner.isEmpty()) return switch(count){
             case 0->pre + YELLOW + "¡‾‾‾‾‾‾‾‾¡";
