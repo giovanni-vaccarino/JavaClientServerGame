@@ -287,7 +287,7 @@ public class ClientPublicBoard {
      * @return a string containing all information to print a card's first row
      */
     private static String printFirstRow(MixedCard card, String actualColor) {
-        if (card.getPointPattern() == null)
+        if (card.getPointPattern() == null&&card.getScore()!=0)
             return actualColor + BLACKTEXT + "     | " + card.getScore(false) + "|     ";
         else if (card.getScore(false) != 0 && card.getPointPattern() != null) {
             try {

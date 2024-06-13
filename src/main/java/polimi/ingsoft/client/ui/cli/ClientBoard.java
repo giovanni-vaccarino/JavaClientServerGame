@@ -883,21 +883,20 @@ public class ClientBoard {
         Coordinates actualCoordinates=board.getPrintingCoordinates();
         String error="ERROR: place not avaiable!";
 
-        boolean canUpdatePrintingCoordinates = true;
+        boolean canUpdatePrintingCoordinates = false;
 
         if (argument != null) {
-            for (Coordinates coordinatesToCheck : argument.getPlacesToCheckBeforePrint())
-                if (getCardAtRespective(board, coordinatesToCheck.getX(), coordinatesToCheck.getY(), actualCoordinates) == null)
-                    canUpdatePrintingCoordinates = false;
-        } else {
-            canUpdatePrintingCoordinates = false;
-        }
-
-        if (canUpdatePrintingCoordinates) {
+            for (Coordinates coordinatesToCheck : argument.getPlacesToCheckBeforePrint()) {
+                if (getCardAtRespective(board, coordinatesToCheck.getX(), coordinatesToCheck.getY(), actualCoordinates) != null)
+                    canUpdatePrintingCoordinates = true;
+            }
             Coordinates centerCoordinates = argument.getOffset();
-            board.updatePrintingCoordinates(centerCoordinates.getX(), centerCoordinates.getY());
+            if(actualCoordinates.sum(centerCoordinates).equals(new Coordinates(0,0)))canUpdatePrintingCoordinates = true;
+            if (canUpdatePrintingCoordinates) {
+                board.updatePrintingCoordinates(centerCoordinates.getX(), centerCoordinates.getY());
+            }
+            else System.out.println(error);
         }
-
         printBoard(board);
     }
 }

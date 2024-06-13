@@ -174,20 +174,17 @@ public class GameManager implements CLIPhaseManager {
     }
 
     private void runPlaceCard(QuestCard questCard) {
-        BoardArgument argument=null;
         int card, x = 0, y = 0, side;
         boolean facingUp = true,alreadyprinted=false;
         MixedCard chosenCard;
             // Print board
-            Board board = model.playerBoards.get(model.currentPlayerNickname);
+            Board board=model.playerBoards.get(cli.getNickname());
             String choice, secondChoice;
             PlayerHand hand = model.hand;
             // Get card choice
             do {
                 if(!alreadyprinted)printer.printFromBoard(board,hand,null,questCard);
                 alreadyprinted=false;
-//                ClientBoard.printBoard(board);
-//               ClientHand.print(hand, questCard);
                 out.println(MESSAGES.PLAY_CARD_HELP_1.getValue());
                 choice = in.nextLine();
                 if (choice.equalsIgnoreCase("chat")) runChatIter();
@@ -212,6 +209,7 @@ public class GameManager implements CLIPhaseManager {
             // Get coords choice
             out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
             do {
+
                 out.println(MESSAGES.PLAY_CARD_HELP_X.getValue());
                 choice = in.nextLine();
                 try {
@@ -220,7 +218,7 @@ public class GameManager implements CLIPhaseManager {
                     out.println(MESSAGES.ERROR.getValue());
                     choice = "err";
                 }
-            } while (choice.equals("err"));
+            } while (choice.equals("err") || choice.isEmpty());
             do {
                 out.println(MESSAGES.PLAY_CARD_HELP_Y.getValue());
                 choice = in.nextLine();
@@ -230,7 +228,7 @@ public class GameManager implements CLIPhaseManager {
                     out.println(MESSAGES.ERROR.getValue());
                     choice = "err";
                 }
-            } while (choice.equals("err"));
+            } while (choice.equals("err") || choice.isEmpty());
             chosenCard = hand.get(card - 1);
             // Get side choice
             do {
@@ -276,9 +274,8 @@ public class GameManager implements CLIPhaseManager {
                     out.println(MESSAGES.ERROR.getValue());
                 }
             } while (!choice.equalsIgnoreCase("resource") && !choice.equalsIgnoreCase("gold"));
-            choice2 = choice;
             do {
-                printer.printFromPublicBoard(resourceCards, goldCards, questCards, hand, choice2, model.personalQuestCard);
+                printer.printFromPublicBoard(resourceCards, goldCards, questCards, hand, choice, model.personalQuestCard);
                 choice2 = in.nextLine();
                 if (!choice2.equalsIgnoreCase("back") && !choice2.equalsIgnoreCase("center") && !choice2.equalsIgnoreCase("right") && !choice2.equalsIgnoreCase("deck")) {
                     choice2 = "getcard";
