@@ -21,18 +21,10 @@ import java.util.Iterator;
  */
 public class ItemPattern implements Pattern, Serializable {
 
-    //@JsonSubTypes.Type(value=ItemPattern.class, name="")
-
     /**
      * Deserializer for ItemPattern class
      */
-    public static class MapDeserializer extends JsonDeserializer<HashMap> {
-//        @Override
-//        public HashMap<Item, Integer> deserializeKey(String s, DeserializationContext deserializationContext) throws IOException {
-//            System.out.print(s);
-//            return new HashMap<Item, Integer>();
-//        }
-
+    public static class MapDeserializer extends JsonDeserializer<HashMap<Item,Integer>> {
         /**
          * Deserializes a JSON string
          * @param jsonParser jsonParser
@@ -69,7 +61,7 @@ public class ItemPattern implements Pattern, Serializable {
                 }
                 cost.put(item, value.asInt());
             }
-            return cost;//mapper.readValue(jsonParser, HashMap.class);
+            return cost;
         }
     }
 
