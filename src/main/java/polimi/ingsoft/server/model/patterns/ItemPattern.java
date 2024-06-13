@@ -101,7 +101,7 @@ public class ItemPattern implements Pattern, Serializable {
                 board.getScrolls()>=cost.get(Object.SCROLL) &&
                  board.getWolfs()>=cost.get(Resource.WOLF)){
             if (cost.get(Object.FEATHER) != 0) count=getValue(board,cost,Object.FEATHER);
-                else if (cost.get(Resource.BUTTERFLY) != 0 && board.getButterflies() < count) count=getValue(board,cost,Resource.BUTTERFLY);
+                else if (cost.get(Resource.BUTTERFLY) != 0) count=getValue(board,cost,Resource.BUTTERFLY);
                 else if (cost.get(Resource.LEAF) != 0) count=getValue(board,cost,Resource.LEAF);
                 else if (cost.get(Resource.MUSHROOM) != 0) count=getValue(board,cost,Resource.MUSHROOM);
                 else if (cost.get(Object.POTION) != 0 ) count=getValue(board,cost,Object.POTION);

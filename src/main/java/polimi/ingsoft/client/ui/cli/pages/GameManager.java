@@ -393,8 +393,8 @@ public class GameManager implements CLIPhaseManager {
         else if(input.equalsIgnoreCase(BoardArgument.RIGHT.getValue()))argument=BoardArgument.RIGHT;
         else if(input.equalsIgnoreCase(BoardArgument.UPLEFT.getValue()))argument=BoardArgument.UPLEFT;
         else if(input.equalsIgnoreCase(BoardArgument.UPRIGHT.getValue()))argument=BoardArgument.UPRIGHT;
-        else if(input.equalsIgnoreCase(BoardArgument.DOWNLEFT.getValue()))argument=BoardArgument.DOWNRIGHT;
-        else argument=BoardArgument.DOWNLEFT;
+        else if(input.equalsIgnoreCase(BoardArgument.DOWNLEFT.getValue()))argument=BoardArgument.DOWNLEFT;
+        else argument=BoardArgument.DOWNRIGHT;
         return argument;
     }
 

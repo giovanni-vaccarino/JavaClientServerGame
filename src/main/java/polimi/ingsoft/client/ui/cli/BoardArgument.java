@@ -14,22 +14,30 @@ public enum BoardArgument implements Arguments {
     UP("up", new Coordinates(0, 2), List.of(new Coordinates[]{
             new Coordinates(0, 2),
             new Coordinates(-1, 3),
-            new Coordinates(1, 3)
+            new Coordinates(1, 3),
+            new Coordinates(-1,1),
+            new Coordinates(1,1)
     })),
     DOWN("down", new Coordinates(0, -2), List.of(new Coordinates[]{
             new Coordinates(0, -2),
             new Coordinates(-1, -3),
-            new Coordinates(1, -3)
+            new Coordinates(1, -3),
+            new Coordinates(-1,-1),
+            new Coordinates(1,-1)
     })),
     LEFT("left", new Coordinates(-2, 0), List.of(new Coordinates[]{
             new Coordinates(-2, 0),
             new Coordinates(-3, 1),
-            new Coordinates(-3, -1)
+            new Coordinates(-3, -1),
+            new Coordinates(-1,1),
+            new Coordinates(-1,-1)
     })),
     RIGHT("right", new Coordinates(2, 0), List.of(new Coordinates[]{
             new Coordinates(2, 0),
             new Coordinates(3, 1),
-            new Coordinates(3, -1)
+            new Coordinates(3, -1),
+            new Coordinates(1,1),
+            new Coordinates(1,-1)
     })),
     UPRIGHT("upright", new Coordinates(1, 1), List.of(new Coordinates[]{
             new Coordinates(1, 1),
@@ -40,20 +48,20 @@ public enum BoardArgument implements Arguments {
     UPLEFT("upleft", new Coordinates(-1, 1), List.of(new Coordinates[]{
             new Coordinates(-1, 1),
             new Coordinates(-2, 2),
-            new Coordinates(-1, 3),
-            new Coordinates(-3, 1)
+            new Coordinates(-2, 0),
+            new Coordinates(0, 2)
     })),
     DOWNRIGHT("downright", new Coordinates(1, -1), List.of(new Coordinates[]{
             new Coordinates(1, -1),
-            new Coordinates(3, 1),
+            new Coordinates(2, 0),
             new Coordinates(2, -2),
-            new Coordinates(1, -3)
+            new Coordinates(0, -2)
     })),
     DOWNLEFT("downleft", new Coordinates(-1, -1), List.of(new Coordinates[]{
             new Coordinates(-1, -1),
-            new Coordinates(-1, -3),
+            new Coordinates(0, -2),
             new Coordinates(-2, -2),
-            new Coordinates(-3, -1)
+            new Coordinates(-2, 0)
     }));
 
     private final String value;
