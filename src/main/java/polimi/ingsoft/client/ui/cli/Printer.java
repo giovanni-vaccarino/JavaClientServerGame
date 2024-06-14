@@ -44,6 +44,7 @@ public class Printer {
         out.print(MESSAGES.CLS.getValue());
         ClientBoard.printBoard(board, boardArgument);
         out.println("RESOURCES: " + board.getResources().toString());
+        out.println("YOUR CARDS: ");
         ClientHand.print(hand, playerQuest);
     }
 
@@ -61,6 +62,7 @@ public class Printer {
     public void printFromPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards, PlayerHand hand, String argument, QuestCard playerQuest) {
         out.print(MESSAGES.CLS.getValue());
         ClientPublicBoard.printPublicBoard(resourceCards, goldCards, questCards);
+        out.println("YOUR CARDS: ");
         ClientHand.print(hand, playerQuest);
         if (argument != null && argument.toLowerCase().equals(PublicBoardArguments.GETCARD.getValue()))
             out.println(MESSAGES.HELP_GET_CARD_TYPE.getValue());

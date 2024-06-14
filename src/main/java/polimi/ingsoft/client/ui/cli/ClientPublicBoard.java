@@ -2,7 +2,6 @@ package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.server.model.items.Object;
 import polimi.ingsoft.server.model.items.Resource;
-import polimi.ingsoft.server.model.boards.Link;
 import polimi.ingsoft.server.model.cards.GoldCard;
 import polimi.ingsoft.server.model.cards.MixedCard;
 import polimi.ingsoft.server.model.cards.QuestCard;
@@ -12,7 +11,6 @@ import polimi.ingsoft.server.model.cards.cardstructure.Face;
 import polimi.ingsoft.server.model.items.Item;
 import polimi.ingsoft.server.model.patterns.ItemPattern;
 import polimi.ingsoft.server.model.patterns.Pattern;
-import polimi.ingsoft.server.model.patterns.SchemePattern;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.ArrayList;
@@ -389,40 +387,33 @@ public class ClientPublicBoard {
             } else return YELLOW + "                                  ";
         } catch (ClassCastException e) {
             if (row == 1 || row == 8) return YELLOW + "                                  ";
-            if (card.getID().equals("QuestCard(1)")) {
-                return printRightToLeftDiagonalQuestCards(row,RED);
-            } else if (card.getID().equals("QuestCard(2)")) {
-                return printLeftToRightDiagonalQuestCards(row, GREEN);
-            } else if (card.getID().equals("QuestCard(3)")) {
-                return printRightToLeftDiagonalQuestCards(row, BLUE);
-            } else if (card.getID().equals("QuestCard(4)")) {
-                return printLeftToRightDiagonalQuestCards(row,PURPLE);
-            } else if (card.getID().equals("QuestCard(5)")) {
-                return switch (row) {
-                    case 2,3,4,5 -> YELLOW + "             " + RED + "        " + YELLOW + "             ";
-                    case 6,7 -> YELLOW + "                     " + GREEN + "        " + YELLOW + "     ";
+            return switch (card.getID()) {
+                case "QuestCard(1)" -> printRightToLeftDiagonalQuestCards(row, RED);
+                case "QuestCard(2)" -> printLeftToRightDiagonalQuestCards(row, GREEN);
+                case "QuestCard(3)" -> printRightToLeftDiagonalQuestCards(row, BLUE);
+                case "QuestCard(4)" -> printLeftToRightDiagonalQuestCards(row, PURPLE);
+                case "QuestCard(5)" -> switch (row) {
+                    case 2, 3, 4, 5 -> YELLOW + "             " + RED + "        " + YELLOW + "             ";
+                    case 6, 7 -> YELLOW + "                     " + GREEN + "        " + YELLOW + "     ";
                     default -> YELLOW + "                                  ";
                 };
-            } else if (card.getID().equals("QuestCard(6)")) {
-                return switch (row) {
-                    case 2,3,4,5 -> YELLOW + "             " + GREEN + "        " + YELLOW + "             ";
-                    case 6,7 -> YELLOW + "     " + PURPLE + "        " + YELLOW + "                     ";
+                case "QuestCard(6)" -> switch (row) {
+                    case 2, 3, 4, 5 -> YELLOW + "             " + GREEN + "        " + YELLOW + "             ";
+                    case 6, 7 -> YELLOW + "     " + PURPLE + "        " + YELLOW + "                     ";
                     default -> YELLOW + "                                  ";
                 };
-            } else if (card.getID().equals("QuestCard(7)")) {
-                return switch (row) {
-                    case 2,3 -> YELLOW + "                     " + RED + "        " + YELLOW + "     ";
-                    case 4,5,6,7 -> YELLOW + "             " + BLUE + "        " + YELLOW + "             ";
+                case "QuestCard(7)" -> switch (row) {
+                    case 2, 3 -> YELLOW + "                     " + RED + "        " + YELLOW + "     ";
+                    case 4, 5, 6, 7 -> YELLOW + "             " + BLUE + "        " + YELLOW + "             ";
                     default -> YELLOW + "                                  ";
                 };
-            } else if (card.getID().equals("QuestCard(8)")) {
-                return switch (row) {
-                    case 2,3 -> YELLOW + "                     " + BLUE + "        " + YELLOW + "     ";
-                    case 4,5,6,7 -> YELLOW + "             " + PURPLE + "        " + YELLOW + "             ";
+                case "QuestCard(8)" -> switch (row) {
+                    case 2, 3 -> YELLOW + "                     " + BLUE + "        " + YELLOW + "     ";
+                    case 4, 5, 6, 7 -> YELLOW + "             " + PURPLE + "        " + YELLOW + "             ";
                     default -> YELLOW + "                                  ";
                 };
-            }
-            return YELLOW + "                                  ";
+                default -> YELLOW + "                                  ";
+            };
         }
     }
 
