@@ -149,8 +149,8 @@ public class GameManager implements CLIPhaseManager {
             runDrawCard();
         } else if (gamePhase == GAME_PHASE.END) {
             out.println(MESSAGES.GAME_END);
-            out.println("IL VINCITORE E' ANCORA DA CODIFICARE, GRAZIE PER AVER GIOCATO !");
-            //TODO FINISH THIS PART
+            //TODO change this method to list reader
+            out.println("IL VINCITORE E': "+gameState.getWinner());
         }
         model.gamePhase = gamePhase;
         model.turnStep = turnStep;
