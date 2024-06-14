@@ -7,16 +7,14 @@ import polimi.ingsoft.server.model.boards.Board;
 import polimi.ingsoft.server.model.boards.Coordinates;
 import polimi.ingsoft.server.model.boards.PlayedCard;
 import polimi.ingsoft.server.model.cards.*;
+import polimi.ingsoft.server.model.chat.Chat;
 import polimi.ingsoft.server.model.chat.Message;
 import polimi.ingsoft.server.model.decks.PlayerHand;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameManager implements CLIPhaseManager {
 
@@ -63,6 +61,8 @@ public class GameManager implements CLIPhaseManager {
     private final PrintStream out;
     private final CLI cli;
     private final Printer printer;
+    private Chat broadcastChat = new Chat();
+    private Map<String, Chat> privateChat = new HashMap<>();
 
     public GameManager(Scanner in, PrintStream out, CLI cli) {
         this.in = in;
@@ -139,14 +139,12 @@ public class GameManager implements CLIPhaseManager {
         if (!Objects.equals(currentPlayerNickname, model.currentPlayerNickname))
             out.println(MESSAGES.CURRENT_PLAYER.getValue() + currentPlayerNickname);
 
-        if ((gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND || turnStep == TURN_STEP.PLACE) && gamePhase!=GAME_PHASE.END) {
+        if (gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND) {
             if (isYourTurn) {
                 if (gamePhase == GAME_PHASE.LAST_ROUND) out.println(MESSAGES.LAST_ROUND);
-                playTurn(turnStep);
+                playTurn(turnStep,gamePhase);
             } else
                 out.println("Wait for your turn!");
-        } else if (turnStep == TURN_STEP.DRAW) {
-            runDrawCard();
         } else if (gamePhase == GAME_PHASE.END) {
             out.println(MESSAGES.GAME_END);
             //TODO change this method to list reader
@@ -157,10 +155,10 @@ public class GameManager implements CLIPhaseManager {
         model.currentPlayerNickname = currentPlayerNickname;
     }
 
-    private void playTurn(TURN_STEP turnStep) {
+    private void playTurn(TURN_STEP turnStep,GAME_PHASE gamePhase) {
         if (turnStep == TURN_STEP.PLACE && state == State.PLACE) {
             runPlaceCard(model.personalQuestCard);
-        } else if (turnStep == TURN_STEP.DRAW && state == State.DRAW) {
+        } else if (turnStep == TURN_STEP.DRAW && state == State.DRAW && gamePhase!=GAME_PHASE.END) {
             runDrawCard();
         }
     }
