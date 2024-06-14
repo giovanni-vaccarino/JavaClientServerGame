@@ -33,25 +33,26 @@ public class ClientPublicBoard {
 
     /**
      * PublicBoard's print method
+     *
      * @param resources the ResourceCard place
-     * @param gold the GoldCard place
-     * @param quests the QuestCard place
+     * @param gold      the GoldCard place
+     * @param quests    the QuestCard place
      */
     public static void printPublicBoard(PlaceInPublicBoard<ResourceCard> resources, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quests) {
         ArrayList<MixedCard> resourceCards, goldCards;
         ArrayList<QuestCard> questCards;
 
-        resourceCards=new ArrayList<>();
+        resourceCards = new ArrayList<>();
         resourceCards.add(resources.get(PlaceInPublicBoard.Slots.DECK));
         resourceCards.add(resources.get(PlaceInPublicBoard.Slots.SLOT_A));
         resourceCards.add(resources.get(PlaceInPublicBoard.Slots.SLOT_B));
-        goldCards=new ArrayList<>();
+        goldCards = new ArrayList<>();
         goldCards.add(gold.get(PlaceInPublicBoard.Slots.DECK));
         goldCards.add(gold.get(PlaceInPublicBoard.Slots.SLOT_A));
         goldCards.add(gold.get(PlaceInPublicBoard.Slots.SLOT_B));
         printRows(resourceCards);
         printRows(goldCards);
-        questCards=new ArrayList<>();
+        questCards = new ArrayList<>();
         questCards.add(quests.get(PlaceInPublicBoard.Slots.SLOT_A));
         questCards.add(quests.get(PlaceInPublicBoard.Slots.SLOT_B));
         printQuests(questCards);
@@ -60,51 +61,52 @@ public class ClientPublicBoard {
 
     /**
      * Prints a Place's rows
+     *
      * @param mixed the list of cards present in a PublicBoard's place's slots. NOTE: this list can contain just one element
      */
     private static void printRows(ArrayList<MixedCard> mixed) {
         int row = 0, count = 0;
         do {
-            System.out.print(YELLOW + "          " + ClientHand.defineColor(null,mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            System.out.print(YELLOW + "          " + ClientHand.defineColor(null, mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
             System.out.print(printResource(mixed, 1, 1, row));
-            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null,mixed.get(1))));
+            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null, mixed.get(1))));
             System.out.print(printResource(mixed, 1, 2, row) + RESET + "   ");
 
             System.out.print(printResource(mixed, 2, 1, row));
-            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(null,mixed.get(2))));
+            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(null, mixed.get(2))));
             System.out.print(printResource(mixed, 2, 2, row));
             count++;
             row++;
             System.out.print(RESET + "\n");
         } while (count < 3);
-        System.out.print(ClientHand.defineColor(null,mixed.getFirst()) + BLACKTEXT + "            ¡‾‾‾‾‾‾‾‾¡            ");
+        System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            ¡‾‾‾‾‾‾‾‾¡            ");
         System.out.print(RESET + "     ");
-        System.out.print(ClientHand.defineColor(null,mixed.get(1)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null, mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
-        System.out.print(ClientHand.defineColor(null,mixed.get(2)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null, mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
-        System.out.print(ClientHand.defineColor(null,mixed.getFirst()) + BLACKTEXT + "            |        |            ");
+        System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            |        |            ");
         System.out.print(RESET + "     ");
-        System.out.print(ClientHand.defineColor(null,mixed.get(1)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null, mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
-        System.out.print(ClientHand.defineColor(null,mixed.get(2)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null, mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
-        System.out.print(ClientHand.defineColor(null,mixed.getFirst()) + BLACKTEXT + "            !________!            ");
+        System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            !________!            ");
         System.out.print(RESET + "     ");
-        System.out.print(ClientHand.defineColor(null,mixed.get(1)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null, mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
-        System.out.print(ClientHand.defineColor(null,mixed.get(2)) + "                                  ");
+        System.out.print(ClientHand.defineColor(null, mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
         row = 6;
         count = 0;
         do {
-            System.out.print(YELLOW + "          " + ClientHand.defineColor(null,mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            System.out.print(YELLOW + "          " + ClientHand.defineColor(null, mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
             System.out.print(printResource(mixed, 1, 3, row));
-            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null,mixed.get(1))));
+            System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null, mixed.get(1))));
             System.out.print(printResource(mixed, 1, 4, row) + RESET + "   ");
 
             System.out.print(printResource(mixed, 2, 3, row));
-            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(null,mixed.get(2))));
+            System.out.print(printCenter(mixed.get(2), row, ClientHand.defineColor(null, mixed.get(2))));
             System.out.print(printResource(mixed, 2, 4, row));
             count++;
             row++;
@@ -115,10 +117,11 @@ public class ClientPublicBoard {
 
     /**
      * Returns a string containing all information to print a card's CornerSpace
-     * @param mixed the list of cards present in a PublicBoard's place
-     * @param index the number of card that's to be printed
+     *
+     * @param mixed  the list of cards present in a PublicBoard's place
+     * @param index  the number of card that's to be printed
      * @param corner the reference to the corner that's being printed
-     * @param row the number of row that's to be printed
+     * @param row    the number of row that's to be printed
      * @return a string containing all information to print a card's corner
      */
     private static String printResource(ArrayList<MixedCard> mixed, int index, int corner, int row) {
@@ -139,7 +142,7 @@ public class ClientPublicBoard {
             else if (row == 6 || row == 0) return (outColor + "¡‾‾‾‾‾‾‾‾¡");
             else return (outColor + "|        |");
         } catch (NullPointerException f) {
-            return ClientHand.defineColor(null,mixed.get(index)) + "          ";
+            return ClientHand.defineColor(null, mixed.get(index)) + "          ";
         }
         if (color == Object.POTION && (row == 1 || row == 7)) return (YELLOW + BLACKTEXT + "| POTION |");
         else if (color == Object.SCROLL && (row == 1 || row == 7)) return (YELLOW + BLACKTEXT + "| SCROLL |");
@@ -156,8 +159,9 @@ public class ClientPublicBoard {
 
     /**
      * Returns a string containing all information to print a card's CenterSpace
-     * @param card the card that's being printed
-     * @param row the row that's being printed
+     *
+     * @param card        the card that's being printed
+     * @param row         the row that's being printed
      * @param actualColor the card's default color
      * @return a string containing all information to print a card's CenterSpace
      */
@@ -217,7 +221,8 @@ public class ClientPublicBoard {
 
     /**
      * Return a string containing all information to print a card's last row
-     * @param card the card that's being printed
+     *
+     * @param card        the card that's being printed
      * @param actualColor the card's default color
      * @return a string containing all information to print a card's last row
      */
@@ -282,12 +287,13 @@ public class ClientPublicBoard {
 
     /**
      * Return a string containing all information to print a card's first row
-     * @param card the card that's being printed
+     *
+     * @param card        the card that's being printed
      * @param actualColor the card's default color
      * @return a string containing all information to print a card's first row
      */
     private static String printFirstRow(MixedCard card, String actualColor) {
-        if (card.getPointPattern() == null&&card.getScore()!=0)
+        if (card.getPointPattern() == null && card.getScore() != 0)
             return actualColor + BLACKTEXT + "     | " + card.getScore(false) + "|     ";
         else if (card.getScore(false) != 0 && card.getPointPattern() != null) {
             try {
@@ -307,9 +313,10 @@ public class ClientPublicBoard {
 
     /**
      * Prints PublicBoards' QuestCards
+     *
      * @param questCards an ArrayList containing the QuestCards that have to be printed
      */
-    private static void printQuests(ArrayList<QuestCard>questCards) {
+    private static void printQuests(ArrayList<QuestCard> questCards) {
         int row = 1;
         QuestCard card;
         System.out.print(YELLOW + "                                  " + RESET + "     ");
@@ -326,9 +333,10 @@ public class ClientPublicBoard {
 
     /**
      * Prints CLI's interface for QuestCards' initial choice
+     *
      * @param questCards an ArrayList containing the QuestCards that have to be printed
      */
-    public static void printInitialQuests(ArrayList<QuestCard> questCards){
+    public static void printInitialQuests(ArrayList<QuestCard> questCards) {
         int row = 1;
         QuestCard card;
         printQuestFirstRow(questCards);
@@ -343,6 +351,7 @@ public class ClientPublicBoard {
 
     /**
      * Prints QuestCards' first row
+     *
      * @param questCards an ArrayList containing the QuestCards that have to be printed
      */
     private static void printQuestFirstRow(ArrayList<QuestCard> questCards) {
@@ -356,7 +365,8 @@ public class ClientPublicBoard {
 
     /**
      * Return a string containing all information to print the body of a questCard
-     * @param row the row that's being printed
+     *
+     * @param row  the row that's being printed
      * @param card the card that's being printed
      * @return a string containing all information to print the body of a questCard
      */
@@ -364,8 +374,8 @@ public class ClientPublicBoard {
         Pattern pattern;
         pattern = card.getPointPattern();
         try {
+            HashMap<Item, Integer> cost = ((ItemPattern) pattern).getCost();
             if (row == 4) {
-                HashMap<Item, Integer> cost = ((ItemPattern) pattern).getCost();
                 if (cost.get(Object.FEATHER) == 2) return YELLOW + BLACKTEXT + "         EACH 2 FEATHERS          ";
                 else if (cost.get(Object.SCROLL) == 2) return YELLOW + BLACKTEXT + "          EACH 2 SCROLLS          ";
                 else if (cost.get(Object.POTION) == 2) return YELLOW + BLACKTEXT + "          EACH 2 POTIONS          ";
@@ -378,12 +388,58 @@ public class ClientPublicBoard {
                 else return (YELLOW + BLACKTEXT + "EACH SET OF SCROLL,POTION,FEATHER ");
             } else return YELLOW + "                                  ";
         } catch (ClassCastException e) {
-            try {
-                ArrayList<Link> links = ((SchemePattern) pattern).getOrder();
-                return YELLOW + "OK                                ";
-            } catch (ClassCastException f) {
-                return "                   QUALCOSA NON VA";
+            if (row == 7 || row == 8) return YELLOW + "                                  ";
+            if (card.getID().equals("QuestCard(1)")) {
+                return printRightToLeftDiagonalQuestCards(row,RED);
+            } else if (card.getID().equals("QuestCard(2)")) {
+                return printLeftToRightDiagonalQuestCards(row, GREEN);
+            } else if (card.getID().equals("QuestCard(3)")) {
+                return printRightToLeftDiagonalQuestCards(row, BLUE);
+            } else if (card.getID().equals("QuestCard(4)")) {
+                return printLeftToRightDiagonalQuestCards(row,PURPLE);
+            } else if (card.getID().equals("QuestCard(5)")) {
+                return switch (row) {
+                    case 1,2,3,4 -> YELLOW + "             " + RED + "        " + YELLOW + "             ";
+                    case 5,6 -> YELLOW + "                     " + GREEN + "        " + YELLOW + "     ";
+                    default -> YELLOW + "                                  ";
+                };
+            } else if (card.getID().equals("QuestCard(6)")) {
+                return switch (row) {
+                    case 1,2,3,4 -> YELLOW + "             " + GREEN + "        " + YELLOW + "             ";
+                    case 5,6 -> YELLOW + "     " + PURPLE + "        " + YELLOW + "                     ";
+                    default -> YELLOW + "                                  ";
+                };
+            } else if (card.getID().equals("QuestCard(7)")) {
+                return switch (row) {
+                    case 1,2 -> YELLOW + "                     " + RED + "        " + YELLOW + "     ";
+                    case 3,4,5,6 -> YELLOW + "             " + BLUE + "        " + YELLOW + "             ";
+                    default -> YELLOW + "                                  ";
+                };
+            } else if (card.getID().equals("QuestCard(8)")) {
+                return switch (row) {
+                    case 1,2 -> YELLOW + "                     " + BLUE + "        " + YELLOW + "     ";
+                    case 3,4,5,6 -> YELLOW + "             " + PURPLE + "        " + YELLOW + "             ";
+                    default -> YELLOW + "                                  ";
+                };
             }
+            return YELLOW + "                                  ";
         }
+    }
+
+    private static String printLeftToRightDiagonalQuestCards(int row, String color) {
+        return switch (row) {
+            case 1, 2 -> YELLOW + "     " + color + "        " + YELLOW + "                     ";
+            case 3, 4 -> YELLOW + "             " + color + "        " + YELLOW + "             ";
+            case 5, 6 -> YELLOW + "                     " + color + "        " + YELLOW + "     ";
+            default -> YELLOW + "                                  ";
+        };
+    }
+    private static String printRightToLeftDiagonalQuestCards(int row,String color){
+        return switch (row) {
+            case 1,2 -> YELLOW + "                     " + color + "        " + YELLOW + "     ";
+            case 3,4 -> YELLOW + "             " + color + "        " + YELLOW + "             ";
+            case 5,6 -> YELLOW + "     " + color + "        " + YELLOW + "                     ";
+            default -> YELLOW + "                                  ";
+        };
     }
 }
