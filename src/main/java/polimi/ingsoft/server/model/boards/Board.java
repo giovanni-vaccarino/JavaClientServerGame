@@ -177,7 +177,10 @@ public class Board implements Serializable {
      * @param points defines the amount of points that should be added to the board's player's score
      */
     public void updatePoints(int points){
-        score += points;
+        if(score + points > 29)
+            score = 29;
+        else
+            score += points;
     }
 
     /**

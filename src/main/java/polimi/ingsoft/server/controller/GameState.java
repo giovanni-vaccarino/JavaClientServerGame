@@ -9,6 +9,7 @@ import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
 import polimi.ingsoft.server.model.cards.QuestCard;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
@@ -35,7 +36,7 @@ public class GameState implements Serializable, Cloneable {
 
     private int endRound;
 
-    private Player winner;
+    private List<String> winners;
 
     /**
      * List of players that have already made their initial choice.
@@ -151,8 +152,7 @@ public class GameState implements Serializable, Cloneable {
             case GAME_PHASE.LAST_ROUND -> {
                 if(this.turnNumber == this.endRound){
                     this.gamePhase = GAME_PHASE.END;
-                    this.calculateFinalScore();
-                    this.calculateWinner();
+                    this.calculateWinners();
                 }
             }
 
@@ -325,7 +325,8 @@ public class GameState implements Serializable, Cloneable {
     /**
      * Add for each player the points from the quest cards(personal and common)
      */
-    private void calculateFinalScore(){
+    private void calculateWinners(){
+        Map<String, Integer> questCardPoints = new HashMap<>();
         QuestCard firstCommonQuest = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_A);
         QuestCard secondCommonQuest = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_B);
 
@@ -338,32 +339,64 @@ public class GameState implements Serializable, Cloneable {
 
             System.out.println(player.getNickname() + " ha fatto: " + pointsFirstCommon + " e " + pointsSecondCommon + " e " + pointsPersonal);
             player.getBoard().updatePoints(pointsFirstCommon + pointsSecondCommon + pointsPersonal);
+            questCardPoints.put(player.getNickname(), pointsFirstCommon + pointsSecondCommon + pointsPersonal);
         }
+
+        List<String> winners = calculatePointsWinners();
+
+        if(winners.size() == 1){
+            setWinners(winners);
+            return;
+        }
+
+        setWinners(calculateQuestPointsWinners(questCardPoints, winners));
+    }
+
+    private List<String> calculatePointsWinners(){
+        List<String> winners = new ArrayList<>();
+        int maxPoints = -1;
+
+        for(var player : matchController.getPlayers()){
+            if(player.getBoard().getScore() > maxPoints){
+                winners.clear();
+                winners.add(player.getNickname());
+                maxPoints = player.getBoard().getScore();
+            }else if(player.getBoard().getScore() == maxPoints){
+                winners.add(player.getNickname());
+            }
+        }
+
+        return winners;
     }
 
 
-    public void setWinner(Player winner){
-        this.winner = winner;
+    private List<String> calculateQuestPointsWinners(Map<String, Integer> questCardPoints, List<String> winners){
+        List<String> tieWinners = new ArrayList<>(winners);
+        winners.clear();
+        int maxQuestPoints = -1;
+
+        for(var player : tieWinners){
+            if(questCardPoints.get(player) > maxQuestPoints){
+                winners.clear();
+                winners.add(player);
+                maxQuestPoints = questCardPoints.get(player);
+            }else if(questCardPoints.get(player) == maxQuestPoints){
+                winners.add(player);
+            }
+        }
+
+        return winners;
+    }
+
+    private void setWinners(List<String> winners){
+        this.winners = winners;
     }
 
 
-    public Player getWinner(){
-        return this.winner;
+    public List<String> getWinners(){
+        return this.winners;
     }
 
-
-    /**
-     * Determines the winner of the game.
-     *
-     * @return the player with the highest score, or null if no players are present
-     */
-    private void calculateWinner() {
-        Optional<Player> winner = this.matchController.getPlayers().stream()
-                .max(Comparator.comparingInt(player -> player.getBoard().getScore()));
-
-        //TODO if there are 2 winners?
-        setWinner(winner.orElse(null));
-    }
 
     @Override
     public GameState clone() {

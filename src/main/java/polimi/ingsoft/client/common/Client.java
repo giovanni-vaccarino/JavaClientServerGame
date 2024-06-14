@@ -129,7 +129,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     public void showUpdateGameState(GameState gameState) throws IOException{
         System.out.println("Ho ricevuto un game phase: " + gameState.getGamePhase());
         if(gameState.getGamePhase().equals(GAME_PHASE.END)){
-            System.out.println("Il vincitore è: " + gameState.getWinner().getNickname());
+            System.out.println("Il vincitore è: " + gameState.getWinners());
         }
         ui.showUpdateGameState(gameState);
     }
