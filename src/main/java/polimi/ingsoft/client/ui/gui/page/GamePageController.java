@@ -599,7 +599,7 @@ public class GamePageController implements Initializable{
                     // ImageView found
 
                     //gridPaneUtils.removeImageViewIfExists(board,i,j);
-                    PlaceCardUtils.placeCard(i,j,board, boardAppo[i][j]);
+                    PlaceCardUtils.placeCard(i,j,board, boardAppo[i][j], false);
                 } else {
                     // ImageView not found at the specified coordinates
                 }

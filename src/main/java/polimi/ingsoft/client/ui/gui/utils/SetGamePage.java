@@ -4,6 +4,7 @@ import javafx.scene.layout.GridPane;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.client.ui.gui.page.GamePageController;
+import polimi.ingsoft.server.enumerations.TYPE_PLAYED_CARD;
 import polimi.ingsoft.server.model.boards.Board;
 import polimi.ingsoft.server.model.boards.Coordinates;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
@@ -102,7 +103,7 @@ public class SetGamePage {
         }else{
             path= CardPathUtils.backQuestCard(id);
         }
-        PlaceCardUtils.placeCardString(0,0,personalDeck, path);
+        PlaceCardUtils.placePlayerHandCardString(0,0,personalDeck, path, TYPE_PLAYED_CARD.QUESTCARD);
 
         for(int i=0; i<getGui().getPlayerHand().size(); i++){
             id = getGui().getPlayerHand().get(i).getID();
@@ -111,7 +112,7 @@ public class SetGamePage {
             }else{
                 path= CardPathUtils.backMixedCard(id);
             }
-            PlaceCardUtils.placeCardString(i+1,0,personalDeck, path);
+            PlaceCardUtils.placePlayerHandCardString(i+1,0,personalDeck, path, TYPE_PLAYED_CARD.MIXEDCARD);
         }
     }
 
