@@ -9,6 +9,8 @@ import polimi.ingsoft.client.socket.SocketClient;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
