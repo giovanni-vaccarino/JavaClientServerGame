@@ -19,7 +19,7 @@ public class GamePageDynamicUtils {
         mixedCard = getGui().getUiModel().getPlayerHand().get(x-1);
         xPlayedCard=x;
         yPlayedCard=y;
-        System.out.println(xPlayedCard+":"+yPlayedCard);
+//        System.out.println(xPlayedCard+":"+yPlayedCard);
     }
 
     public static void selectBoardPlacePlayedCard(int x, int y){

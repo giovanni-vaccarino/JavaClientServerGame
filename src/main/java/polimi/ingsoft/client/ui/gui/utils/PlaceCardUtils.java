@@ -5,9 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.CardClickedEvent;
-import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.CardClickedEventDispatcher;
-import polimi.ingsoft.client.ui.gui.utils.selectedCardUtils.ShowSelectedCardUtils;
 import polimi.ingsoft.server.model.boards.Coordinates;
 
 import java.util.HashMap;
@@ -28,7 +25,7 @@ public class PlaceCardUtils {
     }
 
     public static void placeCardString(int x,int y, GridPane gridPane, String path){
-        System.out.println("PLACE CARD PATH - "+path);
+//        System.out.println("PLACE CARD PATH - "+path);
         ImageView cardImg = new ImageView(new Image(path));
         placeCard(x,y,gridPane,cardImg);
     }

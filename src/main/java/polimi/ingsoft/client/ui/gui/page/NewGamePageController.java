@@ -42,14 +42,12 @@ public class NewGamePageController {
             System.out.println("FXML file not found");
             return;
         }
-        //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
 
         // Load CSS file
         URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
-            //System.out.println("CSS file found");
         } else {
             System.out.println("CSS file not found");
         }

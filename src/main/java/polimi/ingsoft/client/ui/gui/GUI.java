@@ -155,7 +155,7 @@ public class GUI extends UI{
     }
 
     public void updateView(){
-        System.out.println("Mi è arrivato un updateGameState con phase: " + getUiModel().getGameState().getGamePhase());
+        //System.out.println("Mi è arrivato un updateGameState con phase: " + getUiModel().getGameState().getGamePhase());
         switch (getUiModel().getGameState().getGamePhase()){
             case INITIALIZATION -> {
                 switch (getUiModel().getGameState().getCurrentInitialStep()){
@@ -217,7 +217,7 @@ public class GUI extends UI{
 
     @Override
     public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard){
-        System.out.println("STO RICEVENDO UN AGGIORNAMENTO DI PUBLIC BOARD DI TIPO: "+ deckType);
+        //System.out.println("STO RICEVENDO UN AGGIORNAMENTO DI PUBLIC BOARD DI TIPO: "+ deckType);
 
         if (deckType == TYPE_HAND_CARD.RESOURCE) {
             getUiModel().setPlaceInPublicBoardResource((PlaceInPublicBoard<ResourceCard>) placeInPublicBoard);
@@ -229,7 +229,7 @@ public class GUI extends UI{
 
     @Override
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score){
-        System.out.println("REFRESH BOARD IN GUI");
+        //System.out.println("REFRESH BOARD IN GUI");
         getUiModel().updatePlayerBoard(nickname, coordinates, playedCard, score);
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateBoard());
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setScore());
@@ -237,7 +237,7 @@ public class GUI extends UI{
 
     @Override
     public void updatePlayerHand(PlayerHand playerHand){
-        System.out.println(playerHand.getCards().toString());
+        //System.out.println(playerHand.getCards().toString());
         getUiModel().setPlayerHand(playerHand.getCards());
     }
 
@@ -282,7 +282,7 @@ public class GUI extends UI{
     }
 
     public void drawPublicBoard(TYPE_HAND_CARD typeHandCard, PlaceInPublicBoard.Slots slots){
-        System.out.println("TYPE: "+typeHandCard+"/ SLOT: "+slots.toString()+"/ NICKNAME: "+getNickname());
+        //System.out.println("TYPE: "+typeHandCard+"/ SLOT: "+slots.toString()+"/ NICKNAME: "+getNickname());
         try {
             getMatchServer().drawCard(getNickname(),typeHandCard,slots);
         } catch (IOException e) {

@@ -39,12 +39,6 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.*;
 
-/*TO FIX:
-- fix score on board method (mettere pioli sulla carta iniziale)
-- diminuire dimensioni celle freccie per non ostacolare il tocco sulle carte
-- carica board altri giocatori e testa il funzionamento (non solo su main player)
- */
-
 public class GamePageController implements Initializable{
 
     @FXML private GridPane coveredDrawableDeck1;
@@ -338,8 +332,6 @@ public class GamePageController implements Initializable{
 
             board = getGui().getUiModel().getPlayerBoards().get(player);
             score.put(board.getColor(), board.getScore());
-
-            System.out.println("NEW SCORE: "+board.getColor().toString()+"//"+ board.getScore());
         }
 
         placeScore();
@@ -357,8 +349,6 @@ public class GamePageController implements Initializable{
             button.getStyleClass().add("buttonRegular"); // Add CSS style class
             int finalCol = col;
             button.setOnAction(event -> {
-                // Handle button click, you can implement actions here
-                System.out.println("Button clicked for player: " + playerList.get(finalCol));
                 setBoardNickname(playerList.get(finalCol));
                 resetCenterBoard();
                 loadBoardCards();
@@ -446,8 +436,6 @@ public class GamePageController implements Initializable{
             if(y!=2) {
                 node.setOnMouseClicked(event -> {
                     drawVisiblePublicBoard(x,y);
-                    System.out.println(x);
-                    System.out.println(y);
                 });
             }
         }
@@ -460,8 +448,6 @@ public class GamePageController implements Initializable{
             if(y!=2){
                 node.setOnMouseClicked(event -> {
                     drawCoveredPublicBoard(x,y);
-                    System.out.println(x);
-                    System.out.println(y);
                 });
             }
         }
@@ -485,7 +471,6 @@ public class GamePageController implements Initializable{
     }
 
     public void updateBoard(){
-        System.out.println("REFRESHING BOARD");
         if(mixedCard!=null){
             // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
             buttonPersonalDeck30.setVisible(false);
@@ -499,7 +484,6 @@ public class GamePageController implements Initializable{
         mixedCard = getGui().getUiModel().getPlayerHand().get(x-1);
         xPlayedCard=x;
         yPlayedCard=y;
-        System.out.println(xPlayedCard+":"+yPlayedCard);
     }
 
     public void drawVisiblePublicBoard(int x, int y){
@@ -545,6 +529,7 @@ public class GamePageController implements Initializable{
             try {
                 System.out.println("Mixed card inviata: "+coordinates.getX()+":"+coordinates.getY());
                 getGui().getMatchServer().placeCard(nickname,mixedCard,coordinates, PlaceCardUtils.getIsFrontPlayerHandCard(xPlayedCard,yPlayedCard));
+                mixedCard = null;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -649,7 +634,6 @@ public class GamePageController implements Initializable{
                         if (x==(CenterBoardX + c.getX()) && y == (CenterBoardY -c.getY())) {
 
                             node.setOnMouseClicked(event -> {
-                                // AVVISA MODEL/CONTROLLER SCELTA CARTA + loadEntireBoard()!!!
                                 selectBoardPlacePlayedCard(x,y);
                             });
                         }
@@ -770,14 +754,6 @@ public class GamePageController implements Initializable{
                 }
             }
         }
-
-//        if(s<score.size() && s>0){
-//            for(int i=s-1; i>=0; i--){
-//                if(score.get(i).equals(score.get(s))){
-//                    counter++;
-//                }
-//            }
-//        }
 
         return counter;
     }

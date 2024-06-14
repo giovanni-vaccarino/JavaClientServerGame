@@ -48,7 +48,6 @@ public class NicknamePageController implements Initializable {
             System.out.println("FXML file not found");
             return;
         }
-        //System.out.println("FXML file found");
         Parent root = FXMLLoader.load(resourceUrl);
 
         /*FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
@@ -60,7 +59,6 @@ public class NicknamePageController implements Initializable {
         URL cssUrl = getClass().getResource("/polimi/ingsoft/demo/graphics/css/ButtonStyle.css");
         if (cssUrl != null) {
             root.getStylesheets().add(cssUrl.toExternalForm());
-            //System.out.println("CSS file found");
         } else {
             System.out.println("CSS file not found");
         }
@@ -78,8 +76,6 @@ public class NicknamePageController implements Initializable {
     }
 
     public void showError(ERROR_MESSAGES errorMessage) {
-        //nicknameInput.setStyle("-fx-background-color: #d34813;");
-        //nicknameInput.setText(errorMessage.getValue());
         errButton.setVisible(true);
     }
 
