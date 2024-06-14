@@ -388,7 +388,7 @@ public class ClientPublicBoard {
                 else return (YELLOW + BLACKTEXT + "EACH SET OF SCROLL,POTION,FEATHER ");
             } else return YELLOW + "                                  ";
         } catch (ClassCastException e) {
-            if (row == 7 || row == 8) return YELLOW + "                                  ";
+            if (row == 1 || row == 8) return YELLOW + "                                  ";
             if (card.getID().equals("QuestCard(1)")) {
                 return printRightToLeftDiagonalQuestCards(row,RED);
             } else if (card.getID().equals("QuestCard(2)")) {
@@ -399,26 +399,26 @@ public class ClientPublicBoard {
                 return printLeftToRightDiagonalQuestCards(row,PURPLE);
             } else if (card.getID().equals("QuestCard(5)")) {
                 return switch (row) {
-                    case 1,2,3,4 -> YELLOW + "             " + RED + "        " + YELLOW + "             ";
-                    case 5,6 -> YELLOW + "                     " + GREEN + "        " + YELLOW + "     ";
+                    case 2,3,4,5 -> YELLOW + "             " + RED + "        " + YELLOW + "             ";
+                    case 6,7 -> YELLOW + "                     " + GREEN + "        " + YELLOW + "     ";
                     default -> YELLOW + "                                  ";
                 };
             } else if (card.getID().equals("QuestCard(6)")) {
                 return switch (row) {
-                    case 1,2,3,4 -> YELLOW + "             " + GREEN + "        " + YELLOW + "             ";
-                    case 5,6 -> YELLOW + "     " + PURPLE + "        " + YELLOW + "                     ";
+                    case 2,3,4,5 -> YELLOW + "             " + GREEN + "        " + YELLOW + "             ";
+                    case 6,7 -> YELLOW + "     " + PURPLE + "        " + YELLOW + "                     ";
                     default -> YELLOW + "                                  ";
                 };
             } else if (card.getID().equals("QuestCard(7)")) {
                 return switch (row) {
-                    case 1,2 -> YELLOW + "                     " + RED + "        " + YELLOW + "     ";
-                    case 3,4,5,6 -> YELLOW + "             " + BLUE + "        " + YELLOW + "             ";
+                    case 2,3 -> YELLOW + "                     " + RED + "        " + YELLOW + "     ";
+                    case 4,5,6,7 -> YELLOW + "             " + BLUE + "        " + YELLOW + "             ";
                     default -> YELLOW + "                                  ";
                 };
             } else if (card.getID().equals("QuestCard(8)")) {
                 return switch (row) {
-                    case 1,2 -> YELLOW + "                     " + BLUE + "        " + YELLOW + "     ";
-                    case 3,4,5,6 -> YELLOW + "             " + PURPLE + "        " + YELLOW + "             ";
+                    case 2,3 -> YELLOW + "                     " + BLUE + "        " + YELLOW + "     ";
+                    case 4,5,6,7 -> YELLOW + "             " + PURPLE + "        " + YELLOW + "             ";
                     default -> YELLOW + "                                  ";
                 };
             }
@@ -428,17 +428,17 @@ public class ClientPublicBoard {
 
     private static String printLeftToRightDiagonalQuestCards(int row, String color) {
         return switch (row) {
-            case 1, 2 -> YELLOW + "     " + color + "        " + YELLOW + "                     ";
-            case 3, 4 -> YELLOW + "             " + color + "        " + YELLOW + "             ";
-            case 5, 6 -> YELLOW + "                     " + color + "        " + YELLOW + "     ";
+            case 2, 3 -> YELLOW + "     " + color + "        " + YELLOW + "                     ";
+            case 4, 5 -> YELLOW + "             " + color + "        " + YELLOW + "             ";
+            case 6, 7 -> YELLOW + "                     " + color + "        " + YELLOW + "     ";
             default -> YELLOW + "                                  ";
         };
     }
     private static String printRightToLeftDiagonalQuestCards(int row,String color){
         return switch (row) {
-            case 1,2 -> YELLOW + "                     " + color + "        " + YELLOW + "     ";
-            case 3,4 -> YELLOW + "             " + color + "        " + YELLOW + "             ";
-            case 5,6 -> YELLOW + "     " + color + "        " + YELLOW + "                     ";
+            case 2,3 -> YELLOW + "                     " + color + "        " + YELLOW + "     ";
+            case 4,5 -> YELLOW + "             " + color + "        " + YELLOW + "             ";
+            case 6,7 -> YELLOW + "     " + color + "        " + YELLOW + "                     ";
             default -> YELLOW + "                                  ";
         };
     }

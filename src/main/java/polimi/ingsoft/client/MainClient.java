@@ -37,7 +37,7 @@ public class MainClient {
         Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
 
         //If no parameters GUI
-        UIType uiType = UIType.CLI;
+        UIType uiType = UIType.GUI;
 
         if(args.length == 1){
             if(args[0].equalsIgnoreCase("cli") || args[0].equalsIgnoreCase("tui")){
