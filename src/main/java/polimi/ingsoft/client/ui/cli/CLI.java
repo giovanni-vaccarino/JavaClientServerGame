@@ -188,14 +188,14 @@ public class CLI extends UI {
     @Override
     public void updateBroadcastChat(Message message){
         if (phase == CLIPhase.GAME) {
-
+            gameManager.updateBroadcastChat(message);
         }
     }
 
     @Override
     public void updatePrivateChat(String receiver, Message message) {
         if (phase == CLIPhase.GAME) {
-
+            gameManager.updatePrivateChat(receiver, message);
         }
     }
 

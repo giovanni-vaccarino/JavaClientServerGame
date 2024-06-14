@@ -29,6 +29,8 @@ public class GameManager implements CLIPhaseManager {
         GAME_PHASE gamePhase;
         TURN_STEP turnStep;
         String currentPlayerNickname;
+        Chat broadcastChat;
+        Map<String, Chat> privateChat;
 
         public GameModel() {
             gamePhase = GAME_PHASE.PLAY;
@@ -61,8 +63,6 @@ public class GameManager implements CLIPhaseManager {
     private final PrintStream out;
     private final CLI cli;
     private final Printer printer;
-    private Chat broadcastChat = new Chat();
-    private Map<String, Chat> privateChat = new HashMap<>();
 
     public GameManager(Scanner in, PrintStream out, CLI cli) {
         this.in = in;
@@ -114,6 +114,10 @@ public class GameManager implements CLIPhaseManager {
         if (state == State.WAITING_FOR_PLAYER_BOARDS) {
             model.playerBoards = playerBoard;
             model.nicknames = playerBoard.keySet().stream().toList();
+            model.broadcastChat = new Chat();
+            model.privateChat = new HashMap<>();
+            for (String nickname : model.nicknames)
+                model.privateChat.put(nickname, new Chat());
             state = State.WAITING_FOR_INITIALIZATION;
         }
     }
@@ -384,6 +388,16 @@ public class GameManager implements CLIPhaseManager {
         }
         printer.printFromBoard(board,model.hand,argument,model.personalQuestCard);
 
+    }
+
+    public void updateBroadcastChat(Message message) {
+        model.broadcastChat.addMessage(message.getSender(), message.getText());
+    }
+
+    public void updatePrivateChat(String recipient, Message message) {
+        if (Objects.equals(recipient, cli.getNickname()) && model.privateChat.containsKey(message.getSender())) {
+            model.privateChat.get(message.getSender()).addMessage(message.getSender(), message.getText());
+        }
     }
 
     private BoardArgument getBoardArgument(String input) {
