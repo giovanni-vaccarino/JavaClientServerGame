@@ -78,10 +78,13 @@ public class MainClient {
      */
     private static Client createRmiClient(UIType uiType) {
         try {
+            System.setProperty("java.rmi.server.hostname", String.valueOf(InetAddress.getLocalHost()));
             return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, uiType, printStream, scanner);
         } catch (RemoteException | NotBoundException exception) {
             System.out.println(exception);
             return null;
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
         }
     }
 

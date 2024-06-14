@@ -139,7 +139,7 @@ public class GameManager implements CLIPhaseManager {
         if (!Objects.equals(currentPlayerNickname, model.currentPlayerNickname))
             out.println(MESSAGES.CURRENT_PLAYER.getValue() + currentPlayerNickname);
 
-        if (gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND || turnStep == TURN_STEP.PLACE) {
+        if ((gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND || turnStep == TURN_STEP.PLACE) && gamePhase!=GAME_PHASE.END) {
             if (isYourTurn) {
                 if (gamePhase == GAME_PHASE.LAST_ROUND) out.println(MESSAGES.LAST_ROUND);
                 playTurn(turnStep);
@@ -150,7 +150,7 @@ public class GameManager implements CLIPhaseManager {
         } else if (gamePhase == GAME_PHASE.END) {
             out.println(MESSAGES.GAME_END);
             //TODO change this method to list reader
-            out.println("IL VINCITORE E': "+gameState.getWinner());
+            out.println("IL VINCITORE E': "+gameState.getWinner().getNickname());
         }
         model.gamePhase = gamePhase;
         model.turnStep = turnStep;
@@ -297,6 +297,8 @@ public class GameManager implements CLIPhaseManager {
         state = State.WAITING_FOR_DRAW;
     }
 
+
+    //TODO
     private void runChatIter() {
         String choice, receiver = null;
         int type = -1;
@@ -307,8 +309,9 @@ public class GameManager implements CLIPhaseManager {
                 type = Integer.parseInt(choice);
             } catch (NumberFormatException exception) {
                 choice = "err";
+                type=-1;
             }
-        } while (choice.equalsIgnoreCase("err"));
+        } while (choice.equalsIgnoreCase("err")&&type!=1&&type!=2&&type!=3&&type!=4);
         if (type == 2) {
             do {
                 out.println(MESSAGES.HELP_GET_PLAYER_NAME.getValue());
