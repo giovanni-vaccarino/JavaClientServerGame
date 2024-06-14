@@ -1,5 +1,8 @@
 package polimi.ingsoft.client.ui.gui.utils;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
@@ -7,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.enumerations.TYPE_PLAYED_CARD;
@@ -123,11 +127,12 @@ public class PlaceCardUtils {
         if(playerHand){
             imageView.setOnMousePressed(event -> {
                 if(clicked!=null){
-                    clicked.setRotate(0);
+                    rotateImageView(clicked, 0);
                 }
                 clicked=imageView;
 
-                imageView.setRotate(generateRandomNumber());
+                int targetAngle = generateRandomNumber();
+                rotateImageView(imageView, targetAngle);
             });
         }
     }
@@ -168,5 +173,22 @@ public class PlaceCardUtils {
             // Generate a random number between 10 and 20 (inclusive)
             return 10 + random.nextInt(11); // nextInt(11) generates a number between 0 and 10
         }
+    }
+
+    private static void rotateImageView(ImageView imageView, int targetAngle) {
+        // Create a Timeline for the rotation animation
+        Timeline timeline = new Timeline();
+
+        // Define the KeyFrame for the rotation
+        KeyFrame keyFrame = new KeyFrame(
+                Duration.seconds(.25), // Duration of the animation
+                new KeyValue(imageView.rotateProperty(), targetAngle)
+        );
+
+        // Add the KeyFrame to the Timeline
+        timeline.getKeyFrames().add(keyFrame);
+
+        // Play the animation
+        timeline.play();
     }
 }
