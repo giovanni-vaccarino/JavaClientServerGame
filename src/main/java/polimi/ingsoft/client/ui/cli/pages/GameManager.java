@@ -303,7 +303,7 @@ public class GameManager implements CLIPhaseManager {
     //TODO
     private void runChatIter() {
         String choice, receiver = null;
-        int type = -1;
+        int type;
         do {
             out.println(MESSAGES.HELP_GET_MESSAGE_TYPE.getValue());
             choice = in.nextLine();
@@ -314,28 +314,71 @@ public class GameManager implements CLIPhaseManager {
                 type=-1;
             }
         } while (choice.equalsIgnoreCase("err")&&type!=1&&type!=2&&type!=3&&type!=4);
-        if (type == 2) {
-            do {
-                out.println(MESSAGES.HELP_GET_PLAYER_NAME.getValue());
-                out.println("PLAYERS:");
-                for(String player :model.nicknames){
-                    if(!player.equalsIgnoreCase(cli.getNickname()))out.print(player+"\t");
-                }
-                out.print("\n");
-                receiver = in.nextLine();
-                if (!model.nicknames.contains(receiver)) out.println(MESSAGES.CHAT_RECEIVER_ERROR.getValue());
-                if (receiver.equalsIgnoreCase(cli.getNickname()))
-                    out.println(MESSAGES.CHAT_RECEIVER_IS_SENDER_ERROR.getValue());
-            } while (!model.nicknames.contains(receiver) || receiver.equalsIgnoreCase(cli.getNickname()));
+        if(type!=3&&type!=4) {
+            if (type == 2) {
+                do {
+                    out.println(MESSAGES.HELP_GET_PLAYER_NAME.getValue());
+                    out.println("PLAYERS:");
+                    for (String player : model.nicknames) {
+                        if (!player.equalsIgnoreCase(cli.getNickname())) out.println("->" + player + "\t");
+                    }
+                    out.print("\n");
+                    receiver = in.nextLine();
+                    if (!model.nicknames.contains(receiver)) out.println(MESSAGES.CHAT_RECEIVER_ERROR.getValue());
+                    if (receiver.equalsIgnoreCase(cli.getNickname()))
+                        out.println(MESSAGES.CHAT_RECEIVER_IS_SENDER_ERROR.getValue());
+                } while (!model.nicknames.contains(receiver) || receiver.equalsIgnoreCase(cli.getNickname()));
+            }
+            out.println(MESSAGES.HELP_GET_MESSAGE.getValue());
+            choice = in.nextLine();
+            Message message = new Message(cli.getNickname(), choice);
+            try {
+                if (receiver == null) cli.getClient().showUpdateBroadcastChat(message);
+                else cli.getClient().showUpdatePrivateChat(receiver, message);
+            } catch (IOException e) {
+                out.println(MESSAGES.ERROR.getValue());
+            }
         }
-        out.println(MESSAGES.HELP_GET_MESSAGE.getValue());
-        choice = in.nextLine();
-        Message message = new Message(cli.getNickname(), choice);
-        try {
-            if (receiver == null) cli.updateBroadcastChat(message);
-            else cli.updatePrivateChat(receiver, message);
-        } catch (Exception/*IOException*/ e) {
-            out.println(MESSAGES.ERROR.getValue());
+        else if(type==3){
+            int i = Math.min(model.broadcastChat.getMessages().size(), 10);
+            if(i>0) {
+                out.println("Last " + i + " messages:");
+                while (i > 0) {
+                    out.println(model.broadcastChat.getMessages().get(model.broadcastChat.getMessages().size() - i).getSender() + ": " +
+                            model.broadcastChat.getMessages().get(model.broadcastChat.getMessages().size() - i).getText());
+                    i--;
+                }
+            }
+            else out.println("Nothing said yet !");
+        }
+        else{
+            int i = 0;
+            do {
+                out.println("Which chat would you like to access to ?");
+                for (String player : model.privateChat.keySet()) {
+                    if(!player.equals(cli.getNickname())) {
+                        out.println(" -> " + player);
+                        i++;
+                    }
+                }
+                choice=in.nextLine();
+                if(!model.privateChat.containsKey(choice))out.println("Player does not exist !");
+            }while(!model.privateChat.containsKey(choice));
+            i = Math.min(model.privateChat.get(choice).getMessages().size(), 10);
+            if(i>0) {
+                out.println("Messages with " + choice + " : ");
+                out.println("Last " + i + " messages:");
+                while (i > 0) {
+                    out.println(
+                            model.privateChat.get(choice).getMessages().get(
+                                    model.privateChat.get(choice).getMessages().size() - i).getSender() + ": " +
+                                    model.privateChat.get(choice).getMessages().get(
+                                            model.privateChat.get(choice).getMessages().size() - i).getText()
+                    );
+                    i--;
+                }
+            }
+            else out.println("You and " + choice + " haven't already talked to each other !");
         }
     }
 
