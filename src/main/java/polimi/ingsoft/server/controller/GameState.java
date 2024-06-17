@@ -197,14 +197,18 @@ public class GameState implements Serializable, Cloneable {
      * Updates the current turn step.
      */
     public void updateTurnStep(){
-        switch(currentTurnStep){
-            case TURN_STEP.PLACE -> {
-                this.currentTurnStep = TURN_STEP.DRAW;
-            }
+        if(gamePhase == GAME_PHASE.PLAY){
+            switch(currentTurnStep){
+                case TURN_STEP.PLACE -> {
+                    this.currentTurnStep = TURN_STEP.DRAW;
+                }
 
-            case TURN_STEP.DRAW -> {
-                this.currentTurnStep = TURN_STEP.PLACE;
+                case TURN_STEP.DRAW -> {
+                    this.currentTurnStep = TURN_STEP.PLACE;
+                }
             }
+        }else{
+            goToNextPlayer();
         }
     }
 
@@ -317,7 +321,9 @@ public class GameState implements Serializable, Cloneable {
         currentPlayerNickname = getCurrentPlayer().getNickname();
 
         this.updateTurnNumber();
-        this.updateTurnStep();
+        if(gamePhase == GAME_PHASE.PLAY){
+            this.updateTurnStep();
+        }
         this.updateState();
     }
 

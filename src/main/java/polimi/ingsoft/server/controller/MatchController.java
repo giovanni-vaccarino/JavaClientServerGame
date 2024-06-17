@@ -270,10 +270,6 @@ public class MatchController implements Serializable {
         if(facingUp||card.getPlayability(board) > 0){
             boolean isAdded = board.add(coordinates, card, facingUp);
             if(isAdded){
-                System.out.println(player.getNickname());
-                System.out.println("BOARD:"+board.getResources().toString());
-                System.out.println("VOLTE IN CUI MATCHA" + card.getPoints(board,coordinates) );
-                System.out.println("SCORE DELLA CARTA: " + card.getScore(facingUp) + "CON FACINGUP" + facingUp);
                 board.updatePoints(card.getPoints(board,coordinates) * card.getScore(facingUp));
                 player.removeFromHand(card);
             }else{
@@ -299,51 +295,15 @@ public class MatchController implements Serializable {
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
     public synchronized void drawCard(Player player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        switch(deckType){
-            case RESOURCE -> {
-               this.drawResourceCard(player, slot);
-            }
+        gameState.validateMove(player, TURN_STEP.DRAW);
 
-            case GOLD -> {
-                this.drawGoldCard(player, slot);
-            }
+        gameState.goToNextPlayer();
+
+        if(deckType == TYPE_HAND_CARD.RESOURCE){
+            player.addToHand(publicBoard.getResource(slot));
+        }else{
+            player.addToHand(publicBoard.getGold(slot));
         }
-    }
-
-
-    /**
-     * Draws a resource card from the specified slot for a player.
-     *
-     * @param player the player drawing the card
-     * @param slot   the slot from which to draw the card
-     * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
-     * @throws WrongStepException                 if the game is not in the correct step
-     * @throws WrongGamePhaseException            if the game is not in the correct phase
-     */
-    private void drawResourceCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        gameState.validateMove(player, TURN_STEP.DRAW);
-
-        gameState.goToNextPlayer();
-
-        player.addToHand(publicBoard.getResource(slot));
-    }
-
-
-    /**
-     * Draws a gold card from the specified slot for a player.
-     *
-     * @param player the player drawing the card
-     * @param slot   the slot from which to draw the card
-     * @throws WrongPlayerForCurrentTurnException if it's not the player's turn
-     * @throws WrongStepException                 if the game is not in the correct step
-     * @throws WrongGamePhaseException            if the game is not in the correct phase
-     */
-    private void drawGoldCard(Player player, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
-        gameState.validateMove(player, TURN_STEP.DRAW);
-
-        gameState.goToNextPlayer();
-
-        player.addToHand(publicBoard.getGold(slot));
     }
 
 
