@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.server.model.boards;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -333,6 +333,9 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         assertEquals(5,a.getScore());
         a.updatePoints(5);
         assertEquals(10,a.getScore());
+        a.updatePoints(200);
+        assertEquals(29,a.getScore());
+        ;
     }
 
     @Test
