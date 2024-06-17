@@ -333,8 +333,8 @@ public class GameManager implements CLIPhaseManager {
             choice = in.nextLine();
             Message message = new Message(cli.getNickname(), choice);
             try {
-                if (receiver == null) cli.getClient().showUpdateBroadcastChat(message);
-                else cli.getClient().showUpdatePrivateChat(receiver, message);
+                if (receiver == null) cli.getMatchServer().sendBroadcastMessage(message.getSender(), message.getText());
+                else cli.getMatchServer().sendPrivateMessage(message.getSender(), receiver, message.getText());
             } catch (IOException e) {
                 out.println(MESSAGES.ERROR.getValue());
             }
