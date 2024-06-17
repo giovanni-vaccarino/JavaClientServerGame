@@ -631,7 +631,7 @@ public class ClientBoard {
      * @return a string representing the @count row of the card
      */
     private static String printLeftUpLeftCorner(Board board,PlayedCard card, int count,Coordinates actualCoordinates) {
-        String pre = "";
+        String pre = " ";
         CornerSpace corner;
         switch (count) {
             case 0, 1:
@@ -649,7 +649,7 @@ public class ClientBoard {
             corner = card.getUpLeftCorner();
             if (corner == null) return pre + defineColor(card,2) + "          ";
         } else if (card == null && getCardAtRespective(board,-2, 2,actualCoordinates) == null) {//carta 22 no carta 11 no
-            return RESET + "          ";
+            return RESET + pre + "          ";
         } else {//carta 22si carta 11si e 22>11 //carta 22si carta11 no
             corner = getCardAtRespective(board,-2, 2,actualCoordinates).getBottomRightCorner();
             if (corner == null) return pre + defineColor(getCardAtRespective(board,-2, 2,actualCoordinates),2) + "          ";
