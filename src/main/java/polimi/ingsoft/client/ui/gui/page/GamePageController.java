@@ -87,6 +87,7 @@ public class GamePageController implements Initializable{
 
     @FXML private Label currentPlayerName;
     @FXML Button errButton;
+    @FXML Button lastRoundButton;
 
     private Map<PlayerColor, Integer> score;
     private Map <String, PlayerColor> nicknameColor;
@@ -123,6 +124,9 @@ public class GamePageController implements Initializable{
 
         // Error button initialize
         errButton.setVisible(false);
+
+        // Last round button initialize
+        lastRoundButton.setVisible(false);
 
         // Chat
         chatHashMap = new HashMap<>();
@@ -886,6 +890,9 @@ public class GamePageController implements Initializable{
         pause.play();
     }
 
+    public void showLastRound(){
+        lastRoundButton.setVisible(true);
+    }
 
     public void start() throws Exception {
         // Load FXML file

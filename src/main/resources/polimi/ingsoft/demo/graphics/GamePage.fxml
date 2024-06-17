@@ -355,5 +355,15 @@
             </children>
         </StackPane>
 
+        <!-- Last round -->
+        <StackPane layoutX="1100.0" layoutY="10.0" prefHeight="80" alignment="CENTER_LEFT">
+            <children>
+                <Button text="Last Round" mnemonicParsing="false" prefHeight="80" styleClass="lastRoundPane"
+                        stylesheets="/polimi/ingsoft/demo/graphics/css/ButtonStyle.css"
+                        fx:id="lastRoundButton">
+                </Button>
+            </children>
+        </StackPane>
+
     </children>
 </AnchorPane>
