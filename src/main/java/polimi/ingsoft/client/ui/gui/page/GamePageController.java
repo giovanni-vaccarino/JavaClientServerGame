@@ -904,4 +904,24 @@ public class GamePageController implements Initializable{
 
         getStage().getScene().setRoot(root);
     }
+
+    public void winPage(){
+
+        WinPageController winPageController= new WinPageController();
+        try {
+            winPageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void losePage(){
+
+        LosePageController losePageController = new LosePageController();
+        try {
+            losePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
