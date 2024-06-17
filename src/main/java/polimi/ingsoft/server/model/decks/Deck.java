@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Represents a collection of drawable cards
  * @param <T> Cards collection type
  */
-public class Deck<T extends Drawable> extends CardCollection<T> implements  Serializable {
+public class Deck<T extends Drawable> extends CardCollection<T> implements  Serializable, Cloneable {
 
     /**
      * Creates a shuffled card collection of T type
@@ -44,5 +44,14 @@ public class Deck<T extends Drawable> extends CardCollection<T> implements  Seri
         if (!this.cards.isEmpty()) {
             return this.cards.getFirst();
         } else return null;
+    }
+
+    @Override
+    public Deck<T> clone() {
+        try {
+            return (Deck<T>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

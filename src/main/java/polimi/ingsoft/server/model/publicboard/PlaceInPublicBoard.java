@@ -17,7 +17,7 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Clo
         DECK, SLOT_A, SLOT_B
     }
 
-    private final Deck<T> deck;
+    private Deck<T> deck;
     private T slotA;
     private T slotB;
 
@@ -88,7 +88,7 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Clo
     public PlaceInPublicBoard<T> clone() {
         try {
             PlaceInPublicBoard<T> clone = (PlaceInPublicBoard<T>) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            clone.deck = deck.clone();
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
