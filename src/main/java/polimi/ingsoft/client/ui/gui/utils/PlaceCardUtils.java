@@ -3,16 +3,12 @@ package polimi.ingsoft.client.ui.gui.utils;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.enumerations.TYPE_PLAYED_CARD;
 import polimi.ingsoft.server.model.boards.Coordinates;
 
@@ -127,12 +123,11 @@ public class PlaceCardUtils {
         if(playerHand){
             imageView.setOnMousePressed(event -> {
                 if(clicked!=null){
-                    rotateImageView(clicked, 0);
+                    moveImageView(clicked, 0);
                 }
                 clicked=imageView;
 
-                int targetAngle = generateRandomNumber();
-                rotateImageView(imageView, targetAngle);
+                moveImageView(imageView, 30);
             });
         }
     }
@@ -162,33 +157,16 @@ public class PlaceCardUtils {
         });
     }
 
-    public static int generateRandomNumber() {
-        Random random = new Random();
-        boolean isNegativeRange = random.nextBoolean();
-
-        if (isNegativeRange) {
-            // Generate a random number between -20 and -10 (inclusive)
-            return -20 + random.nextInt(11); // nextInt(11) generates a number between 0 and 10
-        } else {
-            // Generate a random number between 10 and 20 (inclusive)
-            return 10 + random.nextInt(11); // nextInt(11) generates a number between 0 and 10
-        }
-    }
-
-    private static void rotateImageView(ImageView imageView, int targetAngle) {
-        // Create a Timeline for the rotation animation
+    private static void moveImageView(ImageView imageView, int targetYMove) {
         Timeline timeline = new Timeline();
 
-        // Define the KeyFrame for the rotation
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(.25), // Duration of the animation
-                new KeyValue(imageView.rotateProperty(), targetAngle)
+                new KeyValue(imageView.translateYProperty(), targetYMove)
         );
 
-        // Add the KeyFrame to the Timeline
         timeline.getKeyFrames().add(keyFrame);
 
-        // Play the animation
         timeline.play();
     }
 }
