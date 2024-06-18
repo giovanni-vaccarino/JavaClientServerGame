@@ -31,4 +31,6 @@ public interface VirtualMatchServer extends Remote, Serializable {
     void drawCard(String player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException;
 
     void placeCard(String player, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException;
+
+    void ping(String nickname) throws IOException;
 }

@@ -12,6 +12,7 @@ public class ClientConnection {
     public ClientConnection(VirtualView virtualView, String nickname){
         this.virtualView = virtualView;
         this.nickname = nickname;
+        this.isConnected = true;
     }
 
     public String getNickname(){
@@ -20,5 +21,13 @@ public class ClientConnection {
 
     public VirtualView getVirtualView(){
         return virtualView;
+    }
+
+    public void setConnected(Boolean connected) {
+        isConnected = connected;
+    }
+
+    public Boolean getConnected() {
+        return isConnected;
     }
 }

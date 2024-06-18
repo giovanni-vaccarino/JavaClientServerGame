@@ -26,15 +26,15 @@ public class RmiServer extends Server {
                 try {
                     ServerCommand command = methodQueue.take();
                     command.execute(this);
-                } catch (InterruptedException | IOException e) {
-                    System.out.println("ssimon" + e.getMessage());
+                } catch (IOException e) {
+                    System.out.println("ssimon " + e.getMessage());
                     Thread.currentThread().interrupt();
-                    break;
+                } catch (InterruptedException e) {
+                    System.out.println("nomiss " + e.getMessage());
                 }
             }
         }, "RmiServerCommandReader").start();
     }
-
     @Override
     public void connect(VirtualView client) throws IOException {
         super.connect(new RmiClientProxy(client));

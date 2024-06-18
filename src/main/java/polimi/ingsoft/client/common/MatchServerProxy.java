@@ -49,4 +49,9 @@ public abstract class MatchServerProxy implements VirtualMatchServer {
     public void placeCard(String player, MixedCard card, Coordinates coordinates, boolean isFacingUp) throws IOException {
         sendMessage((MatchServerCommand) server -> server.placeCard(player, card, coordinates, isFacingUp));
     }
+
+    @Override
+    public void ping(String nickname) throws IOException {
+        sendMessage((MatchServerCommand) server -> server.ping(nickname));
+    }
 }

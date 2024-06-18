@@ -175,4 +175,6 @@ public interface VirtualView extends Remote, Serializable {
 
     void reportMatchError(ERROR_MESSAGES errorMessage) throws IOException;
     void setMatchServer(VirtualMatchServer server) throws IOException;
+    void pong() throws IOException;
+    void matchPong() throws IOException;
 }

@@ -21,4 +21,6 @@ public interface VirtualServer extends Remote, Serializable {
     void joinMatch(String playerNickname, Integer matchId) throws IOException;
 
     void reJoinMatch(Integer matchId, String nickname) throws IOException;
+
+    void ping(String nickname) throws IOException;
 }

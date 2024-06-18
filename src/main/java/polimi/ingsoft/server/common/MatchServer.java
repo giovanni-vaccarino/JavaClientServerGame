@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MatchServer implements VirtualMatchServer {
     private final PrintStream logger;
@@ -193,6 +195,11 @@ public class MatchServer implements VirtualMatchServer {
         } catch (Exception e){
             handleException(clientToUpdate, e);
         }
+    }
+
+    @Override
+    public void ping(String nickname) throws IOException {
+
     }
 
     private void startGameUpdate() {

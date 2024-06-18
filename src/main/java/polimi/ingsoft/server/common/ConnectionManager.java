@@ -2,9 +2,13 @@ package polimi.ingsoft.server.common;
 
 import polimi.ingsoft.client.common.VirtualView;
 
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.*;
 
 public class ConnectionManager {
+    private final PrintStream logger;
+
     private static ConnectionManager instance;
 
     private final List<ClientConnection> clients = new ArrayList<>();
@@ -13,12 +17,46 @@ public class ConnectionManager {
 
     private final Map<Integer, List<VirtualView>> matchNotificationList = new HashMap<>();
 
-    private ConnectionManager() {
+    private ConnectionManager(PrintStream logger) {
+        this.logger = logger;
+        scheduleTimeoutRoutine();
+    }
+
+    private void scheduleTimeoutRoutine() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                // Send ping to all clients connected to main server
+                synchronized (getClients()) {
+                    logger.println("CLIENTS: " + getClients().toString());
+                    for (var client : getClients()) {
+                        if (!client.getConnected()) {
+                            // Client has disconnected :(
+                            logger.println("Il bro si è disconnesso :(");
+                            removeClientFromMainServer(client);
+                        }
+                    }
+
+                    for (var client : getClients()) {
+                        client.setConnected(false);
+                        try {
+                            client.getVirtualView().pong();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                    logger.println("aRgmgsoei");
+                }
+            }
+        };
+
+        new Timer().scheduleAtFixedRate(task, 0, 5000);
     }
 
     public static ConnectionManager getInstance() {
         if (instance == null) {
-            instance = new ConnectionManager();
+            instance = new ConnectionManager(System.out);
         }
         return instance;
     }
@@ -47,7 +85,11 @@ public class ConnectionManager {
     }
 
     public Boolean isNicknameAvailable(String nickname){
-        return clients.stream().anyMatch(clientConnection -> clientConnection.getNickname() == nickname);
+        return clients.stream().anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname));
+    }
+
+    public void removeClientFromMainServer(ClientConnection clientConnection) {
+        clients.remove(clientConnection);
     }
 }
 

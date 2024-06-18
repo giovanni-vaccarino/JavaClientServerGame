@@ -101,6 +101,11 @@ public class CLI extends UI {
         changeManager(gameManager);
     }
 
+    public void returnToMatchManager() {
+        phase = CLIPhase.MATCH_CHOICE;
+        changeManager(matchManager);
+    }
+
     private void changeManager(CLIPhaseManager manager) {
         currentManager = manager;
         manager.start();

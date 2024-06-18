@@ -9,7 +9,6 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.exceptions.ExceptionHandler;
-import polimi.ingsoft.server.exceptions.MatchExceptions.*;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NicknameNotAvailableException;
@@ -25,11 +24,7 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Server implements VirtualServer {
     protected final PrintStream logger;
@@ -70,7 +65,8 @@ public abstract class Server implements VirtualServer {
         logger.println("SERVER: generated stub " + stub);
 
         synchronized (getClients()) {
-            getClients().add(new ClientConnection(client, stub));
+            ClientConnection connection = new ClientConnection(client, stub);
+            getClients().add(connection);
         }
 
         client.showConnectUpdate(stub);
@@ -155,6 +151,13 @@ public abstract class Server implements VirtualServer {
     @Override
     public void reJoinMatch(Integer matchId, String nickname) throws IOException {
 
+    }
+
+    @Override
+    public void ping(String nickname) throws IOException {
+        logger.println("Received PING");
+        ClientConnection client = getClient(nickname);
+        client.setConnected(true);
     }
 
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
