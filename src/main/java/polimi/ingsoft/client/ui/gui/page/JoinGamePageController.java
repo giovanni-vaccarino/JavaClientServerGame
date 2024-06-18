@@ -57,14 +57,14 @@ public class JoinGamePageController implements Initializable {
         gameList.setStyle("-fx-background-color: white;");
     }
     public void setGame(Integer s){
-        gameList.setText(s.toString());
+        gameList.setText("Game "+s.toString());
         gameId = s;
     }
 
     public void setGameList(List<Integer> games) {
         gameList.getItems().clear();
         for (Integer game : games) {
-            MenuItem menuItem = new MenuItem(game.toString());
+            MenuItem menuItem = new MenuItem("Game "+game.toString()+" - 1/2");
             menuItem.setOnAction(e -> handleMenuItemAction(game));
             gameList.getItems().add(menuItem);
         }

@@ -54,7 +54,7 @@ public class InitialCardPageController implements Initializable {
     public void setInitialCardPath(String id){
         String frontPath = CardPathUtils.frontInitialCard(id);
         String backPath = CardPathUtils.backInitialCard(id);
-        setInitialCard(frontPath, backPath); // TODO outer function!!! SSSIMON
+        setInitialCard(frontPath, backPath);
     }
 
     public void setInitialCard(String frontPath, String backPath){
