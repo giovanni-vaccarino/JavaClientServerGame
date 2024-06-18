@@ -152,7 +152,11 @@ public class GameManager implements CLIPhaseManager {
         } else if (gamePhase == GAME_PHASE.END) {
             out.println(MESSAGES.GAME_END);
             //TODO change this method to list reader
-            out.println("IL VINCITORE E': "+gameState.getWinners());
+            if(gameState.getWinners().size()==1) out.println("IL VINCITORE E': "+gameState.getWinners().getFirst());
+            else{
+                out.println("VINCITORI:");
+                for(String winner:gameState.getWinners())out.println(winner);
+            }
         }
         model.gamePhase = gamePhase;
         model.turnStep = turnStep;
