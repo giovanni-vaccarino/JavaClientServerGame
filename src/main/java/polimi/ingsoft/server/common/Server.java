@@ -328,6 +328,14 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+    protected void deleteGame(Integer matchId){
+        controller.deleteMatch(matchId);
+
+        synchronized (getMatchNotificationClients()){
+            getMatchNotificationClients().remove(matchId);
+        }
+    }
+
     private void initExceptionHandlers() {
         exceptionHandlers.put(NullPointerException.class,
                 (client, exception) -> reportError(client, ERROR_MESSAGES.UNKNOWN_ERROR));

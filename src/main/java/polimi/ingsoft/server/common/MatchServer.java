@@ -186,6 +186,10 @@ public class MatchServer implements VirtualMatchServer {
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
+
+            if(matchController.getGameState().getGamePhase() == GAME_PHASE.END){
+                server.deleteGame(matchController.getMatchId());
+            }
         } catch (Exception e){
             handleException(clientToUpdate, e);
         }

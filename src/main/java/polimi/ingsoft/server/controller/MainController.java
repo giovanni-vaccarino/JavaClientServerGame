@@ -12,7 +12,6 @@ import java.util.*;
  * Controller class that manages the creation and management of matches.
  */
 public class MainController {
-
     /**
      * A map that associates each match ID with its corresponding MatchController.
      */
@@ -85,6 +84,17 @@ public class MainController {
         matches.put(matchId, match);
 
         return matchId;
+    }
+
+
+    /**
+     * Delete the MatchController for the specified match ID.
+     *
+     * @param matchId the ID of the match
+     * @throws MatchNotFoundException    if the match is not found
+     */
+    public synchronized void deleteMatch(int matchId){
+        matches.remove(matchId);
     }
 
 
