@@ -175,12 +175,15 @@ public class GamePageController implements Initializable{
         });
         buttonPersonalDeck10.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(1,0);
+            mixedCard = null;
         });
         buttonPersonalDeck20.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(2,0);
+            mixedCard = null;
         });
         buttonPersonalDeck30.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(3,0);
+            mixedCard = null;
         });
 
         // Set nickname-->color
