@@ -17,6 +17,13 @@ public class ConnectionManager {
 
     private final Map<Integer, List<VirtualView>> matchNotificationList = new HashMap<>();
 
+    /**
+     * Maps every client disconnected to its game
+     * NOTE: when the game ends, all the disconnected clients from that game are removed
+     */
+    private final Map<ClientConnection, Integer> disconnectedClients = new HashMap<>();
+
+
     private ConnectionManager(PrintStream logger) {
         this.logger = logger;
         logger.println("patata");
@@ -29,7 +36,7 @@ public class ConnectionManager {
             public void run() {
                 // Send ping to all clients connected to main server
                 synchronized (getClients()) {
-                    logger.println("CLIENTS: " + getClients().toString());
+                    logger.println("CLIENTS: " + getClients().stream().map(ClientConnection::getNickname).toList());
                     List<ClientConnection> disconnectedClients = new ArrayList<>();
                     for (var client : getClients()) {
                         if (!client.getConnected()) {
@@ -51,7 +58,7 @@ public class ConnectionManager {
                         }
                     }
 
-                    logger.println("aRgmgsoei");
+                    logger.println("ALL THE PINGS TO THE CLIENTS HAVE BEEN SENT");
                 }
             }
         };
@@ -75,18 +82,15 @@ public class ConnectionManager {
         return clientsInGame;
     }
 
-
     public Map<Integer, List<VirtualView>> getMatchNotificationList(){
         return matchNotificationList;
     }
 
     public ClientConnection getClient(String nickname){
-       for(var client : clients){
-           if(Objects.equals(client.getNickname(), nickname))
-               return client;
-       }
-
-       return null;
+       return clients.stream()
+               .filter(client -> Objects.equals(client.getNickname(), nickname))
+               .findFirst()
+               .orElse(null);
     }
 
     public Boolean isNicknameAvailable(String nickname){
@@ -100,5 +104,37 @@ public class ConnectionManager {
     public void addClientConnection(ClientConnection clientConnection) {
         clients.add(clientConnection);
     }
+
+    public void addClientInGame(ClientConnection clientConnection) {
+        clientsInGame.add(clientConnection);
+    }
+
+    public void removeClientInGame(ClientConnection clientConnection) {
+        clientsInGame.remove(clientConnection);
+    }
+
+    public ClientConnection getClientInGame(VirtualView virtualView){
+        return clientsInGame.stream()
+                .filter(client -> Objects.equals(client.getVirtualView(), virtualView))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public ClientConnection getClientInGame(String nickname){
+        return clientsInGame.stream()
+                .filter(client -> Objects.equals(client.getNickname(), nickname))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void addDisconnectedClient(ClientConnection connection, Integer matchId){
+        disconnectedClients.put(connection, matchId);
+    }
+
+    public void removeDisconnectedClient(ClientConnection connection){
+        disconnectedClients.remove(connection);
+    }
+
+    public Map<ClientConnection, Integer> getDisconnectedClients(){return disconnectedClients;}
 }
 

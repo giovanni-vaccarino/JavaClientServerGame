@@ -24,6 +24,7 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.ref.Cleaner;
 import java.util.*;
 
 public abstract class Server implements VirtualServer {
@@ -63,13 +64,48 @@ public abstract class Server implements VirtualServer {
         ConnectionManager.getInstance().addClientConnection(clientConnection);
     }
 
+    protected void removeClientConnection(ClientConnection clientConnection){
+        ConnectionManager.getInstance().removeClientFromMainServer(clientConnection);
+    }
+
+    protected List<ClientConnection> getClientsInGame(){
+        return ConnectionManager.getInstance().getClientsInGame();
+    }
+
+    protected ClientConnection getClientInGame(VirtualView virtualView){
+        return ConnectionManager.getInstance().getClientInGame(virtualView);
+    }
+
+    protected ClientConnection getClientInGame(String nickname){
+        return ConnectionManager.getInstance().getClientInGame(nickname);
+    }
+
+    protected void addClientInGame(ClientConnection clientConnection){
+        ConnectionManager.getInstance().addClientInGame(clientConnection);
+    }
+
+    protected void removeClientInGame(ClientConnection clientConnection){
+        ConnectionManager.getInstance().removeClientInGame(clientConnection);
+    }
+
+    protected void addDisconnectedClient(ClientConnection clientConnection, Integer matchId){
+        ConnectionManager.getInstance().addDisconnectedClient(clientConnection, matchId);
+    }
+
+    protected void removeDisconnectedClient(ClientConnection clientConnection){
+        ConnectionManager.getInstance().removeDisconnectedClient(clientConnection);
+    }
+
+    protected Map<ClientConnection, Integer> getDisconnectedClients(){
+        return ConnectionManager.getInstance().getDisconnectedClients();
+    }
+
     @Override
     public void connect(VirtualView client) throws IOException {
         String stub = Utils.getRandomNickname();
         logger.println("SERVER: generated stub " + stub);
 
         synchronized (getClients()) {
-            logger.println("patata prima");
             ClientConnection connection = new ClientConnection(client, stub);
             addClientConnection(connection);
         }
@@ -106,12 +142,13 @@ public abstract class Server implements VirtualServer {
         List<Integer> matches = controller.getMatches();
         broadcastUpdateMatchesList(matches);
 
-        getMatchServers().put(id, createMatchServer(controller.getMatch(id), getMatchNotificationClients().get(id), logger));
-
         // Creating a new list for the players
         synchronized (getMatchNotificationClients()){
             getMatchNotificationClients().put(id, new ArrayList<>());
         }
+
+        getMatchServers().put(id, createMatchServer(controller.getMatch(id), getMatchNotificationClients().get(id), logger));
+
         // It is client's responsibility to join the match right after
     }
 
@@ -125,9 +162,20 @@ public abstract class Server implements VirtualServer {
 
             MatchController matchController = controller.getMatch(matchId);
             GameState gameState = matchController.getGameState();
+
             //Adding the client to the match notification list
             synchronized (getMatchNotificationClients()){
                 getMatchNotificationClients().get(matchId).add(clientToUpdate);
+            }
+
+            //Removing the client connection from the clients list, and moving it to the in game list
+            synchronized (getClients()){
+                synchronized (getClientsInGame()) {
+                    addClientInGame(getClient(playerNickname));
+
+                    removeClientConnection(getClient(playerNickname));
+                    logger.println("Moved " + playerNickname + " to the in game list");
+                }
             }
 
             VirtualMatchServer matchServer;
@@ -140,13 +188,16 @@ public abstract class Server implements VirtualServer {
 
             clientToUpdate.setMatchServer(matchServer);
 
-            List<String> nicknames = matchController.getNamePlayers();
-            lobbyUpdatePlayerJoin(nicknames);
+            //List<String> nicknames = matchController.getNamePlayers();
+            //lobbyUpdatePlayerJoin(nicknames);
+
             if (gameState.getGamePhase() == GAME_PHASE.INITIALIZATION) {
+                logger.println("SENDING START GAME UPDATE");
                 matchUpdateGameState(
                         matchController.getMatchId(),
                         gameState
                 );
+                logger.println("FINISHED SENDING START GAME UPDATE");
             }
         } catch (Exception e){
             handleException(clientToUpdate, e);
@@ -359,10 +410,33 @@ public abstract class Server implements VirtualServer {
     }
 
     protected void deleteGame(Integer matchId){
+        List<String> players = controller.getMatch(matchId).getNamePlayers();
         controller.deleteMatch(matchId);
 
         synchronized (getMatchNotificationClients()){
             getMatchNotificationClients().remove(matchId);
+        }
+
+        //Removing the client connections from the in game list, and moving it to the client list
+        synchronized (getClients()){
+            synchronized (getClientsInGame()) {
+                for(var playerNickname : players){
+                    addClientConnection(getClient(playerNickname));
+                    removeClientInGame(getClient(playerNickname));
+
+                    logger.println("Moving back " + playerNickname + " to the client list");
+                }
+            }
+        }
+
+        //Removing the disconnected clients associated to that game
+        synchronized (getDisconnectedClients()){
+            for(var playerNickname : players){
+                getDisconnectedClients().keySet().stream()
+                        .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), playerNickname))
+                        .findFirst()
+                        .ifPresent(getDisconnectedClients()::remove);
+            }
         }
     }
 

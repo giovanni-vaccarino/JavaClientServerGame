@@ -193,6 +193,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void matchPong() throws IOException {
+        System.out.println("Received MATCH PONG");
         getMatchServer().ping(getUi().getNickname());
     }
 }
