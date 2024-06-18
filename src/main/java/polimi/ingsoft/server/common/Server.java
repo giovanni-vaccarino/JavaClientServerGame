@@ -328,6 +328,18 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+    public void reportMatchError(Integer matchId, VirtualView client, ERROR_MESSAGES error) {
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
+        synchronized (clientsToNotify) {
+            try {
+                client.reportError(error);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     protected void deleteGame(Integer matchId){
         controller.deleteMatch(matchId);
 

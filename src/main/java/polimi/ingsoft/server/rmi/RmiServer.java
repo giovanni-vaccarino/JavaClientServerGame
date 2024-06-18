@@ -27,6 +27,7 @@ public class RmiServer extends Server {
                     ServerCommand command = methodQueue.take();
                     command.execute(this);
                 } catch (InterruptedException | IOException e) {
+                    System.out.println("ssimon" + e.getMessage());
                     Thread.currentThread().interrupt();
                     break;
                 }
