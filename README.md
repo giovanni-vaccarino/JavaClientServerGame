@@ -1,17 +1,33 @@
 
 # Codex Naturalis - GC05
 ## Software engineering final project
-Software Engineering Project 2024: GC05 - Vaccarino, Zacchi, Viganò, Vacis
+Software Engineering Project 2024:
+
+Members of the group GC05:
+
+- Zacchi Simone
+- Vaccarino Giovanni
+- Vacis Nicolò 
+- Viganò Andrea
 
 ## Implemented Features
-- CLI
-- GUI (java FX)
-- SOCKET
-- RMI
-- Complete ruleset
-- Advanced Feature: Chat
-- Advanced Feature: Multiple games
-- Advanced Feature: Resilience 
+Legend:
+
+- 🟢: implemented
+- 🔴: not implemented
+
+| Feature        | Status |
+|----------------|--------|
+| Complete rules | 🟢     |
+| TCP            | 🟢     |
+| RMI            | 🟢     |
+| CLI            | 🟢     |
+| GUI(FX)        | 🟢     |
+| Resilience     | 🟢     |
+| Chat           | 🟢     |
+| Multiple games | 🟢     |
+| Persistence    | 🔴     |
+
 ## Unit Test Coverage Data
 Line Coverage:
 - Controller: xx%
