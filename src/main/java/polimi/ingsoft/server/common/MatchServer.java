@@ -50,12 +50,13 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setColor(String nickname, PlayerColor color) throws IOException {
-        VirtualView clientToUpdate = server.clients.get(nickname);
+        VirtualView clientToUpdate = server.getClients().get(nickname);
 
         try {
             matchController.setPlayerColor(nickname, color);
             PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
             this.server.singleUpdateInitialSettings(
+                    matchController.getMatchId(),
                     clientToUpdate,
                     settings
             );
@@ -70,12 +71,13 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException {
-        VirtualView clientToUpdate = server.clients.get(nickname);
+        VirtualView clientToUpdate = server.getClients().get(nickname);
 
         try {
             matchController.setFaceInitialCard(nickname, isInitialCardFacingUp);
             PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
             this.server.singleUpdateInitialSettings(
+                    matchController.getMatchId(),
                     clientToUpdate,
                     settings
             );
@@ -90,12 +92,13 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setQuestCard(String nickname, QuestCard questCard) throws IOException {
-        VirtualView clientToUpdate = server.clients.get(nickname);
+        VirtualView clientToUpdate = server.getClients().get(nickname);
 
         try {
             matchController.setQuestCard(nickname, questCard);
             PlayerInitialSetting settings = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
             this.server.singleUpdateInitialSettings(
+                    matchController.getMatchId(),
                     clientToUpdate,
                     settings
             );
@@ -121,13 +124,13 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void sendPrivateMessage(String player, String recipient, String message) throws IOException {
-        VirtualView clientToUpdate = server.clients.get(player);
+        VirtualView clientToUpdate = server.getClients().get(player);
         System.out.println("Sto mandando messaggio 2");
         try {
             Message _message = matchController.writePrivateMessage(player, recipient, message);
             System.out.println("Sto mandando messaggio 3");
-            this.server.singleUpdatePrivateMessage(player, recipient, _message);
-            this.server.singleUpdatePrivateMessage(recipient, player, _message);
+            this.server.singleUpdatePrivateMessage(matchController.getMatchId(), player, recipient, _message);
+            this.server.singleUpdatePrivateMessage(matchController.getMatchId(), recipient, player, _message);
         } catch (Exception e){
             handleException(clientToUpdate, e);
         }
@@ -135,7 +138,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void drawCard(String nickname, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-        VirtualView clientToUpdate = server.clients.get(nickname);
+        VirtualView clientToUpdate = server.getClients().get(nickname);
         Player player = matchController.getPlayerByNickname(nickname)
                 .orElse(null);
 
@@ -146,7 +149,7 @@ public class MatchServer implements VirtualMatchServer {
                     :
                     matchController.getPublicBoard().getPublicBoardGold();
 
-            this.server.singleUpdatePlayerHand(clientToUpdate, player.getHand());
+            this.server.singleUpdatePlayerHand(matchController.getMatchId(), clientToUpdate, player.getHand());
             this.server.matchUpdatePublicBoard(
                     matchController.getMatchId(),
                     deckType,
@@ -163,7 +166,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void placeCard(String nickname, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
-        VirtualView clientToUpdate = server.clients.get(nickname);
+        VirtualView clientToUpdate = server.getClients().get(nickname);
         Player player = matchController.getPlayerByNickname(nickname)
                 .orElse(null);
 
@@ -171,7 +174,7 @@ public class MatchServer implements VirtualMatchServer {
             matchController.placeCard(player, card, coordinates, facingUp);
             PlayedCard playedCard = player.getBoard().getCard(coordinates);
             Integer score = player.getBoard().getScore();
-            this.server.singleUpdatePlayerHand(clientToUpdate, player.getHand());
+            this.server.singleUpdatePlayerHand(matchController.getMatchId(), clientToUpdate, player.getHand());
             this.server.matchUpdatePlayerBoard(
                     matchController.getMatchId(),
                     nickname,

@@ -25,12 +25,13 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Server implements VirtualServer, ConnectionsClient {
+public abstract class Server implements VirtualServer {
     protected final PrintStream logger;
 
     protected final MainController controller;
@@ -47,20 +48,30 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
 
     protected abstract Map<Integer, VirtualMatchServer> getMatchServers();
 
+    protected Map<String, VirtualView> getClients(){
+        return ConnectionManager.getInstance().getClients();
+    }
+
+    protected Map<Integer, List<VirtualView>> getMatchNotificationClients(){
+        return ConnectionManager.getInstance().getMatchNotificationList();
+    }
+
     @Override
     public void connect(VirtualView client) throws IOException {
         String stub = Utils.getRandomNickname();
         logger.println("SERVER: generated stub " + stub);
-        synchronized (this.clients) {
-            this.clients.put(stub, client);
+
+        synchronized (getClients()) {
+            getClients().put(stub, client);
         }
+
         client.showConnectUpdate(stub);
     }
 
     @Override
     public void setNickname(String nickname, String stub) throws IOException {
         logger.println("SERVER: " + nickname + " " + stub);
-        VirtualView clientToUpdate = clients.get(stub);
+        VirtualView clientToUpdate = getClients().get(stub);
 
         try {
             setNicknameForClient(clientToUpdate, nickname);
@@ -72,32 +83,32 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
 
     @Override
     public void getMatches(String nickname) throws IOException {
-        VirtualView clientToUpdate = clients.get(nickname);
+        VirtualView clientToUpdate = getClients().get(nickname);
         List<Integer> matches = controller.getMatches();
         singleUpdateMatchesList(clientToUpdate, matches);
     }
 
     @Override
     public void createMatch(String playerNickname, Integer requiredNumPlayers) throws IOException {
-        VirtualView clientToUpdate = clients.get(playerNickname);
+        VirtualView clientToUpdate = getClients().get(playerNickname);
 
         int id = controller.createMatch(requiredNumPlayers);
         singleUpdateMatchCreate(clientToUpdate, id);
         List<Integer> matches = controller.getMatches();
         broadcastUpdateMatchesList(matches);
 
-        getMatchServers().put(id, createMatchServer(controller.getMatch(id), matchNotificationList.get(id), logger));
+        getMatchServers().put(id, createMatchServer(controller.getMatch(id), getMatchNotificationClients().get(id), logger));
 
         // Creating a new list for the players
-        synchronized (matchNotificationList){
-            matchNotificationList.put(id, new ArrayList<>());
+        synchronized (getMatchNotificationClients()){
+            getMatchNotificationClients().put(id, new ArrayList<>());
         }
         // It is client's responsibility to join the match right after
     }
 
     @Override
     public void joinMatch(String playerNickname, Integer matchId) throws IOException {
-        VirtualView clientToUpdate = clients.get(playerNickname);
+        VirtualView clientToUpdate = getClients().get(playerNickname);
 
         try {
             controller.joinMatch(matchId, playerNickname);
@@ -106,8 +117,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
             MatchController matchController = controller.getMatch(matchId);
             GameState gameState = matchController.getGameState();
             //Adding the client to the match notification list
-            synchronized (matchNotificationList){
-                matchNotificationList.get(matchId).add(clientToUpdate);
+            synchronized (getMatchNotificationClients()){
+                getMatchNotificationClients().get(matchId).add(clientToUpdate);
             }
 
             VirtualMatchServer matchServer;
@@ -115,7 +126,7 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
                 matchServer = getMatchServers().get(matchId);
             } else {
                 // Match was created by a client using a protocol different from the one used by this client
-                matchServer = createMatchServer(controller.getMatch(matchId), matchNotificationList.get(matchId), logger);
+                matchServer = createMatchServer(controller.getMatch(matchId), getMatchNotificationClients().get(matchId), logger);
             }
 
             clientToUpdate.setMatchServer(matchServer);
@@ -139,24 +150,24 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
-        synchronized (this.clients) {
-            if (clients.containsKey(nickname)) {
+        synchronized (getClients()) {
+            if (getClients().containsKey(nickname)) {
                 throw new NicknameNotAvailableException();
             }
 
             //Removing the precedent (key, value) of the client
-            clients.entrySet().stream()
+            getClients().entrySet().stream()
                     .filter(entry -> entry.getValue().equals(client))
                     .map(Map.Entry::getKey)
                     .findFirst()
-                    .ifPresent(clients::remove);
+                    .ifPresent(getClients()::remove);
 
-            clients.put(nickname, client);
+            getClients().put(nickname, client);
         }
     }
 
     protected void singleUpdateNickname(VirtualView client) {
-        synchronized (this.clients) {
+        synchronized (getClients()) {
             try {
                 client.showNicknameUpdate();
             } catch (IOException ignore) { }
@@ -164,7 +175,7 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     protected void singleUpdateMatchesList(VirtualView client, List<Integer> matches) {
-        synchronized (this.clients) {
+        synchronized (getClients()) {
             try {
                 client.showUpdateMatchesList(matches);
             } catch (IOException ignored) { }
@@ -172,21 +183,21 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     protected void broadcastUpdateMatchesList(List<Integer> matches) throws IOException {
-        synchronized (this.clients) {
-            for (var client : this.clients.values()) {
+        synchronized (getClients()) {
+            for (var client : getClients().values()) {
                 client.showUpdateMatchesList(matches);
             }
         }
     }
 
     protected void singleUpdateMatchCreate(VirtualView client, Integer matchId) throws IOException {
-        synchronized (this.clients) {
+        synchronized (getClients()) {
             client.showUpdateMatchCreate(matchId);
         }
     }
 
     protected void singleUpdateMatchJoin(VirtualView client) {
-        synchronized (this.clients) {
+        synchronized (getClients()) {
             try {
                 client.showUpdateMatchJoin();
             } catch (IOException ignored) { }
@@ -195,10 +206,12 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
 
     protected void lobbyUpdatePlayerJoin(List<String> nicknames) {
         List<VirtualView> clientsToNotify = new ArrayList<>();
+
         for (var nickname : nicknames) {
-            clientsToNotify.add(this.clients.get(nickname));
+            clientsToNotify.add(getClients().get(nickname));
         }
-        synchronized (this.clients) {
+
+        synchronized (getClients()) {
             for (var client : clientsToNotify) {
                 try {
                     client.showUpdateLobbyPlayers(nicknames);
@@ -207,8 +220,10 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
         }
     }
 
-    public void singleUpdateInitialSettings(VirtualView client, PlayerInitialSetting playerInitialSetting) {
-        synchronized (this.clients) {
+    public void singleUpdateInitialSettings(Integer matchId, VirtualView client, PlayerInitialSetting playerInitialSetting) {
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
+        synchronized (clientsToNotify) {
             try {
                 client.showUpdateInitialSettings(playerInitialSetting);
             } catch (IOException ignored) { }
@@ -216,7 +231,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     public void matchUpdateGameState(Integer matchId, GameState gameState) {
-        List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
@@ -226,8 +242,10 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
         }
     }
 
-    public void singleUpdatePlayerHand(VirtualView client, PlayerHand playerHand) {
-        synchronized (this.clients) {
+    public void singleUpdatePlayerHand(Integer matchId, VirtualView client, PlayerHand playerHand) {
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
+        synchronized (clientsToNotify) {
             try {
                 client.showUpdatePlayerHand(playerHand);
             } catch (IOException ignored) { }
@@ -235,7 +253,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     public void matchUpdatePublicBoard(Integer matchId, TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> publicBoardUpdate) {
-        List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
@@ -246,7 +265,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     public void matchUpdatePlayerBoard(Integer matchId, String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
-        List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
@@ -258,7 +278,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     public void matchUpdateBroadcastMessage(Integer matchId, Message message) {
-        List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
@@ -268,9 +289,11 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
         }
     }
 
-    public void singleUpdatePrivateMessage(String nickname, String recipient, Message message) {
-        VirtualView client = this.clients.get(nickname);
-        synchronized (this.clients) {
+    public void singleUpdatePrivateMessage(Integer matchId, String nickname, String recipient, Message message) {
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+        VirtualView client = getClients().get(nickname);
+
+        synchronized (clientsToNotify) {
             try {
                 client.showUpdatePrivateChat(recipient, message);
             } catch (IOException ignored) { }
@@ -284,7 +307,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
             PlaceInPublicBoard<QuestCard> quest,
             Map<String, Board> boards
     ) {
-        List<VirtualView> clientsToNotify = this.matchNotificationList.get(matchId);
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
@@ -295,7 +319,7 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
     }
 
     public void reportError(VirtualView client, ERROR_MESSAGES error) {
-        synchronized (this.clients) {
+        synchronized (getClients()) {
             try {
                 client.reportError(error);
             } catch (IOException e) {

@@ -8,11 +8,11 @@ import java.util.Map;
 public class ConnectionManager {
     private static ConnectionManager instance;
 
-    private Map<String, VirtualView> clients = new HashMap<>();
+    private final Map<String, VirtualView> clients = new HashMap<>();
 
-    private Map<String, VirtualView> clientsInGame = new HashMap<>();
+    private final Map<String, VirtualView> clientsInGame = new HashMap<>();
 
-    private Map<Integer, List<VirtualView>> matchNotificationList = new HashMap<>();
+    private final Map<Integer, List<VirtualView>> matchNotificationList = new HashMap<>();
 
     private ConnectionManager() {
     }
@@ -22,6 +22,18 @@ public class ConnectionManager {
             instance = new ConnectionManager();
         }
         return instance;
+    }
+
+    public Map<String, VirtualView> getClients(){
+        return clients;
+    }
+
+    public Map<String, VirtualView> getClientsInGame(){
+        return clientsInGame;
+    }
+
+    public Map<Integer, List<VirtualView>> getMatchNotificationList(){
+        return matchNotificationList;
     }
 }
 
