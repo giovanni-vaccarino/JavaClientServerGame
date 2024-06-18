@@ -48,8 +48,16 @@ public abstract class Server implements VirtualServer {
 
     protected abstract Map<Integer, VirtualMatchServer> getMatchServers();
 
-    protected Map<String, VirtualView> getClients(){
+    protected List<ClientConnection> getClients(){
         return ConnectionManager.getInstance().getClients();
+    }
+
+    protected ClientConnection getClient(String nickname){
+        return ConnectionManager.getInstance().getClient(nickname);
+    }
+
+    protected Boolean isNicknameAvailable(String nickname){
+        return ConnectionManager.getInstance().isNicknameAvailable(nickname);
     }
 
     protected Map<Integer, List<VirtualView>> getMatchNotificationClients(){
@@ -62,7 +70,7 @@ public abstract class Server implements VirtualServer {
         logger.println("SERVER: generated stub " + stub);
 
         synchronized (getClients()) {
-            getClients().put(stub, client);
+            getClients().add(new ClientConnection(client, stub));
         }
 
         client.showConnectUpdate(stub);
@@ -71,7 +79,7 @@ public abstract class Server implements VirtualServer {
     @Override
     public void setNickname(String nickname, String stub) throws IOException {
         logger.println("SERVER: " + nickname + " " + stub);
-        VirtualView clientToUpdate = getClients().get(stub);
+        VirtualView clientToUpdate = getClient(nickname).getVirtualView();
 
         try {
             setNicknameForClient(clientToUpdate, nickname);
@@ -83,14 +91,14 @@ public abstract class Server implements VirtualServer {
 
     @Override
     public void getMatches(String nickname) throws IOException {
-        VirtualView clientToUpdate = getClients().get(nickname);
+        VirtualView clientToUpdate = getClient(nickname).getVirtualView();
         List<Integer> matches = controller.getMatches();
         singleUpdateMatchesList(clientToUpdate, matches);
     }
 
     @Override
     public void createMatch(String playerNickname, Integer requiredNumPlayers) throws IOException {
-        VirtualView clientToUpdate = getClients().get(playerNickname);
+        VirtualView clientToUpdate = getClient(playerNickname).getVirtualView();
 
         int id = controller.createMatch(requiredNumPlayers);
         singleUpdateMatchCreate(clientToUpdate, id);
@@ -108,7 +116,7 @@ public abstract class Server implements VirtualServer {
 
     @Override
     public void joinMatch(String playerNickname, Integer matchId) throws IOException {
-        VirtualView clientToUpdate = getClients().get(playerNickname);
+        VirtualView clientToUpdate = getClient(playerNickname).getVirtualView();
 
         try {
             controller.joinMatch(matchId, playerNickname);
@@ -151,18 +159,17 @@ public abstract class Server implements VirtualServer {
 
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
         synchronized (getClients()) {
-            if (getClients().containsKey(nickname)) {
+            if (isNicknameAvailable(nickname)) {
                 throw new NicknameNotAvailableException();
             }
 
             //Removing the precedent (key, value) of the client
-            getClients().entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(client))
-                    .map(Map.Entry::getKey)
+            getClients().stream()
+                    .filter(entry -> entry.getVirtualView().equals(client))
                     .findFirst()
                     .ifPresent(getClients()::remove);
 
-            getClients().put(nickname, client);
+            getClients().add(new ClientConnection(client, nickname));
         }
     }
 
@@ -184,8 +191,8 @@ public abstract class Server implements VirtualServer {
 
     protected void broadcastUpdateMatchesList(List<Integer> matches) throws IOException {
         synchronized (getClients()) {
-            for (var client : getClients().values()) {
-                client.showUpdateMatchesList(matches);
+            for (var client : getClients()) {
+                client.getVirtualView().showUpdateMatchesList(matches);
             }
         }
     }
@@ -208,7 +215,7 @@ public abstract class Server implements VirtualServer {
         List<VirtualView> clientsToNotify = new ArrayList<>();
 
         for (var nickname : nicknames) {
-            clientsToNotify.add(getClients().get(nickname));
+            clientsToNotify.add(getClient(nickname).getVirtualView());
         }
 
         synchronized (getClients()) {
@@ -291,7 +298,7 @@ public abstract class Server implements VirtualServer {
 
     public void singleUpdatePrivateMessage(Integer matchId, String nickname, String recipient, Message message) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
-        VirtualView client = getClients().get(nickname);
+        VirtualView client = getClient(nickname).getVirtualView();
 
         synchronized (clientsToNotify) {
             try {
