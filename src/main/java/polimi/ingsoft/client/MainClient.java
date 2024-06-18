@@ -6,6 +6,7 @@ import polimi.ingsoft.client.ui.UIType;
 import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
 import polimi.ingsoft.client.ui.cli.Protocols;
 import polimi.ingsoft.client.socket.SocketClient;
+import polimi.ingsoft.server.exceptions.UnableToConnectException;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -53,9 +54,12 @@ public class MainClient {
             client.getUi().showWelcomeScreen();
 
             while (true) { }
+        } catch (UnableToConnectException e) {
+            // TODO maybe change this one
+            main(args);
         } catch (IOException e) {
             printStream.println("Error: " + e.getMessage());
-        }//TODO nullpointer exception se scegli RMI da una rete in cui non c'è nessun server
+        }
     }
 
 
@@ -67,7 +71,7 @@ public class MainClient {
      * @return the created Client object.
      * @throws IOException if an I/O error occurs during client creation.
      */
-    private static Client createClient(Protocols protocol, UIType uiType) throws IOException {
+    private static Client createClient(Protocols protocol, UIType uiType) throws UnableToConnectException {
         return (protocol == Protocols.RMI) ? createRmiClient(uiType) : createSocketClient(uiType);
     }
 
@@ -78,16 +82,13 @@ public class MainClient {
      * @param uiType the type of user interface (CLI or GUI).
      * @return the created RmiClient object, or null if an error occurs.
      */
-    private static Client createRmiClient(UIType uiType) {
+    private static Client createRmiClient(UIType uiType) throws UnableToConnectException {
         try {
             //System.setProperty("java.rmi.server.hostname", String.valueOf(InetAddress.getLocalHost()));
             return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, uiType, printStream, scanner);
         } catch (RemoteException | NotBoundException exception) {
-            System.out.println(exception);
-            return null;
-        } /*catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }*/
+            throw new UnableToConnectException();
+        }
     }
 
 
@@ -98,7 +99,11 @@ public class MainClient {
      * @return the created SocketClient object.
      * @throws IOException if an I/O error occurs during client creation.
      */
-    private static Client createSocketClient(UIType uiType) throws IOException {
-        return new SocketClient(socketServerHostName, socketServerPort, uiType, printStream, scanner);
+    private static Client createSocketClient(UIType uiType) throws UnableToConnectException {
+        try {
+            return new SocketClient(socketServerHostName, socketServerPort, uiType, printStream, scanner);
+        } catch (IOException e) {
+            throw new UnableToConnectException();
+        }
     }
 }
