@@ -2,6 +2,7 @@ package polimi.ingsoft.server;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import polimi.ingsoft.server.common.ConnectionManager;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.rmi.RmiServer;
@@ -34,6 +35,7 @@ public class MainServer {
         logger.println("MAIN: Starting servers (RMI & Socket)");
         runRmiServer();
         runSocketServer();
+        ConnectionManager.getInstance();
         logger.println("MAIN: Finished scheduling server setup");
     }
 

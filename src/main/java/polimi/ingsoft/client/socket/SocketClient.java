@@ -55,13 +55,23 @@ public class SocketClient extends Client {
     @Override
     public void run() {
         new Thread(() -> {
-            try {
+            try{
                 ClientCommand command;
-                while ((command = (ClientCommand) in.readObject()) != null)
-                    command.execute(this);
-            } catch (IOException | ClassNotFoundException e) {
-                // TODO handle
+                while ((command = (ClientCommand) in.readObject()) != null){
+                    System.out.println("SSIMON 2");
+                    try {
+                        command.execute(this);
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    System.out.println("SSIMON 3");
+                }
+            }catch (IOException | ClassNotFoundException e){
+                e.printStackTrace(System.out);
             }
+
+
+
         }, "SocketClientCommandReader").start();
     }
 }

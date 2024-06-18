@@ -85,6 +85,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showConnectUpdate(String stubNickname) throws IOException {
+        System.out.println("arrivato nick stub");
         ui.setStubNickname(stubNickname);
     }
 
@@ -183,7 +184,11 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     @Override
     public void pong() throws IOException {
         System.out.println("Received PONG");
-        getServer().ping(getUi().getNickname());
+        if(getUi().getNickname() != null){
+            getServer().ping(getUi().getNickname());
+        }else{
+            getServer().ping(getUi().getStub());
+        }
     }
 
     @Override

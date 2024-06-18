@@ -19,6 +19,7 @@ public class ConnectionManager {
 
     private ConnectionManager(PrintStream logger) {
         this.logger = logger;
+        logger.println("patata");
         scheduleTimeoutRoutine();
     }
 
@@ -29,20 +30,24 @@ public class ConnectionManager {
                 // Send ping to all clients connected to main server
                 synchronized (getClients()) {
                     logger.println("CLIENTS: " + getClients().toString());
+                    List<ClientConnection> disconnectedClients = new ArrayList<>();
                     for (var client : getClients()) {
                         if (!client.getConnected()) {
                             // Client has disconnected :(
                             logger.println("Il bro si è disconnesso :(");
-                            removeClientFromMainServer(client);
+                            disconnectedClients.add(client);
                         }
+                    }
+
+                    for(var client: disconnectedClients){
+                        removeClientFromMainServer(client);
                     }
 
                     for (var client : getClients()) {
                         client.setConnected(false);
                         try {
                             client.getVirtualView().pong();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException ignore) {
                         }
                     }
 
@@ -90,6 +95,10 @@ public class ConnectionManager {
 
     public void removeClientFromMainServer(ClientConnection clientConnection) {
         clients.remove(clientConnection);
+    }
+
+    public void addClientConnection(ClientConnection clientConnection) {
+        clients.add(clientConnection);
     }
 }
 

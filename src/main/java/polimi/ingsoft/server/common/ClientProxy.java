@@ -117,6 +117,7 @@ public abstract class ClientProxy implements VirtualView {
 
     @Override
     public void pong() throws IOException {
+        System.out.println("SSIMON 1");
         sendMessage((ClientCommand) VirtualView::pong);
     }
 

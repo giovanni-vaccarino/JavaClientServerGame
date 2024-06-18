@@ -59,14 +59,19 @@ public abstract class Server implements VirtualServer {
         return ConnectionManager.getInstance().getMatchNotificationList();
     }
 
+    protected void addClientConnection(ClientConnection clientConnection){
+        ConnectionManager.getInstance().addClientConnection(clientConnection);
+    }
+
     @Override
     public void connect(VirtualView client) throws IOException {
         String stub = Utils.getRandomNickname();
         logger.println("SERVER: generated stub " + stub);
 
         synchronized (getClients()) {
+            logger.println("patata prima");
             ClientConnection connection = new ClientConnection(client, stub);
-            getClients().add(connection);
+            addClientConnection(connection);
         }
 
         client.showConnectUpdate(stub);
@@ -75,7 +80,7 @@ public abstract class Server implements VirtualServer {
     @Override
     public void setNickname(String nickname, String stub) throws IOException {
         logger.println("SERVER: " + nickname + " " + stub);
-        VirtualView clientToUpdate = getClient(nickname).getVirtualView();
+        VirtualView clientToUpdate = getClient(stub).getVirtualView();
 
         try {
             setNicknameForClient(clientToUpdate, nickname);
@@ -156,8 +161,11 @@ public abstract class Server implements VirtualServer {
     @Override
     public void ping(String nickname) throws IOException {
         logger.println("Received PING");
-        ClientConnection client = getClient(nickname);
-        client.setConnected(true);
+        logger.println(nickname);
+        synchronized (getClients()){
+            ClientConnection client = getClient(nickname);
+            client.setConnected(true);
+        }
     }
 
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
