@@ -19,9 +19,11 @@ import polimi.ingsoft.server.model.cards.ResourceCard;
 import polimi.ingsoft.server.model.chat.Message;
 import polimi.ingsoft.server.model.player.Player;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
+import polimi.ingsoft.server.exceptions.ExceptionHandler;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MatchServer implements VirtualMatchServer {
@@ -30,10 +32,15 @@ public class MatchServer implements VirtualMatchServer {
     // TODO temp
     private final Server server;
 
+    private final Map<Class<? extends Exception>, ExceptionHandler> exceptionHandlers = new HashMap<>();
+
+
     public MatchServer(PrintStream logger, MatchController controller, Server server) {
         this.logger = logger;
         this.matchController = controller;
         this.server = server;
+
+        initExceptionHandlers();
     }
 
     @Override
@@ -56,16 +63,8 @@ public class MatchServer implements VirtualMatchServer {
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
-        } catch (NullPointerException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
-        } catch (WrongGamePhaseException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_GAME_PHASE);
-        } catch (WrongStepException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_STEP);
-        } catch (ColorAlreadyPickedException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.COLOR_ALREADY_PICKED);
-        } catch (InitalChoiceAlreadySetException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -84,14 +83,8 @@ public class MatchServer implements VirtualMatchServer {
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
-        } catch (NullPointerException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
-        } catch (WrongGamePhaseException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_GAME_PHASE);
-        } catch (WrongStepException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_STEP);
-        } catch (InitalChoiceAlreadySetException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -112,14 +105,8 @@ public class MatchServer implements VirtualMatchServer {
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
-        } catch (NullPointerException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.PLAYER_IS_NOT_IN_A_MATCH);
-        } catch (WrongGamePhaseException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_GAME_PHASE);
-        } catch (WrongStepException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_STEP);
-        } catch (InitalChoiceAlreadySetException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -141,8 +128,8 @@ public class MatchServer implements VirtualMatchServer {
             System.out.println("Sto mandando messaggio 3");
             this.server.singleUpdatePrivateMessage(player, recipient, _message);
             this.server.singleUpdatePrivateMessage(recipient, player, _message);
-        } catch (PlayerNotFoundException e) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.PLAYER_NOT_FOUND);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -169,14 +156,8 @@ public class MatchServer implements VirtualMatchServer {
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
-        } catch (NullPointerException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.UNKNOWN_ERROR);
-        } catch (WrongGamePhaseException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_GAME_PHASE);
-        } catch (WrongStepException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_STEP);
-        } catch (WrongPlayerForCurrentTurnException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_PLAYER_TURN);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -202,18 +183,8 @@ public class MatchServer implements VirtualMatchServer {
                     matchController.getMatchId(),
                     matchController.getGameState()
             );
-        } catch (NullPointerException exception) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.UNKNOWN_ERROR);
-        } catch (WrongGamePhaseException exception){
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_GAME_PHASE);
-        } catch (WrongStepException exception){
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_STEP);
-        } catch (WrongPlayerForCurrentTurnException exception){
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.WRONG_PLAYER_TURN);
-        } catch (CoordinateNotValidException e) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.COORDINATE_NOT_VALID);
-        } catch (NotEnoughResourcesException e) {
-            this.server.reportError(clientToUpdate, ERROR_MESSAGES.NOT_ENOUGH_RESOURCES);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -230,5 +201,43 @@ public class MatchServer implements VirtualMatchServer {
                 questPublicBoard,
                 playerBoards
         );
+    }
+
+    private void initExceptionHandlers() {
+        exceptionHandlers.put(NullPointerException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.UNKNOWN_ERROR));
+
+        exceptionHandlers.put(WrongGamePhaseException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.WRONG_GAME_PHASE));
+
+        exceptionHandlers.put(WrongStepException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.WRONG_STEP));
+
+        exceptionHandlers.put(ColorAlreadyPickedException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.COLOR_ALREADY_PICKED));
+
+        exceptionHandlers.put(InitalChoiceAlreadySetException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET));
+
+        exceptionHandlers.put(WrongPlayerForCurrentTurnException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.WRONG_PLAYER_TURN));
+
+        exceptionHandlers.put(PlayerNotFoundException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.PLAYER_NOT_FOUND));
+
+        exceptionHandlers.put(CoordinateNotValidException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.COORDINATE_NOT_VALID));
+
+        exceptionHandlers.put(NotEnoughResourcesException.class,
+                (client, exception) -> server.reportError(client, ERROR_MESSAGES.NOT_ENOUGH_RESOURCES));
+    }
+
+    private void handleException(VirtualView clientToUpdate, Exception exception) {
+        ExceptionHandler handler = exceptionHandlers.get(exception.getClass());
+        if (handler != null) {
+            handler.handle(clientToUpdate, exception);
+        } else {
+            server.reportError(clientToUpdate, ERROR_MESSAGES.UNKNOWN_ERROR);
+        }
     }
 }

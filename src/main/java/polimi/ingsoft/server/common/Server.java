@@ -8,6 +8,8 @@ import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
+import polimi.ingsoft.server.exceptions.ExceptionHandler;
+import polimi.ingsoft.server.exceptions.MatchExceptions.*;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NicknameNotAvailableException;
@@ -24,19 +26,25 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Server implements VirtualServer, ConnectionsClient {
     protected final PrintStream logger;
+
     protected final MainController controller;
+
+    private final Map<Class<? extends Exception>, ExceptionHandler> exceptionHandlers = new HashMap<>();
 
     public Server(PrintStream logger, MainController controller) {
         this.logger = logger;
         this.controller = controller;
+        initExceptionHandlers();
     }
 
     protected abstract VirtualMatchServer createMatchServer(MatchController matchController, List<VirtualView> clients, PrintStream logger);
+
     protected abstract Map<Integer, VirtualMatchServer> getMatchServers();
 
     @Override
@@ -57,8 +65,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
         try {
             setNicknameForClient(clientToUpdate, nickname);
             singleUpdateNickname(clientToUpdate);
-        } catch (NicknameNotAvailableException exception) {
-            clientToUpdate.reportError(ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -120,10 +128,8 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
                         gameState
                 );
             }
-        } catch (MatchAlreadyFullException exception) {
-            reportError(clientToUpdate, ERROR_MESSAGES.MATCH_IS_ALREADY_FULL);
-        } catch (MatchNotFoundException exception) {
-            reportError(clientToUpdate, ERROR_MESSAGES.MATCH_DOES_NOT_EXIST);
+        } catch (Exception e){
+            handleException(clientToUpdate, e);
         }
     }
 
@@ -295,6 +301,29 @@ public abstract class Server implements VirtualServer, ConnectionsClient {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    private void initExceptionHandlers() {
+        exceptionHandlers.put(NullPointerException.class,
+                (client, exception) -> reportError(client, ERROR_MESSAGES.UNKNOWN_ERROR));
+
+        exceptionHandlers.put(NicknameNotAvailableException.class,
+                (client, exception) -> reportError(client, ERROR_MESSAGES.NICKNAME_NOT_AVAILABLE));
+
+        exceptionHandlers.put(MatchAlreadyFullException.class,
+                (client, exception) -> reportError(client, ERROR_MESSAGES.MATCH_IS_ALREADY_FULL));
+
+        exceptionHandlers.put(MatchNotFoundException.class,
+                (client, exception) -> reportError(client, ERROR_MESSAGES.MATCH_DOES_NOT_EXIST));
+    }
+
+    private void handleException(VirtualView clientToUpdate, Exception exception) {
+        ExceptionHandler handler = exceptionHandlers.get(exception.getClass());
+        if (handler != null) {
+            handler.handle(clientToUpdate, exception);
+        } else {
+           reportError(clientToUpdate, ERROR_MESSAGES.UNKNOWN_ERROR);
         }
     }
 }
