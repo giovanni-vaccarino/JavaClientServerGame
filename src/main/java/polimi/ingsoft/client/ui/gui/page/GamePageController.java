@@ -235,6 +235,7 @@ public class GamePageController implements Initializable{
     public void setCurrentPlayerName(){
         GameState gameState = getGui().getUiModel().getGameState();
         currentPlayerName.setText("Turn: "+ gameState.getCurrentPlayerNickname());
+        setClickBoardHandler();
     }
 
     public void setPublicBoard(){
@@ -485,6 +486,7 @@ public class GamePageController implements Initializable{
     }
 
     public void drawPlayerHand(int x, int y){
+        System.out.println("PLAYER HAND CLICKED: "+x+":"+y);
         mixedCard = getGui().getUiModel().getPlayerHand().get(x-1);
         xPlayedCard=x;
         yPlayedCard=y;
@@ -910,6 +912,14 @@ public class GamePageController implements Initializable{
         fadeTransition.play();*/
 
         getStage().getScene().setRoot(root);
+    }
+
+    public void nextPage(){
+        if(getGui().getUiModel().getGameState().getWinners().contains(getGui().getNickname())){
+            winPage();
+        }else{
+            losePage();
+        }
     }
 
     public void winPage(){

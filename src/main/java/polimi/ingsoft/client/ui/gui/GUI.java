@@ -200,6 +200,11 @@ public class GUI extends UI{
 
             case LAST_ROUND -> {
                 javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().showLastRound());
+            }
+
+            case END -> {
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().nextPage());
             }
         }
     }
