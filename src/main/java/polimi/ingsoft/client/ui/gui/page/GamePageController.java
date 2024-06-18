@@ -469,14 +469,13 @@ public class GamePageController implements Initializable{
         setPublicBoard();
         setPlayerHand();
 
-        // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
         buttonPersonalDeck30.setVisible(true);
 
         setClickBoardHandler();
     }
 
-    public void updateBoard(){
-        if(mixedCard!=null){
+    public void updateBoard(String boardNickname){
+        if(boardNickname.equals(getGui().getNickname())){
             // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
             buttonPersonalDeck30.setVisible(false);
         }
