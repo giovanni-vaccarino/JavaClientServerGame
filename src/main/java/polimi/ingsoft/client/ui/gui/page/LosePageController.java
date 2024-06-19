@@ -1,19 +1,28 @@
 package polimi.ingsoft.client.ui.gui.page;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
 
 import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LosePageController {
+public class LosePageController implements Initializable {
+    @FXML Label winnerLabel;
 
     public LosePageController() {
         GUIsingleton.getInstance().setLosePageController(this);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        winnerLabel.setText("Winners: "+String.join(" / ", getGui().getUiModel().getGameState().getWinners()));
+    }
     public GUI getGui(){
         return GUIsingleton.getInstance().getGui();
     }
