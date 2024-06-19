@@ -92,4 +92,10 @@ class FaceTest {
        t.setBottomRight(w);
         assertEquals(w,t.getBottomRight());
     }
+    @Test
+    void equalsTest(){
+       assertFalse(t.equals(null));
+       assertTrue(t.equals(new Face()));
+
+    }
 }

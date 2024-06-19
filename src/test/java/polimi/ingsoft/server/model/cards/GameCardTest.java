@@ -78,4 +78,15 @@ class GameCardTest {
         assertEquals(front4,t.getBottomRightCorner(true));
         assertEquals(back4,t.getBottomRightCorner(false));
     }
+
+    @Test
+    void equals(){
+        assertTrue(t.equals(t));
+        assertFalse(t.equals(null));
+        assertTrue(t.equals(new ResourceCard("id",front,back,score)));
+    }
+    @Test
+    void hashCodeTest(){
+        System.out.println(t.hashCode());
+    }
 }
