@@ -68,6 +68,8 @@ public abstract class UI implements Serializable {
         this.stub = stubNickname;
     }
 
+    public String getStub(){return this.stub;}
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
         try {

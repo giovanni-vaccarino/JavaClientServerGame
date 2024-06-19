@@ -23,8 +23,7 @@ import polimi.ingsoft.server.exceptions.ExceptionHandler;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MatchServer implements VirtualMatchServer {
     private final PrintStream logger;
@@ -41,6 +40,68 @@ public class MatchServer implements VirtualMatchServer {
         this.server = server;
 
         initExceptionHandlers();
+        scheduleTimeoutRoutine();
+    }
+
+    private List<VirtualView> getMatchClients(){
+        return server.getMatchNotificationClients().get(matchController.getMatchId());
+    }
+
+    private void scheduleTimeoutRoutine() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                // Send ping to all clients that are playing the game
+                synchronized (server.getClientsInGame()){
+                    synchronized (getMatchClients()) {
+                        logger.println("CLIENTS IN GAME" + matchController.getMatchId() + ": " + server.getClientsInGame().stream().map(ClientConnection::getNickname).toList());
+                        List<ClientConnection> disconnectedClients = new ArrayList<>();
+
+                        for (var client : getMatchClients()) {
+                            ClientConnection clientConnection = server.getClientInGame(client);
+
+                            if (!clientConnection.getConnected()) {
+                                // Client has disconnected :(
+                                logger.println("Il bro si è disconnesso dal game :(");
+                                disconnectedClients.add(clientConnection);
+                            }
+                        }
+
+                        for(var client: disconnectedClients){
+                            server.addDisconnectedClient(client, matchController.getMatchId());
+                            server.removeClientInGame(client);
+                            getMatchClients().remove(client.getVirtualView());
+                        }
+
+                        for (var client : getMatchClients()) {
+                            ClientConnection clientConnection = server.getClientInGame(client);
+
+                            clientConnection.setConnected(false);
+                            try {
+                                clientConnection.getVirtualView().matchPong();
+                            } catch (IOException ignore) {
+                            }
+                        }
+
+                        logger.println("ALL THE PINGS TO THE CLIENTS IN GAME HAVE BEEN SENT");
+                    }
+                }
+            }
+        };
+
+        new Timer().scheduleAtFixedRate(task, 0, 5000);
+    }
+
+    @Override
+    public void ping(String nickname) throws IOException {
+        logger.println("Received MATCH PING");
+        logger.println(nickname);
+        synchronized (getMatchClients()){
+            synchronized (server.getClientsInGame()){
+                ClientConnection client = server.getClientInGame(nickname);
+                client.setConnected(true);
+            }
+        }
     }
 
     @Override
@@ -50,7 +111,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setColor(String nickname, PlayerColor color) throws IOException {
-        VirtualView clientToUpdate = server.getClients().get(nickname);
+        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
 
         try {
             matchController.setPlayerColor(nickname, color);
@@ -71,7 +132,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException {
-        VirtualView clientToUpdate = server.getClients().get(nickname);
+        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
 
         try {
             matchController.setFaceInitialCard(nickname, isInitialCardFacingUp);
@@ -92,7 +153,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setQuestCard(String nickname, QuestCard questCard) throws IOException {
-        VirtualView clientToUpdate = server.getClients().get(nickname);
+        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
 
         try {
             matchController.setQuestCard(nickname, questCard);
@@ -124,7 +185,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void sendPrivateMessage(String player, String recipient, String message) throws IOException {
-        VirtualView clientToUpdate = server.getClients().get(player);
+        VirtualView clientToUpdate = server.getClientInGame(player).getVirtualView();
         System.out.println("Sto mandando messaggio 2");
         try {
             Message _message = matchController.writePrivateMessage(player, recipient, message);
@@ -138,7 +199,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void drawCard(String nickname, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-        VirtualView clientToUpdate = server.getClients().get(nickname);
+        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
         Player player = matchController.getPlayerByNickname(nickname)
                 .orElse(null);
 
@@ -166,7 +227,7 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void placeCard(String nickname, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
-        VirtualView clientToUpdate = server.getClients().get(nickname);
+        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
         Player player = matchController.getPlayerByNickname(nickname)
                 .orElse(null);
 
@@ -212,31 +273,31 @@ public class MatchServer implements VirtualMatchServer {
 
     private void initExceptionHandlers() {
         exceptionHandlers.put(NullPointerException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.UNKNOWN_ERROR));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.UNKNOWN_ERROR));
 
         exceptionHandlers.put(WrongGamePhaseException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.WRONG_GAME_PHASE));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.WRONG_GAME_PHASE));
 
         exceptionHandlers.put(WrongStepException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.WRONG_STEP));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.WRONG_STEP));
 
         exceptionHandlers.put(ColorAlreadyPickedException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.COLOR_ALREADY_PICKED));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.COLOR_ALREADY_PICKED));
 
         exceptionHandlers.put(InitalChoiceAlreadySetException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET));
 
         exceptionHandlers.put(WrongPlayerForCurrentTurnException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.WRONG_PLAYER_TURN));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.WRONG_PLAYER_TURN));
 
         exceptionHandlers.put(PlayerNotFoundException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.PLAYER_NOT_FOUND));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.PLAYER_NOT_FOUND));
 
         exceptionHandlers.put(CoordinateNotValidException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.COORDINATE_NOT_VALID));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.COORDINATE_NOT_VALID));
 
         exceptionHandlers.put(NotEnoughResourcesException.class,
-                (client, exception) -> server.reportError(client, ERROR_MESSAGES.NOT_ENOUGH_RESOURCES));
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.NOT_ENOUGH_RESOURCES));
     }
 
     private void handleException(VirtualView clientToUpdate, Exception exception) {

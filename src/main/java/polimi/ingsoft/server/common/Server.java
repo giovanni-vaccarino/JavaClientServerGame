@@ -9,7 +9,6 @@ import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.exceptions.ExceptionHandler;
-import polimi.ingsoft.server.exceptions.MatchExceptions.*;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NicknameNotAvailableException;
@@ -25,11 +24,8 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.ref.Cleaner;
+import java.util.*;
 
 public abstract class Server implements VirtualServer {
     protected final PrintStream logger;
@@ -48,12 +44,60 @@ public abstract class Server implements VirtualServer {
 
     protected abstract Map<Integer, VirtualMatchServer> getMatchServers();
 
-    protected Map<String, VirtualView> getClients(){
+    protected List<ClientConnection> getClients(){
         return ConnectionManager.getInstance().getClients();
+    }
+
+    protected ClientConnection getClient(String nickname){
+        return ConnectionManager.getInstance().getClient(nickname);
+    }
+
+    protected Boolean isNicknameAvailable(String nickname){
+        return ConnectionManager.getInstance().isNicknameAvailable(nickname);
     }
 
     protected Map<Integer, List<VirtualView>> getMatchNotificationClients(){
         return ConnectionManager.getInstance().getMatchNotificationList();
+    }
+
+    protected void addClientConnection(ClientConnection clientConnection){
+        ConnectionManager.getInstance().addClientConnection(clientConnection);
+    }
+
+    protected void removeClientConnection(ClientConnection clientConnection){
+        ConnectionManager.getInstance().removeClientFromMainServer(clientConnection);
+    }
+
+    protected List<ClientConnection> getClientsInGame(){
+        return ConnectionManager.getInstance().getClientsInGame();
+    }
+
+    protected ClientConnection getClientInGame(VirtualView virtualView){
+        return ConnectionManager.getInstance().getClientInGame(virtualView);
+    }
+
+    protected ClientConnection getClientInGame(String nickname){
+        return ConnectionManager.getInstance().getClientInGame(nickname);
+    }
+
+    protected void addClientInGame(ClientConnection clientConnection){
+        ConnectionManager.getInstance().addClientInGame(clientConnection);
+    }
+
+    protected void removeClientInGame(ClientConnection clientConnection){
+        ConnectionManager.getInstance().removeClientInGame(clientConnection);
+    }
+
+    protected void addDisconnectedClient(ClientConnection clientConnection, Integer matchId){
+        ConnectionManager.getInstance().addDisconnectedClient(clientConnection, matchId);
+    }
+
+    protected void removeDisconnectedClient(ClientConnection clientConnection){
+        ConnectionManager.getInstance().removeDisconnectedClient(clientConnection);
+    }
+
+    protected Map<ClientConnection, Integer> getDisconnectedClients(){
+        return ConnectionManager.getInstance().getDisconnectedClients();
     }
 
     @Override
@@ -62,7 +106,8 @@ public abstract class Server implements VirtualServer {
         logger.println("SERVER: generated stub " + stub);
 
         synchronized (getClients()) {
-            getClients().put(stub, client);
+            ClientConnection connection = new ClientConnection(client, stub);
+            addClientConnection(connection);
         }
 
         client.showConnectUpdate(stub);
@@ -71,7 +116,7 @@ public abstract class Server implements VirtualServer {
     @Override
     public void setNickname(String nickname, String stub) throws IOException {
         logger.println("SERVER: " + nickname + " " + stub);
-        VirtualView clientToUpdate = getClients().get(stub);
+        VirtualView clientToUpdate = getClient(stub).getVirtualView();
 
         try {
             setNicknameForClient(clientToUpdate, nickname);
@@ -83,32 +128,33 @@ public abstract class Server implements VirtualServer {
 
     @Override
     public void getMatches(String nickname) throws IOException {
-        VirtualView clientToUpdate = getClients().get(nickname);
+        VirtualView clientToUpdate = getClient(nickname).getVirtualView();
         List<Integer> matches = controller.getMatches();
         singleUpdateMatchesList(clientToUpdate, matches);
     }
 
     @Override
     public void createMatch(String playerNickname, Integer requiredNumPlayers) throws IOException {
-        VirtualView clientToUpdate = getClients().get(playerNickname);
+        VirtualView clientToUpdate = getClient(playerNickname).getVirtualView();
 
         int id = controller.createMatch(requiredNumPlayers);
         singleUpdateMatchCreate(clientToUpdate, id);
         List<Integer> matches = controller.getMatches();
         broadcastUpdateMatchesList(matches);
 
-        getMatchServers().put(id, createMatchServer(controller.getMatch(id), getMatchNotificationClients().get(id), logger));
-
         // Creating a new list for the players
         synchronized (getMatchNotificationClients()){
             getMatchNotificationClients().put(id, new ArrayList<>());
         }
+
+        getMatchServers().put(id, createMatchServer(controller.getMatch(id), getMatchNotificationClients().get(id), logger));
+
         // It is client's responsibility to join the match right after
     }
 
     @Override
     public void joinMatch(String playerNickname, Integer matchId) throws IOException {
-        VirtualView clientToUpdate = getClients().get(playerNickname);
+        VirtualView clientToUpdate = getClient(playerNickname).getVirtualView();
 
         try {
             controller.joinMatch(matchId, playerNickname);
@@ -116,9 +162,20 @@ public abstract class Server implements VirtualServer {
 
             MatchController matchController = controller.getMatch(matchId);
             GameState gameState = matchController.getGameState();
+
             //Adding the client to the match notification list
             synchronized (getMatchNotificationClients()){
                 getMatchNotificationClients().get(matchId).add(clientToUpdate);
+            }
+
+            //Removing the client connection from the clients list, and moving it to the in game list
+            synchronized (getClients()){
+                synchronized (getClientsInGame()) {
+                    addClientInGame(getClient(playerNickname));
+
+                    removeClientConnection(getClient(playerNickname));
+                    logger.println("Moved " + playerNickname + " to the in game list");
+                }
             }
 
             VirtualMatchServer matchServer;
@@ -131,13 +188,16 @@ public abstract class Server implements VirtualServer {
 
             clientToUpdate.setMatchServer(matchServer);
 
-            List<String> nicknames = matchController.getNamePlayers();
-            lobbyUpdatePlayerJoin(nicknames);
+            //List<String> nicknames = matchController.getNamePlayers();
+            //lobbyUpdatePlayerJoin(nicknames);
+
             if (gameState.getGamePhase() == GAME_PHASE.INITIALIZATION) {
+                logger.println("SENDING START GAME UPDATE");
                 matchUpdateGameState(
                         matchController.getMatchId(),
                         gameState
                 );
+                logger.println("FINISHED SENDING START GAME UPDATE");
             }
         } catch (Exception e){
             handleException(clientToUpdate, e);
@@ -149,20 +209,29 @@ public abstract class Server implements VirtualServer {
 
     }
 
+    @Override
+    public void ping(String nickname) throws IOException {
+        logger.println("Received PING");
+        logger.println(nickname);
+        synchronized (getClients()){
+            ClientConnection client = getClient(nickname);
+            client.setConnected(true);
+        }
+    }
+
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
         synchronized (getClients()) {
-            if (getClients().containsKey(nickname)) {
+            if (isNicknameAvailable(nickname)) {
                 throw new NicknameNotAvailableException();
             }
 
             //Removing the precedent (key, value) of the client
-            getClients().entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(client))
-                    .map(Map.Entry::getKey)
+            getClients().stream()
+                    .filter(entry -> entry.getVirtualView().equals(client))
                     .findFirst()
                     .ifPresent(getClients()::remove);
 
-            getClients().put(nickname, client);
+            getClients().add(new ClientConnection(client, nickname));
         }
     }
 
@@ -184,8 +253,8 @@ public abstract class Server implements VirtualServer {
 
     protected void broadcastUpdateMatchesList(List<Integer> matches) throws IOException {
         synchronized (getClients()) {
-            for (var client : getClients().values()) {
-                client.showUpdateMatchesList(matches);
+            for (var client : getClients()) {
+                client.getVirtualView().showUpdateMatchesList(matches);
             }
         }
     }
@@ -208,7 +277,7 @@ public abstract class Server implements VirtualServer {
         List<VirtualView> clientsToNotify = new ArrayList<>();
 
         for (var nickname : nicknames) {
-            clientsToNotify.add(getClients().get(nickname));
+            clientsToNotify.add(getClient(nickname).getVirtualView());
         }
 
         synchronized (getClients()) {
@@ -291,7 +360,7 @@ public abstract class Server implements VirtualServer {
 
     public void singleUpdatePrivateMessage(Integer matchId, String nickname, String recipient, Message message) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
-        VirtualView client = getClients().get(nickname);
+        VirtualView client = getClient(nickname).getVirtualView();
 
         synchronized (clientsToNotify) {
             try {
@@ -328,11 +397,46 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+    public void reportMatchError(Integer matchId, VirtualView client, ERROR_MESSAGES error) {
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
+        synchronized (clientsToNotify) {
+            try {
+                client.reportError(error);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     protected void deleteGame(Integer matchId){
+        List<String> players = controller.getMatch(matchId).getNamePlayers();
         controller.deleteMatch(matchId);
 
         synchronized (getMatchNotificationClients()){
             getMatchNotificationClients().remove(matchId);
+        }
+
+        //Removing the client connections from the in game list, and moving it to the client list
+        synchronized (getClients()){
+            synchronized (getClientsInGame()) {
+                for(var playerNickname : players){
+                    addClientConnection(getClient(playerNickname));
+                    removeClientInGame(getClient(playerNickname));
+
+                    logger.println("Moving back " + playerNickname + " to the client list");
+                }
+            }
+        }
+
+        //Removing the disconnected clients associated to that game
+        synchronized (getDisconnectedClients()){
+            for(var playerNickname : players){
+                getDisconnectedClients().keySet().stream()
+                        .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), playerNickname))
+                        .findFirst()
+                        .ifPresent(getDisconnectedClients()::remove);
+            }
         }
     }
 

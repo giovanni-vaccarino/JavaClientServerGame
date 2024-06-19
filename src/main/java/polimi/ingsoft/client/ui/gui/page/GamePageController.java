@@ -175,12 +175,15 @@ public class GamePageController implements Initializable{
         });
         buttonPersonalDeck10.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(1,0);
+            mixedCard = null;
         });
         buttonPersonalDeck20.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(2,0);
+            mixedCard = null;
         });
         buttonPersonalDeck30.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(3,0);
+            mixedCard = null;
         });
 
         // Set nickname-->color
@@ -235,6 +238,7 @@ public class GamePageController implements Initializable{
     public void setCurrentPlayerName(){
         GameState gameState = getGui().getUiModel().getGameState();
         currentPlayerName.setText("Turn: "+ gameState.getCurrentPlayerNickname());
+        setClickBoardHandler();
     }
 
     public void setPublicBoard(){
@@ -468,16 +472,30 @@ public class GamePageController implements Initializable{
         setPublicBoard();
         setPlayerHand();
 
-        // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
         buttonPersonalDeck30.setVisible(true);
+        buttonPersonalDeck20.setVisible(true);
+        buttonPersonalDeck10.setVisible(true);
 
         setClickBoardHandler();
     }
 
-    public void updateBoard(){
-        if(mixedCard!=null){
-            // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
+    public void updateBoard(String boardNickname){
+        if(boardNickname.equals(getGui().getNickname())){
             buttonPersonalDeck30.setVisible(false);
+        }
+        switch (getGui().getUiModel().getPlayerHand().size()){
+            case 2:
+                buttonPersonalDeck30.setVisible(false);
+                break;
+            case 1:
+                buttonPersonalDeck30.setVisible(false);
+                buttonPersonalDeck20.setVisible(false);
+                break;
+            case 0:
+                buttonPersonalDeck30.setVisible(false);
+                buttonPersonalDeck20.setVisible(false);
+                buttonPersonalDeck10.setVisible(false);
+                break;
         }
         SetGamePage.setBoardData();
         SetGamePage.setPlayerHand(personalDeck);
@@ -485,6 +503,7 @@ public class GamePageController implements Initializable{
     }
 
     public void drawPlayerHand(int x, int y){
+        System.out.println("PLAYER HAND CLICKED: "+x+":"+y);
         mixedCard = getGui().getUiModel().getPlayerHand().get(x-1);
         xPlayedCard=x;
         yPlayedCard=y;
@@ -910,6 +929,14 @@ public class GamePageController implements Initializable{
         fadeTransition.play();*/
 
         getStage().getScene().setRoot(root);
+    }
+
+    public void nextPage(){
+        if(getGui().getUiModel().getGameState().getWinners().contains(getGui().getNickname())){
+            winPage();
+        }else{
+            losePage();
+        }
     }
 
     public void winPage(){

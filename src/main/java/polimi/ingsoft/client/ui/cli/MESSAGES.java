@@ -167,7 +167,9 @@ public enum MESSAGES {
     ->DOWNRIGHT
     ->DOWNLEFT
     ->BACK: GO BACK TO YOUR BOARD !
-    """);
+    """),
+
+    GO_BACK_TO_MATCH_MENU("Premi invio per tornare al menu di scelta partita...");
 
     private final String value;
 

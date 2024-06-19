@@ -48,7 +48,7 @@ public class ConnectionHandler implements Runnable {
             out.close();
             socket.close();
         } catch (EOFException | SocketException e) {
-            // TODO handle disconnection here
+
             logger.println("SOCKET: Connection closed");
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);

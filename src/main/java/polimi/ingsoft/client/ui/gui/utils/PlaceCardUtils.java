@@ -145,15 +145,17 @@ public class PlaceCardUtils {
         GUIsingleton.getInstance().getGamePageController().getBoard().add(possiblePosition, x, y);
 
         possiblePosition.setOnMouseEntered(event -> {
-            possiblePosition.setFitWidth(170);
-            possiblePosition.setFitHeight(120);
-            possiblePosition.setTranslateX(-20);
+//            possiblePosition.setFitWidth(170);
+//            possiblePosition.setFitHeight(120);
+//            possiblePosition.setTranslateX(-20);
+            possiblePosition.setStyle("");
         });
 
         possiblePosition.setOnMouseExited(event -> {
-            possiblePosition.setFitWidth(140);
-            possiblePosition.setFitHeight(100);
-            possiblePosition.setTranslateX(0);
+//            possiblePosition.setFitWidth(140);
+//            possiblePosition.setFitHeight(100);
+//            possiblePosition.setTranslateX(0);
+            possiblePosition.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 2, 2);");
         });
     }
 

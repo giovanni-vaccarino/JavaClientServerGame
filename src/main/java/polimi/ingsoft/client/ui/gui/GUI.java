@@ -200,6 +200,11 @@ public class GUI extends UI{
 
             case LAST_ROUND -> {
                 javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().showLastRound());
+            }
+
+            case END -> {
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().nextPage());
             }
         }
     }
@@ -231,7 +236,7 @@ public class GUI extends UI{
     public void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score){
         //System.out.println("REFRESH BOARD IN GUI");
         getUiModel().updatePlayerBoard(nickname, coordinates, playedCard, score);
-        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateBoard());
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateBoard(nickname));
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setScore());
     }
 

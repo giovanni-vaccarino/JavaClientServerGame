@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.common;
 
 import polimi.ingsoft.server.common.VirtualServer;
+import polimi.ingsoft.server.common.command.MatchServerCommand;
 import polimi.ingsoft.server.common.command.ServerCommand;
 
 import java.io.IOException;
@@ -37,5 +38,10 @@ public abstract class ServerProxy implements VirtualServer {
     @Override
     public void reJoinMatch(Integer matchId, String nickname) throws IOException {
         sendMessage((ServerCommand) server -> server.reJoinMatch(matchId, nickname));
+    }
+
+    @Override
+    public void ping(String nickname) throws IOException {
+        sendMessage((ServerCommand) server -> server.ping(nickname));
     }
 }

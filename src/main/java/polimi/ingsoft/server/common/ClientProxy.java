@@ -109,4 +109,19 @@ public abstract class ClientProxy implements VirtualView {
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
         sendMessage((ClientCommand) client -> client.reportError(errorMessage));
     }
+
+    @Override
+    public void reportMatchError(ERROR_MESSAGES errorMessage) throws IOException {
+        sendMessage((ClientCommand) client -> client.reportError(errorMessage));
+    }
+
+    @Override
+    public void pong() throws IOException {
+        sendMessage((ClientCommand) VirtualView::pong);
+    }
+
+    @Override
+    public void matchPong() throws IOException {
+        sendMessage((ClientCommand) VirtualView::matchPong);
+    }
 }

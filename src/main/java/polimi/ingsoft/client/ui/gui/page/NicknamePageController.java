@@ -31,6 +31,16 @@ public class NicknamePageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         errButton.setVisible(false);
+
+        nicknameInput.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case ENTER:
+                    setNickname();
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     public GUI getGui(){

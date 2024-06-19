@@ -152,11 +152,11 @@ public class GameManager implements CLIPhaseManager {
         } else if (gamePhase == GAME_PHASE.END) {
             out.println(MESSAGES.GAME_END);
             //TODO change this method to list reader
-            if(gameState.getWinners().size()==1) out.println("IL VINCITORE E': "+gameState.getWinners().getFirst());
-            else{
-                out.println("VINCITORI:");
-                for(String winner:gameState.getWinners())out.println(winner);
-            }
+            out.println("IL VINCITORE E': "+gameState.getWinners());
+
+            out.println(MESSAGES.GO_BACK_TO_MATCH_MENU.getValue());
+            in.nextLine();
+            cli.returnToMatchManager();
         }
         model.gamePhase = gamePhase;
         model.turnStep = turnStep;
@@ -168,14 +168,6 @@ public class GameManager implements CLIPhaseManager {
             runPlaceCard(model.personalQuestCard);
         } else if (turnStep == TURN_STEP.DRAW && state == State.DRAW && gamePhase!=GAME_PHASE.END) {
             runDrawCard();
-        }
-    }
-
-    private void showTurn(TURN_STEP turnStep) {
-        if (turnStep == TURN_STEP.PLACE) {
-            showPlaceCard();
-        } else if (turnStep == TURN_STEP.DRAW) {
-            showDrawCard();
         }
     }
 
