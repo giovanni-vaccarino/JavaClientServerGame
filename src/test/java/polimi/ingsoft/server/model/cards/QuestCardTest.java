@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.server.model.cards;
 
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.model.boards.Link;
