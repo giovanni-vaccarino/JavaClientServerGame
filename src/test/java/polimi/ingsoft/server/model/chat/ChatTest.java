@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.server.model.chat;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +9,6 @@ import polimi.ingsoft.server.model.cards.ResourceCard;
 import polimi.ingsoft.server.model.cards.cardstructure.CenterSpace;
 import polimi.ingsoft.server.model.cards.cardstructure.CornerSpace;
 import polimi.ingsoft.server.model.cards.cardstructure.Face;
-import polimi.ingsoft.server.model.chat.Chat;
 import polimi.ingsoft.server.model.items.Item;
 import polimi.ingsoft.server.model.items.Resource;
 
@@ -132,6 +131,44 @@ class ChatTest {
         void getBottomRightCorner() {
             assertEquals(front4,t.getBottomRightCorner(true));
             assertEquals(back4,t.getBottomRightCorner(false));
+        }
+    }
+
+    static class MessageTest {
+        @Test
+        public void shouldCreateMessage() {
+            String playerSender = "Gianni";
+            String textMessage = "Gianni il cuoco";
+
+            Message message = new Message(playerSender, textMessage);
+
+            assertEquals(message.getSender(), playerSender);
+            assertEquals(message.getText(), textMessage);
+        }
+
+        @Test
+        public void shouldGetText() {
+            String textMessage = "Gianni il cuoco";
+            Message message = new Message("Gianni", textMessage);
+
+            assertEquals(message.getText(), textMessage);
+        }
+
+        @Test
+        public void shouldGetSender() {
+            String playerSender = "Gianni";
+            Message message = new Message(playerSender, "Gianni il cuoco");
+
+            assertEquals(message.getSender(), playerSender);
+        }
+
+        @Test
+        public void shouldGetPrintableFormatMessage() {
+            String playerSender = "Gianni";
+            String textMessage = "Gianni il cuoco";
+            Message message = new Message(playerSender, textMessage);
+
+            assertEquals(message.printable(), playerSender + ": " + textMessage);
         }
     }
 }

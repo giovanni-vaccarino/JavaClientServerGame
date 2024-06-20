@@ -5,7 +5,6 @@ package polimi.ingsoft.server.model.player;
  */
 public enum PlayerColor {
     RED, YELLOW, BLUE, GREEN;
-    String describe;
 
     /**
      * Converts a player color to String
