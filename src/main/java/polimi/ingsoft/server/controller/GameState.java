@@ -128,6 +128,16 @@ public class GameState implements Serializable, Cloneable {
      * Updates the game phase
      */
     public void updateState(){
+        /*
+        if(matchController.getNumOnlinePlayers() == 1){
+            //TODO case of 0 active players
+            //set blocked state
+            // start timeout
+            return;
+        }
+        //unlock it
+        */
+
         switch(gamePhase){
             case GAME_PHASE.WAITING_FOR_PLAYERS -> {
                 if(getPlayersNick().size() == requestedNumPlayers){
@@ -302,6 +312,8 @@ public class GameState implements Serializable, Cloneable {
         this.firstPlayerIndex = random.nextInt(requestedNumPlayers);
         currentPlayerIndex = firstPlayerIndex;
         currentPlayerNickname = matchController.getPlayerInitialSettings().get(firstPlayerIndex).getNickname();
+
+        System.out.println("The first player is: " + currentPlayerNickname + " with index: " + currentPlayerIndex);
     }
 
 
@@ -317,11 +329,15 @@ public class GameState implements Serializable, Cloneable {
      * Advances to the next player.
      */
     public void goToNextPlayer() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % requestedNumPlayers;
-        currentPlayerNickname = getCurrentPlayer().getNickname();
+        System.out.println("The previous player was: " + currentPlayerNickname + " with index: " + currentPlayerIndex);
+        do{
+            currentPlayerIndex = (currentPlayerIndex + 1) % requestedNumPlayers;
+            System.out.println("The current player has become: " + getCurrentPlayer().getNickname() + " with index " + currentPlayerIndex);
+            this.updateTurnNumber();
+        } while(matchController.isPlayerDisconnected(currentPlayerIndex));
 
-        this.updateTurnNumber();
-        if(gamePhase == GAME_PHASE.PLAY){
+        currentPlayerNickname = getCurrentPlayer().getNickname();
+        if(gamePhase == GAME_PHASE.PLAY && currentTurnStep == TURN_STEP.DRAW){
             this.updateTurnStep();
         }
         this.updateState();

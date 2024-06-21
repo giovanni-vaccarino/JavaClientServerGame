@@ -13,10 +13,11 @@ import java.io.Serializable;
 public class Player implements Serializable {
     private Board board;
     private PlayerColor color;
-
     private final PlayerHand hand;
     private QuestCard questCard;
     private final String nickname;
+
+    private Boolean isDisconnected = false;
 
     /**
      * Creates a new player object
@@ -35,6 +36,13 @@ public class Player implements Serializable {
         this.questCard = questCard;
     }
 
+    public Boolean getIsDisconnected() {
+        return isDisconnected;
+    }
+
+    public void setIsDisconnected(Boolean isDisconnected){
+        this.isDisconnected = isDisconnected;
+    }
     /**
      * Returns Player's board
      * @return Player's board

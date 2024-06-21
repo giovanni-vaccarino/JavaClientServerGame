@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
  * The MatchController class manages the state and behavior of a single match.
  */
 public class MatchController implements Serializable {
-
     private final Integer requestedNumPlayers;
 
     private final GameState gameState;
@@ -46,6 +45,8 @@ public class MatchController implements Serializable {
     protected transient final PrintStream logger;
 
     protected final int matchId;
+
+    private boolean isPingerOn = false;
 
 
     /**
@@ -71,8 +72,43 @@ public class MatchController implements Serializable {
         this.gameState = new GameState(this, requestedNumPlayers);
     }
 
-    public Integer getRequestedNumPlayers() {
-        return requestedNumPlayers;
+    public boolean isPingerOn() {
+        return isPingerOn;
+    }
+
+    public void setPingerOn(boolean pingerOn) {
+        isPingerOn = pingerOn;
+    }
+
+
+    public synchronized REJOIN_STATE updatePlayerStatus(String nickname, Boolean isDisconnected){
+        Player player = getPlayerByNickname(nickname).orElse(null);
+
+        player.setIsDisconnected(isDisconnected);
+
+        if(gameState.getCurrentPlayer() == player){
+            if(gameState.getCurrentTurnStep() == TURN_STEP.PLACE){
+                gameState.goToNextPlayer();
+
+                return REJOIN_STATE.HAVE_TO_UPDATE_TURN;
+            }else{
+                return REJOIN_STATE.HAVE_TO_DRAW;
+            }
+        }
+
+        return REJOIN_STATE.NO_UPDATE;
+    }
+
+
+    public synchronized Boolean isPlayerDisconnected(Integer index){
+        return players.get(index).getIsDisconnected();
+    }
+
+
+    public synchronized Integer getNumOnlinePlayers(){
+        return Math.toIntExact(players.stream()
+                .filter(player -> !player.getIsDisconnected())
+                .count());
     }
 
     /**
@@ -317,6 +353,7 @@ public class MatchController implements Serializable {
     public synchronized Message writeBroadcastMessage(String playerSender, String message){
         return this.chatController.writeBroadcastMessage(playerSender, message);
     }
+
 
     /**
      * Adds a message in a private chat.

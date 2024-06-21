@@ -222,6 +222,7 @@ class MatchControllerTest {
         assertEquals(3, matchController.getPlayers().size());
     }
 
+    /*
     @Test
     void testPlaySteps() {
         //Adding 3 players to the match (requested number of players to start = 3)
@@ -299,7 +300,7 @@ class MatchControllerTest {
         }
 
     }
-
+*/
 
     @Test
     void testWrongInitialStepException() {

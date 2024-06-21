@@ -131,10 +131,25 @@ public class ConnectionManager {
         disconnectedClients.put(connection, matchId);
     }
 
-    public void removeDisconnectedClient(ClientConnection connection){
-        disconnectedClients.remove(connection);
+    public ClientConnection getDisconnectedClient(String nickname){
+        return disconnectedClients.keySet().stream()
+                .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void removeDisconnectedClient(String nickname){
+        disconnectedClients.keySet().stream()
+                .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname))
+                .findFirst()
+                .ifPresent(disconnectedClients::remove);
     }
 
     public Map<ClientConnection, Integer> getDisconnectedClients(){return disconnectedClients;}
+
+    public Boolean isPlayerDisconnected(String nickname){
+        return disconnectedClients.keySet().stream()
+                .anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname));
+    }
 }
 

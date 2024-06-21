@@ -40,6 +40,8 @@ public abstract class Server implements VirtualServer {
         initExceptionHandlers();
     }
 
+    //TODO handle this calls to connection manager in another way
+
     protected abstract VirtualMatchServer createMatchServer(MatchController matchController, List<VirtualView> clients, PrintStream logger);
 
     protected abstract Map<Integer, VirtualMatchServer> getMatchServers();
@@ -92,12 +94,20 @@ public abstract class Server implements VirtualServer {
         ConnectionManager.getInstance().addDisconnectedClient(clientConnection, matchId);
     }
 
-    protected void removeDisconnectedClient(ClientConnection clientConnection){
-        ConnectionManager.getInstance().removeDisconnectedClient(clientConnection);
+    protected void removeDisconnectedClient(String nickname){
+        ConnectionManager.getInstance().removeDisconnectedClient(nickname);
     }
 
     protected Map<ClientConnection, Integer> getDisconnectedClients(){
         return ConnectionManager.getInstance().getDisconnectedClients();
+    }
+
+    protected ClientConnection getDisconnectedClient(String nickname){
+        return ConnectionManager.getInstance().getDisconnectedClient(nickname);
+    }
+
+    protected Boolean isPlayerDisconnected(String nickname){
+        return ConnectionManager.getInstance().isPlayerDisconnected(nickname);
     }
 
     @Override
@@ -106,21 +116,33 @@ public abstract class Server implements VirtualServer {
         logger.println("SERVER: generated stub " + stub);
 
         synchronized (getClients()) {
-            ClientConnection connection = new ClientConnection(client, stub);
-            addClientConnection(connection);
+            logger.println("aggiunto correttamente stub: " + stub);
+            addClientConnection(new ClientConnection(client, stub));
         }
 
         client.showConnectUpdate(stub);
     }
 
+
     @Override
     public void setNickname(String nickname, String stub) throws IOException {
         logger.println("SERVER: " + nickname + " " + stub);
-        VirtualView clientToUpdate = getClient(stub).getVirtualView();
+        VirtualView clientToUpdate;
+        synchronized (getClients()){
+            logger.println("Sto leggendo correttamente da stub:  "+ stub);
+            clientToUpdate = getClient(stub).getVirtualView();
+        }
 
         try {
-            setNicknameForClient(clientToUpdate, nickname);
-            singleUpdateNickname(clientToUpdate);
+            //TODO refactor
+            if(isPlayerAlreadyInGame(nickname)){
+                Integer matchId = handleReconnection(nickname, stub);
+                singleUpdateNickname(clientToUpdate);
+                reJoinUpdates(nickname, matchId);
+            }else{
+                setNicknameForClient(clientToUpdate, nickname);
+                singleUpdateNickname(clientToUpdate);
+            }
         } catch (Exception e){
             handleException(clientToUpdate, e);
         }
@@ -128,15 +150,20 @@ public abstract class Server implements VirtualServer {
 
     @Override
     public void getMatches(String nickname) throws IOException {
-        VirtualView clientToUpdate = getClient(nickname).getVirtualView();
+        VirtualView clientToUpdate;
+        synchronized (getClients()){
+            clientToUpdate = getClient(nickname).getVirtualView();
+        }
         List<Integer> matches = controller.getMatches();
         singleUpdateMatchesList(clientToUpdate, matches);
     }
 
     @Override
     public void createMatch(String playerNickname, Integer requiredNumPlayers) throws IOException {
-        VirtualView clientToUpdate = getClient(playerNickname).getVirtualView();
-
+        VirtualView clientToUpdate;
+        synchronized (getClients()){
+            clientToUpdate = getClient(playerNickname).getVirtualView();
+        }
         int id = controller.createMatch(requiredNumPlayers);
         singleUpdateMatchCreate(clientToUpdate, id);
         List<Integer> matches = controller.getMatches();
@@ -154,7 +181,10 @@ public abstract class Server implements VirtualServer {
 
     @Override
     public void joinMatch(String playerNickname, Integer matchId) throws IOException {
-        VirtualView clientToUpdate = getClient(playerNickname).getVirtualView();
+        VirtualView clientToUpdate;
+        synchronized (getClients()){
+            clientToUpdate = getClient(playerNickname).getVirtualView();
+        }
 
         try {
             controller.joinMatch(matchId, playerNickname);
@@ -387,6 +417,25 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+    public void reJoinMatchUpdate(
+            Integer matchId,
+            PlaceInPublicBoard<ResourceCard> resource,
+            PlaceInPublicBoard<GoldCard> gold,
+            PlaceInPublicBoard<QuestCard> quest,
+            Map<String, Board> boards
+    ) {
+        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+
+        synchronized (clientsToNotify) {
+            for (var client : clientsToNotify) {
+                try {
+                    //change with another update
+                    client.showUpdateGameStart(resource, gold, quest, boards);
+                } catch (IOException ignored) { }
+            }
+        }
+    }
+
     public void reportError(VirtualView client, ERROR_MESSAGES error) {
         synchronized (getClients()) {
             try {
@@ -438,6 +487,59 @@ public abstract class Server implements VirtualServer {
                         .ifPresent(getDisconnectedClients()::remove);
             }
         }
+    }
+
+
+    private Boolean isPlayerAlreadyInGame(String nickname){
+        synchronized (getDisconnectedClients()){
+            return isPlayerDisconnected(nickname);
+        }
+    }
+
+
+    private Integer handleReconnection(String nickname, String stub){
+        VirtualView virtualView;
+        Integer matchId;
+
+        synchronized (getDisconnectedClients()){
+            matchId = getDisconnectedClients().get(getDisconnectedClient(nickname));
+            removeDisconnectedClient(nickname);
+        }
+
+        synchronized (getClients()){
+            virtualView = getClient(stub).getVirtualView();
+        }
+
+        synchronized (getClientsInGame()){
+            addClientInGame(new ClientConnection(virtualView, nickname));
+        }
+        logger.println(nickname + " has reconnected to the Game " + matchId);
+
+        return matchId;
+    }
+
+
+    private void reJoinUpdates(String nickname, Integer matchId){
+        MatchController matchController = controller.getMatch(matchId);
+
+        synchronized (getMatchNotificationClients().get(matchId)){
+            matchController.updatePlayerStatus(nickname, false);
+        }
+
+        PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
+        PlaceInPublicBoard<GoldCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardGold();
+        PlaceInPublicBoard<QuestCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardQuest();
+        Map<String, Board> playerBoards = matchController.getPlayerBoards();
+        //Retrieve chats
+
+        reJoinMatchUpdate(
+                matchController.getMatchId(),
+                resourcePublicBoard,
+                goldPublicBoard,
+                questPublicBoard,
+                playerBoards
+                //chats
+        );
     }
 
     private void initExceptionHandlers() {
