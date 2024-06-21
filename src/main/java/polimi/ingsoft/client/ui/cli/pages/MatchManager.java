@@ -66,11 +66,7 @@ public class MatchManager implements CLIPhaseManager {
             do {
                 out.print(MESSAGES.CHOOSE_MATCH.getValue());
                 choice = in.nextLine();
-                if (choice.equalsIgnoreCase("update")) {
-                    //TODO insert matches list updater
-                    showMatchesList();
-                } else {
-                    try {
+                try {
                         matchId = Integer.parseInt(choice);
                     } catch (NumberFormatException exception) {
                         matchId = -1;
@@ -80,7 +76,6 @@ public class MatchManager implements CLIPhaseManager {
                     } else {
                         out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
                     }
-                }
             } while (!isValid);
 
             if (matchId == 0) runCreateMatch();

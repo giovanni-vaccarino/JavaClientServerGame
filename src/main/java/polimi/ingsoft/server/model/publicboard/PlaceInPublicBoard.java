@@ -38,6 +38,9 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Clo
      */
     public T draw(PlaceInPublicBoard.Slots slot) {
         switch (slot) {
+            case null -> {
+                return null;
+            }
             case DECK -> {
                 return deck.draw();
             }
@@ -52,7 +55,6 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Clo
                 return result;
             }
         }
-        return null;
     }
 
     /**
@@ -62,6 +64,9 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Clo
      */
     public T get(PlaceInPublicBoard.Slots slot) {
         switch (slot) {
+            case null -> {
+                return null;
+            }
             case DECK -> {
                 return deck.show();
             }
@@ -72,7 +77,6 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Clo
                 return this.slotB;
             }
         }
-        return null;
     }
 
     /**

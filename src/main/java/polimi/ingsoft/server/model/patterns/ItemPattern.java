@@ -1,4 +1,5 @@
 package polimi.ingsoft.server.model.patterns;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -24,40 +25,39 @@ public class ItemPattern implements Pattern, Serializable {
     /**
      * Deserializer for ItemPattern class
      */
-    public static class MapDeserializer extends JsonDeserializer<HashMap<Item,Integer>> {
+    public static class MapDeserializer extends JsonDeserializer<HashMap<Item, Integer>> {
         /**
          * Deserializes a JSON string
-         * @param jsonParser jsonParser
+         *
+         * @param jsonParser             jsonParser
          * @param deserializationContext deserializationContext
          * @return the ItemPattern's relative cost HashMap
          * @throws IOException when IOException happens
          */
         @Override
-        public HashMap<Item,Integer> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-//            ObjectMapper mapper = new ObjectMapper();
-//            System.out.println("\n\nlol"+mapper.readValue(jsonParser, HashMap.class));
+        public HashMap<Item, Integer> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
             JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-            HashMap<Item,Integer> cost=new HashMap<>();
+            HashMap<Item, Integer> cost = new HashMap<>();
             Iterator<HashMap.Entry<String, JsonNode>> fields = node.fields();
             while (fields.hasNext()) {
                 HashMap.Entry<String, JsonNode> entry = fields.next();
                 String key = entry.getKey();
                 JsonNode value = entry.getValue();
-                Item item=null;
+                Item item = null;
                 if (key.startsWith("MUSHROOM")) {
-                    item= Resource.MUSHROOM;
+                    item = Resource.MUSHROOM;
                 } else if (key.startsWith("BUTTERFLY")) {
-                    item=Resource.BUTTERFLY;
+                    item = Resource.BUTTERFLY;
                 } else if (key.startsWith("WOLF")) {
-                    item=Resource.WOLF;
-                }else if (key.startsWith("LEAF")) {
-                    item=Resource.LEAF;
-                }else if (key.startsWith("FEATHER")) {
-                    item= Object.FEATHER;
-                }else if (key.startsWith("POTION")) {
-                    item=Object.POTION;
-                }else if (key.startsWith("SCROLL")) {
-                    item=Object.SCROLL;
+                    item = Resource.WOLF;
+                } else if (key.startsWith("LEAF")) {
+                    item = Resource.LEAF;
+                } else if (key.startsWith("FEATHER")) {
+                    item = Object.FEATHER;
+                } else if (key.startsWith("POTION")) {
+                    item = Object.POTION;
+                } else if (key.startsWith("SCROLL")) {
+                    item = Object.SCROLL;
                 }
                 cost.put(item, value.asInt());
             }
@@ -66,10 +66,11 @@ public class ItemPattern implements Pattern, Serializable {
     }
 
     @JsonDeserialize(using = MapDeserializer.class)
-    private final HashMap<Item,Integer> cost;
+    private final HashMap<Item, Integer> cost;
 
     /**
      * Creates an ItemPattern
+     *
      * @param cost the HashMap representing the amount of each Item required to fulfill the ItemPattern's requirements
      */
     public ItemPattern(@JsonProperty("cost") HashMap<Item, Integer> cost) {
@@ -78,47 +79,55 @@ public class ItemPattern implements Pattern, Serializable {
 
     /**
      * Returns the amount of times a player's Board fulfills the ItemPattern's requirements
-     * @param board the board that has to be checked
+     *
+     * @param board       the board that has to be checked
      * @param coordinates the coordinates of the ItemPattern's card's placement
      * @return the amount of times a player's Board fulfills the ItemPattern's requirements
      */
     @Override
     public int getMatch(Board board, Coordinates coordinates) {
-        int count=0;
-        if(board.getFeathers()>=cost.get(Object.FEATHER) &&
-            board.getButterflies()>=cost.get(Resource.BUTTERFLY) &&
-             board.getLeaves()>=cost.get(Resource.LEAF) &&
-              board.getMushrooms()>=cost.get(Resource.MUSHROOM) &&
-               board.getPotions()>=cost.get(Object.POTION) &&
-                board.getScrolls()>=cost.get(Object.SCROLL) &&
-                 board.getWolfs()>=cost.get(Resource.WOLF)){
-            if (cost.get(Object.FEATHER) != 0) count=getValue(board,cost,Object.FEATHER);
-                else if (cost.get(Resource.BUTTERFLY) != 0) count=getValue(board,cost,Resource.BUTTERFLY);
-                else if (cost.get(Resource.LEAF) != 0) count=getValue(board,cost,Resource.LEAF);
-                else if (cost.get(Resource.MUSHROOM) != 0) count=getValue(board,cost,Resource.MUSHROOM);
-                else if (cost.get(Object.POTION) != 0 ) count=getValue(board,cost,Object.POTION);
-                else if (cost.get(Object.SCROLL) != 0 ) count=getValue(board,cost,Object.SCROLL);
-                else if (cost.get(Resource.WOLF) != 0) count=getValue(board,cost,Resource.WOLF);
-            if(cost.get(Object.FEATHER)!=0&&getValue(board,cost,Object.FEATHER)<count)count=getValue(board,cost,Object.FEATHER);
-            if(cost.get(Resource.BUTTERFLY)!=0&&getValue(board,cost,Resource.BUTTERFLY)<count)count=getValue(board,cost,Resource.BUTTERFLY);
-            if(cost.get(Resource.LEAF)!=0&&getValue(board,cost,Resource.LEAF)<count)count=getValue(board,cost,Resource.LEAF);
-            if(cost.get(Resource.MUSHROOM)!=0&&getValue(board,cost,Resource.MUSHROOM)<count)count=getValue(board,cost,Resource.MUSHROOM);
-            if(cost.get(Object.POTION)!=0&&getValue(board,cost,Object.POTION)<count)count=getValue(board,cost,Object.POTION);
-            if(cost.get(Object.SCROLL)!=0&&getValue(board,cost,Object.SCROLL)<count)count=getValue(board,cost,Object.SCROLL);
-            if(cost.get(Resource.WOLF)!=0&&getValue(board,cost,Resource.WOLF)<count)count=getValue(board,cost,Resource.WOLF);
+        int count = 0;
+        if (board.getFeathers() >= cost.get(Object.FEATHER) &&
+                board.getButterflies() >= cost.get(Resource.BUTTERFLY) &&
+                board.getLeaves() >= cost.get(Resource.LEAF) &&
+                board.getMushrooms() >= cost.get(Resource.MUSHROOM) &&
+                board.getPotions() >= cost.get(Object.POTION) &&
+                board.getScrolls() >= cost.get(Object.SCROLL) &&
+                board.getWolfs() >= cost.get(Resource.WOLF)) {
+            if (cost.get(Object.FEATHER) != 0) count = getValue(board, cost, Object.FEATHER);
+            else if (cost.get(Resource.BUTTERFLY) != 0) count = getValue(board, cost, Resource.BUTTERFLY);
+            else if (cost.get(Resource.LEAF) != 0) count = getValue(board, cost, Resource.LEAF);
+            else if (cost.get(Resource.MUSHROOM) != 0) count = getValue(board, cost, Resource.MUSHROOM);
+            else if (cost.get(Object.POTION) != 0) count = getValue(board, cost, Object.POTION);
+            else if (cost.get(Object.SCROLL) != 0) count = getValue(board, cost, Object.SCROLL);
+            else if (cost.get(Resource.WOLF) != 0) count = getValue(board, cost, Resource.WOLF);
+            if (cost.get(Object.FEATHER) != 0 && getValue(board, cost, Object.FEATHER) < count)
+                count = getValue(board, cost, Object.FEATHER);
+            if (cost.get(Resource.BUTTERFLY) != 0 && getValue(board, cost, Resource.BUTTERFLY) < count)
+                count = getValue(board, cost, Resource.BUTTERFLY);
+            if (cost.get(Resource.LEAF) != 0 && getValue(board, cost, Resource.LEAF) < count)
+                count = getValue(board, cost, Resource.LEAF);
+            if (cost.get(Resource.MUSHROOM) != 0 && getValue(board, cost, Resource.MUSHROOM) < count)
+                count = getValue(board, cost, Resource.MUSHROOM);
+            if (cost.get(Object.POTION) != 0 && getValue(board, cost, Object.POTION) < count)
+                count = getValue(board, cost, Object.POTION);
+            if (cost.get(Object.SCROLL) != 0 && getValue(board, cost, Object.SCROLL) < count)
+                count = getValue(board, cost, Object.SCROLL);
+            if (cost.get(Resource.WOLF) != 0 && getValue(board, cost, Resource.WOLF) < count)
+                count = getValue(board, cost, Resource.WOLF);
             return count;
-        }
-        else return 0;
+        } else return 0;
     }
 
     /**
      * Returns the amount of times a certain Item can fulfill an ItemPattern request
+     *
      * @param board the board that has to be checked
-     * @param cost the HashMap representing the ItemPattern
-     * @param item the Item that has to be checked
+     * @param cost  the HashMap representing the ItemPattern
+     * @param item  the Item that has to be checked
      * @return the amount of times a certain Item can fulfill an ItemPattern request
      */
-    private int getValue(Board board,HashMap<Item,Integer> cost,Item item){
+    private int getValue(Board board, HashMap<Item, Integer> cost, Item item) {
         return switch (item) {
             case Object.FEATHER -> Math.floorDiv(board.getFeathers(), cost.get(Object.FEATHER));
             case Resource.BUTTERFLY -> Math.floorDiv(board.getButterflies(), cost.get(Resource.BUTTERFLY));
@@ -127,15 +136,16 @@ public class ItemPattern implements Pattern, Serializable {
             case Object.POTION -> Math.floorDiv(board.getPotions(), cost.get(Object.POTION));
             case Object.SCROLL -> Math.floorDiv(board.getScrolls(), cost.get(Object.SCROLL));
             case Resource.WOLF -> Math.floorDiv(board.getWolfs(), cost.get(Resource.WOLF));
-            default -> 0;
+            case null, default -> 0;
         };
     }
 
     /**
      * Returns a HashMap representing the ItemPattern's required Items
+     *
      * @return a HashMap representing the ItemPattern's required Items
      */
-    public HashMap<Item,Integer> getCost(){
+    public HashMap<Item, Integer> getCost() {
         return this.cost;
     }
 

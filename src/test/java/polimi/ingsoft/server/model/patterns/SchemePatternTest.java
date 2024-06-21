@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.server.model.patterns;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -284,5 +284,10 @@ class SchemePatternTest {
         pattern=new SchemePattern(link8);
         assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES8:"+pattern.getMatch(board));
+    }
+    @Test
+    public void getOrder(){
+        pattern=new SchemePattern(link1);
+        System.out.println(pattern.getOrder());
     }
 }

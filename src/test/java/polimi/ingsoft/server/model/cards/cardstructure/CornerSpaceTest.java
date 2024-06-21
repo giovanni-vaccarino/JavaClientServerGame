@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.server.model.cards.cardstructure;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.*;

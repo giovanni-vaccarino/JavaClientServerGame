@@ -3,10 +3,7 @@ package polimi.ingsoft.server.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.enumerations.*;
-import polimi.ingsoft.server.exceptions.MatchExceptions.ColorAlreadyPickedException;
-import polimi.ingsoft.server.exceptions.MatchExceptions.InitalChoiceAlreadySetException;
-import polimi.ingsoft.server.exceptions.MatchExceptions.WrongPlayerForCurrentTurnException;
-import polimi.ingsoft.server.exceptions.MatchExceptions.WrongStepException;
+import polimi.ingsoft.server.exceptions.MatchExceptions.*;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.factories.PublicBoardFactory;
 import polimi.ingsoft.server.model.boards.Coordinates;
@@ -224,7 +221,7 @@ class MatchControllerTest {
 
     /*
     @Test
-    void testPlaySteps() {
+    void testPlaySteps() throws WrongGamePhaseException, WrongPlayerForCurrentTurnException, WrongStepException {
         //Adding 3 players to the match (requested number of players to start = 3)
         try {
             matchController.addPlayer("Player1");
@@ -278,11 +275,11 @@ class MatchControllerTest {
         Player currentPlayer = matchController.getGameState().getCurrentPlayer();
 
         // Drawing a card
-        try {
+//        try {
             matchController.drawCard(currentPlayer, TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_A);
-        } catch (Exception e) {
-            fail("Unexpected exception");
-        }
+//        } catch (Exception e) {
+//            fail("Unexpected exception");
+//        }
 
         assertEquals(TURN_STEP.PLACE, matchController.getGameState().getCurrentTurnStep());
 
@@ -413,4 +410,105 @@ class MatchControllerTest {
         }
     }
 
+    @Test
+    void getPublicBoard() {
+        System.out.println(matchController.getPublicBoard());
+    }
+
+    @Test
+    void getRequestedNumPlayers() {
+        System.out.println(matchController.getRequestedNumPlayers());
+    }
+
+    @Test
+    void getMatchId() {
+        System.out.println(matchController.getMatchId());
+    }
+
+    @Test
+    void getGameState() {
+        System.out.println(matchController.getGameState());
+    }
+
+    @Test
+    void getPlayers() {
+        System.out.println(matchController.getPlayers());
+    }
+
+    @Test
+    void getPlayerInitialSettings() {
+        System.out.println(matchController.getPlayerInitialSettings());
+    }
+
+    @Test
+    void getNamePlayers() {
+        System.out.println(matchController.getNamePlayers());
+    }
+
+    @Test
+    void getPlayerInitialSettingByNickname() {
+        System.out.println(matchController.getPlayerInitialSettingByNickname("Player1"));
+        System.out.println(matchController.getPlayerInitialSettingByNickname(""));
+    }
+
+    @Test
+    void getPlayerByNickname() {
+        System.out.println(matchController.getPlayerByNickname("Player1"));
+        System.out.println(matchController.getPlayerByNickname(""));
+    }
+
+    @Test
+    void getPlayerBoards() {
+        System.out.println(matchController.getPlayerBoards());
+    }
+
+    @Test
+    void addPlayer() throws MatchAlreadyFullException {
+        matchController.addPlayer("Player3");
+        matchController.addPlayer("Player4");
+        matchController.getPlayers().remove("Player3");
+        matchController.addPlayer("Player4");
+    }
+
+    @Test
+    void initializePlayers() throws MatchAlreadyFullException {
+        matchController.addPlayer("player1");
+        matchController.initializePlayers();
+        System.out.println(matchController.getPlayers().getFirst());
+
+    }
+
+    @Test
+    void setPlayerColor() throws WrongGamePhaseException, WrongStepException, ColorAlreadyPickedException, InitalChoiceAlreadySetException, MatchAlreadyFullException {
+        matchController.addPlayer("player4");
+        matchController.addPlayer("player5");
+        matchController.addPlayer("player6");
+        matchController.setPlayerColor("player4",PlayerColor.RED);
+        System.out.println(matchController.getPlayers());
+
+    }
+
+    @Test
+    void setFaceInitialCard() {
+    }
+
+    @Test
+    void setQuestCard() {
+    }
+
+    @Test
+    void placeCard() {
+    }
+
+    @Test
+    void drawCard() {
+    }
+
+    @Test
+    void writeBroadcastMessage() {
+    }
+
+    @Test
+    void writePrivateMessage() {
+    }
 }

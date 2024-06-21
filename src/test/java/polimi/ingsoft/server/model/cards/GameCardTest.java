@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.server.model.cards;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.model.items.Resource;
@@ -77,5 +77,16 @@ class GameCardTest {
     void getBottomRightCorner() {
         assertEquals(front4,t.getBottomRightCorner(true));
         assertEquals(back4,t.getBottomRightCorner(false));
+    }
+
+    @Test
+    void equals(){
+        assertTrue(t.equals(t));
+        assertFalse(t.equals(null));
+        assertTrue(t.equals(new ResourceCard("id",front,back,score)));
+    }
+    @Test
+    void hashCodeTest(){
+        System.out.println(t.hashCode());
     }
 }

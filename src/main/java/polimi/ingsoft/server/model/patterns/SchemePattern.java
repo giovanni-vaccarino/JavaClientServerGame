@@ -82,19 +82,4 @@ public class SchemePattern implements Pattern, Serializable {
      * @return an arraylist of links representing the SchemePattern
      */
     public ArrayList<Link> getOrder(){return this.order;}
-//    public void setCost(@JsonProperty("cost")Object object){
-//        //System.out.println(object);
-//        if(object.toString()!="Order"){
-//            System.out.println(((ArrayList<Link>)object).get(0).getClass());
-////            try {
-////                System.out.println("HASH"+(((LinkedHashMap) object).entrySet()));
-////            }catch(ClassCastException e){
-////                System.out.println("LIST"+((ArrayList<Link>)object).toString());
-////
-////                this.order=((ArrayList<Link>) object);
-////                System.out.println(this.order.getFirst().getClass());
-////                System.out.println(this.order.get(1).getPosFromBegin()+""+this.order.get(1).getColor());
-////            }
-//        }
-//    }
 }

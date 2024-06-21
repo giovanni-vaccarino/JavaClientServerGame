@@ -65,4 +65,28 @@ class MainControllerTest {
         assertTrue(matches.contains(matchId1));
         assertTrue(matches.contains(matchId2));
     }
+
+    @Test
+    void getMatches() {
+    }
+
+    @Test
+    void getMatch() {
+    }
+
+    @Test
+    void createMatch() {
+    }
+
+    @Test
+    void deleteMatch() {
+    }
+
+    @Test
+    void joinMatch() {
+    }
+
+    @Test
+    void reJoinMatch() {
+    }
 }

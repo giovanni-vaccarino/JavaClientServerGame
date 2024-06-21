@@ -175,12 +175,15 @@ public class GamePageController implements Initializable{
         });
         buttonPersonalDeck10.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(1,0);
+            mixedCard = null;
         });
         buttonPersonalDeck20.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(2,0);
+            mixedCard = null;
         });
         buttonPersonalDeck30.setOnMouseClicked(event -> {
             PlaceCardUtils.flipCardPlayerHand(3,0);
+            mixedCard = null;
         });
 
         // Set nickname-->color
@@ -470,14 +473,29 @@ public class GamePageController implements Initializable{
         setPlayerHand();
 
         buttonPersonalDeck30.setVisible(true);
+        buttonPersonalDeck20.setVisible(true);
+        buttonPersonalDeck10.setVisible(true);
 
         setClickBoardHandler();
     }
 
     public void updateBoard(String boardNickname){
         if(boardNickname.equals(getGui().getNickname())){
-            // TODO TEST IF IT DOES NOT HAVE ANY OTHER PROBLEMS (SET VISIBBLE IN THE CORRECT MOMENT)
             buttonPersonalDeck30.setVisible(false);
+        }
+        switch (getGui().getUiModel().getPlayerHand().size()){
+            case 2:
+                buttonPersonalDeck30.setVisible(false);
+                break;
+            case 1:
+                buttonPersonalDeck30.setVisible(false);
+                buttonPersonalDeck20.setVisible(false);
+                break;
+            case 0:
+                buttonPersonalDeck30.setVisible(false);
+                buttonPersonalDeck20.setVisible(false);
+                buttonPersonalDeck10.setVisible(false);
+                break;
         }
         SetGamePage.setBoardData();
         SetGamePage.setPlayerHand(personalDeck);

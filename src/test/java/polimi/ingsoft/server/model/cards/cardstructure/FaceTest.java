@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.model;
+package polimi.ingsoft.server.model.cards.cardstructure;
 
 import polimi.ingsoft.server.model.items.Resource;
 import org.junit.jupiter.api.BeforeAll;
@@ -91,5 +91,11 @@ class FaceTest {
     void setBottomRight() {
        t.setBottomRight(w);
         assertEquals(w,t.getBottomRight());
+    }
+    @Test
+    void equalsTest(){
+       assertFalse(t.equals(null));
+       assertTrue(t.equals(new Face()));
+
     }
 }
