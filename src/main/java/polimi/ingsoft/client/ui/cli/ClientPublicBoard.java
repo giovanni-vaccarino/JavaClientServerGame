@@ -27,6 +27,7 @@ public class ClientPublicBoard {
     public static final String PURPLE = "\u001B[45m";
     public static final String YELLOW = "\u001B[43m";
     public static final String BLACKTEXT = "\u001B[30m";
+    public static final String WHITE = "\u001B[47m";
     public static final String RESET = "\u001B[0m";
 
     /**
@@ -65,7 +66,8 @@ public class ClientPublicBoard {
     private static void printRows(ArrayList<MixedCard> mixed) {
         int row = 0, count = 0;
         do {
-            System.out.print(YELLOW + "          " + ClientHand.defineColor(null, mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            if(mixed.getFirst()!=null)System.out.print(YELLOW + "          " + ClientHand.defineColor(null, mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            else System.out.print(WHITE + "                                  " + RESET + "     ");
             System.out.print(printResource(mixed, 1, 1, row));
             System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null, mixed.get(1))));
             System.out.print(printResource(mixed, 1, 2, row) + RESET + "   ");
@@ -77,19 +79,22 @@ public class ClientPublicBoard {
             row++;
             System.out.print(RESET + "\n");
         } while (count < 3);
-        System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            ¡‾‾‾‾‾‾‾‾¡            ");
+        if(mixed.getFirst()!=null)System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            ¡‾‾‾‾‾‾‾‾¡            ");
+        else System.out.print(WHITE + "                                  ");
         System.out.print(RESET + "     ");
         System.out.print(ClientHand.defineColor(null, mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
         System.out.print(ClientHand.defineColor(null, mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
-        System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            |        |            ");
+        if(mixed.getFirst()!=null)System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            |        |            ");
+        else System.out.print(WHITE + BLACKTEXT + "           EMPTY DECK !           ");
         System.out.print(RESET + "     ");
         System.out.print(ClientHand.defineColor(null, mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
         System.out.print(ClientHand.defineColor(null, mixed.get(2)) + "                                  ");
         System.out.print(RESET + "\n");
-        System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            !________!            ");
+        if(mixed.getFirst()!=null)System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            !________!            ");
+        else System.out.print(WHITE + "                                  ");
         System.out.print(RESET + "     ");
         System.out.print(ClientHand.defineColor(null, mixed.get(1)) + "                                  ");
         System.out.print(RESET + "   ");
@@ -98,7 +103,8 @@ public class ClientPublicBoard {
         row = 6;
         count = 0;
         do {
-            System.out.print(YELLOW + "          " + ClientHand.defineColor(null, mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            if(mixed.getFirst()!=null)System.out.print(YELLOW + "          " + ClientHand.defineColor(null, mixed.getFirst()) + "              " + YELLOW + "          " + RESET + "     ");
+            else System.out.print(WHITE + "                                  " + RESET + "     ");
             System.out.print(printResource(mixed, 1, 3, row));
             System.out.print(printCenter(mixed.get(1), row, ClientHand.defineColor(null, mixed.get(1))));
             System.out.print(printResource(mixed, 1, 4, row) + RESET + "   ");

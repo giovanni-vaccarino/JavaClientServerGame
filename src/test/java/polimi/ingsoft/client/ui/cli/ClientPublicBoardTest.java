@@ -171,12 +171,12 @@ class ClientPublicBoardTest {
         resources=new ArrayList<>();
         resources.add(res1);
         resources.add(res2);
-        resources.add(res3);
+//        resources.add(res3);
         goldCards=new ArrayList<>();
         goldCards.add(gold);
         goldCards.add(gold);
-        goldCards.add(gold);
-        goldCards.add(gold);
+//        goldCards.add(gold);
+//        goldCards.add(gold);
         quests=new ArrayList<>();
         quests.add(quest);
         quests.add(quest2);
@@ -187,6 +187,12 @@ class ClientPublicBoardTest {
 
     @Test
     void printClientPublicBoard() {
+        publicBoard=new PublicBoard(new Deck<>(resources),new Deck<>(goldCards),new Deck<>(quests),null);
+        ClientPublicBoard.printPublicBoard(publicBoard.getPublicBoardResource(),publicBoard.getPublicBoardGold(),publicBoard.getPublicBoardQuest());
+        this.init();
+        resources.add(res3);
+        goldCards.add(gold);
+        goldCards.add(gold);
         publicBoard=new PublicBoard(new Deck<>(resources),new Deck<>(goldCards),new Deck<>(quests),null);
         ClientPublicBoard.printPublicBoard(publicBoard.getPublicBoardResource(),publicBoard.getPublicBoardGold(),publicBoard.getPublicBoardQuest());
     }
