@@ -390,7 +390,7 @@ public abstract class Server implements VirtualServer {
 
     public void singleUpdatePrivateMessage(Integer matchId, String nickname, String recipient, Message message) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
-        VirtualView client = getClient(nickname).getVirtualView();
+        VirtualView client = getClientInGame(nickname).getVirtualView();
 
         synchronized (clientsToNotify) {
             try {
