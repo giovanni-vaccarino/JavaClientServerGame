@@ -57,6 +57,6 @@ public class WinPageController {
             throw new RuntimeException(e);
         }
 
-        //getGui().clearUIModel();
+        getGui().clearUIModel();
     }
 }

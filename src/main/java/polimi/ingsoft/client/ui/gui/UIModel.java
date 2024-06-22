@@ -180,19 +180,19 @@ public class UIModel {
     }
 
     public void clear(){
-//        matchId=null;
-//        matchList=null;
-//        clientState=null;
-//        gameState=null;
-//        //playerInitialSetting=null;
-//        resourceCards=null;
-//        goldCards=null;
-//        questCards=null;
-//        playerHand=null;
-//        personalQuestCard=null;
-//        playerBoards=null;
-//        privateChat=null;
-//        broadcastChat=null;
+        matchId=null;
+        matchList=null;
+        clientState=null;
+        gameState=null;
+        playerInitialSetting=null;
+        resourceCards=null;
+        goldCards=null;
+        questCards=null;
+        playerHand=null;
+        personalQuestCard=null;
+        playerBoards=null;
+        privateChat=null;
+        broadcastChat=null;
     }
 
 }

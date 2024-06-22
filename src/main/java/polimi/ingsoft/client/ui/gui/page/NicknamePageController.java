@@ -100,4 +100,14 @@ public class NicknamePageController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    public void startGame(){
+
+        GamePageController gamePageController = new GamePageController();
+        try {
+            gamePageController.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
