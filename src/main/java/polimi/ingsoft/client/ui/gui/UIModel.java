@@ -179,6 +179,20 @@ public class UIModel {
         privateChat.get(receiver).addMessage(message.getSender(), message.getText());
     }
 
-
+    public void clear(){
+        matchId=null;
+        matchList=null;
+        clientState=null;
+        gameState=null;
+        playerInitialSetting=null;
+        resourceCards=null;
+        goldCards=null;
+        questCards=null;
+        playerHand=null;
+        personalQuestCard=null;
+        playerBoards=null;
+        privateChat=null;
+        broadcastChat=null;
+    }
 
 }

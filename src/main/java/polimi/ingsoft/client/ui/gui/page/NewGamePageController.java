@@ -54,6 +54,7 @@ public class NewGamePageController {
         getStage().getScene().setRoot(root);
     }
 
+    @SuppressWarnings("*")
     public void setNumberPlayers(ActionEvent actionEvent) {
         if(twoPlayersRadioButton.isSelected()){
 

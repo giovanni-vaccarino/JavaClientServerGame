@@ -47,6 +47,7 @@ public class JoinGamePageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         errButtonFull.setVisible(false);
         errButtonNoSel.setVisible(false);
+        gameList.setStyle("-fx-background-color: white;");
         List<Integer> items = getGui().getMatchList();
         resetGame();
         setGameList(items);
@@ -63,10 +64,15 @@ public class JoinGamePageController implements Initializable {
 
     public void setGameList(List<Integer> games) {
         gameList.getItems().clear();
-        for (Integer game : games) {
-            MenuItem menuItem = new MenuItem("Game "+game.toString()+" - 1/2");
-            menuItem.setOnAction(e -> handleMenuItemAction(game));
-            gameList.getItems().add(menuItem);
+        if(games!=null){
+            for (Integer game : games) {
+                MenuItem menuItem = new MenuItem("Game "+game.toString()+" - 1/2");
+                menuItem.setOnAction(e -> handleMenuItemAction(game));
+                gameList.getItems().add(menuItem);
+            }
+        }
+        if(games == null || games.isEmpty()){
+            gameList.setText("No available games");
         }
     }
 

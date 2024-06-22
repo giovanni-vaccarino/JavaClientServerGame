@@ -61,15 +61,15 @@ public class GUI extends UI{
     public void reportError(ERROR_MESSAGES errorMessage) {
         switch (errorMessage){
             case NICKNAME_NOT_AVAILABLE -> {
-                GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage));
             }
 
             case MATCH_IS_ALREADY_FULL -> {
-                GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage));
             }
 
             case COLOR_ALREADY_PICKED -> {
-                GUIsingleton.getInstance().getColorPageController().showError(errorMessage);
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getColorPageController().showError(errorMessage));
             }
 
             case WRONG_GAME_PHASE, WRONG_PLAYER_TURN, NOT_ENOUGH_RESOURCES, COORDINATE_NOT_VALID -> {
@@ -309,5 +309,9 @@ public class GUI extends UI{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void clearUIModel(){
+        uiModel.clear();
     }
 }
