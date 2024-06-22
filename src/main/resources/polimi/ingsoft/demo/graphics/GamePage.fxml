@@ -270,58 +270,68 @@
                    styleClass="chatPane" stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
                    visible="false" fx:id="chatPane">
             <children>
-                <Separator orientation="VERTICAL" translateX="-150" style="-fx-border-color: #705f16"/>
-                <Separator orientation="HORIZONTAL" translateY="286" style="-fx-border-color: #705f16"/>
+
+                <Line startX="180.0" startY="0.0"
+                      endX="180.0" endY="710.0"
+                      translateX="-170"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="separator1"/>
+
+                <Line startX="10.0" startY="69.0"
+                      endX="690.0" endY="69.0"
+                      translateY="285"
+                      stroke="#332115" strokeWidth="2"
+                      fx:id="separator2"/>
 
                 <Button mnemonicParsing="false"
                         fx:id="chatButton1" visible="false"
-                        translateX="-242" translateY="-320"
+                        translateX="-250" translateY="-320"
                         prefWidth="150" prefHeight="50" styleClass="chatButtonList"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
 
                 <Line startX="242.0" startY="100.0" visible="false"
                       endX="300.0" endY="100.0"
-                      translateX="-242" translateY="-285"
+                      translateX="-250" translateY="-285"
                       stroke="#332115" strokeWidth="2"
                       fx:id="chatLine1"/>
 
                 <Button mnemonicParsing="false" visible="false"
                         fx:id="chatButton2"
-                        translateX="-242" translateY="-250"
+                        translateX="-250" translateY="-250"
                         prefWidth="150" prefHeight="50" styleClass="chatButtonList"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
 
                 <Line startX="0.0" startY="100.0" visible="false"
                       endX="58.0" endY="100.0"
-                      translateX="-242" translateY="-215"
+                      translateX="-250" translateY="-215"
                       stroke="#332115" strokeWidth="2"
                       fx:id="chatLine2"/>
 
                 <Button mnemonicParsing="false" visible="false"
                         fx:id="chatButton3"
-                        translateX="-242" translateY="-180"
+                        translateX="-250" translateY="-180"
                         prefWidth="150" prefHeight="50" styleClass="chatButtonList"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
 
                 <Line startX="242.0" startY="100.0" visible="false"
                       endX="300.0" endY="100.0"
-                      translateX="-242" translateY="-135"
+                      translateX="-250" translateY="-135"
                       stroke="#332115" strokeWidth="2"
                       fx:id="chatLine3"/>
 
                 <Button mnemonicParsing="false"
                         fx:id="chatButton4"
-                        translateX="-242" translateY="-100"
+                        translateX="-250" translateY="-100"
                         prefWidth="150" prefHeight="50" styleClass="chatButtonList"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css">
                 </Button>
 
                 <Button mnemonicParsing="false" text="Send"
                         fx:id="sendMessage"
-                        translateX="-242" translateY="320"
+                        translateX="-250" translateY="320"
                         prefWidth="100" prefHeight="30" styleClass="chatButtonSend"
                         stylesheets="/polimi/ingsoft/demo/graphics/css/ChatStyle.css"
                         onAction="#sendMessage">

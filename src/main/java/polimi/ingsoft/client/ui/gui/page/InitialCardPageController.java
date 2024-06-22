@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@SuppressWarnings("all")
 public class InitialCardPageController implements Initializable {
     private static final Logger cssLogger = Logger.getLogger("javafx.scene.CssStyleHelper");
     @FXML

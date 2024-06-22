@@ -111,3 +111,7 @@
     -fx-font-family: 'Old English Text MT';
     -fx-text-base-color: #323232;
 }
+
+.button {
+    -fx-text-base-color: #323232;
+}
