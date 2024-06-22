@@ -23,8 +23,12 @@ import java.util.ResourceBundle;
 
 import static polimi.ingsoft.server.enumerations.ERROR_MESSAGES.COLOR_ALREADY_PICKED;
 import static polimi.ingsoft.server.enumerations.ERROR_MESSAGES.INITIAL_SETTING_ALREADY_SET;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ColorPageController implements Initializable {
+
+    private static final Logger cssLogger = Logger.getLogger("javafx.scene.CssStyleHelper");
     private PlayerColor myColor;
     private String color;
     private boolean selected;
@@ -46,6 +50,7 @@ public class ColorPageController implements Initializable {
     // Default constructor
     public ColorPageController() {
         GUIsingleton.getInstance().setColorPageController(this);
+        cssLogger.setLevel(Level.SEVERE);
     }
 
     public GUI getGui(){
@@ -64,17 +69,18 @@ public class ColorPageController implements Initializable {
         resetColor();
         setGameList(items);
     }
+
     public void resetColor(){
         setColorText("Select color");
         selected = false;
         colorList.setStyle("-fx-background-color: white;");
         colorSelected.setVisible(false);
     }
+
     public void setColorText(String s){
         color=String.valueOf(s);
         colorList.setText(color);
     }
-
     public void setGameList(List<PlayerColor> colors) {
         colorList.getItems().clear();
         for (PlayerColor color : colors) {

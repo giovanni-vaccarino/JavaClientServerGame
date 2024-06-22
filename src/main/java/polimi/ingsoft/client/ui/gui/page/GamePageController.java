@@ -39,6 +39,7 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.*;
 
+@SuppressWarnings("all")
 public class GamePageController implements Initializable{
 
     @FXML private GridPane coveredDrawableDeck1;
@@ -120,6 +121,7 @@ public class GamePageController implements Initializable{
     }
 
     @Override
+    @SuppressWarnings("*")
     public void initialize(URL location, ResourceBundle resources) {
 
         // Error button initialize

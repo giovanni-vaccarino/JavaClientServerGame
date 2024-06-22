@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("all")
 public class QuestCardPageController implements Initializable {
     @FXML
     private ImageView questCard1;
