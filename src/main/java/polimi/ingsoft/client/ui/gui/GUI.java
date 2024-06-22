@@ -310,4 +310,8 @@ public class GUI extends UI{
             throw new RuntimeException(e);
         }
     }
+
+    public void clearUIModel(){
+        uiModel.clear();
+    }
 }

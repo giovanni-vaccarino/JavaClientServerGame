@@ -65,5 +65,7 @@ public class LosePageController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        //getGui().clearUIModel();
     }
 }
