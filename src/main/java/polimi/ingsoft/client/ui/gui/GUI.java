@@ -276,6 +276,9 @@ public class GUI extends UI{
         getUiModel().setPlayerHand(playerHand.getCards());
 
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getNicknamePageController().startGame());
+        if(GUIsingleton.getInstance().getStartingPageController() != null){
+            javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getStartingPageController().startGame());
+        }
 
         System.out.println("Updating the model of the match");
     }
