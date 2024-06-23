@@ -49,6 +49,12 @@ public abstract class UI implements Serializable {
     public abstract void updatePlayerHand(PlayerHand playerHand);
     public abstract void updateBroadcastChat(Message message);
     public abstract void updatePrivateChat(String receiver, Message message);
+    public abstract void setRejoinMatchModel(GameState gameState,
+                                             PlaceInPublicBoard<ResourceCard> resource,
+                                             PlaceInPublicBoard<GoldCard> gold,
+                                             PlaceInPublicBoard<QuestCard> quest,
+                                             Map<String, Board> boards,
+                                             PlayerHand playerHand);
 
     public VirtualView getClient(){
         return client;
@@ -101,15 +107,5 @@ public abstract class UI implements Serializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void setRejoinMatchModel(GameState gameState,
-                                    PlaceInPublicBoard<ResourceCard> resource,
-                                    PlaceInPublicBoard<GoldCard> gold,
-                                    PlaceInPublicBoard<QuestCard> quest,
-                                    Map<String, Board> boards,
-                                    PlayerHand playerHand){
-        // per nico -> metti gli updates qua
-        System.out.println("Updating the model of the match");
     }
 }
