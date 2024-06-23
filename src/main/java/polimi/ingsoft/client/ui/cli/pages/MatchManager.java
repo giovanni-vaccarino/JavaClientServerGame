@@ -39,10 +39,21 @@ public class MatchManager implements CLIPhaseManager {
     }
 
     public void updateMatches(List<Integer> matchIds) {
-        if (state == State.WAITING_FOR_MATCHES) {
-            this.matchIds = matchIds;
-            state = State.SET_MATCH_ID;
-            setMatchId();
+        switch (state){
+            case State.WAITING_FOR_MATCHES -> {
+                this.matchIds = matchIds;
+                state = State.SET_MATCH_ID;
+                //TODO ensure this thread is killed
+                new Thread(this::setMatchId).start();
+            }
+
+            case State.SET_MATCH_ID -> {
+                if(cli.getIsUpdateMatchRequested()){
+                    cli.setIsUpdateMatchRequested(false);
+                    this.matchIds = matchIds;
+                    new Thread(this::setMatchId).start();
+                }
+            }
         }
     }
 
@@ -66,16 +77,27 @@ public class MatchManager implements CLIPhaseManager {
             do {
                 out.print(MESSAGES.CHOOSE_MATCH.getValue());
                 choice = in.nextLine();
-                try {
+                if(choice.equals("update")) {
+                    System.out.println("aaa");
+                    try{
+                        cli.setIsUpdateMatchRequested(true);
+                        cli.getServer().getMatches(cli.getNickname());
+                    } catch (IOException ignore){}
+
+                    return;
+                }else{
+                    try {
                         matchId = Integer.parseInt(choice);
                     } catch (NumberFormatException exception) {
                         matchId = -1;
                     }
+
                     if (matchIds.contains(matchId) || matchId == 0) {
                         isValid = true;
                     } else {
                         out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
                     }
+                }
             } while (!isValid);
 
             if (matchId == 0) runCreateMatch();

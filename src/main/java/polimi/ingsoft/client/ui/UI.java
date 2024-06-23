@@ -29,6 +29,8 @@ public abstract class UI implements Serializable {
     private String nickname;
     private String stub;
 
+    private Boolean isUpdateMatchRequested = false;
+
     public  UI (Client client) {
         this.client = client;
     }
@@ -76,6 +78,14 @@ public abstract class UI implements Serializable {
     }
 
     public String getStub(){return this.stub;}
+
+    public void setIsUpdateMatchRequested(Boolean isUpdateMatchRequested){
+        this.isUpdateMatchRequested = isUpdateMatchRequested;
+    }
+
+    public Boolean getIsUpdateMatchRequested(){
+        return this.isUpdateMatchRequested;
+    }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;

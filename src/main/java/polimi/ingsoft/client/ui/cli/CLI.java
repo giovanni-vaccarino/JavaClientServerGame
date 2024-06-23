@@ -117,6 +117,7 @@ public class CLI extends UI {
         }
     }
 
+    @Override
     public void showWelcomeScreen() {
         if (phase == CLIPhase.WELCOME) {
             out.println(MESSAGES.WELCOME.getValue());
@@ -124,6 +125,7 @@ public class CLI extends UI {
         }
     }
 
+    @Override
     public void updateMatchesList(List<Integer> matches) {
         if (phase == CLIPhase.MATCH_CHOICE) {
             matchManager.updateMatches(matches);
