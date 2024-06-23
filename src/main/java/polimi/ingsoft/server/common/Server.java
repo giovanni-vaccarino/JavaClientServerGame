@@ -20,6 +20,7 @@ import polimi.ingsoft.server.model.cards.QuestCard;
 import polimi.ingsoft.server.model.cards.ResourceCard;
 import polimi.ingsoft.server.model.chat.Message;
 import polimi.ingsoft.server.model.decks.PlayerHand;
+import polimi.ingsoft.server.model.player.Player;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
@@ -420,21 +421,20 @@ public abstract class Server implements VirtualServer {
     }
 
     public void reJoinMatchUpdate(
-            Integer matchId,
+            String nickname,
+            GameState gameState,
             PlaceInPublicBoard<ResourceCard> resource,
             PlaceInPublicBoard<GoldCard> gold,
             PlaceInPublicBoard<QuestCard> quest,
-            Map<String, Board> boards
+            Map<String, Board> boards,
+            PlayerHand playerHand
     ) {
-        List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
+        synchronized (getClientsInGame()) {
+            VirtualView client = getClientInGame(nickname).getVirtualView();
 
-        synchronized (clientsToNotify) {
-            for (var client : clientsToNotify) {
-                try {
-                    //change with another update
-                    client.showUpdateGameStart(resource, gold, quest, boards);
-                } catch (IOException ignored) { }
-            }
+            try {
+                client.showUpdateRejoinMatch(gameState, resource, gold, quest, boards, playerHand);
+            } catch (IOException ignored) { }
         }
     }
 
@@ -523,24 +523,29 @@ public abstract class Server implements VirtualServer {
 
     private void reJoinUpdates(String nickname, Integer matchId){
         MatchController matchController = controller.getMatch(matchId);
+        Player player = matchController.getPlayerByNickname(nickname)
+                .orElse(null);
 
         synchronized (getMatchNotificationClients().get(matchId)){
             matchController.updatePlayerStatus(nickname, false);
         }
 
+        GameState gameState = matchController.getGameState();
         PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
         PlaceInPublicBoard<GoldCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardGold();
         PlaceInPublicBoard<QuestCard> questPublicBoard = matchController.getPublicBoard().getPublicBoardQuest();
         Map<String, Board> playerBoards = matchController.getPlayerBoards();
-        //Retrieve chats
+        PlayerHand playerHand = player.getHand();
 
+        //retrieve chats
         reJoinMatchUpdate(
-                matchController.getMatchId(),
+                nickname,
+                gameState,
                 resourcePublicBoard,
                 goldPublicBoard,
                 questPublicBoard,
-                playerBoards
-                //chats
+                playerBoards,
+                playerHand
         );
     }
 

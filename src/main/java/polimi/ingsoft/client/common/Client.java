@@ -199,4 +199,14 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
         System.out.println("Received MATCH PONG");
         getMatchServer().ping(getUi().getNickname());
     }
+
+    @Override
+    public void showUpdateRejoinMatch(GameState gameState,
+                                      PlaceInPublicBoard<ResourceCard> resource,
+                                      PlaceInPublicBoard<GoldCard> gold,
+                                      PlaceInPublicBoard<QuestCard> quest,
+                                      Map<String, Board> boards,
+                                      PlayerHand playerHand) throws IOException{
+        ui.setRejoinMatchModel(gameState, resource, gold, quest, boards, playerHand);
+    }
 }
