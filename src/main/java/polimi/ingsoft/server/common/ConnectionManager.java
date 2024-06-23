@@ -53,6 +53,7 @@ public class ConnectionManager {
                     for (var client : getClients()) {
                         client.setConnected(false);
                         try {
+                            logger.println("PING MANDATO LATO SERVER A: " + client.getNickname());
                             client.getVirtualView().pong();
                         } catch (IOException ignore) {
                         }
@@ -94,7 +95,9 @@ public class ConnectionManager {
     }
 
     public Boolean isNicknameAvailable(String nickname){
-        return clients.stream().anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname));
+        return clients.stream().anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname))
+                ||
+                clientsInGame.stream().anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname));
     }
 
     public void removeClientFromMainServer(ClientConnection clientConnection) {

@@ -99,10 +99,12 @@ public class MatchServer implements VirtualMatchServer {
                         }
 
                         for(var client: disconnectedClients){
-                            server.addDisconnectedClient(client, matchController.getMatchId());
+                            GAME_PHASE gamePhase = matchController.getGameState().getGamePhase();
+                            if(gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND){
+                                server.addDisconnectedClient(client, matchController.getMatchId());
+                            }
                             server.removeClientInGame(client);
                             getMatchClients().remove(client.getVirtualView());
-                            GAME_PHASE gamePhase = matchController.getGameState().getGamePhase();
                             handlePlayerDisconnection(client.getNickname(), gamePhase);
                         }
 
@@ -207,6 +209,7 @@ public class MatchServer implements VirtualMatchServer {
             );
             if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
                 this.startGameUpdate();
+
             this.server.matchUpdateGameState(
                     matchController.getMatchId(),
                     matchController.getGameState()
@@ -325,39 +328,83 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
-    private void handlePlayerDisconnection(String nickname, GAME_PHASE gamePhase){
-        switch (gamePhase){
+    private void handlePlayerDisconnection(String nickname, GAME_PHASE gamePhase) {
+        switch (gamePhase) {
             case WAITING_FOR_PLAYERS -> {
-                // NO resilience
+                matchController.removeLobbyPlayer(nickname);
+                logger.println("Ho rimosso " + nickname + " dalla lobby");
             }
 
             case INITIALIZATION -> {
-                //NO resilience
+                if(matchController.getGameState().isLastPlayerSetting()){
+                    matchController.getGameState().updateInitialStep(nickname);
+
+                    if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
+                        this.startGameUpdate();
+
+                    this.server.matchUpdateGameState(
+                            matchController.getMatchId(),
+                            matchController.getGameState()
+                    );
+                }
+
+                matchController.removePlayerInitialSetting(nickname);
+                logger.println("Ho rimosso " + nickname + " dalla partita in fase di settaggio");
             }
 
             case PLAY, LAST_ROUND -> {
-                REJOIN_STATE rejoinState = matchController.updatePlayerStatus(
-                        nickname,
-                        true
-                );
-
-                switch (rejoinState){
-                    case HAVE_TO_DRAW -> {
-                        DrawParams drawParams = new DrawParams();
-                        drawCard(nickname, drawParams.getDeckType(), drawParams.getSlot());
-                    }
-
-                    case HAVE_TO_UPDATE_TURN -> {
-                        matchController.getGameState().goToNextPlayer();
-                        this.server.matchUpdateGameState(
-                                matchController.getMatchId(),
-                                matchController.getGameState()
-                        );
-                    }
-                }
+                handleRejoinState(nickname);
             }
         }
     }
+
+
+    private void handleRejoinState(String nickname) {
+        REJOIN_STATE rejoinState = matchController.updatePlayerStatus(nickname, true);
+
+        switch (rejoinState) {
+            case HAVE_TO_DRAW -> {
+                drawRandomCard(nickname, new DrawParams());
+            }
+
+            case HAVE_TO_UPDATE_TURN -> {
+                matchController.getGameState().goToNextPlayer();
+                this.server.matchUpdateGameState(
+                        matchController.getMatchId(),
+                        matchController.getGameState()
+                );
+            }
+        }
+    }
+
+
+    private void drawRandomCard(String nickname, DrawParams drawParams){
+        TYPE_HAND_CARD deckType = drawParams.getDeckType();
+        PlaceInPublicBoard.Slots slot = drawParams.getSlot();
+
+        Player player = matchController.getPlayerByNickname(nickname)
+                .orElse(null);
+
+        try {
+            matchController.drawCard(player, deckType, slot);
+            PlaceInPublicBoard<?> publicBoardUpdate = (deckType == TYPE_HAND_CARD.RESOURCE) ?
+                    matchController.getPublicBoard().getPublicBoardResource()
+                    :
+                    matchController.getPublicBoard().getPublicBoardGold();
+
+            this.server.matchUpdatePublicBoard(
+                    matchController.getMatchId(),
+                    deckType,
+                    publicBoardUpdate
+            );
+            this.server.matchUpdateGameState(
+                    matchController.getMatchId(),
+                    matchController.getGameState()
+            );
+        } catch (Exception ignore){
+        }
+    }
+
 
     private void initExceptionHandlers() {
         exceptionHandlers.put(NullPointerException.class,

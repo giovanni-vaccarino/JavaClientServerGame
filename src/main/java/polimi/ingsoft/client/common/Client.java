@@ -92,6 +92,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showNicknameUpdate() throws IOException {
+        System.out.println("arrivato nick effettivo");
         ui.updateNickname();
     }
 
@@ -183,6 +184,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void pong() throws IOException {
+        System.out.println("Received PONG");
         if(getUi().getNickname() != null){
             System.out.println("il mio nick non è null");
             getServer().ping(getUi().getNickname());

@@ -118,9 +118,4 @@ public class MainController {
 
         match.addPlayer(nickname);
     }
-
-    //TODO add only if deciding to implement the AF
-    public void reJoinMatch(Integer lobbyId, String nickname){
-
-    }
 }

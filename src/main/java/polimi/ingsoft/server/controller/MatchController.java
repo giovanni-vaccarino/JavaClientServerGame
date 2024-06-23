@@ -36,6 +36,8 @@ public class MatchController implements Serializable {
 
     private final List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
 
+    private final List<String> lobbyPlayers = new ArrayList<>();
+
     public PublicBoard getPublicBoard() {
         return publicBoard;
     }
@@ -109,6 +111,38 @@ public class MatchController implements Serializable {
         return Math.toIntExact(players.stream()
                 .filter(player -> !player.getIsDisconnected())
                 .count());
+    }
+
+    public List<String> getLobbyPlayers(){
+        return lobbyPlayers;
+    }
+
+    public void removeLobbyPlayer(String nickname){
+        lobbyPlayers.stream()
+                .filter(p -> p.equals(nickname))
+                .findFirst()
+                .ifPresent(lobbyPlayers::remove);
+    }
+
+    public void removePlayerInitialSetting(String nickname){
+        playerInitialSettings.stream()
+                .filter(p -> p.getNickname().equals(nickname))
+                .findFirst()
+                .ifPresent(playerInitialSettings::remove);
+
+        gameState.decreaseSettingPlayer();
+    }
+
+    public void initializePlayersInitialSettings(){
+        for(var player : lobbyPlayers){
+            // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
+            PlayerInitialSetting playerInitialSetting = PlayerInitialSettingFactory.createPlayerInitialSetting(this.publicBoard, player);
+
+            //Adding a new private chat for the player
+            chatController.addPrivateChat(player);
+
+            playerInitialSettings.add(playerInitialSetting);
+        }
     }
 
     /**
@@ -189,17 +223,11 @@ public class MatchController implements Serializable {
      * @throws MatchAlreadyFullException if the match is already full
      */
     public synchronized void addPlayer(String nickname) throws MatchAlreadyFullException {
-        if(playerInitialSettings.size() == requestedNumPlayers){
+        if(lobbyPlayers.size() == requestedNumPlayers){
             throw new MatchAlreadyFullException();
         }
 
-        // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
-        PlayerInitialSetting playerInitialSetting = PlayerInitialSettingFactory.createPlayerInitialSetting(this.publicBoard, nickname);
-
-        //Adding a new private chat for the player
-        chatController.addPrivateChat(nickname);
-
-        playerInitialSettings.add(playerInitialSetting);
+        lobbyPlayers.add(nickname);
 
         gameState.updateState();
     }

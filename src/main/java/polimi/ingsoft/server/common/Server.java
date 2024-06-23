@@ -251,8 +251,10 @@ public abstract class Server implements VirtualServer {
 
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
         synchronized (getClients()) {
-            if (isNicknameAvailable(nickname)) {
-                throw new NicknameNotAvailableException();
+            synchronized (getClientsInGame()){
+                if (isNicknameAvailable(nickname)) {
+                    throw new NicknameNotAvailableException();
+                }
             }
 
             //Removing the precedent (key, value) of the client
