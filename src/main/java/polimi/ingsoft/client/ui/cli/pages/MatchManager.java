@@ -78,7 +78,6 @@ public class MatchManager implements CLIPhaseManager {
                 out.print(MESSAGES.CHOOSE_MATCH.getValue());
                 choice = in.nextLine();
                 if(choice.equals("update")) {
-                    System.out.println("aaa");
                     try{
                         cli.setIsUpdateMatchRequested(true);
                         cli.getServer().getMatches(cli.getNickname());
