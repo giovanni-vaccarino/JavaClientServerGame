@@ -259,14 +259,13 @@ public class GUI extends UI{
     }
 
     @Override
-    public void setRejoinMatchModel(GameState gameState,
+    public void setRejoinMatchModel(PlayerInitialSetting playerInitialSetting,
+                                    GameState gameState,
                                     PlaceInPublicBoard<ResourceCard> resource,
                                     PlaceInPublicBoard<GoldCard> gold,
                                     PlaceInPublicBoard<QuestCard> quest,
                                     Map<String, Board> boards,
                                     PlayerHand playerHand) {
-
-        //TODO only call this, not the updateNickname
 
         getUiModel().setGameState(gameState);
         getUiModel().setPlaceInPublicBoardResource(resource);
@@ -274,6 +273,7 @@ public class GUI extends UI{
         getUiModel().setQuestCards(quest);
         getUiModel().setPlayerBoards(boards);
         getUiModel().setPlayerHand(playerHand.getCards());
+        getUiModel().setPlayerInitialSetting(playerInitialSetting);
 
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getNicknamePageController().startGame());
         if(GUIsingleton.getInstance().getStartingPageController() != null){

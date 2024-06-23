@@ -205,7 +205,13 @@ public class CLI extends UI {
     }
 
     @Override
-    public void setRejoinMatchModel(GameState gameState, PlaceInPublicBoard<ResourceCard> resource, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quest, Map<String, Board> boards, PlayerHand playerHand) {
+    public void setRejoinMatchModel(PlayerInitialSetting playerInitialSetting,
+                                    GameState gameState,
+                                    PlaceInPublicBoard<ResourceCard> resource,
+                                    PlaceInPublicBoard<GoldCard> gold,
+                                    PlaceInPublicBoard<QuestCard> quest,
+                                    Map<String, Board> boards,
+                                    PlayerHand playerHand) {
         //TODO
         System.out.println("Updating the model of the match");
     }

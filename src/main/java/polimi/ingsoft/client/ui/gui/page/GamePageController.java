@@ -134,11 +134,11 @@ public class GamePageController implements Initializable{
         chatHashMap = new HashMap<>();
         setChat();
 
-        // Personal cards
-        setPlayerHand();
-
         // Start flip
         PlaceCardUtils.initializeFaceCards();
+
+        // Personal cards
+        setPlayerHand();
 
         // Public board
         setPublicBoard();
