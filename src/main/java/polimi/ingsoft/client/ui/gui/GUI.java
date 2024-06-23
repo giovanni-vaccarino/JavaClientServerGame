@@ -61,15 +61,15 @@ public class GUI extends UI{
     public void reportError(ERROR_MESSAGES errorMessage) {
         switch (errorMessage){
             case NICKNAME_NOT_AVAILABLE -> {
-                GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage);
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getNicknamePageController().showError(errorMessage));
             }
 
             case MATCH_IS_ALREADY_FULL -> {
-                GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage);
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getJoinGamePageController().showError(errorMessage));
             }
 
             case COLOR_ALREADY_PICKED -> {
-                GUIsingleton.getInstance().getColorPageController().showError(errorMessage);
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getColorPageController().showError(errorMessage));
             }
 
             case WRONG_GAME_PHASE, WRONG_PLAYER_TURN, NOT_ENOUGH_RESOURCES, COORDINATE_NOT_VALID -> {
@@ -162,7 +162,7 @@ public class GUI extends UI{
                     case COLOR -> {
                         if(nextColorPageEnable){
                             nextColorPageEnable =false;
-                            GUIsingleton.getInstance().getWaitingPageController().nextPage();
+                            javafx.application.Platform.runLater(() ->GUIsingleton.getInstance().getWaitingPageController().nextPage());
                         }else{
                             /*if (playerInitialSetting != null){
                                 if(playerInitialSetting.getColor() != null){
@@ -174,13 +174,13 @@ public class GUI extends UI{
                     case FACE_INITIAL -> {
                         if(nextInitialCardPageEnable){
                             nextInitialCardPageEnable =false;
-                            GUIsingleton.getInstance().getColorPageController().nextPage();
+                            javafx.application.Platform.runLater(() ->GUIsingleton.getInstance().getColorPageController().nextPage());
                         }
                     }
                     case QUEST_CARD -> {
                         if(nextQuestCardPageEnable){
                             nextQuestCardPageEnable = false;
-                            GUIsingleton.getInstance().getInitialCardPageController().nextPage();
+                            javafx.application.Platform.runLater(() ->GUIsingleton.getInstance().getInitialCardPageController().nextPage());
                         }
 
                     }
@@ -190,8 +190,8 @@ public class GUI extends UI{
             case PLAY -> {
                 if(nextGamePageEnable){
                     nextGamePageEnable = false;
-                    GUIsingleton.getInstance().getQuestCardPageController().nextPage();
-                    GUIsingleton.getInstance().getLoadingGamePageController().nextPage();
+                    javafx.application.Platform.runLater(() ->GUIsingleton.getInstance().getQuestCardPageController().nextPage());
+                    javafx.application.Platform.runLater(() ->GUIsingleton.getInstance().getLoadingGamePageController().nextPage());
                     javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
                 }else {
                     javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().setCurrentPlayerName());
@@ -258,6 +258,31 @@ public class GUI extends UI{
         javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getGamePageController().updateChat());
     }
 
+    @Override
+    public void setRejoinMatchModel(PlayerInitialSetting playerInitialSetting,
+                                    GameState gameState,
+                                    PlaceInPublicBoard<ResourceCard> resource,
+                                    PlaceInPublicBoard<GoldCard> gold,
+                                    PlaceInPublicBoard<QuestCard> quest,
+                                    Map<String, Board> boards,
+                                    PlayerHand playerHand) {
+
+        getUiModel().setGameState(gameState);
+        getUiModel().setPlaceInPublicBoardResource(resource);
+        getUiModel().setPlaceInPublicBoardGold(gold);
+        getUiModel().setQuestCards(quest);
+        getUiModel().setPlayerBoards(boards);
+        getUiModel().setPlayerHand(playerHand.getCards());
+        getUiModel().setPlayerInitialSetting(playerInitialSetting);
+
+        javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getNicknamePageController().startGame());
+        if(GUIsingleton.getInstance().getStartingPageController() != null){
+            javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getStartingPageController().startGame());
+        }
+
+        System.out.println("Updating the model of the match");
+    }
+
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){
         return getUiModel().getResourceCards();
     }
@@ -309,5 +334,9 @@ public class GUI extends UI{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void clearUIModel(){
+        uiModel.clear();
     }
 }

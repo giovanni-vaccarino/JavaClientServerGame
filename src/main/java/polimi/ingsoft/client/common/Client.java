@@ -92,6 +92,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showNicknameUpdate() throws IOException {
+        System.out.println("arrivato nick effettivo");
         ui.updateNickname();
     }
 
@@ -185,8 +186,10 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     public void pong() throws IOException {
         System.out.println("Received PONG");
         if(getUi().getNickname() != null){
+            System.out.println("il mio nick non è null");
             getServer().ping(getUi().getNickname());
         }else{
+            System.out.println("il mio nick è null - sto pingando con lo stub");
             getServer().ping(getUi().getStub());
         }
     }
@@ -195,5 +198,16 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     public void matchPong() throws IOException {
         System.out.println("Received MATCH PONG");
         getMatchServer().ping(getUi().getNickname());
+    }
+
+    @Override
+    public void showUpdateRejoinMatch(PlayerInitialSetting playerInitialSetting,
+                                      GameState gameState,
+                                      PlaceInPublicBoard<ResourceCard> resource,
+                                      PlaceInPublicBoard<GoldCard> gold,
+                                      PlaceInPublicBoard<QuestCard> quest,
+                                      Map<String, Board> boards,
+                                      PlayerHand playerHand) throws IOException{
+        ui.setRejoinMatchModel(playerInitialSetting, gameState, resource, gold, quest, boards, playerHand);
     }
 }

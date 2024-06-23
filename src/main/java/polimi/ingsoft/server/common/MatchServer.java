@@ -6,6 +6,7 @@ import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.server.enumerations.GAME_PHASE;
+import polimi.ingsoft.server.enumerations.REJOIN_STATE;
 import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.exceptions.MatchExceptions.*;
@@ -26,6 +27,27 @@ import java.io.PrintStream;
 import java.util.*;
 
 public class MatchServer implements VirtualMatchServer {
+    private class DrawParams{
+        private final TYPE_HAND_CARD deckType;
+
+        private PlaceInPublicBoard.Slots slot;
+
+        public DrawParams(){
+            Random random = new Random();
+
+            this.deckType = (random.nextInt(2) == 0) ? TYPE_HAND_CARD.RESOURCE : TYPE_HAND_CARD.GOLD ;
+            this.slot = (random.nextInt(2) == 0) ? PlaceInPublicBoard.Slots.SLOT_A : PlaceInPublicBoard.Slots.SLOT_B ;
+        }
+
+        public TYPE_HAND_CARD getDeckType(){
+            return this.deckType;
+        }
+
+        public PlaceInPublicBoard.Slots getSlot(){
+            return this.slot;
+        }
+    }
+
     private final PrintStream logger;
     private final MatchController matchController;
     // TODO temp
@@ -40,18 +62,27 @@ public class MatchServer implements VirtualMatchServer {
         this.server = server;
 
         initExceptionHandlers();
-        scheduleTimeoutRoutine();
+        synchronized (matchController){
+            logger.println("Tentativo di apertura match ping");
+            if(!matchController.isPingerOn()){
+                logger.println("Tentativo di apertura match ping riuscito");
+                scheduleTimeoutRoutine();
+                matchController.setPingerOn(true);
+            }
+        }
     }
 
     private List<VirtualView> getMatchClients(){
         return server.getMatchNotificationClients().get(matchController.getMatchId());
     }
 
+    //TODO move away from here since it is executed 2 times (1 for RMI and 1 for Socket)
     private void scheduleTimeoutRoutine() {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 // Send ping to all clients that are playing the game
+                //TODO ensure there are no deadlocks with this nested synchronized
                 synchronized (server.getClientsInGame()){
                     synchronized (getMatchClients()) {
                         logger.println("CLIENTS IN GAME" + matchController.getMatchId() + ": " + server.getClientsInGame().stream().map(ClientConnection::getNickname).toList());
@@ -62,15 +93,19 @@ public class MatchServer implements VirtualMatchServer {
 
                             if (!clientConnection.getConnected()) {
                                 // Client has disconnected :(
-                                logger.println("Il bro si è disconnesso dal game :(");
+                                logger.println("Il bro " + clientConnection.getNickname() + " si è disconnesso dal game :(");
                                 disconnectedClients.add(clientConnection);
                             }
                         }
 
                         for(var client: disconnectedClients){
-                            server.addDisconnectedClient(client, matchController.getMatchId());
+                            GAME_PHASE gamePhase = matchController.getGameState().getGamePhase();
+                            if(gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND){
+                                server.addDisconnectedClient(client, matchController.getMatchId());
+                            }
                             server.removeClientInGame(client);
                             getMatchClients().remove(client.getVirtualView());
+                            handlePlayerDisconnection(client.getNickname(), gamePhase);
                         }
 
                         for (var client : getMatchClients()) {
@@ -89,7 +124,7 @@ public class MatchServer implements VirtualMatchServer {
             }
         };
 
-        new Timer().scheduleAtFixedRate(task, 0, 5000);
+        new Timer().scheduleAtFixedRate(task, 1000, 5000);
     }
 
     @Override
@@ -111,7 +146,10 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setColor(String nickname, PlayerColor color) throws IOException {
-        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        VirtualView clientToUpdate;
+        synchronized (getMatchClients()){
+            clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        }
 
         try {
             matchController.setPlayerColor(nickname, color);
@@ -132,7 +170,10 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setIsInitialCardFacingUp(String nickname, Boolean isInitialCardFacingUp) throws IOException {
-        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        VirtualView clientToUpdate;
+        synchronized (getMatchClients()){
+            clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        }
 
         try {
             matchController.setFaceInitialCard(nickname, isInitialCardFacingUp);
@@ -153,7 +194,10 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void setQuestCard(String nickname, QuestCard questCard) throws IOException {
-        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        VirtualView clientToUpdate;
+        synchronized (getMatchClients()){
+            clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        }
 
         try {
             matchController.setQuestCard(nickname, questCard);
@@ -165,6 +209,7 @@ public class MatchServer implements VirtualMatchServer {
             );
             if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
                 this.startGameUpdate();
+
             this.server.matchUpdateGameState(
                     matchController.getMatchId(),
                     matchController.getGameState()
@@ -177,6 +222,7 @@ public class MatchServer implements VirtualMatchServer {
     @Override
     public void sendBroadcastMessage(String player, String message) throws IOException {
         Message messageSent = matchController.writeBroadcastMessage(player, message);
+
         this.server.matchUpdateBroadcastMessage(
                 matchController.getMatchId(),
                 messageSent
@@ -185,11 +231,14 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void sendPrivateMessage(String player, String recipient, String message) throws IOException {
-        VirtualView clientToUpdate = server.getClientInGame(player).getVirtualView();
-        System.out.println("Sto mandando messaggio 2");
+        VirtualView clientToUpdate;
+        synchronized (getMatchClients()){
+            clientToUpdate = server.getClientInGame(player).getVirtualView();
+        }
+
         try {
             Message _message = matchController.writePrivateMessage(player, recipient, message);
-            System.out.println("Sto mandando messaggio 3");
+
             this.server.singleUpdatePrivateMessage(matchController.getMatchId(), player, recipient, _message);
             this.server.singleUpdatePrivateMessage(matchController.getMatchId(), recipient, player, _message);
         } catch (Exception e){
@@ -198,8 +247,11 @@ public class MatchServer implements VirtualMatchServer {
     }
 
     @Override
-    public void drawCard(String nickname, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws IOException {
-        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+    public void drawCard(String nickname, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot){
+        VirtualView clientToUpdate;
+        synchronized (getMatchClients()){
+            clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        }
         Player player = matchController.getPlayerByNickname(nickname)
                 .orElse(null);
 
@@ -227,7 +279,11 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void placeCard(String nickname, MixedCard card, Coordinates coordinates, boolean facingUp) throws IOException {
-        VirtualView clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        VirtualView clientToUpdate;
+        synchronized (getMatchClients()){
+            clientToUpdate = server.getClientInGame(nickname).getVirtualView();
+        }
+
         Player player = matchController.getPlayerByNickname(nickname)
                 .orElse(null);
 
@@ -270,6 +326,85 @@ public class MatchServer implements VirtualMatchServer {
                 playerBoards
         );
     }
+
+
+    private void handlePlayerDisconnection(String nickname, GAME_PHASE gamePhase) {
+        switch (gamePhase) {
+            case WAITING_FOR_PLAYERS -> {
+                matchController.removeLobbyPlayer(nickname);
+                logger.println("Ho rimosso " + nickname + " dalla lobby");
+            }
+
+            case INITIALIZATION -> {
+                if(matchController.getGameState().isLastPlayerSetting()){
+                    matchController.getGameState().updateInitialStep(nickname);
+
+                    if (matchController.getGameState().getGamePhase() == GAME_PHASE.PLAY)
+                        this.startGameUpdate();
+
+                    this.server.matchUpdateGameState(
+                            matchController.getMatchId(),
+                            matchController.getGameState()
+                    );
+                }
+
+                matchController.removePlayerInitialSetting(nickname);
+                logger.println("Ho rimosso " + nickname + " dalla partita in fase di settaggio");
+            }
+
+            case PLAY, LAST_ROUND -> {
+                handleRejoinState(nickname);
+            }
+        }
+    }
+
+
+    private void handleRejoinState(String nickname) {
+        REJOIN_STATE rejoinState = matchController.updatePlayerStatus(nickname, true);
+
+        switch (rejoinState) {
+            case HAVE_TO_DRAW -> {
+                drawRandomCard(nickname, new DrawParams());
+            }
+
+            case HAVE_TO_UPDATE_TURN -> {
+                matchController.getGameState().goToNextPlayer();
+                this.server.matchUpdateGameState(
+                        matchController.getMatchId(),
+                        matchController.getGameState()
+                );
+            }
+        }
+    }
+
+
+    private void drawRandomCard(String nickname, DrawParams drawParams){
+        TYPE_HAND_CARD deckType = drawParams.getDeckType();
+        PlaceInPublicBoard.Slots slot = drawParams.getSlot();
+
+        Player player = matchController.getPlayerByNickname(nickname)
+                .orElse(null);
+
+        try {
+            matchController.drawCard(player, deckType, slot);
+            PlaceInPublicBoard<?> publicBoardUpdate = (deckType == TYPE_HAND_CARD.RESOURCE) ?
+                    matchController.getPublicBoard().getPublicBoardResource()
+                    :
+                    matchController.getPublicBoard().getPublicBoardGold();
+
+            this.server.matchUpdatePublicBoard(
+                    matchController.getMatchId(),
+                    deckType,
+                    publicBoardUpdate
+            );
+            this.server.matchUpdateGameState(
+                    matchController.getMatchId(),
+                    matchController.getGameState()
+            );
+        } catch (Exception ignore){
+        }
+    }
+
 
     private void initExceptionHandlers() {
         exceptionHandlers.put(NullPointerException.class,

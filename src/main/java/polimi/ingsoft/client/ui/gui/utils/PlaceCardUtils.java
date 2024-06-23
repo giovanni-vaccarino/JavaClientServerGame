@@ -14,11 +14,10 @@ import polimi.ingsoft.server.model.boards.Coordinates;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class PlaceCardUtils {
-    private static final Map<Coordinates, Boolean> isCartFrontPublicBoard = new HashMap<>();
-    private static final Map<Coordinates, Boolean> isCartFrontPlayerHand = new HashMap<>();
+    private static final Map<Coordinates, Boolean> isCardFrontPublicBoard = new HashMap<>();
+    private static final Map<Coordinates, Boolean> isCardFrontPlayerHand = new HashMap<>();
     private static ImageView clicked = null;
 
     public static void placeSameResourceCard(int x, int y, GridPane gridPane){
@@ -65,30 +64,30 @@ public class PlaceCardUtils {
     public static void initializeFaceCards(){
         for(int i=0; i<2; i++){
             for(int j=0; j<2; j++){
-                isCartFrontPublicBoard.put(new Coordinates(i,j),false);
+                isCardFrontPublicBoard.put(new Coordinates(i,j),false);
             }
         }
 
-        isCartFrontPlayerHand.put(new Coordinates(0,0),true);
+        isCardFrontPlayerHand.put(new Coordinates(0,0),true);
 
         for(int i=1; i<4; i++){
-            isCartFrontPlayerHand.put(new Coordinates(i,0),false);
+            isCardFrontPlayerHand.put(new Coordinates(i,0),false);
         }
     }
 
     public static Boolean getIsFrontPublicBoardCard(int x, int y){
-        return isCartFrontPublicBoard.get(new Coordinates(x,y));
+        return isCardFrontPublicBoard.get(new Coordinates(x,y));
     }
 
     public static Boolean getIsFrontPlayerHandCard(int x, int y){
-        return isCartFrontPlayerHand.get(new Coordinates(x,y));
+        return isCardFrontPlayerHand.get(new Coordinates(x,y));
     }
 
     public static void flipCardPublicBoard(int x, int y){
         Coordinates coordinates = new Coordinates(x,y);
         Boolean isFront = getIsFrontPublicBoardCard(x,y);
-        isCartFrontPublicBoard.remove(coordinates);
-        isCartFrontPublicBoard.put(coordinates,!isFront);
+        isCardFrontPublicBoard.remove(coordinates);
+        isCardFrontPublicBoard.put(coordinates,!isFront);
 
         GUIsingleton.getInstance().getGamePageController().setVisiblePublicBoard();
 
@@ -99,8 +98,8 @@ public class PlaceCardUtils {
 
         Coordinates coordinates = new Coordinates(x,y);
         Boolean isFront = getIsFrontPlayerHandCard(x,y);
-        isCartFrontPlayerHand.remove(coordinates);
-        isCartFrontPlayerHand.put(coordinates,!isFront);
+        isCardFrontPlayerHand.remove(coordinates);
+        isCardFrontPlayerHand.put(coordinates,!isFront);
 
         GUIsingleton.getInstance().getGamePageController().setPlayerHand();
 

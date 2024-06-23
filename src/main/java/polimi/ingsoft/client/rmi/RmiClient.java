@@ -59,9 +59,12 @@ public class RmiClient extends Client {
                     try {
                         ClientCommand command = methodQueue.take();
                         command.execute(this);
-                    } catch (InterruptedException | IOException e) {
+                    } catch (InterruptedException  e) {
+                        System.out.println("ERRORE INTERR");
                         Thread.currentThread().interrupt();
-                        break;
+                    } catch (IOException e){
+                        System.out.println("ERRORE IOEXC");
+                        System.out.println(e.getMessage());
                     }
                 }
             }, "RmiClientCommandReader").start();

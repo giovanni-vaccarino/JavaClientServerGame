@@ -39,6 +39,7 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.util.*;
 
+
 public class GamePageController implements Initializable{
 
     @FXML private GridPane coveredDrawableDeck1;
@@ -120,6 +121,7 @@ public class GamePageController implements Initializable{
     }
 
     @Override
+    @SuppressWarnings("*")
     public void initialize(URL location, ResourceBundle resources) {
 
         // Error button initialize
@@ -132,11 +134,11 @@ public class GamePageController implements Initializable{
         chatHashMap = new HashMap<>();
         setChat();
 
-        // Personal cards
-        setPlayerHand();
-
         // Start flip
         PlaceCardUtils.initializeFaceCards();
+
+        // Personal cards
+        setPlayerHand();
 
         // Public board
         setPublicBoard();
@@ -831,6 +833,7 @@ public class GamePageController implements Initializable{
         chatMessagesPane.setVisible(!chatMessagesPane.isVisible());
     }
 
+    @SuppressWarnings("*")
     public void openChat(String nameChat){
 
         openedChat = nameChat;

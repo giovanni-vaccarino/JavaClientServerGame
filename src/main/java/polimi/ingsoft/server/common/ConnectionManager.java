@@ -53,6 +53,7 @@ public class ConnectionManager {
                     for (var client : getClients()) {
                         client.setConnected(false);
                         try {
+                            logger.println("PING MANDATO LATO SERVER A: " + client.getNickname());
                             client.getVirtualView().pong();
                         } catch (IOException ignore) {
                         }
@@ -94,7 +95,9 @@ public class ConnectionManager {
     }
 
     public Boolean isNicknameAvailable(String nickname){
-        return clients.stream().anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname));
+        return clients.stream().anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname))
+                ||
+                clientsInGame.stream().anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname));
     }
 
     public void removeClientFromMainServer(ClientConnection clientConnection) {
@@ -131,10 +134,25 @@ public class ConnectionManager {
         disconnectedClients.put(connection, matchId);
     }
 
-    public void removeDisconnectedClient(ClientConnection connection){
-        disconnectedClients.remove(connection);
+    public ClientConnection getDisconnectedClient(String nickname){
+        return disconnectedClients.keySet().stream()
+                .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void removeDisconnectedClient(String nickname){
+        disconnectedClients.keySet().stream()
+                .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname))
+                .findFirst()
+                .ifPresent(disconnectedClients::remove);
     }
 
     public Map<ClientConnection, Integer> getDisconnectedClients(){return disconnectedClients;}
+
+    public Boolean isPlayerDisconnected(String nickname){
+        return disconnectedClients.keySet().stream()
+                .anyMatch(clientConnection -> Objects.equals(clientConnection.getNickname(), nickname));
+    }
 }
 

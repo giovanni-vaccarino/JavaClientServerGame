@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
  * The MatchController class manages the state and behavior of a single match.
  */
 public class MatchController implements Serializable {
-
     private final Integer requestedNumPlayers;
 
     private final GameState gameState;
@@ -37,6 +36,8 @@ public class MatchController implements Serializable {
 
     private final List<PlayerInitialSetting> playerInitialSettings = new ArrayList<>();
 
+    private final List<String> lobbyPlayers = new ArrayList<>();
+
     public PublicBoard getPublicBoard() {
         return publicBoard;
     }
@@ -46,6 +47,8 @@ public class MatchController implements Serializable {
     protected transient final PrintStream logger;
 
     protected final int matchId;
+
+    private boolean isPingerOn = false;
 
 
     /**
@@ -71,8 +74,75 @@ public class MatchController implements Serializable {
         this.gameState = new GameState(this, requestedNumPlayers);
     }
 
-    public Integer getRequestedNumPlayers() {
-        return requestedNumPlayers;
+    public boolean isPingerOn() {
+        return isPingerOn;
+    }
+
+    public void setPingerOn(boolean pingerOn) {
+        isPingerOn = pingerOn;
+    }
+
+
+    public synchronized REJOIN_STATE updatePlayerStatus(String nickname, Boolean isDisconnected){
+        Player player = getPlayerByNickname(nickname).orElse(null);
+
+        player.setIsDisconnected(isDisconnected);
+
+        if(gameState.getCurrentPlayer() == player){
+            if(gameState.getCurrentTurnStep() == TURN_STEP.PLACE){
+                gameState.goToNextPlayer();
+
+                return REJOIN_STATE.HAVE_TO_UPDATE_TURN;
+            }else{
+                return REJOIN_STATE.HAVE_TO_DRAW;
+            }
+        }
+
+        return REJOIN_STATE.NO_UPDATE;
+    }
+
+
+    public synchronized Boolean isPlayerDisconnected(Integer index){
+        return players.get(index).getIsDisconnected();
+    }
+
+
+    public synchronized Integer getNumOnlinePlayers(){
+        return Math.toIntExact(players.stream()
+                .filter(player -> !player.getIsDisconnected())
+                .count());
+    }
+
+    public List<String> getLobbyPlayers(){
+        return lobbyPlayers;
+    }
+
+    public void removeLobbyPlayer(String nickname){
+        lobbyPlayers.stream()
+                .filter(p -> p.equals(nickname))
+                .findFirst()
+                .ifPresent(lobbyPlayers::remove);
+    }
+
+    public void removePlayerInitialSetting(String nickname){
+        playerInitialSettings.stream()
+                .filter(p -> p.getNickname().equals(nickname))
+                .findFirst()
+                .ifPresent(playerInitialSettings::remove);
+
+        gameState.decreaseSettingPlayer();
+    }
+
+    public void initializePlayersInitialSettings(){
+        for(var player : lobbyPlayers){
+            // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
+            PlayerInitialSetting playerInitialSetting = PlayerInitialSettingFactory.createPlayerInitialSetting(this.publicBoard, player);
+
+            //Adding a new private chat for the player
+            chatController.addPrivateChat(player);
+
+            playerInitialSettings.add(playerInitialSetting);
+        }
     }
 
     /**
@@ -153,17 +223,11 @@ public class MatchController implements Serializable {
      * @throws MatchAlreadyFullException if the match is already full
      */
     public synchronized void addPlayer(String nickname) throws MatchAlreadyFullException {
-        if(playerInitialSettings.size() == requestedNumPlayers){
+        if(lobbyPlayers.size() == requestedNumPlayers){
             throw new MatchAlreadyFullException();
         }
 
-        // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
-        PlayerInitialSetting playerInitialSetting = PlayerInitialSettingFactory.createPlayerInitialSetting(this.publicBoard, nickname);
-
-        //Adding a new private chat for the player
-        chatController.addPrivateChat(nickname);
-
-        playerInitialSettings.add(playerInitialSetting);
+        lobbyPlayers.add(nickname);
 
         gameState.updateState();
     }
@@ -317,6 +381,7 @@ public class MatchController implements Serializable {
     public synchronized Message writeBroadcastMessage(String playerSender, String message){
         return this.chatController.writeBroadcastMessage(playerSender, message);
     }
+
 
     /**
      * Adds a message in a private chat.

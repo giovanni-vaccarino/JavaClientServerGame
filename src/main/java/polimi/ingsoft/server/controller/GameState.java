@@ -22,9 +22,11 @@ public class GameState implements Serializable, Cloneable {
      * The match controller associated with this game state.
      * Declared transient to avoid serialization and network transmission.
      */
-    private transient MatchController matchController;
+    private final transient MatchController matchController;
 
     private final Integer requestedNumPlayers;
+
+    private Integer effectiveNumPlayers;
 
     private int currentPlayerIndex;
 
@@ -41,7 +43,7 @@ public class GameState implements Serializable, Cloneable {
     /**
      * List of players that have already made their initial choice.
      */
-    private List<String> playerStepCheck = new ArrayList<>();
+    private final List<String> playerStepCheck = new ArrayList<>();
 
     private GAME_PHASE gamePhase;
 
@@ -59,6 +61,7 @@ public class GameState implements Serializable, Cloneable {
         this.gamePhase = GAME_PHASE.WAITING_FOR_PLAYERS;
         this.matchController = matchController;
         this.requestedNumPlayers = requestedNumPlayers;
+        this.effectiveNumPlayers = requestedNumPlayers;
     }
 
 
@@ -124,20 +127,43 @@ public class GameState implements Serializable, Cloneable {
     }
 
 
+    private Integer getNumLobbyPlayers(){
+        return matchController.getLobbyPlayers().size();
+    }
+
+    public void decreaseSettingPlayer(){
+        effectiveNumPlayers -= 1;
+    }
+
+    public Boolean isLastPlayerSetting(){
+        return playerStepCheck.size() == effectiveNumPlayers - 1;
+    }
+
     /**
      * Updates the game phase
      */
     public void updateState(){
+        /*
+        if(matchController.getNumOnlinePlayers() == 1){
+            //TODO case of 0 active players
+            //set blocked state
+            // start timeout
+            return;
+        }
+        //unlock it
+        */
+
         switch(gamePhase){
             case GAME_PHASE.WAITING_FOR_PLAYERS -> {
-                if(getPlayersNick().size() == requestedNumPlayers){
+                if(getNumLobbyPlayers().equals(requestedNumPlayers)){
+                    this.matchController.initializePlayersInitialSettings();
                     this.gamePhase = GAME_PHASE.INITIALIZATION;
                     this.currentInitialStep = INITIAL_STEP.COLOR;
                 }
             }
 
             case GAME_PHASE.INITIALIZATION -> {
-                if (playerStepCheck.size() == requestedNumPlayers && this.currentInitialStep == INITIAL_STEP.QUEST_CARD){
+                if (playerStepCheck.size() == effectiveNumPlayers && this.currentInitialStep == INITIAL_STEP.QUEST_CARD){
                     this.setFirstPlayer();
                     this.matchController.initializePlayers();
                     this.gamePhase = GAME_PHASE.PLAY;
@@ -162,6 +188,7 @@ public class GameState implements Serializable, Cloneable {
         }
     }
 
+
     /**
      * Updates the initial step
      *
@@ -172,21 +199,21 @@ public class GameState implements Serializable, Cloneable {
 
         switch (currentInitialStep){
             case INITIAL_STEP.COLOR -> {
-                if (playerStepCheck.size() == requestedNumPlayers){
+                if (playerStepCheck.size() == effectiveNumPlayers){
                     this.currentInitialStep = INITIAL_STEP.FACE_INITIAL;
                     this.playerStepCheck.clear();
                 }
             }
 
             case INITIAL_STEP.FACE_INITIAL -> {
-                if (playerStepCheck.size() == requestedNumPlayers){
+                if (playerStepCheck.size() == effectiveNumPlayers){
                     this.currentInitialStep = INITIAL_STEP.QUEST_CARD;
                     this.playerStepCheck.clear();
                 }
             }
 
             case INITIAL_STEP.QUEST_CARD -> {
-                if (playerStepCheck.size() == requestedNumPlayers){
+                if (playerStepCheck.size() == effectiveNumPlayers){
                     this.updateState();
                 }
             }
@@ -299,9 +326,11 @@ public class GameState implements Serializable, Cloneable {
     private void setFirstPlayer(){
         Random random = new Random();
 
-        this.firstPlayerIndex = random.nextInt(requestedNumPlayers);
+        this.firstPlayerIndex = random.nextInt(effectiveNumPlayers);
         currentPlayerIndex = firstPlayerIndex;
         currentPlayerNickname = matchController.getPlayerInitialSettings().get(firstPlayerIndex).getNickname();
+
+        System.out.println("The first player is: " + currentPlayerNickname + " with index: " + currentPlayerIndex);
     }
 
 
@@ -317,11 +346,15 @@ public class GameState implements Serializable, Cloneable {
      * Advances to the next player.
      */
     public void goToNextPlayer() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % requestedNumPlayers;
-        currentPlayerNickname = getCurrentPlayer().getNickname();
+        System.out.println("The previous player was: " + currentPlayerNickname + " with index: " + currentPlayerIndex);
+        do{
+            currentPlayerIndex = (currentPlayerIndex + 1) % effectiveNumPlayers;
+            System.out.println("The current player has become: " + getCurrentPlayer().getNickname() + " with index " + currentPlayerIndex);
+            this.updateTurnNumber();
+        } while(matchController.isPlayerDisconnected(currentPlayerIndex));
 
-        this.updateTurnNumber();
-        if(gamePhase == GAME_PHASE.PLAY){
+        currentPlayerNickname = getCurrentPlayer().getNickname();
+        if(gamePhase == GAME_PHASE.PLAY && currentTurnStep == TURN_STEP.DRAW){
             this.updateTurnStep();
         }
         this.updateState();

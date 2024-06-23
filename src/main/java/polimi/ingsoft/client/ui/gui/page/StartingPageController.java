@@ -16,6 +16,7 @@ import java.net.URL;
 
 public class StartingPageController {
 
+    private boolean nextPage = false;
     // Default constructor
     public StartingPageController() {GUIsingleton.getInstance().setStartingPageController(this);}
 
@@ -47,6 +48,7 @@ public class StartingPageController {
     }
 
     public void newGame(ActionEvent actionEvent) throws IOException {
+        nextPage=true;
 
         NewGamePageController newGamePageController = new NewGamePageController();
         try {
@@ -57,12 +59,24 @@ public class StartingPageController {
     }
 
     public void joinGame(ActionEvent actionEvent) throws IOException {
+        nextPage=true;
 
         JoinGamePageController joinGamePageController = new JoinGamePageController();
         try {
             joinGamePageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void startGame(){
+        if(!nextPage){
+            GamePageController gamePageController = new GamePageController();
+            try {
+                gamePageController.start();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

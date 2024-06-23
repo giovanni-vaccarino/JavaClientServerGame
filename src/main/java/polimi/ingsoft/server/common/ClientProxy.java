@@ -124,4 +124,15 @@ public abstract class ClientProxy implements VirtualView {
     public void matchPong() throws IOException {
         sendMessage((ClientCommand) VirtualView::matchPong);
     }
+
+    @Override
+    public void showUpdateRejoinMatch(PlayerInitialSetting playerInitialSetting,
+                                      GameState gameState,
+                                      PlaceInPublicBoard<ResourceCard> resource,
+                                      PlaceInPublicBoard<GoldCard> gold,
+                                      PlaceInPublicBoard<QuestCard> quest,
+                                      Map<String, Board> boards,
+                                      PlayerHand playerHand) throws IOException{
+        sendMessage((ClientCommand) client -> client.showUpdateRejoinMatch(playerInitialSetting, gameState, resource, gold, quest, boards, playerHand));
+    }
 }

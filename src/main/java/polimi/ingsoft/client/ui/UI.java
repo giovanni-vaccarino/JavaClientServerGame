@@ -29,6 +29,8 @@ public abstract class UI implements Serializable {
     private String nickname;
     private String stub;
 
+    private Boolean isUpdateMatchRequested = false;
+
     public  UI (Client client) {
         this.client = client;
     }
@@ -49,6 +51,13 @@ public abstract class UI implements Serializable {
     public abstract void updatePlayerHand(PlayerHand playerHand);
     public abstract void updateBroadcastChat(Message message);
     public abstract void updatePrivateChat(String receiver, Message message);
+    public abstract void setRejoinMatchModel(PlayerInitialSetting playerInitialSetting,
+                                             GameState gameState,
+                                             PlaceInPublicBoard<ResourceCard> resource,
+                                             PlaceInPublicBoard<GoldCard> gold,
+                                             PlaceInPublicBoard<QuestCard> quest,
+                                             Map<String, Board> boards,
+                                             PlayerHand playerHand);
 
     public VirtualView getClient(){
         return client;
@@ -69,6 +78,14 @@ public abstract class UI implements Serializable {
     }
 
     public String getStub(){return this.stub;}
+
+    public void setIsUpdateMatchRequested(Boolean isUpdateMatchRequested){
+        this.isUpdateMatchRequested = isUpdateMatchRequested;
+    }
+
+    public Boolean getIsUpdateMatchRequested(){
+        return this.isUpdateMatchRequested;
+    }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;

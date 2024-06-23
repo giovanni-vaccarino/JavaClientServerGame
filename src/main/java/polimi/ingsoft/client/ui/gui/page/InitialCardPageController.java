@@ -16,8 +16,11 @@ import polimi.ingsoft.client.ui.gui.utils.CardPathUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class InitialCardPageController implements Initializable {
+    private static final Logger cssLogger = Logger.getLogger("javafx.scene.CssStyleHelper");
     @FXML
     private ImageView initialCard;
     @FXML
@@ -34,6 +37,7 @@ public class InitialCardPageController implements Initializable {
     // Default constructor
     public InitialCardPageController() {
         GUIsingleton.getInstance().setInitialCardPageController(this);
+        cssLogger.setLevel(Level.SEVERE);
     }
 
     public GUI getGui(){

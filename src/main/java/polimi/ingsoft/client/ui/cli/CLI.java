@@ -117,6 +117,7 @@ public class CLI extends UI {
         }
     }
 
+    @Override
     public void showWelcomeScreen() {
         if (phase == CLIPhase.WELCOME) {
             out.println(MESSAGES.WELCOME.getValue());
@@ -124,6 +125,7 @@ public class CLI extends UI {
         }
     }
 
+    @Override
     public void updateMatchesList(List<Integer> matches) {
         if (phase == CLIPhase.MATCH_CHOICE) {
             matchManager.updateMatches(matches);
@@ -202,6 +204,18 @@ public class CLI extends UI {
         if (phase == CLIPhase.GAME) {
             gameManager.updatePrivateChat(receiver, message);
         }
+    }
+
+    @Override
+    public void setRejoinMatchModel(PlayerInitialSetting playerInitialSetting,
+                                    GameState gameState,
+                                    PlaceInPublicBoard<ResourceCard> resource,
+                                    PlaceInPublicBoard<GoldCard> gold,
+                                    PlaceInPublicBoard<QuestCard> quest,
+                                    Map<String, Board> boards,
+                                    PlayerHand playerHand) {
+        //TODO
+        System.out.println("Updating the model of the match");
     }
 
     @Override

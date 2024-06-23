@@ -1,7 +1,23 @@
 .splitMenuButtonSmall {
     -fx-font-size: 20px;
     -fx-font-family: 'Old English Text MT';
-    -fx-text-base-color: black; /* Add this line */
+    -fx-text-base-color: #323232;
+}
+
+.splitMenuButtonSmall .label {
+    -fx-background-color: #dfd7b0;
+}
+
+.splitMenuButtonSmall .arrow-button {
+    -fx-background-color: #dfd7b0;
+}
+
+.splitMenuButtonSmall .arrow {
+    -fx-background-color: #323232;
+}
+
+.splitMenuButtonSmall .menu-item {
+    -fx-background-color: #dfd7b0;
 }
 
 .buttonBack {
@@ -15,6 +31,7 @@
     /*-fx-text-fill: #705f16;*/
     -fx-font-family: 'Old English Text MT';
     -fx-underline: true;
+    -fx-text-base-color: #323232;
 }
 
 .buttonCancel {
@@ -25,6 +42,7 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: #323232;
 }
 
 .buttonSmall {
@@ -35,6 +53,7 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: #323232;
 }
 
 
@@ -46,6 +65,7 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: #323232;
 }
 
 .buttonLarge {
@@ -56,6 +76,7 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: #323232;
 }
 
 .errorPane {
@@ -66,6 +87,7 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: #323232;
 }
 
 .lastRoundPane{
@@ -76,6 +98,7 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: #323232;
 }
 
 .successPane {
@@ -86,4 +109,9 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-family: 'Old English Text MT';
+    -fx-text-base-color: #323232;
+}
+
+.button {
+    -fx-text-base-color: #323232;
 }

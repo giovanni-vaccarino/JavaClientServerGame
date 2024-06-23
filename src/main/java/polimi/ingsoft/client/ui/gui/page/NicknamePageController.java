@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class NicknamePageController implements Initializable {
+    private boolean nextPage = false;
     private String nickname;
     @FXML
     private TextField nicknameInput;
@@ -91,6 +92,7 @@ public class NicknamePageController implements Initializable {
 
 
     public void nextPage(){
+        nextPage=true;
         errButton.setVisible(false);
 
         StartingPageController startingPageController = new StartingPageController();
@@ -98,6 +100,17 @@ public class NicknamePageController implements Initializable {
             startingPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void startGame(){
+        if(!nextPage){
+            GamePageController gamePageController = new GamePageController();
+            try {
+                gamePageController.start();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
