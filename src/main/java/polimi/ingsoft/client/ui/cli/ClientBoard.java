@@ -33,7 +33,7 @@ public class ClientBoard {
     public static final String GREEN = "\u001B[42m";
     public static final String BLUE = "\u001B[46m";//"\u001B[44m";
     public static final String PURPLE = "\u001B[45m";
-    public static final String YELLOW = "\u001B[43m";
+    public static final String YELLOW = "\u001B[103m";
     public static final String BLACKTEXT = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
     public static final String WHITETEXT = "\u001B[37m";
