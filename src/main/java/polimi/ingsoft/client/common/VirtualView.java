@@ -178,7 +178,8 @@ public interface VirtualView extends Remote, Serializable {
     void pong() throws IOException;
     void matchPong() throws IOException;
 
-    void showUpdateRejoinMatch(GameState gameState,
+    void showUpdateRejoinMatch(PlayerInitialSetting playerInitialSetting,
+                               GameState gameState,
                                PlaceInPublicBoard<ResourceCard> resource,
                                PlaceInPublicBoard<GoldCard> gold,
                                PlaceInPublicBoard<QuestCard> quest,

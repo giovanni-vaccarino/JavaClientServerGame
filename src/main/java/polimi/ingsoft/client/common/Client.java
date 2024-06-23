@@ -201,12 +201,13 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
     }
 
     @Override
-    public void showUpdateRejoinMatch(GameState gameState,
+    public void showUpdateRejoinMatch(PlayerInitialSetting playerInitialSetting,
+                                      GameState gameState,
                                       PlaceInPublicBoard<ResourceCard> resource,
                                       PlaceInPublicBoard<GoldCard> gold,
                                       PlaceInPublicBoard<QuestCard> quest,
                                       Map<String, Board> boards,
                                       PlayerHand playerHand) throws IOException{
-        ui.setRejoinMatchModel(gameState, resource, gold, quest, boards, playerHand);
+        ui.setRejoinMatchModel(playerInitialSetting, gameState, resource, gold, quest, boards, playerHand);
     }
 }

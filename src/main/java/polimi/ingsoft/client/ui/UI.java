@@ -103,7 +103,8 @@ public abstract class UI implements Serializable {
         }
     }
 
-    public void setRejoinMatchModel(GameState gameState,
+    public void setRejoinMatchModel(PlayerInitialSetting playerInitialSetting,
+                                    GameState gameState,
                                     PlaceInPublicBoard<ResourceCard> resource,
                                     PlaceInPublicBoard<GoldCard> gold,
                                     PlaceInPublicBoard<QuestCard> quest,

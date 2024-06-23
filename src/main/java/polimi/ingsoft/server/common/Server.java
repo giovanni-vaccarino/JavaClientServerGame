@@ -422,6 +422,7 @@ public abstract class Server implements VirtualServer {
 
     public void reJoinMatchUpdate(
             String nickname,
+            PlayerInitialSetting playerInitialSetting,
             GameState gameState,
             PlaceInPublicBoard<ResourceCard> resource,
             PlaceInPublicBoard<GoldCard> gold,
@@ -433,7 +434,7 @@ public abstract class Server implements VirtualServer {
             VirtualView client = getClientInGame(nickname).getVirtualView();
 
             try {
-                client.showUpdateRejoinMatch(gameState, resource, gold, quest, boards, playerHand);
+                client.showUpdateRejoinMatch(playerInitialSetting, gameState, resource, gold, quest, boards, playerHand);
             } catch (IOException ignored) { }
         }
     }
@@ -525,6 +526,7 @@ public abstract class Server implements VirtualServer {
         MatchController matchController = controller.getMatch(matchId);
         Player player = matchController.getPlayerByNickname(nickname)
                 .orElse(null);
+        PlayerInitialSetting playerInitialSetting = matchController.getPlayerInitialSettingByNickname(nickname).orElse(null);
 
         synchronized (getMatchNotificationClients().get(matchId)){
             matchController.updatePlayerStatus(nickname, false);
@@ -540,6 +542,7 @@ public abstract class Server implements VirtualServer {
         //retrieve chats
         reJoinMatchUpdate(
                 nickname,
+                playerInitialSetting,
                 gameState,
                 resourcePublicBoard,
                 goldPublicBoard,
