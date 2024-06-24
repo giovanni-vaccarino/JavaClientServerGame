@@ -363,6 +363,11 @@ public class GameState implements Serializable, Cloneable {
         this.updateState();
     }
 
+    public void setOnlyWinner(){
+        this.gamePhase = GAME_PHASE.END;
+        this.calculateWinners();
+    }
+
 
     /**
      * Add for each player the points from the quest cards(personal and common)

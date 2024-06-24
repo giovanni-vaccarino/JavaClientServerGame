@@ -369,7 +369,12 @@ public class MatchServer implements VirtualMatchServer {
 
             case BLOCKED_ONE_PLAYER -> {
                 logger.println("TIMER IS EXPIRED. THE WINNER IS THE ONLY PLAYER REMAINED");
-                //notify the win to the player
+                matchController.getGameState().setOnlyWinner();
+                this.server.matchUpdateGameState(
+                        matchController.getMatchId(),
+                        matchController.getGameState()
+                );
+                server.deleteGame(matchController.getMatchId());
             }
         }
     }
