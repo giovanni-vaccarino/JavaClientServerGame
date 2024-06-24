@@ -462,14 +462,6 @@ public class GameManager implements CLIPhaseManager {
         return argument;
     }
 
-    private void showPlaceCard() {
-        out.println(model.currentPlayerNickname + MESSAGES.OTHER_PLAYER_PERFORMING_PLACE.getValue());
-    }
-
-    private void showDrawCard() {
-        out.println(model.currentPlayerNickname + MESSAGES.OTHER_PLAYER_PERFORMING_DRAW.getValue());
-    }
-
     public void updatePlayerHand(PlayerHand hand) {
         model.hand = hand;
     }
@@ -489,6 +481,25 @@ public class GameManager implements CLIPhaseManager {
     @Override
     public void parseError(ERROR_MESSAGES error) {
         // TODO Maybe remove this one
-        out.println("UNEXPECTED ERROR: " + error.getValue());
+        switch (error) {
+            case COORDINATE_NOT_VALID, NOT_ENOUGH_RESOURCES -> {
+                out.println(model.gamePhase);
+                out.println(model.turnStep);
+                out.println(model.currentPlayerNickname);
+                if ((model.gamePhase == GAME_PHASE.PLAY || model.gamePhase == GAME_PHASE.LAST_ROUND)
+                        && model.turnStep == TURN_STEP.PLACE
+                        && Objects.equals(model.currentPlayerNickname, cli.getNickname())) {
+                    new Thread(() -> {
+                        out.println(error.getValue());
+                        out.println(MESSAGES.PRESS_NEXT_LINE.getValue());
+                        in.nextLine();
+                        runPlaceCard(model.personalQuestCard);
+                    }).start();
+                }
+            }
+            default -> {
+                out.println("UNEXPECTED ERROR: " + error.getValue());
+            }
+        }
     }
 }

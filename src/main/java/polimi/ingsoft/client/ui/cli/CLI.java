@@ -235,6 +235,7 @@ public class CLI extends UI {
     @Override
     public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) {
         if (phase == CLIPhase.GAME) {
+            System.out.println("Updating public board");
             gameManager.updatePublicBoard(deckType, placeInPublicBoard);
         }
     }

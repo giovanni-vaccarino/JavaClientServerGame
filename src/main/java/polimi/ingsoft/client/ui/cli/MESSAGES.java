@@ -143,7 +143,7 @@ public enum MESSAGES {
             """),
     END_CHAT_ITER_MESSAGE("""
             
-            PRESS "ENTER" TO GO BACK TO YOUR BOARD'S MENU 
+            PRESS "ENTER" TO GO BACK TO YOUR BOARD'S MENU
             """),
 
     HELP_GET_PLAYER_NAME("TYPE THE RECEIVING PLAYER'S NAME:"),
@@ -175,7 +175,8 @@ public enum MESSAGES {
     ->BACK: GO BACK TO YOUR BOARD !
     """),
 
-    GO_BACK_TO_MATCH_MENU("Premi invio per tornare al menu di scelta partita...");
+    GO_BACK_TO_MATCH_MENU("Premi invio per tornare al menu di scelta partita..."),
+    PRESS_NEXT_LINE("Premi invio per riprovare...");
 
     private final String value;
 

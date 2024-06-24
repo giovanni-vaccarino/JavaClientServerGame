@@ -241,7 +241,6 @@ public abstract class Server implements VirtualServer {
 
     @Override
     public void ping(String nickname) throws IOException {
-        logger.println("Received PING");
         logger.println(nickname);
         synchronized (getClients()){
             ClientConnection client = getClient(nickname);
