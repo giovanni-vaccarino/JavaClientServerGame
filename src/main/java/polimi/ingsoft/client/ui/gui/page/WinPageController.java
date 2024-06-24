@@ -49,14 +49,14 @@ public class WinPageController {
     }
 
     public void nextPage(){
+        getGui().clearUIModel();
 
         StartingPageController startingPageController = new StartingPageController();
+
         try {
             startingPageController.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        getGui().clearUIModel();
     }
 }

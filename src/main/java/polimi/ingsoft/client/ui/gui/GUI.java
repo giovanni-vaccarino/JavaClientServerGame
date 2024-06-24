@@ -338,5 +338,8 @@ public class GUI extends UI{
 
     public void clearUIModel(){
         uiModel.clear();
+        try{
+            getClient().setMatchServer(null);
+        } catch (IOException ignore){}
     }
 }
