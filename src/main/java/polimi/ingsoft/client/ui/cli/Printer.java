@@ -21,16 +21,6 @@ public class Printer {
         this.out = out;
     }
 
-    /**
-     * Prints game's basic argument
-     *
-     * @param argument a player's input
-     */
-    public void printFromMain(String argument) {
-        if (argument.toLowerCase().equals(Arguments.Argument.HELP.getValue())) {
-            out.println(MESSAGES.HELP_MAIN.getValue());
-        } else out.println(MESSAGES.ERROR.getValue());
-    }
 
     /**
      * Prints a PlayerBoard followed by his PlayerHand and PlayerQuest. When argument is not null it alters the board's printing
@@ -42,6 +32,7 @@ public class Printer {
      */
     public void printFromBoard(Board board, PlayerHand hand, BoardArgument boardArgument, QuestCard playerQuest) {
         out.print(MESSAGES.CLS.getValue());
+        System.out.flush();
         ClientBoard.printBoard(board, boardArgument);
         out.println("RESOURCES: " + board.getResources().toString());
         out.println("YOUR CARDS: ");
@@ -61,6 +52,7 @@ public class Printer {
      */
     public void printFromPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards, PlayerHand hand, String argument, QuestCard playerQuest) {
         out.print(MESSAGES.CLS.getValue());
+        System.out.flush();
         ClientPublicBoard.printPublicBoard(resourceCards, goldCards, questCards);
         out.println("YOUR CARDS: ");
         ClientHand.print(hand, playerQuest);
@@ -79,6 +71,8 @@ public class Printer {
      * @param initialCard the InitialCard that has to be printed
      */
     public void printInitialCardChoice(InitialCard initialCard) {
+        out.print(MESSAGES.CLS.getValue());
+        System.out.flush();
         out.print(MESSAGES.HELP_INITIAL_CARD_CHOICE.getValue());
         ClientHand.initialPrint(initialCard);
     }
@@ -90,6 +84,8 @@ public class Printer {
      * @param quest2 the second QuestCard
      */
     public void printQuestCardChoice(QuestCard quest1, QuestCard quest2) {
+        out.print(MESSAGES.CLS.getValue());
+        System.out.flush();
         out.print(MESSAGES.HELP_QUEST_CARD_CHOICE.getValue());
         ArrayList<QuestCard> quests = new ArrayList<>();
         quests.add(quest1);
