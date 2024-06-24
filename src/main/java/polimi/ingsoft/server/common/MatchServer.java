@@ -28,7 +28,7 @@ public class MatchServer implements VirtualMatchServer {
     private class DrawParams{
         private final TYPE_HAND_CARD deckType;
 
-        private PlaceInPublicBoard.Slots slot;
+        private final PlaceInPublicBoard.Slots slot;
 
         public DrawParams(){
             Random random = new Random();

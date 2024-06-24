@@ -421,6 +421,7 @@ public abstract class Server implements VirtualServer {
 
     public void reJoinMatchUpdate(
             String nickname,
+            VirtualMatchServer matchServer,
             PlayerInitialSetting playerInitialSetting,
             GameState gameState,
             PlaceInPublicBoard<ResourceCard> resource,
@@ -433,7 +434,7 @@ public abstract class Server implements VirtualServer {
             VirtualView client = getClientInGame(nickname).getVirtualView();
 
             try {
-                client.showUpdateRejoinMatch(playerInitialSetting, gameState, resource, gold, quest, boards, playerHand);
+                client.showUpdateRejoinMatch(playerInitialSetting, matchServer, gameState, resource, gold, quest, boards, playerHand);
             } catch (IOException ignored) { }
         }
     }
@@ -512,6 +513,7 @@ public abstract class Server implements VirtualServer {
 
         synchronized (getClients()){
             virtualView = getClient(stub).getVirtualView();
+            removeClientConnection(getClient(stub));
         }
 
         synchronized (getClientsInGame()){
@@ -537,6 +539,14 @@ public abstract class Server implements VirtualServer {
             matchController.updatePlayerStatus(nickname, false);
         }
 
+        VirtualMatchServer matchServer;
+        if (getMatchServers().containsKey(matchId)) {
+            matchServer = getMatchServers().get(matchId);
+        } else {
+            // Match was created by a client using a protocol different from the one used by this client
+            matchServer = createMatchServer(controller.getMatch(matchId), getMatchNotificationClients().get(matchId), logger);
+        }
+
         GameState gameState = matchController.getGameState();
         PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
         PlaceInPublicBoard<GoldCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardGold();
@@ -547,6 +557,7 @@ public abstract class Server implements VirtualServer {
         //retrieve chats
         reJoinMatchUpdate(
                 nickname,
+                matchServer,
                 playerInitialSetting,
                 gameState,
                 resourcePublicBoard,
