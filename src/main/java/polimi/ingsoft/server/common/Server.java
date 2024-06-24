@@ -130,7 +130,6 @@ public abstract class Server implements VirtualServer {
         logger.println("SERVER: " + nickname + " " + stub);
         VirtualView clientToUpdate;
         synchronized (getClients()){
-            logger.println("Sto leggendo correttamente da stub:  "+ stub);
             clientToUpdate = getClient(stub).getVirtualView();
         }
 
@@ -462,7 +461,7 @@ public abstract class Server implements VirtualServer {
     }
 
     protected void deleteGame(Integer matchId){
-        List<String> players = controller.getMatch(matchId).getNamePlayers();
+        List<Player> players = controller.getMatch(matchId).getPlayers();
         controller.deleteMatch(matchId);
 
         synchronized (getMatchNotificationClients()){
@@ -472,20 +471,22 @@ public abstract class Server implements VirtualServer {
         //Removing the client connections from the in game list, and moving it to the client list
         synchronized (getClients()){
             synchronized (getClientsInGame()) {
-                for(var playerNickname : players){
-                    addClientConnection(getClient(playerNickname));
-                    removeClientInGame(getClient(playerNickname));
+                for(var player : players){
+                    if(!player.getIsDisconnected()){
+                        addClientConnection(getClient(player.getNickname()));
+                        removeClientInGame(getClient(player.getNickname()));
 
-                    logger.println("Moving back " + playerNickname + " to the client list");
+                        logger.println("Moving back " + player.getNickname() + " to the client list");
+                    }
                 }
             }
         }
 
         //Removing the disconnected clients associated to that game
         synchronized (getDisconnectedClients()){
-            for(var playerNickname : players){
+            for(var player : players){
                 getDisconnectedClients().keySet().stream()
-                        .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), playerNickname))
+                        .filter(clientConnection -> Objects.equals(clientConnection.getNickname(), player.getNickname()))
                         .findFirst()
                         .ifPresent(getDisconnectedClients()::remove);
             }
@@ -515,6 +516,10 @@ public abstract class Server implements VirtualServer {
 
         synchronized (getClientsInGame()){
             addClientInGame(new ClientConnection(virtualView, nickname));
+        }
+
+        synchronized (getMatchNotificationClients()){
+            getMatchNotificationClients().get(matchId).add(virtualView);
         }
         logger.println(nickname + " has reconnected to the Game " + matchId);
 

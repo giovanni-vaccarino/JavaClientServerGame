@@ -82,6 +82,10 @@ public class MatchController implements Serializable {
         isPingerOn = pingerOn;
     }
 
+    public Integer getRequestedNumPlayers(){
+        return this.requestedNumPlayers;
+    }
+
 
     public synchronized REJOIN_STATE updatePlayerStatus(String nickname, Boolean isDisconnected){
         Player player = getPlayerByNickname(nickname).orElse(null);
@@ -327,7 +331,7 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, CoordinateNotValidException, NotEnoughResourcesException {
+    public synchronized void placeCard(Player player, MixedCard card, Coordinates coordinates, boolean facingUp) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, CoordinateNotValidException, NotEnoughResourcesException, MatchBlockedException {
         gameState.validateMove(player, TURN_STEP.PLACE);
         Board board = player.getBoard();
 
@@ -358,7 +362,7 @@ public class MatchController implements Serializable {
      * @throws WrongStepException                 if the game is not in the correct step
      * @throws WrongGamePhaseException            if the game is not in the correct phase
      */
-    public synchronized void drawCard(Player player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public synchronized void drawCard(Player player, TYPE_HAND_CARD deckType, PlaceInPublicBoard.Slots slot) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, MatchBlockedException {
         gameState.validateMove(player, TURN_STEP.DRAW);
 
         gameState.goToNextPlayer();

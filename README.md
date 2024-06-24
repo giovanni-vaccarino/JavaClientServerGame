@@ -49,7 +49,7 @@ The program takes some arguments
 #### Running the GUI
 The GUI will start using no additional argument, or using -gui argument.
 ```
-java -jar <name_of_the_jar>.jar [-gui]
+java -jar <name_of_the_jar>.jar -gui
 ```
 #### Running the CLI
 Appending the argument -cli, a command line interface will be started. 

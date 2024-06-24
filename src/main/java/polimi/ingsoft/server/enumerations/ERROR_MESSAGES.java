@@ -34,6 +34,7 @@ public enum ERROR_MESSAGES {
 
     // Game errors
     WRONG_GAME_PHASE("Wrong phase of the game"),
+    MATCH_IS_BLOCKED("The match is currently blocked"),
     WRONG_STEP("Wrong step"),
     WRONG_PLAYER_TURN("It is not your turn"),
     UNABLE_TO_DRAW_CARD("Unable to draw card"),

@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.controller;
 
+import polimi.ingsoft.server.enumerations.BLOCKED_MATCH_STATE;
 import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.exceptions.MatchExceptions.*;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
@@ -51,6 +52,8 @@ public class GameState implements Serializable, Cloneable {
 
     private INITIAL_STEP currentInitialStep;
 
+    private BLOCKED_MATCH_STATE blockedMatchState;
+
     /**
      * Constructs a GameState with the specified matchController and number of players.
      *
@@ -59,6 +62,7 @@ public class GameState implements Serializable, Cloneable {
      */
     public GameState(MatchController matchController, Integer requestedNumPlayers) {
         this.gamePhase = GAME_PHASE.WAITING_FOR_PLAYERS;
+        this.blockedMatchState = BLOCKED_MATCH_STATE.NOT_BLOCKED;
         this.matchController = matchController;
         this.requestedNumPlayers = requestedNumPlayers;
         this.effectiveNumPlayers = requestedNumPlayers;
@@ -139,20 +143,15 @@ public class GameState implements Serializable, Cloneable {
         return playerStepCheck.size() == effectiveNumPlayers - 1;
     }
 
+    public void setBlockedMatchState(BLOCKED_MATCH_STATE blockedMatchState){this.blockedMatchState = blockedMatchState;}
+
+    public BLOCKED_MATCH_STATE getBlockedMatchState(){return this.blockedMatchState;}
+
+
     /**
      * Updates the game phase
      */
     public void updateState(){
-        /*
-        if(matchController.getNumOnlinePlayers() == 1){
-            //TODO case of 0 active players
-            //set blocked state
-            // start timeout
-            return;
-        }
-        //unlock it
-        */
-
         switch(gamePhase){
             case GAME_PHASE.WAITING_FOR_PLAYERS -> {
                 if(getNumLobbyPlayers().equals(requestedNumPlayers)){
@@ -249,7 +248,8 @@ public class GameState implements Serializable, Cloneable {
      * @throws WrongStepException                if the move is not allowed in the current step
      * @throws WrongGamePhaseException           if the move is not allowed in the current game phase
      */
-    public void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException {
+    public void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, MatchBlockedException {
+        if (blockedMatchState != BLOCKED_MATCH_STATE.NOT_BLOCKED) throw new MatchBlockedException();
         if (gamePhase != GAME_PHASE.PLAY && gamePhase != GAME_PHASE.LAST_ROUND) throw new WrongGamePhaseException();
         if (player != getCurrentPlayer()) throw new WrongPlayerForCurrentTurnException();
         if (currentTurnStep != move) throw new WrongStepException();
@@ -346,6 +346,9 @@ public class GameState implements Serializable, Cloneable {
      * Advances to the next player.
      */
     public void goToNextPlayer() {
+        if(blockedMatchState.equals(BLOCKED_MATCH_STATE.BLOCKED_ONE_PLAYER)){
+            return;
+        }
         System.out.println("The previous player was: " + currentPlayerNickname + " with index: " + currentPlayerIndex);
         do{
             currentPlayerIndex = (currentPlayerIndex + 1) % effectiveNumPlayers;
@@ -396,12 +399,14 @@ public class GameState implements Serializable, Cloneable {
         int maxPoints = -1;
 
         for(var player : matchController.getPlayers()){
-            if(player.getBoard().getScore() > maxPoints){
-                winners.clear();
-                winners.add(player.getNickname());
-                maxPoints = player.getBoard().getScore();
-            }else if(player.getBoard().getScore() == maxPoints){
-                winners.add(player.getNickname());
+            if(!player.getIsDisconnected()){
+                if(player.getBoard().getScore() > maxPoints){
+                    winners.clear();
+                    winners.add(player.getNickname());
+                    maxPoints = player.getBoard().getScore();
+                }else if(player.getBoard().getScore() == maxPoints){
+                    winners.add(player.getNickname());
+                }
             }
         }
 
