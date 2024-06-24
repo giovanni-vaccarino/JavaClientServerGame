@@ -175,8 +175,8 @@ public enum MESSAGES {
     ->BACK: GO BACK TO YOUR BOARD !
     """),
 
-    GO_BACK_TO_MATCH_MENU("Premi invio per tornare al menu di scelta partita..."),
-    PRESS_NEXT_LINE("Premi invio per riprovare...");
+    GO_BACK_TO_MATCH_MENU("Press enter to go back to the match choice menu..."),
+    PRESS_NEXT_LINE("Press enter to try again...");
 
     private final String value;
 
