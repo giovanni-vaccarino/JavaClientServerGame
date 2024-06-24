@@ -399,12 +399,14 @@ public class GameState implements Serializable, Cloneable {
         int maxPoints = -1;
 
         for(var player : matchController.getPlayers()){
-            if(player.getBoard().getScore() > maxPoints){
-                winners.clear();
-                winners.add(player.getNickname());
-                maxPoints = player.getBoard().getScore();
-            }else if(player.getBoard().getScore() == maxPoints){
-                winners.add(player.getNickname());
+            if(!player.getIsDisconnected()){
+                if(player.getBoard().getScore() > maxPoints){
+                    winners.clear();
+                    winners.add(player.getNickname());
+                    maxPoints = player.getBoard().getScore();
+                }else if(player.getBoard().getScore() == maxPoints){
+                    winners.add(player.getNickname());
+                }
             }
         }
 
