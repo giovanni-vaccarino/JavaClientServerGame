@@ -36,8 +36,8 @@ class ClientPublicBoardTest {
     public static void init(){
         CornerSpace upleft,upright,bottomleft,bottomright;
         CenterSpace center;
-        List<Item> list = new ArrayList<>();
-        List<Resource> list2 =new ArrayList<>();
+        List<Item> list;
+        List<Resource> list2;
         Face front,back;
 
         list=new ArrayList<>();

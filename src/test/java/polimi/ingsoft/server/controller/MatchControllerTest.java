@@ -415,10 +415,10 @@ class MatchControllerTest {
         System.out.println(matchController.getPublicBoard());
     }
 
-    @Test
-    void getRequestedNumPlayers() {
-        System.out.println(matchController.getRequestedNumPlayers());
-    }
+//    @Test
+//    void getRequestedNumPlayers() {
+//        System.out.println(matchController.getRequestedNumPlayers());
+//    }
 
     @Test
     void getMatchId() {

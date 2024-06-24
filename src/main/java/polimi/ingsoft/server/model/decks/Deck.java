@@ -49,7 +49,9 @@ public class Deck<T extends Drawable> extends CardCollection<T> implements  Seri
     @Override
     public Deck<T> clone() {
         try {
-            return (Deck<T>) super.clone();
+            Deck<T> deck = (Deck<T>) super.clone();
+            deck.cards = (ArrayList<T>) this.cards.clone();
+            return deck;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }

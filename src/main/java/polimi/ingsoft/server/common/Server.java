@@ -241,7 +241,6 @@ public abstract class Server implements VirtualServer {
 
     @Override
     public void ping(String nickname) throws IOException {
-        logger.println("Received PING");
         logger.println(nickname);
         synchronized (getClients()){
             ClientConnection client = getClient(nickname);
@@ -463,6 +462,7 @@ public abstract class Server implements VirtualServer {
 
     protected void deleteGame(Integer matchId){
         List<Player> players = controller.getMatch(matchId).getPlayers();
+        getMatchServers().get(matchId);
         controller.deleteMatch(matchId);
 
         synchronized (getMatchNotificationClients()){

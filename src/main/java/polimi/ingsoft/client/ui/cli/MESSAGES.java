@@ -9,7 +9,9 @@ public enum MESSAGES {
     WELCOME("Welcome to CODEX\n"),
     NICKNAME_UPDATED("Your nickname was successfully set"),
     NO_MATCHES_TO_SHOW("There are currently no matches being run"),
-    CHOOSE_MATCH("Choose your match or create a new one by typing \"0\": "),
+    CHOOSE_MATCH("""
+    
+    Choose your match, create a new one by typing \"0\" or update the matches list by typing \"update\": """),
     CHOOSE_NICKNAME("Choose your nickname: "),
     CHOOSE_NUMBER_OF_PLAYERS("Choose how many players should the game have: "),
     JOINING_MATCH("Joining match..."),
@@ -65,6 +67,7 @@ public enum MESSAGES {
             1->LEFT
             2->CENTER
             3->RIGHT
+            FLIP -> FLIP ONE OF YOUR HAND'S CARDS
             CHAT -> CHAT WITH ANOTHER PLAYER
             MOVE -> NAVIGATE YOUR BOARD
             BOARD -> SEE ANOTHER PLAYER'S BOARD
@@ -118,10 +121,11 @@ public enum MESSAGES {
     ERROR("SOMETHING WENT WRONG, PLEASE TRY WITH ANOTHER COMMAND !\n"),
 
     GET_FLIP_CHOICE("""
-            WHICH CARD WOULD YOU LIKE TO FLIP ?" +
+            WHICH CARD WOULD YOU LIKE TO FLIP ?
             1->LEFT
             2->CENTER
             3->RIGHT
+            BACK -> GO BACK TO PLAYING YOUR CARD 
             """),
 
     LAST_ROUND("""
@@ -138,6 +142,10 @@ public enum MESSAGES {
             2-> PRIVATE MESSAGE
             3-> SEE BROADCAST CHAT
             4-> SEE PRIVATE MESSAGES
+            """),
+    END_CHAT_ITER_MESSAGE("""
+            
+            PRESS "ENTER" TO GO BACK TO YOUR BOARD'S MENU
             """),
 
     HELP_GET_PLAYER_NAME("TYPE THE RECEIVING PLAYER'S NAME:"),
@@ -169,7 +177,8 @@ public enum MESSAGES {
     ->BACK: GO BACK TO YOUR BOARD !
     """),
 
-    GO_BACK_TO_MATCH_MENU("Premi invio per tornare al menu di scelta partita...");
+    GO_BACK_TO_MATCH_MENU("Press enter to go back to the match choice menu..."),
+    PRESS_NEXT_LINE("Press enter to try again...");
 
     private final String value;
 

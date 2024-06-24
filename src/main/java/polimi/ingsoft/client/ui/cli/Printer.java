@@ -8,6 +8,7 @@ import polimi.ingsoft.server.model.cards.ResourceCard;
 import polimi.ingsoft.server.model.decks.PlayerHand;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
@@ -21,16 +22,6 @@ public class Printer {
         this.out = out;
     }
 
-    /**
-     * Prints game's basic argument
-     *
-     * @param argument a player's input
-     */
-    public void printFromMain(String argument) {
-        if (argument.toLowerCase().equals(Arguments.Argument.HELP.getValue())) {
-            out.println(MESSAGES.HELP_MAIN.getValue());
-        } else out.println(MESSAGES.ERROR.getValue());
-    }
 
     /**
      * Prints a PlayerBoard followed by his PlayerHand and PlayerQuest. When argument is not null it alters the board's printing
@@ -41,7 +32,7 @@ public class Printer {
      * @param playerQuest      player's personal QuestCard
      */
     public void printFromBoard(Board board, PlayerHand hand, BoardArgument boardArgument, QuestCard playerQuest) {
-        out.print(MESSAGES.CLS.getValue());
+        cleanTerminal();
         ClientBoard.printBoard(board, boardArgument);
         out.println("RESOURCES: " + board.getResources().toString());
         out.println("YOUR CARDS: ");
@@ -60,7 +51,7 @@ public class Printer {
      * @param playerQuest   player's personal quest card
      */
     public void printFromPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards, PlayerHand hand, String argument, QuestCard playerQuest) {
-        out.print(MESSAGES.CLS.getValue());
+        cleanTerminal();
         ClientPublicBoard.printPublicBoard(resourceCards, goldCards, questCards);
         out.println("YOUR CARDS: ");
         ClientHand.print(hand, playerQuest);
@@ -79,6 +70,7 @@ public class Printer {
      * @param initialCard the InitialCard that has to be printed
      */
     public void printInitialCardChoice(InitialCard initialCard) {
+        cleanTerminal();
         out.print(MESSAGES.HELP_INITIAL_CARD_CHOICE.getValue());
         ClientHand.initialPrint(initialCard);
     }
@@ -90,10 +82,23 @@ public class Printer {
      * @param quest2 the second QuestCard
      */
     public void printQuestCardChoice(QuestCard quest1, QuestCard quest2) {
+        cleanTerminal();
         out.print(MESSAGES.HELP_QUEST_CARD_CHOICE.getValue());
         ArrayList<QuestCard> quests = new ArrayList<>();
         quests.add(quest1);
         quests.add(quest2);
         ClientPublicBoard.printInitialQuests(quests);
+    }
+
+    public static void cleanTerminal(){
+        try {
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print(MESSAGES.CLS.getValue());
+                System.out.flush();
+            }
+        } catch (IOException | InterruptedException ignored){
+        }
     }
 }

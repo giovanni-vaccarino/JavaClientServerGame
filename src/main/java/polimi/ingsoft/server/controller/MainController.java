@@ -94,6 +94,8 @@ public class MainController {
      * @throws MatchNotFoundException    if the match is not found
      */
     public synchronized void deleteMatch(int matchId){
+        MatchController matchController = matches.get(matchId);
+        matchController.turnPingerOff();
         matches.remove(matchId);
     }
 

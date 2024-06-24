@@ -48,7 +48,7 @@ public class MatchController implements Serializable {
 
     protected final int matchId;
 
-    private boolean isPingerOn = false;
+    private Timer pinger = null;
 
 
     /**
@@ -74,12 +74,16 @@ public class MatchController implements Serializable {
         this.gameState = new GameState(this, requestedNumPlayers);
     }
 
-    public boolean isPingerOn() {
-        return isPingerOn;
+    public boolean hasPinger() {
+        return pinger != null;
     }
 
-    public void setPingerOn(boolean pingerOn) {
-        isPingerOn = pingerOn;
+    public void setPinger(Timer pinger) {
+        this.pinger = pinger;
+    }
+
+    public void turnPingerOff() {
+        if (pinger != null) pinger.cancel();
     }
 
     public Integer getRequestedNumPlayers(){
