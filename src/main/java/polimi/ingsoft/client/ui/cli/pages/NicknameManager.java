@@ -2,6 +2,7 @@ package polimi.ingsoft.client.ui.cli.pages;
 
 import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
+import polimi.ingsoft.client.ui.cli.Printer;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.PrintStream;
@@ -32,6 +33,7 @@ public class NicknameManager implements CLIPhaseManager {
     }
 
     private void setNickname() {
+        Printer.cleanTerminal();
         if (state == State.SET_NICKNAME) {
             out.print(MESSAGES.CHOOSE_NICKNAME.getValue());
             nickname = in.nextLine();
