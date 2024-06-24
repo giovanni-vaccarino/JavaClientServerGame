@@ -444,9 +444,8 @@ public class GameManager implements CLIPhaseManager {
     }
 
     public void updatePrivateChat(String recipient, Message message) {
-        if (Objects.equals(recipient, cli.getNickname()) && model.privateChat.containsKey(message.getSender())) {
-            model.privateChat.get(message.getSender()).addMessage(message.getSender(), message.getText());
-        }
+        System.out.println(recipient + cli.getNickname() + message.getSender());
+        model.privateChat.get(recipient).addMessage(message.getSender(), message.getText());
     }
 
     private BoardArgument getBoardArgument(String input) {
