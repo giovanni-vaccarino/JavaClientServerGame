@@ -3,12 +3,10 @@ package polimi.ingsoft.server.common;
 import polimi.ingsoft.client.common.VirtualView;
 import polimi.ingsoft.server.common.command.MatchServerCommand;
 import polimi.ingsoft.server.controller.MatchController;
+import polimi.ingsoft.server.controller.MatchTimer;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
-import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
-import polimi.ingsoft.server.enumerations.GAME_PHASE;
-import polimi.ingsoft.server.enumerations.REJOIN_STATE;
+import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.model.player.PlayerColor;
-import polimi.ingsoft.server.enumerations.TYPE_HAND_CARD;
 import polimi.ingsoft.server.exceptions.MatchExceptions.*;
 import polimi.ingsoft.server.model.boards.Board;
 import polimi.ingsoft.server.model.boards.Coordinates;
@@ -55,6 +53,8 @@ public class MatchServer implements VirtualMatchServer {
 
     private final Map<Class<? extends Exception>, ExceptionHandler> exceptionHandlers = new HashMap<>();
 
+    private final MatchTimer matchBlockedTimer = new MatchTimer(this);
+
 
     public MatchServer(PrintStream logger, MatchController controller, Server server) {
         this.logger = logger;
@@ -76,7 +76,6 @@ public class MatchServer implements VirtualMatchServer {
         return server.getMatchNotificationClients().get(matchController.getMatchId());
     }
 
-    //TODO move away from here since it is executed 2 times (1 for RMI and 1 for Socket)
     private void scheduleTimeoutRoutine() {
         TimerTask task = new TimerTask() {
             @Override
@@ -359,8 +358,54 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
+    public void notifyTimerEnd(){
+        switch (matchController.getGameState().getBlockedMatchState()){
+            case BLOCKED_NO_PLAYERS -> {
+                logger.println("TIMER IS EXPIRED. THE GAME HAS BEEN DELETED");
+                server.deleteGame(matchController.getMatchId());
+            }
+
+            case BLOCKED_ONE_PLAYER -> {
+                logger.println("TIMER IS EXPIRED. THE WINNER IS THE ONLY PLAYER REMAINED");
+                //notify the win to the player
+            }
+        }
+    }
+
+
+    private BLOCKED_MATCH_STATE handleBlockedMatch(){
+        Integer numOnlinePlayers = matchController.getNumOnlinePlayers();
+        switch (numOnlinePlayers){
+            case 0 -> {
+                logger.println("TIMER HAS BEEN SET. THE GAME IS GOING TO BE DELETED IN x SECONDS");
+                matchController.getGameState().setBlockedMatchState(BLOCKED_MATCH_STATE.BLOCKED_NO_PLAYERS);
+                matchBlockedTimer.startTimer(10);
+            }
+
+            case 1 -> {
+                logger.println("TIMER HAS BEEN SET. THE GAME IS GOING TO BE DELETED IN x SECONDS");
+                matchController.getGameState().setBlockedMatchState(BLOCKED_MATCH_STATE.BLOCKED_ONE_PLAYER);
+                matchBlockedTimer.startTimer(10);
+            }
+
+            default -> {
+                logger.println("TIMER HAS BEEN STOPPED");
+                matchBlockedTimer.stopTimer();
+            }
+        }
+
+        return matchController.getGameState().getBlockedMatchState();
+    }
+
+
     private void handleRejoinState(String nickname) {
         REJOIN_STATE rejoinState = matchController.updatePlayerStatus(nickname, true);
+
+        BLOCKED_MATCH_STATE blockedMatchState = handleBlockedMatch();
+
+        if(blockedMatchState.equals(BLOCKED_MATCH_STATE.BLOCKED_NO_PLAYERS)){
+            return;
+        }
 
         switch (rejoinState) {
             case HAVE_TO_DRAW -> {
@@ -412,6 +457,9 @@ public class MatchServer implements VirtualMatchServer {
 
         exceptionHandlers.put(WrongGamePhaseException.class,
                 (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.WRONG_GAME_PHASE));
+
+        exceptionHandlers.put(MatchBlockedException.class,
+                (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.MATCH_IS_BLOCKED));
 
         exceptionHandlers.put(WrongStepException.class,
                 (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.WRONG_STEP));
