@@ -65,6 +65,7 @@ public enum MESSAGES {
             1->LEFT
             2->CENTER
             3->RIGHT
+            FLIP -> FLIP ONE OF YOUR HAND'S CARDS
             CHAT -> CHAT WITH ANOTHER PLAYER
             MOVE -> NAVIGATE YOUR BOARD
             BOARD -> SEE ANOTHER PLAYER'S BOARD
@@ -118,10 +119,11 @@ public enum MESSAGES {
     ERROR("SOMETHING WENT WRONG, PLEASE TRY WITH ANOTHER COMMAND !\n"),
 
     GET_FLIP_CHOICE("""
-            WHICH CARD WOULD YOU LIKE TO FLIP ?" +
+            WHICH CARD WOULD YOU LIKE TO FLIP ?
             1->LEFT
             2->CENTER
             3->RIGHT
+            BACK -> GO BACK TO PLAYING YOUR CARD 
             """),
 
     LAST_ROUND("""
@@ -138,6 +140,10 @@ public enum MESSAGES {
             2-> PRIVATE MESSAGE
             3-> SEE BROADCAST CHAT
             4-> SEE PRIVATE MESSAGES
+            """),
+    END_CHAT_ITER_MESSAGE("""
+            
+            PRESS "ENTER" TO GO BACK TO YOUR BOARD'S MENU 
             """),
 
     HELP_GET_PLAYER_NAME("TYPE THE RECEIVING PLAYER'S NAME:"),

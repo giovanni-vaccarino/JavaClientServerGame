@@ -193,21 +193,21 @@ public class GameManager implements CLIPhaseManager {
                 }
                 else if (choice.equalsIgnoreCase("flip")) {
                     do {
+                        printer.printFromBoard(board,hand,null,questCard);
                         System.out.println(MESSAGES.GET_FLIP_CHOICE.getValue());
                         secondChoice = in.nextLine();
-                        if (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")))
+                        if (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3") || secondChoice.equalsIgnoreCase("back")))
                             out.println(MESSAGES.ERROR.getValue());
-                    } while (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3")));
-                    hand.flip(Integer.parseInt(secondChoice) - 1);
-                    ClientHand.print(hand, questCard);
+                    } while (!(secondChoice.equals("1") || secondChoice.equals("2") || secondChoice.equals("3") || secondChoice.equalsIgnoreCase("back")));
+                    if(!choice.equalsIgnoreCase("back"))hand.flip(Integer.parseInt(secondChoice) - 1);
                 } else if (!(choice.equals("1") || choice.equals("2") || choice.equals("3")))
                     out.print(MESSAGES.ERROR.getValue());
             } while (!(choice.equals("1") || choice.equals("2") || choice.equals("3")));
             card = Integer.parseInt((choice));
             // Get coords choice
+            printer.printFromBoard(board,hand,null,questCard);
             out.println(MESSAGES.PLAY_CARD_HELP_2.getValue() + " " + board.getPrintingCoordinates().getX() + "," + board.getPrintingCoordinates().getY());
             do {
-
                 out.println(MESSAGES.PLAY_CARD_HELP_X.getValue());
                 choice = in.nextLine();
                 try {
@@ -300,6 +300,7 @@ public class GameManager implements CLIPhaseManager {
     private void runChatIter() {
         String choice, receiver = null;
         int type;
+        Printer.cleanTerminal();
         do {
             out.println(MESSAGES.HELP_GET_MESSAGE_TYPE.getValue());
             choice = in.nextLine();
@@ -346,6 +347,8 @@ public class GameManager implements CLIPhaseManager {
                 }
             }
             else out.println("Nothing said yet !");
+            System.out.println(MESSAGES.END_CHAT_ITER_MESSAGE.getValue());
+            in.nextLine();
         }
         else{
             int i = 0;
@@ -375,12 +378,15 @@ public class GameManager implements CLIPhaseManager {
                 }
             }
             else out.println("You and " + choice + " haven't already talked to each other !");
+            System.out.println(MESSAGES.END_CHAT_ITER_MESSAGE.getValue());
+            in.nextLine();
         }
     }
 
     public void runBoardIter() {
         BoardArgument argument=null;
         String observed,input;
+        Printer.cleanTerminal();
         out.println(MESSAGES.HELP_OTHER_PLAYERS_BOARD.getValue());
         do {
             out.println(MESSAGES.HELP_GET_PLAYER_NAME.getValue());
@@ -396,8 +402,9 @@ public class GameManager implements CLIPhaseManager {
         } while (!model.nicknames.contains(observed) || observed.equalsIgnoreCase(cli.getNickname()));
         Board temp=model.playerBoards.get(observed);
         do{
-            ClientBoard.printBoard(temp,argument);
             do {
+                Printer.cleanTerminal();
+                ClientBoard.printBoard(temp,argument);
                 out.println(MESSAGES.HELP_BOARD_NAVIGATE.getValue());
                 input = in.nextLine();
                 if (checkInputForBoardNavigation(input)) out.println(MESSAGES.ERROR.getValue());
@@ -418,6 +425,8 @@ public class GameManager implements CLIPhaseManager {
         BoardArgument argument=null;
         String input;
         do {
+            Printer.cleanTerminal();
+            ClientBoard.printBoard(board,null);
             out.println(MESSAGES.HELP_BOARD_NAVIGATE.getValue());
             input = in.nextLine();
             if (checkInputForBoardNavigation(input)) out.println(MESSAGES.ERROR.getValue());
@@ -425,6 +434,7 @@ public class GameManager implements CLIPhaseManager {
         if(!input.equalsIgnoreCase("back")){
             argument = getBoardArgument(input);
         }
+        Printer.cleanTerminal();
         printer.printFromBoard(board,model.hand,argument,model.personalQuestCard);
 
     }
