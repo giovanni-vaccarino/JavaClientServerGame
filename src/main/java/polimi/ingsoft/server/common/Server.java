@@ -130,7 +130,6 @@ public abstract class Server implements VirtualServer {
         logger.println("SERVER: " + nickname + " " + stub);
         VirtualView clientToUpdate;
         synchronized (getClients()){
-            logger.println("Sto leggendo correttamente da stub:  "+ stub);
             clientToUpdate = getClient(stub).getVirtualView();
         }
 
@@ -515,6 +514,10 @@ public abstract class Server implements VirtualServer {
 
         synchronized (getClientsInGame()){
             addClientInGame(new ClientConnection(virtualView, nickname));
+        }
+
+        synchronized (getMatchNotificationClients()){
+            getMatchNotificationClients().get(matchId).add(virtualView);
         }
         logger.println(nickname + " has reconnected to the Game " + matchId);
 
