@@ -25,7 +25,7 @@ import java.io.PrintStream;
 import java.util.*;
 
 public class MatchServer implements VirtualMatchServer {
-    private class DrawParams{
+    private class DrawParams {
         private final TYPE_HAND_CARD deckType;
 
         private PlaceInPublicBoard.Slots slot;
@@ -64,10 +64,10 @@ public class MatchServer implements VirtualMatchServer {
         initExceptionHandlers();
         synchronized (matchController){
             logger.println("Tentativo di apertura match ping");
-            if(!matchController.isPingerOn()){
+            if(!matchController.hasPinger()){
                 logger.println("Tentativo di apertura match ping riuscito");
-                scheduleTimeoutRoutine();
-                matchController.setPingerOn(true);
+                Timer pinger = scheduleTimeoutRoutine();
+                matchController.setPinger(pinger);
             }
         }
     }
@@ -76,7 +76,7 @@ public class MatchServer implements VirtualMatchServer {
         return server.getMatchNotificationClients().get(matchController.getMatchId());
     }
 
-    private void scheduleTimeoutRoutine() {
+    private Timer scheduleTimeoutRoutine() {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -123,7 +123,9 @@ public class MatchServer implements VirtualMatchServer {
             }
         };
 
-        new Timer().scheduleAtFixedRate(task, 1000, 5000);
+        Timer pinger = new Timer();
+        pinger.scheduleAtFixedRate(task, 1000, 5000);
+        return pinger;
     }
 
     @Override
