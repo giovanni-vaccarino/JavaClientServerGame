@@ -483,9 +483,6 @@ public class GameManager implements CLIPhaseManager {
         // TODO Maybe remove this one
         switch (error) {
             case COORDINATE_NOT_VALID, NOT_ENOUGH_RESOURCES -> {
-                out.println(model.gamePhase);
-                out.println(model.turnStep);
-                out.println(model.currentPlayerNickname);
                 if ((model.gamePhase == GAME_PHASE.PLAY || model.gamePhase == GAME_PHASE.LAST_ROUND)
                         && model.turnStep == TURN_STEP.PLACE
                         && Objects.equals(model.currentPlayerNickname, cli.getNickname())) {

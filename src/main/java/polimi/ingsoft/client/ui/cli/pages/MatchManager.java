@@ -2,6 +2,7 @@ package polimi.ingsoft.client.ui.cli.pages;
 
 import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
+import polimi.ingsoft.client.ui.cli.Printer;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
@@ -119,6 +120,7 @@ public class MatchManager implements CLIPhaseManager {
     private void runCreateMatch() {
         String choice;
         if (state == State.SET_MATCH_ID) {
+            Printer.cleanTerminal();
             int requestedNumPlayers;
             boolean isValid = false;
 

@@ -9,7 +9,9 @@ public enum MESSAGES {
     WELCOME("Welcome to CODEX\n"),
     NICKNAME_UPDATED("Your nickname was successfully set"),
     NO_MATCHES_TO_SHOW("There are currently no matches being run"),
-    CHOOSE_MATCH("Choose your match, create a new one by typing \"0\" or update the matches list by typing \"update\": "),
+    CHOOSE_MATCH("""
+    
+    Choose your match, create a new one by typing \"0\" or update the matches list by typing \"update\": """),
     CHOOSE_NICKNAME("Choose your nickname: "),
     CHOOSE_NUMBER_OF_PLAYERS("Choose how many players should the game have: "),
     JOINING_MATCH("Joining match..."),
@@ -175,8 +177,8 @@ public enum MESSAGES {
     ->BACK: GO BACK TO YOUR BOARD !
     """),
 
-    GO_BACK_TO_MATCH_MENU("Premi invio per tornare al menu di scelta partita..."),
-    PRESS_NEXT_LINE("Premi invio per riprovare...");
+    GO_BACK_TO_MATCH_MENU("Press enter to go back to the match choice menu..."),
+    PRESS_NEXT_LINE("Press enter to try again...");
 
     private final String value;
 

@@ -149,6 +149,7 @@ public class MatchInitializationManager implements CLIPhaseManager {
         int colorId = 0;
         boolean isValid = false;
         String choice;
+        Printer.cleanTerminal();
         do {
             out.print(MESSAGES.CHOOSE_COLOR.getValue());
             choice = in.nextLine();
