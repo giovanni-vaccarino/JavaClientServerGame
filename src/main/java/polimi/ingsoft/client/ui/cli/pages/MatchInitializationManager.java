@@ -66,7 +66,7 @@ public class MatchInitializationManager implements CLIPhaseManager {
     @Override
     public void start() {
         state = State.SELECTING_COLOR;
-        selectColor();
+        new Thread(this::selectColor).start();
     }
 
     public void updateGameState(GameState gameState) {
@@ -76,10 +76,10 @@ public class MatchInitializationManager implements CLIPhaseManager {
         if (gamePhase == GAME_PHASE.INITIALIZATION) {
             if (state == State.WAITING_FOR_OTHERS_TO_SELECT_COLOR && initialStep == INITIAL_STEP.FACE_INITIAL) {
                 state = State.SELECTING_INITIAL_CARD_FACE;
-                selectInitialCardFace();
+                new Thread(this::selectInitialCardFace).start();
             } else if (state == State.WAITING_FOR_OTHERS_TO_SELECT_INITIAL_CARD_FACE && initialStep == INITIAL_STEP.QUEST_CARD) {
                 state = State.SELECTING_QUEST_CARD;
-                selectQuestCard();
+                new Thread(this::selectQuestCard).start();
             }
         } else if (gamePhase == GAME_PHASE.PLAY && state == State.WAITING_FOR_OTHERS_TO_SELECT_QUEST_CARD) {
             state = State.NONE;
@@ -220,15 +220,15 @@ public class MatchInitializationManager implements CLIPhaseManager {
         if (state == State.WAITING_FOR_COLOR && error == ERROR_MESSAGES.UNABLE_TO_SET_COLOR || error == ERROR_MESSAGES.COLOR_ALREADY_PICKED) {
             out.println("ERROR: " + error.getValue());
             state = State.SELECTING_COLOR;
-            selectColor();
+            new Thread(this::selectColor).start();
         } else if (state == State.WAITING_FOR_INITIAL_CARD_FACE && error == ERROR_MESSAGES.UNABLE_TO_SET_FACE) {
             out.println("ERROR: " + error.getValue());
             state = State.SELECTING_INITIAL_CARD_FACE;
-            selectInitialCardFace();
+            new Thread(this::selectInitialCardFace).start();
         } else if (state == State.WAITING_FOR_QUEST_CARD && error == ERROR_MESSAGES.UNABLE_TO_SET_QUEST_CARD) {
             out.println("ERROR: " + error.getValue());
             state = State.SELECTING_QUEST_CARD;
-            selectQuestCard();
+            new Thread(this::selectQuestCard).start();
         } else {
             // TODO Maybe remove this one
             out.println("UNEXPECTED ERROR: " + error.getValue());

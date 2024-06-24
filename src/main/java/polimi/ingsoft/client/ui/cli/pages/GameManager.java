@@ -146,7 +146,7 @@ public class GameManager implements CLIPhaseManager {
         if (gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND) {
             if (isYourTurn) {
                 if (gamePhase == GAME_PHASE.LAST_ROUND) out.println(MESSAGES.LAST_ROUND);
-                playTurn(turnStep,gamePhase);
+                new Thread(() -> playTurn(turnStep,gamePhase)).start();
             } else
                 out.println("Wait for your turn!");
         } else if (gamePhase == GAME_PHASE.END) {
