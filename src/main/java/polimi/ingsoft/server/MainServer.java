@@ -55,7 +55,7 @@ public class MainServer {
     private static void runRmiServer() {
         try {
             System.setProperty("java.rmi.server.disableHttp", "true");
-            System.setProperty("java.rmi.server.hostname", Arrays.toString(InetAddress.getLocalHost().getAddress()));
+            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
             VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(rmiServer, 0);
 
             Registry registry = LocateRegistry.createRegistry(1234);

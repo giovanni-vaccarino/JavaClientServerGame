@@ -85,7 +85,7 @@ public class MainClient {
      */
     private static Client createRmiClient(UIType uiType) throws UnableToConnectException {
         try {
-            System.setProperty("java.rmi.server.hostname", Arrays.toString(InetAddress.getLocalHost().getAddress()));
+            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
             return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, uiType, printStream, scanner);
         } catch (RemoteException | NotBoundException exception) {
             throw new UnableToConnectException();
