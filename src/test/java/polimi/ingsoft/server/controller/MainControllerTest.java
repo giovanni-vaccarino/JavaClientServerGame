@@ -2,6 +2,7 @@ package polimi.ingsoft.server.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
 
@@ -60,10 +61,10 @@ class MainControllerTest {
         Integer matchId1 = mainController.createMatch(2);
         Integer matchId2 = mainController.createMatch(3);
 
-        List<Integer> matches = mainController.getMatches();
-
-        assertTrue(matches.contains(matchId1));
-        assertTrue(matches.contains(matchId2));
+        List<MatchList> matches = mainController.getMatches();
+        List<Integer> matchIDs = matches.stream().map( match -> match.getMatchId()).toList();
+        assertTrue(matchIDs.contains(matchId1));
+        assertTrue(matchIDs.contains(matchId2));
     }
 
     @Test
