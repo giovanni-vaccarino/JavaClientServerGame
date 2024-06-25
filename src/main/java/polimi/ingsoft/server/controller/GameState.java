@@ -349,10 +349,12 @@ public class GameState implements Serializable, Cloneable {
         if(blockedMatchState.equals(BLOCKED_MATCH_STATE.BLOCKED_ONE_PLAYER)){
             return;
         }
-        System.out.println("The previous player was: " + currentPlayerNickname + " with index: " + currentPlayerIndex);
+
         do{
+            System.out.println("The previous player was: " + currentPlayerNickname + " with index: " + currentPlayerIndex + ". Status: " + getCurrentPlayer().getIsDisconnected());
             currentPlayerIndex = (currentPlayerIndex + 1) % effectiveNumPlayers;
-            System.out.println("The current player has become: " + getCurrentPlayer().getNickname() + " with index " + currentPlayerIndex);
+            System.out.println("The current player has become: " + getCurrentPlayer().getNickname() + " with index " + currentPlayerIndex
+                    + ". Status: " + getCurrentPlayer().getIsDisconnected());
             this.updateTurnNumber();
         } while(matchController.isPlayerDisconnected(currentPlayerIndex));
 

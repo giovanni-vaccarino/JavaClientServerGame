@@ -65,6 +65,7 @@ public class ColorPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         errButton.setVisible(false);
         waitButton.setVisible(false);
+        updateButton.setVisible(false);
         List<PlayerColor> items = List.of(PlayerColor.RED,PlayerColor.BLUE,PlayerColor.GREEN, PlayerColor.YELLOW); // CALL MODEL
         resetColor();
         setGameList(items);
@@ -152,6 +153,8 @@ public class ColorPageController implements Initializable {
             showError(INITIAL_SETTING_ALREADY_SET);
         }
     }
+
+
     public void nextPage(){
         InitialCardPageController initialCardPageController = new InitialCardPageController();
         try {
@@ -181,7 +184,6 @@ public class ColorPageController implements Initializable {
             errButton.setVisible(true);
             colorList.setVisible(true);
             selectButton.setVisible(true);
-            updateButton.setVisible(true);
             colorSend = false;
         }
     }

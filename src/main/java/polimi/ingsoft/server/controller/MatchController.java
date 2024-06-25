@@ -48,7 +48,7 @@ public class MatchController implements Serializable {
 
     protected final int matchId;
 
-    private Timer pinger = null;
+    private transient Timer pinger = null;
 
 
     /**
@@ -97,13 +97,8 @@ public class MatchController implements Serializable {
         player.setIsDisconnected(isDisconnected);
 
         if(gameState.getCurrentPlayer() == player){
-            if(gameState.getCurrentTurnStep() == TURN_STEP.PLACE){
-                gameState.goToNextPlayer();
-
-                return REJOIN_STATE.HAVE_TO_UPDATE_TURN;
-            }else{
-                return REJOIN_STATE.HAVE_TO_DRAW;
-            }
+            return (gameState.getCurrentTurnStep() == TURN_STEP.PLACE) ? REJOIN_STATE.HAVE_TO_UPDATE_TURN
+                    : REJOIN_STATE.HAVE_TO_DRAW;
         }
 
         return REJOIN_STATE.NO_UPDATE;

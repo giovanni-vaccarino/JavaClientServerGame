@@ -243,6 +243,16 @@ public abstract class Server implements VirtualServer {
     @Override
     public void ping(String nickname) throws IOException {
         logger.println(nickname);
+
+        synchronized (getClientsInGame()){
+            ClientConnection clientConnection = getClientInGame(nickname);
+
+            if(clientConnection != null) {
+                clientConnection.setConnected(true);
+                return;
+            }
+        }
+
         synchronized (getClients()){
             ClientConnection client = getClient(nickname);
             client.setConnected(true);

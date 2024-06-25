@@ -153,7 +153,6 @@ public class GUI extends UI{
 
     public String getInitialCard(){
         return getUiModel().getPlayerInitialSetting().getInitialCard().getID();
-        //return "InitialCard(5)";
     }
 
     public void updateView(){
@@ -268,7 +267,7 @@ public class GUI extends UI{
                                     PlaceInPublicBoard<QuestCard> quest,
                                     Map<String, Board> boards,
                                     PlayerHand playerHand) {
-
+        nextGamePageEnable  = false;
         getUiModel().setGameState(gameState);
         getUiModel().setPlaceInPublicBoardResource(resource);
         getUiModel().setPlaceInPublicBoardGold(gold);
@@ -281,8 +280,6 @@ public class GUI extends UI{
         if(GUIsingleton.getInstance().getStartingPageController() != null){
             javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getStartingPageController().startGame());
         }
-
-        System.out.println("Updating the model of the match");
     }
 
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){
