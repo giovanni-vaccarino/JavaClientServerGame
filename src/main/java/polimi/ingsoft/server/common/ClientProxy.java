@@ -127,13 +127,12 @@ public abstract class ClientProxy implements VirtualView {
 
     @Override
     public void showUpdateRejoinMatch(PlayerInitialSetting playerInitialSetting,
-                                      VirtualMatchServer matchServer,
                                       GameState gameState,
                                       PlaceInPublicBoard<ResourceCard> resource,
                                       PlaceInPublicBoard<GoldCard> gold,
                                       PlaceInPublicBoard<QuestCard> quest,
                                       Map<String, Board> boards,
                                       PlayerHand playerHand) throws IOException{
-        sendMessage((ClientCommand) client -> client.showUpdateRejoinMatch(playerInitialSetting, matchServer, gameState, resource, gold, quest, boards, playerHand));
+        sendMessage((ClientCommand) client -> client.showUpdateRejoinMatch(playerInitialSetting, gameState, resource, gold, quest, boards, playerHand));
     }
 }
