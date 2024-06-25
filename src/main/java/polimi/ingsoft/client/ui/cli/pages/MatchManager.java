@@ -3,6 +3,7 @@ package polimi.ingsoft.client.ui.cli.pages;
 import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.cli.Printer;
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class MatchManager implements CLIPhaseManager {
 
     private State state = State.NONE;
 
-    private List<Integer> matchIds;
+    private List<MatchList> matches;
     private int matchId;
 
     public MatchManager(Scanner in, PrintStream out, CLI cli) {
@@ -39,19 +40,18 @@ public class MatchManager implements CLIPhaseManager {
         }
     }
 
-    public void updateMatches(List<Integer> matchIds) {
+    public void updateMatches(List<MatchList> matches) {
         switch (state){
             case State.WAITING_FOR_MATCHES -> {
-                this.matchIds = matchIds;
+                this.matches = matches;
                 state = State.SET_MATCH_ID;
-                //TODO ensure this thread is killed
                 new Thread(this::setMatchId).start();
             }
 
             case State.SET_MATCH_ID -> {
                 if(cli.getIsUpdateMatchRequested()){
                     cli.setIsUpdateMatchRequested(false);
-                    this.matchIds = matchIds;
+                    this.matches = matches;
                     new Thread(this::setMatchId).start();
                 }
             }
@@ -59,10 +59,11 @@ public class MatchManager implements CLIPhaseManager {
     }
 
     private void showMatchesList() {
-        if (matchIds.isEmpty()) out.println(MESSAGES.NO_MATCHES_TO_SHOW.getValue());
+        if (matches.isEmpty()) out.println(MESSAGES.NO_MATCHES_TO_SHOW.getValue());
         int i = 0;
-        for (Integer match : matchIds)
-            out.printf("%d. Match number %d%n", ++i, match);
+        for (MatchList match : matches)
+            out.println(i + ". Match number " + match.getMatchId() + ". " + match.getJoinedPlayers() + " / " + match.getRequiredNumPlayers());
+
     }
 
     private boolean isValidNumberOfPlayers(int numberOfPlayers) {
@@ -92,7 +93,7 @@ public class MatchManager implements CLIPhaseManager {
                         matchId = -1;
                     }
 
-                    if (matchIds.contains(matchId) || matchId == 0) {
+                    if (matches.contains(matchId) || matchId == 0) {
                         isValid = true;
                     } else {
                         out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());

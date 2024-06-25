@@ -4,7 +4,9 @@ import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.client.ui.gui.utils.PlaceCardUtils;
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.controller.GameState;
+import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
@@ -101,7 +103,7 @@ public class GUI extends UI{
         }
     }
 
-    public List<Integer> getMatchList(){
+    public List<MatchList> getMatchList(){
         return getUiModel().getMatchList();
     }
 
@@ -118,7 +120,7 @@ public class GUI extends UI{
     }
 
     @Override
-    public void updateMatchesList(List<Integer> matches) {
+    public void updateMatchesList(List<MatchList> matches) {
         getUiModel().setMatchList(matches);
     }
 

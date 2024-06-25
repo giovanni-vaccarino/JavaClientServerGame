@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.common;
 
 import polimi.ingsoft.client.ui.gui.GUI;
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
@@ -97,7 +98,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
 
     @Override
-    public void showUpdateMatchesList(List<Integer> matches) throws IOException {
+    public void showUpdateMatchesList(List<MatchList> matches) throws IOException {
         ui.updateMatchesList(matches);
     }
 

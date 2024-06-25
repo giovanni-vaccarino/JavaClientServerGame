@@ -44,7 +44,7 @@ public abstract class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdateMatchesList(List<Integer> matches) throws IOException {
+    public void showUpdateMatchesList(List<MatchList> matches) throws IOException {
         sendMessage((ClientCommand) client -> client.showUpdateMatchesList(matches));
     }
 

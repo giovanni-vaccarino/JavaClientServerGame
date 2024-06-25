@@ -2,6 +2,7 @@ package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.cli.pages.*;
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.*;
@@ -126,7 +127,7 @@ public class CLI extends UI {
     }
 
     @Override
-    public void updateMatchesList(List<Integer> matches) {
+    public void updateMatchesList(List<MatchList> matches) {
         if (phase == CLIPhase.MATCH_CHOICE) {
             matchManager.updateMatches(matches);
         }

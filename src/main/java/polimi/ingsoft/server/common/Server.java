@@ -154,7 +154,8 @@ public abstract class Server implements VirtualServer {
         synchronized (getClients()){
             clientToUpdate = getClient(nickname).getVirtualView();
         }
-        List<Integer> matches = controller.getMatches();
+
+        List<MatchList> matches = controller.getMatches();
         singleUpdateMatchesList(clientToUpdate, matches);
     }
 
@@ -166,7 +167,7 @@ public abstract class Server implements VirtualServer {
         }
         int id = controller.createMatch(requiredNumPlayers);
         singleUpdateMatchCreate(clientToUpdate, id);
-        List<Integer> matches = controller.getMatches();
+        List<MatchList> matches = controller.getMatches();
         broadcastUpdateMatchesList(matches);
 
         // Creating a new list for the players
@@ -274,7 +275,7 @@ public abstract class Server implements VirtualServer {
         }
     }
 
-    protected void singleUpdateMatchesList(VirtualView client, List<Integer> matches) {
+    protected void singleUpdateMatchesList(VirtualView client, List<MatchList> matches) {
         synchronized (getClients()) {
             try {
                 client.showUpdateMatchesList(matches);
@@ -282,7 +283,7 @@ public abstract class Server implements VirtualServer {
         }
     }
 
-    protected void broadcastUpdateMatchesList(List<Integer> matches) throws IOException {
+    protected void broadcastUpdateMatchesList(List<MatchList> matches) throws IOException {
         synchronized (getClients()) {
             for (var client : getClients()) {
                 client.getVirtualView().showUpdateMatchesList(matches);

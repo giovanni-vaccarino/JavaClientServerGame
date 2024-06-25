@@ -1,6 +1,7 @@
 package polimi.ingsoft.client.common;
 
 
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.common.command.ClientCommand;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
@@ -52,7 +53,7 @@ public interface VirtualView extends Remote, Serializable {
      * @param matches The list of match IDs.
      * @throws IOException If an I/O error occurs.
      */
-    void showUpdateMatchesList(List<Integer> matches) throws IOException;
+    void showUpdateMatchesList(List<MatchList> matches) throws IOException;
 
 
     /**

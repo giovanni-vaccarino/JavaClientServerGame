@@ -2,6 +2,7 @@ package polimi.ingsoft.client.ui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;
@@ -37,7 +38,7 @@ public abstract class UI implements Serializable {
 
     public abstract void showWelcomeScreen() throws IOException;
     public abstract void updateNickname();
-    public abstract void updateMatchesList(List<Integer> matches);
+    public abstract void updateMatchesList(List<MatchList> matches);
     public abstract void showUpdateMatchJoin();
     public abstract void updatePlayersInLobby(List<String> nicknames);
     public abstract void showMatchCreate(Integer matchId);

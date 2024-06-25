@@ -1,5 +1,6 @@
 package polimi.ingsoft.client.ui.gui;
 
+import polimi.ingsoft.server.common.MatchList;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class UIModel {
     private Integer matchId;
-    private List<Integer> matchList;
+    private List<MatchList> matchList;
     private CLIENT_STATE clientState;
     private GameState gameState;
     private PlayerInitialSetting playerInitialSetting;
@@ -45,11 +46,11 @@ public class UIModel {
         this.matchId = matchId;
     }
 
-    public List<Integer> getMatchList() {
+    public List<MatchList> getMatchList() {
         return matchList;
     }
 
-    public void setMatchList(List<Integer> matchList) {
+    public void setMatchList(List<MatchList> matchList) {
         this.matchList = matchList;
     }
 

@@ -11,6 +11,8 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
+import polimi.ingsoft.server.common.MatchList;
+import polimi.ingsoft.server.controller.MatchController;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
@@ -48,7 +50,7 @@ public class JoinGamePageController implements Initializable {
         errButtonFull.setVisible(false);
         errButtonNoSel.setVisible(false);
         gameList.setStyle("-fx-background-color: white;");
-        List<Integer> items = getGui().getMatchList();
+        List<MatchList> items = getGui().getMatchList();
         resetGame();
         setGameList(items);
     }
@@ -62,12 +64,13 @@ public class JoinGamePageController implements Initializable {
         gameId = s;
     }
 
-    public void setGameList(List<Integer> games) {
+    public void setGameList(List<MatchList> games) {
         gameList.getItems().clear();
         if(games!=null){
-            for (Integer game : games) {
-                MenuItem menuItem = new MenuItem("Game "+game.toString()+" - 1/2");
-                menuItem.setOnAction(e -> handleMenuItemAction(game));
+            for (MatchList game : games) {
+                MenuItem menuItem = new MenuItem("Game "+game.getMatchId() + " - " +
+                        game.getJoinedPlayers() + " / " + game.getRequiredNumPlayers());
+                menuItem.setOnAction(e -> handleMenuItemAction(game.getMatchId()));
                 gameList.getItems().add(menuItem);
             }
         }
