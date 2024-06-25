@@ -26,6 +26,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The GUI class represents the graphical user interface for the client.
+ * It extends the UI class and provides methods to interact with the GUI components.
+ */
+
 public class GUI extends UI{
 
     private HomeController homeController;
@@ -37,12 +42,22 @@ public class GUI extends UI{
 
     private final UIModel uiModel;
 
+    /**
+     * Constructor for the GUI class.
+     *
+     * @param client the client instance
+     */
     public GUI(Client client){
         super(client);
         GUIsingleton.getInstance().setGui(this);
         uiModel = new UIModel();
     }
 
+    /**
+     * Gets the UI model.
+     *
+     * @return the UI model
+     */
     public UIModel getUiModel() {
         return uiModel;
     }
@@ -80,6 +95,11 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Creates a new match with the specified number of players.
+     *
+     * @param numPlayers the number of players
+     */
     public void createMatch(int numPlayers){
         try {
             getUiModel().setClientState(CLIENT_STATE.NEWGAME);
@@ -88,6 +108,11 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Joins an existing match with the specified match ID.
+     *
+     * @param matchId the match ID
+     */
     public void joinMatch(Integer matchId) {
         try {
             getUiModel().setClientState(CLIENT_STATE.JOINGAME);
@@ -96,6 +121,9 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Retrieves the list of matches for the client.
+     */
     public void getClientMatches(){
         try {
             getServer().getMatches(this.getNickname());
@@ -103,6 +131,11 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Gets the list of matches.
+     *
+     * @return the list of matches
+     */
     public List<MatchList> getMatchList(){
         return getUiModel().getMatchList();
     }
@@ -150,11 +183,18 @@ public class GUI extends UI{
         getUiModel().setPlayerBoards(playerBoard);
     }
 
-
+    /**
+     * Gets the initial card.
+     *
+     * @return the initial card ID
+     */
     public String getInitialCard(){
         return getUiModel().getPlayerInitialSetting().getInitialCard().getID();
     }
 
+    /**
+     * Updates the view based on the current game state.
+     */
     public void updateView(){
         //System.out.println("Mi è arrivato un updateGameState con phase: " + getUiModel().getGameState().getGamePhase());
         switch (getUiModel().getGameState().getGamePhase()){
@@ -282,34 +322,75 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Gets the public board for resource cards.
+     *
+     * @return the resource card public board
+     */
     public PlaceInPublicBoard<ResourceCard> getResourceCardPublicBoard(){
         return getUiModel().getResourceCards();
     }
 
+    /**
+     * Gets the public board for gold cards.
+     *
+     * @return the gold card public board
+     */
     public PlaceInPublicBoard<GoldCard> getGoldCardPublicBoard(){
         return getUiModel().getGoldCards();
     }
 
+    /**
+     * Gets the public board for quest cards.
+     *
+     * @return the quest card public board
+     */
     public PlaceInPublicBoard<QuestCard> getQuestCardPublicBoard(){
         return getUiModel().getQuestCards();
     }
 
+    /**
+     * Gets the player's hand of mixed cards.
+     *
+     * @return the player's hand
+     */
     public List<MixedCard> getPlayerHand(){
         return getUiModel().getPlayerHand();
     }
 
+    /**
+     * Gets the first choosable quest card.
+     *
+     * @return the first choosable quest card
+     */
     public QuestCard getFirstChoosableQuestCard(){
         return getUiModel().getPlayerInitialSetting().getFirstChoosableQuestCard();
     }
 
+    /**
+     * Gets the second choosable quest card.
+     *
+     * @return the second choosable quest card
+     */
     public QuestCard getSecondChoosableQuestCard(){
         return getUiModel().getPlayerInitialSetting().getSecondChoosableQuestCard();
     }
 
+    /**
+     * Gets the player's personal quest card.
+     *
+     * @return the personal quest card
+     */
     public QuestCard getPersonalQuestCard(){
         return getUiModel().getPersonalQuestCard();
     }
 
+    /**
+     * Draws a card from the public board.
+     *
+     * @param typeHandCard the type of hand card
+     * @param slots        the slots on the public board
+     */
     public void drawPublicBoard(TYPE_HAND_CARD typeHandCard, PlaceInPublicBoard.Slots slots){
         //System.out.println("TYPE: "+typeHandCard+"/ SLOT: "+slots.toString()+"/ NICKNAME: "+getNickname());
         try {
@@ -319,6 +400,11 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Sends a broadcast message.
+     *
+     * @param message the message to be sent
+     */
     public void sendBroadCastMessage(String message){
         try {
             getMatchServer().sendBroadcastMessage(getNickname(),message);
@@ -327,6 +413,12 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Sends a private message to a specific player.
+     *
+     * @param receiver the receiver's nickname
+     * @param message  the message to be sent
+     */
     public void sendPrivateMessage(String receiver, String message){
         try {
             getMatchServer().sendPrivateMessage(getNickname(),receiver,message);
@@ -335,6 +427,9 @@ public class GUI extends UI{
         }
     }
 
+    /**
+     * Clears the UI model.
+     */
     public void clearUIModel(){
         uiModel.clear();
         try{

@@ -347,6 +347,10 @@ public class GamePageController implements Initializable{
         placeScore();
     }
 
+    public void resetMixedCard(){
+        mixedCard=null;
+    }
+
     public void setBoard(){
         SetGamePage.setBoardData();
         setNameBoards(getGui().getUiModel().getPlayerBoards().keySet().stream().toList());
@@ -950,6 +954,8 @@ public class GamePageController implements Initializable{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        GUIsingleton.getInstance().setGamePageController(null);
     }
 
     public void losePage(){
@@ -960,5 +966,7 @@ public class GamePageController implements Initializable{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        GUIsingleton.getInstance().setGamePageController(null);
     }
 }

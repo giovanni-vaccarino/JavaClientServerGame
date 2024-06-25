@@ -95,6 +95,7 @@ public class PlaceCardUtils {
     }
 
     public static void flipCardPlayerHand(int x, int y){
+        GUIsingleton.getInstance().getGamePageController().resetMixedCard();
 
         Coordinates coordinates = new Coordinates(x,y);
         Boolean isFront = getIsFrontPlayerHandCard(x,y);
