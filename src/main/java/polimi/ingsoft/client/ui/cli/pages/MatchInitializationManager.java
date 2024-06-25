@@ -14,7 +14,6 @@ import polimi.ingsoft.server.model.decks.PlayerHand;
 import polimi.ingsoft.server.model.cards.QuestCard;
 
 import java.io.PrintStream;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MatchInitializationManager implements CLIPhaseManager {
@@ -143,13 +142,13 @@ public class MatchInitializationManager implements CLIPhaseManager {
 
     private void selectColor() {
         int i = 1;
+        Printer.cleanTerminal();
         for (PlayerColor color : PlayerColor.values())
             out.println((i++) + ". " + color.toString());
 
         int colorId = 0;
         boolean isValid = false;
         String choice;
-        Printer.cleanTerminal();
         do {
             out.print(MESSAGES.CHOOSE_COLOR.getValue());
             choice = in.nextLine();
