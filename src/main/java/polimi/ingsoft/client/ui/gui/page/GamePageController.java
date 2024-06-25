@@ -347,6 +347,10 @@ public class GamePageController implements Initializable{
         placeScore();
     }
 
+    public void resetMixedCard(){
+        mixedCard=null;
+    }
+
     public void setBoard(){
         SetGamePage.setBoardData();
         setNameBoards(getGui().getUiModel().getPlayerBoards().keySet().stream().toList());
