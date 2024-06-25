@@ -954,6 +954,8 @@ public class GamePageController implements Initializable{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        GUIsingleton.getInstance().setGamePageController(null);
     }
 
     public void losePage(){
@@ -964,5 +966,7 @@ public class GamePageController implements Initializable{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        GUIsingleton.getInstance().setGamePageController(null);
     }
 }
