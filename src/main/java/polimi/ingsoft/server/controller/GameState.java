@@ -80,16 +80,6 @@ public class GameState implements Serializable, Cloneable {
 
 
     /**
-     * Returns the list of player nicknames.
-     *
-     * @return the list of player nicknames
-     */
-    private List<String> getPlayersNick(){
-        return this.matchController.getNamePlayers();
-    }
-
-
-    /**
      * Returns the index of the first player.
      *
      * @return the index of the first player

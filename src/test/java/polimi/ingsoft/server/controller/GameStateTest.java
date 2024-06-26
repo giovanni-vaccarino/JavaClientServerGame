@@ -19,10 +19,6 @@ class GameStateTest {
         matchController = new MatchController(System.out, 1, 3, publicBoard, new ChatController());
         gameState = matchController.getGameState();
     }
-    @Test
-    void getCurrentPlayer() {
-        gameState.getCurrentPlayer();
-    }
 
     @Test
     void getFirstPlayerIndex() {
@@ -52,26 +48,6 @@ class GameStateTest {
     @Test
     void updateState() {
         gameState.updateState();
-    }
-
-    @Test
-    void updateInitialStep() {
-    }
-
-    @Test
-    void updateTurnStep() {
-    }
-
-    @Test
-    void validateMove() {
-    }
-
-    @Test
-    void validateInitialChoice() {
-    }
-
-    @Test
-    void checkColorAvailability() {
     }
 
     @Test

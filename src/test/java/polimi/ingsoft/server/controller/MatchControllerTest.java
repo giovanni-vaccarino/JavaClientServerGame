@@ -17,10 +17,7 @@ import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Timer;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -397,11 +394,7 @@ class MatchControllerTest {
             fail("Unexpected exception");
         }
 
-        HashMap<Item, Integer> questCardFirstPlayerCost = new HashMap<>();
-        questCardFirstPlayerCost.put(Resource.LEAF, 3);
-
-        QuestCard firstQuestCard = new QuestCard("first", new ItemPattern(questCardFirstPlayerCost), 3);
-
+        QuestCard firstQuestCard = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_A);
         // Selecting the quest card
         try {
             matchController.setQuestCard("Player1", firstQuestCard);
@@ -473,11 +466,12 @@ class MatchControllerTest {
     }
 
     @Test
-    void initializePlayers() throws MatchAlreadyFullException {
-        matchController.addPlayer("player1");
-        matchController.initializePlayers();
-        System.out.println(matchController.getPlayers().getFirst());
+    void initializePlayers() {
+        setupInitialPhase();
+        List<Player> players = matchController.getPlayers();
 
+        matchController.initializePlayers();
+        assertEquals(players, matchController.getPlayers());
     }
 
     @Test
@@ -491,23 +485,36 @@ class MatchControllerTest {
     }
 
     @Test
-    void setFaceInitialCard() {
-    }
-
-    @Test
-    void setQuestCard() {
-    }
-
-    @Test
-    void drawCard() {
-    }
-
-    @Test
     void writeBroadcastMessage() {
+        setupInitialPhase();
+
+        Player player = matchController.getPlayers().get(0);
+
+        matchController.writeBroadcastMessage(player.getNickname(), "Example message");
     }
 
     @Test
     void writePrivateMessage() {
+        setupInitialPhase();
+
+        Player player1 = matchController.getPlayers().get(0);
+        Player player2 = matchController.getPlayers().get(1);
+
+        try{
+            matchController.writePrivateMessage(player1.getNickname(), player2.getNickname(), "Example message");
+        } catch (PlayerNotFoundException e){
+            fail("unexpected exception");
+        }
+    }
+
+    @Test
+    void removePlayerInitialSettingTest() {
+        setupInitialPhase();
+        Player player1 = matchController.getPlayers().get(0);
+        Integer size = matchController.getPlayerInitialSettings().size();
+
+        matchController.removePlayerInitialSetting(player1.getNickname());
+        assertEquals(matchController.getPlayerInitialSettings().size(), size - 1);
     }
 
     // Join phase tests
@@ -620,6 +627,12 @@ class MatchControllerTest {
         this.setupInitialPhase();
         Player firstPlayer = matchController.getPlayers().getFirst();
         assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
+    }
+
+    @Test
+    void testCalculateWinner() {
+        this.setupInitialPhase();
+        matchController.getGameState().setOnlyWinner();
     }
 
     @Test

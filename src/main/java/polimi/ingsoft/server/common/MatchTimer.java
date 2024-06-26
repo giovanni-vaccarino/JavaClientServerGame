@@ -1,4 +1,4 @@
-package polimi.ingsoft.server.controller;
+package polimi.ingsoft.server.common;
 
 import polimi.ingsoft.server.common.MatchServer;
 

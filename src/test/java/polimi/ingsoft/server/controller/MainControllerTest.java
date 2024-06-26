@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.common.MatchData;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
+import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NotValidNumPlayersException;
 
 import java.util.List;
 
@@ -23,8 +24,34 @@ class MainControllerTest {
         Integer matchId = mainController.createMatch(4);
 
         assertNotNull(matchId);
-        assertTrue(mainController.getMatches().contains(matchId));
+        List<Integer > matches = mainController.getMatches().stream()
+                        .map(MatchData::matchId)
+                                .toList();
+
+        assertTrue(matches.contains(matchId));
     }
+
+    @Test
+    public void testNotValidNumPlayersException() {
+        assertThrows(NotValidNumPlayersException.class, () -> mainController.createMatch(5));
+    }
+
+    @Test
+    public void testDeleteMatch() {
+        Integer matchId = mainController.createMatch(4);
+
+        assertNotNull(matchId);
+
+        mainController.deleteMatch(matchId);
+
+        List<Integer > matches = mainController.getMatches().stream()
+                .map(MatchData::matchId)
+                .toList();
+
+        assertFalse(matches.contains(matchId));
+    }
+
+
 
     @Test
     public void testJoinMatch(){
@@ -67,27 +94,4 @@ class MainControllerTest {
         assertTrue(matchIDs.contains(matchId2));
     }
 
-    @Test
-    void getMatches() {
-    }
-
-    @Test
-    void getMatch() {
-    }
-
-    @Test
-    void createMatch() {
-    }
-
-    @Test
-    void deleteMatch() {
-    }
-
-    @Test
-    void joinMatch() {
-    }
-
-    @Test
-    void reJoinMatch() {
-    }
 }

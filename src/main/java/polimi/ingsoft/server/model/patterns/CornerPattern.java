@@ -6,7 +6,7 @@ import polimi.ingsoft.server.model.boards.Coordinates;
 import java.io.Serializable;
 
 /**
- * Class that represent's Card's PointPattern that requires Corner(s) coverage
+ * Class that represents Card's PointPattern that requires Corner(s) coverage
  */
 public class CornerPattern implements Pattern, Serializable {
 
