@@ -91,7 +91,6 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showNicknameUpdate() throws IOException {
-        System.out.println("arrivato nick effettivo");
         ui.updateNickname();
     }
 
@@ -128,7 +127,6 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException{
-        System.out.println("I got GAME STATE: " + gameState.getGamePhase());
         // TODO move
         if(gameState.getGamePhase().equals(GAME_PHASE.END)){
             System.out.println("Il vincitore è: " + gameState.getWinners());
@@ -179,13 +177,8 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void pong() throws IOException {
-        if(getUi().getNickname() != null){
-            System.out.println("il mio nick non è null");
-            getServer().ping(getUi().getNickname());
-        }else{
-            System.out.println("il mio nick è null - sto pingando con lo stub");
-            getServer().ping(getUi().getStub());
-        }
+        String nickname = getUi().getNickname();
+        getServer().ping(nickname != null ? nickname : getUi().getStub());
     }
 
     @Override

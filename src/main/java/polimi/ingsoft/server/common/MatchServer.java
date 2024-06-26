@@ -131,10 +131,12 @@ public class MatchServer implements VirtualMatchServer {
     @Override
     public void ping(String nickname) throws IOException {
         logger.println("Received MATCH PING");
-        synchronized (getMatchClients()){
-            synchronized (server.getClientsInGame()){
-                ClientConnection client = server.getClientInGame(nickname);
-                client.setConnected(true);
+        if (getMatchClients() != null) {
+            synchronized (getMatchClients()) {
+                synchronized (server.getClientsInGame()) {
+                    ClientConnection client = server.getClientInGame(nickname);
+                    client.setConnected(true);
+                }
             }
         }
     }

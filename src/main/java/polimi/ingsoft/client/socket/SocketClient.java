@@ -48,8 +48,8 @@ public class SocketClient extends Client {
     }
 
     @Override
-    public void setMatchServer(VirtualMatchServer controller) {
-        this.matchServer = controller;
+    public void setMatchServer(VirtualMatchServer matchServer) {
+
     }
 
     @Override
