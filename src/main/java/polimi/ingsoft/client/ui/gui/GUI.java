@@ -427,10 +427,16 @@ public class GUI extends UI{
     }
 
     /**
-     * Clears the UI model.
+     * Clears the UI model and enables new game.
      */
     public void clearUIModel(){
         uiModel.clear();
+
+        nextColorPageEnable = true;
+        nextInitialCardPageEnable = true;
+        nextQuestCardPageEnable = true;
+        nextGamePageEnable = true;
+
         try{
             getClient().setMatchServer(null);
         } catch (IOException ignore){}
