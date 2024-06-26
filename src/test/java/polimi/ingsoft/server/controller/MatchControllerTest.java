@@ -19,6 +19,7 @@ import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Timer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -511,4 +512,142 @@ class MatchControllerTest {
     @Test
     void writePrivateMessage() {
     }
+
+    // Join phase tests
+    @Test
+    void testGetLobbyPlayers() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            assertEquals(2, matchController.getLobbyPlayers().size());
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    @Test
+    void testRemoveLobbyPlayer() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            matchController.removeLobbyPlayer("Player1");
+            assertEquals(1, matchController.getLobbyPlayers().size());
+            assertEquals("Player2", matchController.getLobbyPlayers().get(0));
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    @Test
+    void testAddPlayer() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            assertEquals(2, matchController.getLobbyPlayers().size());
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    // Pinger methods tests
+    @Test
+    void testSetPinger() {
+        try {
+            matchController.addPlayer("Player1");
+            Timer timer = new Timer();
+            matchController.setPinger(timer);
+            assertTrue(matchController.hasPinger());
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+
+    @Test
+    void testTurnPingerOff() {
+        try {
+            matchController.addPlayer("Player1");
+            Timer timer = new Timer();
+            matchController.setPinger(timer);
+            matchController.turnPingerOff();
+            assertFalse(matchController.hasPinger());
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    // Player status methods during gameplay
+    @Test
+    void testGetNumOnlinePlayers() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            assertEquals(2, matchController.getNumOnlinePlayers());
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    @Test
+    void testIsPlayerDisconnected() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            matchController.updatePlayerStatus("Player1", false);
+            assertTrue(matchController.isPlayerDisconnected(1));
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    @Test
+    void testUpdatePlayerStatus() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.updatePlayerStatus("Player1", true);
+            assertFalse(matchController.isPlayerDisconnected(1));
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    // Player initialization settings test
+    @Test
+    void testInitializePlayersInitialSettings() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            matchController.initializePlayersInitialSettings();
+            assertEquals(2, matchController.getPlayerInitialSettings().size());
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    // Player boards test
+    @Test
+    void testGetPlayerBoards() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            assertEquals(2, matchController.getPlayerBoards().size());
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
+    // Check if the player is first during the game
+    @Test
+    void testIsFirstPlayer() {
+        try {
+            matchController.addPlayer("Player1");
+            matchController.addPlayer("Player2");
+            matchController.initializePlayersInitialSettings();
+            Player firstPlayer = matchController.getPlayers().getFirst();
+            assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
+        } catch (MatchAlreadyFullException e) {
+            fail("Unexpected MatchAlreadyFullException");
+        }
+    }
+
 }

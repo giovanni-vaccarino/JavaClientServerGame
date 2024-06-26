@@ -250,7 +250,7 @@ public class MatchController implements Serializable {
                 this.players;
     }
 
-    private Boolean isFirstPlayer(String nickname){
+    public Boolean isFirstPlayer(String nickname){
         Integer firstPlayerIndex = gameState.getFirstPlayerIndex();
 
         return getPlayerInitialSettings().get(firstPlayerIndex).getNickname().equals(nickname);
