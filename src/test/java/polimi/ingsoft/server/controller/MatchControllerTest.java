@@ -669,19 +669,15 @@ class MatchControllerTest {
             Coordinates coordinates = matchController.getPlayerBoards().get(myPlayer.getNickname()).getAvailablePlaces().get(random.nextInt(size));
 
             try {
-                matchController.placeCard(myPlayer, mixedCard, coordinates, true);
-            } catch (CoordinateNotValidException e) {
-                throw new RuntimeException(e);
-            } catch (NotEnoughResourcesException e) {
-                throw new RuntimeException(e);
-            } catch (WrongGamePhaseException e) {
-                throw new RuntimeException(e);
-            } catch (WrongPlayerForCurrentTurnException e) {
-                throw new RuntimeException(e);
-            } catch (WrongStepException e) {
-                throw new RuntimeException(e);
-            } catch (MatchBlockedException e) {
-                throw new RuntimeException(e);
+                matchController.placeCard(myPlayer, mixedCard, coordinates, false);
+            } catch (NotEnoughResourcesException | WrongPlayerForCurrentTurnException | WrongStepException |
+                     WrongGamePhaseException | CoordinateNotValidException | MatchBlockedException e) {
+                try {
+                    matchController.placeCard(myPlayer, mixedCard, coordinates, true);
+                } catch (WrongPlayerForCurrentTurnException | WrongStepException | WrongGamePhaseException |
+                         CoordinateNotValidException | NotEnoughResourcesException | MatchBlockedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }
