@@ -19,6 +19,7 @@ import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Timer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,7 +61,7 @@ class MatchControllerTest {
             fail("Unexpected MatchAlreadyFullException");
         }
 
-        assertThrows(MatchAlreadyFullException.class, () ->matchController.addPlayer("Player4"));
+        assertThrows(MatchAlreadyFullException.class, () -> matchController.addPlayer("Player4"));
     }
 
     @Test
@@ -359,7 +360,7 @@ class MatchControllerTest {
     }
 
     @Test
-    void testSendBroadcastMessage(){
+    void testSendBroadcastMessage() {
         this.setupInitialPhase();
         String sender = matchController.getGameState().getCurrentPlayer().getNickname();
         String message = "Test Message";
@@ -368,7 +369,7 @@ class MatchControllerTest {
         assertEquals(message, matchController.writeBroadcastMessage(sender, message).getText());
     }
 
-    void setupInitialPhase(){
+    void setupInitialPhase() {
         // Adding 3 players to the match (requested number of players to start = 3)
         try {
             matchController.addPlayer("Player1");
@@ -484,7 +485,7 @@ class MatchControllerTest {
         matchController.addPlayer("player4");
         matchController.addPlayer("player5");
         matchController.addPlayer("player6");
-        matchController.setPlayerColor("player4",PlayerColor.RED);
+        matchController.setPlayerColor("player4", PlayerColor.RED);
         System.out.println(matchController.getPlayers());
 
     }
@@ -495,10 +496,6 @@ class MatchControllerTest {
 
     @Test
     void setQuestCard() {
-    }
-
-    @Test
-    void placeCard() {
     }
 
     @Test
@@ -625,4 +622,100 @@ class MatchControllerTest {
         assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
     }
 
+    @Test
+    void testGame() {
+        this.setupInitialPhase();
+        Player currentPlayer = null;
+        Integer counter = 0;
+        Random random = new Random();
+
+        while (!matchController.getGameState().getGamePhase().equals(GAME_PHASE.LAST_ROUND) && counter<100000) {
+
+            counter++;
+
+            System.out.println(matchController.getGameState().getGamePhase().toString());
+            placeCard(getCurrentPlayer());
+            System.out.println(matchController.getGameState().getGamePhase().toString());
+            drawCard(getCurrentPlayer());
+
+            if(random.nextInt(2) == 0){
+                matchController.updatePlayerStatus(getCurrentPlayer().getNickname(), true);
+                matchController.updatePlayerStatus(getCurrentPlayer().getNickname(), false);
+            }
+        }
+    }
+
+    public Player getCurrentPlayer(){
+        String nickname = matchController.getGameState().getCurrentPlayerNickname();
+        Player currentPlayer = null;
+        for (Player player : matchController.getPlayers()) {
+            if (player.getNickname().equals(nickname)) {
+                currentPlayer = player;
+            }
+        }
+
+        return currentPlayer;
+    }
+    
+    public void placeCard(Player myPlayer){
+        Random random = new Random();
+        Integer size;
+
+        size = myPlayer.getHand().getCards().size();
+        MixedCard mixedCard = myPlayer.getHand().getCards().get(random.nextInt(size));
+
+        if(mixedCard!=null){
+            size = matchController.getPlayerBoards().get(myPlayer.getNickname()).getAvailablePlaces().size();
+            Coordinates coordinates = matchController.getPlayerBoards().get(myPlayer.getNickname()).getAvailablePlaces().get(random.nextInt(size));
+
+            try {
+                matchController.placeCard(myPlayer, mixedCard, coordinates, true);
+            } catch (CoordinateNotValidException e) {
+                throw new RuntimeException(e);
+            } catch (NotEnoughResourcesException e) {
+                throw new RuntimeException(e);
+            } catch (WrongGamePhaseException e) {
+                throw new RuntimeException(e);
+            } catch (WrongPlayerForCurrentTurnException e) {
+                throw new RuntimeException(e);
+            } catch (WrongStepException e) {
+                throw new RuntimeException(e);
+            } catch (MatchBlockedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    
+    public void drawCard(Player myPlayer){
+        Random random = new Random();
+        TYPE_HAND_CARD typeHandCard = null;
+        PlaceInPublicBoard.Slots slot= null;
+
+        if(random.nextInt(2) == 0){
+            typeHandCard = TYPE_HAND_CARD.RESOURCE;
+        }else{
+            typeHandCard = TYPE_HAND_CARD.GOLD;
+        }
+
+        if(random.nextInt(2) == 0){
+            slot = PlaceInPublicBoard.Slots.SLOT_A;
+        }else{
+            slot = PlaceInPublicBoard.Slots.SLOT_B;
+        }
+
+        if (matchController.getGameState().getCurrentTurnStep().equals(TURN_STEP.DRAW)){
+            try {
+                matchController.drawCard(myPlayer, typeHandCard, slot);
+            } catch (WrongPlayerForCurrentTurnException e) {
+                throw new RuntimeException(e);
+            } catch (WrongStepException e) {
+                throw new RuntimeException(e);
+            } catch (WrongGamePhaseException e) {
+                throw new RuntimeException(e);
+            } catch (MatchBlockedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 }
