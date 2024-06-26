@@ -622,6 +622,7 @@ class MatchControllerTest {
         assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
     }
 
+    // test Place Card and Draw Card sequences
     @Test
     void testGame() {
         this.setupInitialPhase();
