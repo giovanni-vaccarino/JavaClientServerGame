@@ -389,6 +389,7 @@ class MatchControllerTest {
         try {
             matchController.setFaceInitialCard("Player1", true);
             matchController.setFaceInitialCard("Player2", false);
+            assertTrue(matchController.getGameState().isLastPlayerSetting());
             matchController.setFaceInitialCard("Player3", true);
         } catch (Exception e) {
             fail("Unexpected exception");
@@ -625,15 +626,26 @@ class MatchControllerTest {
     @Test
     void testIsFirstPlayer() {
         this.setupInitialPhase();
-        Player firstPlayer = matchController.getPlayers().getFirst();
+        Integer firstPlayerIndex = matchController.getGameState().getFirstPlayerIndex();
+        Player firstPlayer = matchController.getPlayers().get(firstPlayerIndex);
+
         assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
     }
 
-    // test Place Card and Draw Card sequences
+    // test Winner setting
     @Test
     void testCalculateWinner() {
         this.setupInitialPhase();
         matchController.getGameState().setOnlyWinner();
+        List<String> winners = matchController.getGameState().getWinners();
+        assertNotNull(winners);
+    }
+
+    @Test
+    void testBlockedState() {
+        this.setupInitialPhase();
+        matchController.getGameState().setBlockedMatchState(BLOCKED_MATCH_STATE.NOT_BLOCKED);
+        assertEquals(matchController.getGameState().getBlockedMatchState(), BLOCKED_MATCH_STATE.NOT_BLOCKED);
     }
 
     @Test

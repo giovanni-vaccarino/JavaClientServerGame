@@ -4,7 +4,7 @@ import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.UI;
 import polimi.ingsoft.client.ui.gui.page.HomeController;
 import polimi.ingsoft.client.ui.gui.utils.PlaceCardUtils;
-import polimi.ingsoft.server.common.MatchData;
+import polimi.ingsoft.server.common.Utils.MatchData;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;

@@ -2,7 +2,7 @@ package polimi.ingsoft.client.ui;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.common.VirtualView;
-import polimi.ingsoft.server.common.MatchData;
+import polimi.ingsoft.server.common.Utils.MatchData;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.GameState;

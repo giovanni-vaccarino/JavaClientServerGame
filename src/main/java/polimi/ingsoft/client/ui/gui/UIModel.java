@@ -1,6 +1,6 @@
 package polimi.ingsoft.client.ui.gui;
 
-import polimi.ingsoft.server.common.MatchData;
+import polimi.ingsoft.server.common.Utils.MatchData;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.CLIENT_STATE;

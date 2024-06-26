@@ -3,7 +3,7 @@ package polimi.ingsoft.client.ui.cli.pages;
 import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.cli.Printer;
-import polimi.ingsoft.server.common.MatchData;
+import polimi.ingsoft.server.common.Utils.MatchData;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;

@@ -10,7 +10,6 @@ import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
 import polimi.ingsoft.server.model.cards.QuestCard;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;

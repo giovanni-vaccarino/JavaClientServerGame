@@ -21,46 +21,6 @@ class GameStateTest {
     }
 
     @Test
-    void getFirstPlayerIndex() {
-        gameState.getFirstPlayerIndex();
-    }
-
-    @Test
-    void getGamePhase() {
-        gameState.getGamePhase();
-    }
-
-    @Test
-    void getCurrentInitialStep() {
-        gameState.getCurrentInitialStep();
-    }
-
-    @Test
-    void getCurrentTurnStep() {
-        gameState.getCurrentTurnStep();
-    }
-
-    @Test
-    void getCurrentPlayerNickname() {
-        gameState.getCurrentPlayerNickname();
-    }
-
-    @Test
-    void updateState() {
-        gameState.updateState();
-    }
-
-    @Test
-    void goToNextPlayer() {
-        //gameState.goToNextPlayer();
-    }
-
-    @Test
-    void getWinners() {
-        gameState.getWinners();
-    }
-
-    @Test
     void testClone() {
         gameState.clone();
     }
