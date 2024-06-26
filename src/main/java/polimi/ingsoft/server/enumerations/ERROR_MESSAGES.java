@@ -4,6 +4,7 @@ package polimi.ingsoft.server.enumerations;
  */
 public enum ERROR_MESSAGES {
     // General errors
+    SERVER_IP_NOT_VALID("The server ip entered is not valid"),
     PROTOCOL_NUMBER_OUT_OF_BOUND("Protocol does not exist"),
     UNKNOWN_COMMAND("Unknown command"),
     UNKNOWN_ERROR("Unexpected error"),

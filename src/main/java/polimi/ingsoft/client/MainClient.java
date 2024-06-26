@@ -3,7 +3,8 @@ package polimi.ingsoft.client;
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.rmi.RmiClient;
 import polimi.ingsoft.client.ui.UIType;
-import polimi.ingsoft.client.ui.cli.ProtocolChoiceCLI;
+import polimi.ingsoft.client.ui.cli.IPChoiceCLI;
+import polimi.ingsoft.client.ui.cli.JarParams;
 import polimi.ingsoft.client.ui.cli.Protocols;
 import polimi.ingsoft.client.socket.SocketClient;
 import polimi.ingsoft.server.exceptions.UnableToConnectException;
@@ -14,7 +15,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -24,9 +24,7 @@ import java.util.Scanner;
 public class MainClient {
     private static final PrintStream printStream = System.out;
     private static final Scanner scanner = new Scanner(System.in);
-    private static final String socketServerHostName = "127.0.0.1";
     private static final int socketServerPort = 4444;
-    private static final String rmiServerHostName = "127.0.0.1";
     private static final int rmiServerPort = 1234;
     private static final String rmiServerName = "MatchManagerServer";
 
@@ -37,26 +35,15 @@ public class MainClient {
      * @param args command line arguments to specify the UI type (CLI or GUI).
      */
     public static void main(String[] args) {
-        ProtocolChoiceCLI protocolChoiceCLI = new ProtocolChoiceCLI(scanner, printStream);
-        Protocols protocol = protocolChoiceCLI.runChooseProtocolRoutine();
-
-        //If no parameters GUI
-        UIType uiType = UIType.GUI;
-
-        if(args.length == 1){
-            if(args[0].equalsIgnoreCase("cli") || args[0].equalsIgnoreCase("tui")){
-                uiType = UIType.CLI;
-            }
-        }
+        JarParams params = handleParams(args);
 
         try {
-            Client client = createClient(protocol, uiType);
+            Client client = createClient(params.getServerIp(), params.getProtocol(), params.getUiType());
             client.run();
             client.getUi().showWelcomeScreen();
 
             while (true) { }
         } catch (UnableToConnectException e) {
-            // TODO maybe change this one
             main(args);
         } catch (IOException e) {
             printStream.println("Error: " + e.getMessage());
@@ -72,8 +59,8 @@ public class MainClient {
      * @return the created Client object.
      * @throws IOException if an I/O error occurs during client creation.
      */
-    private static Client createClient(Protocols protocol, UIType uiType) throws UnableToConnectException {
-        return (protocol == Protocols.RMI) ? createRmiClient(uiType) : createSocketClient(uiType);
+    private static Client createClient(String serverIp, Protocols protocol, UIType uiType) throws UnableToConnectException {
+        return (protocol == Protocols.RMI) ? createRmiClient(serverIp, uiType) : createSocketClient(serverIp, uiType);
     }
 
 
@@ -83,10 +70,10 @@ public class MainClient {
      * @param uiType the type of user interface (CLI or GUI).
      * @return the created RmiClient object, or null if an error occurs.
      */
-    private static Client createRmiClient(UIType uiType) throws UnableToConnectException {
+    private static Client createRmiClient(String serverIp, UIType uiType) throws UnableToConnectException {
         try {
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
-            return new RmiClient(rmiServerHostName, rmiServerName, rmiServerPort, uiType, printStream, scanner);
+            return new RmiClient(serverIp, rmiServerName, rmiServerPort, uiType, printStream, scanner);
         } catch (RemoteException | NotBoundException exception) {
             throw new UnableToConnectException();
         } catch (UnknownHostException e) {
@@ -102,11 +89,43 @@ public class MainClient {
      * @return the created SocketClient object.
      * @throws IOException if an I/O error occurs during client creation.
      */
-    private static Client createSocketClient(UIType uiType) throws UnableToConnectException {
+    private static Client createSocketClient(String serverIp, UIType uiType) throws UnableToConnectException {
         try {
-            return new SocketClient(socketServerHostName, socketServerPort, uiType, printStream, scanner);
+            return new SocketClient(serverIp, socketServerPort, uiType, printStream, scanner);
         } catch (IOException e) {
             throw new UnableToConnectException();
         }
+    }
+
+
+    private static JarParams handleParams(String []args){
+        UIType uiType = UIType.GUI;
+        Protocols protocol = Protocols.RMI;
+        String serverIp = "";
+
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i].toLowerCase();
+
+            if (IPChoiceCLI.isValidIP(arg)) {
+                serverIp = arg;
+            }
+
+            // Check for UI type argument
+            else if (arg.equals("-cli")) {
+                uiType = UIType.CLI;
+            }
+
+            // Check for protocol argument
+            else if (arg.equals("-socket")) {
+                protocol = Protocols.SOCKET;
+            }
+        }
+
+        if (serverIp.isEmpty()) {
+            IPChoiceCLI ipChoiceCLI = new IPChoiceCLI(scanner, printStream);
+            serverIp = ipChoiceCLI.runChooseIpRoutine();
+        }
+
+        return new JarParams(serverIp, uiType, protocol);
     }
 }

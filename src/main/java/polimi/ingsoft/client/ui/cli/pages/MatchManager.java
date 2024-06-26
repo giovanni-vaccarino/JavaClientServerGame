@@ -60,9 +60,11 @@ public class MatchManager implements CLIPhaseManager {
 
     private void showMatchesList() {
         if (matches.isEmpty()) out.println(MESSAGES.NO_MATCHES_TO_SHOW.getValue());
-        int i = 0;
-        for (MatchData match : matches)
-            out.println(i + ". Match number " + match.matchId() + ". " + match.joinedPlayers() + " / " + match.requiredNumPlayers());
+        int i = 1;
+        for (MatchData match : matches) {
+            out.println(i + ". Match number " + match.matchId() + ": " + match.joinedPlayers() + " / " + match.getRequiredNumPlayers() + " players in lobby");
+            i++;
+        }
 
     }
 
@@ -79,28 +81,31 @@ public class MatchManager implements CLIPhaseManager {
             do {
                 out.print(MESSAGES.CHOOSE_MATCH.getValue());
                 choice = in.nextLine();
-                if(choice.equals("update")) {
-                    try{
+                if (choice.equals("update")) {
+                    try {
                         cli.setIsUpdateMatchRequested(true);
                         cli.getServer().getMatches(cli.getNickname());
                     } catch (IOException ignore){}
 
                     return;
-                }else{
+                } else {
                     try {
                         matchId = Integer.parseInt(choice);
                     } catch (NumberFormatException exception) {
                         matchId = -1;
                     }
-
-                    if (matches.contains(matchId) || matchId == 0) {
-                        isValid = true;
-                    } else {
-                        out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
+                    if (matchId == 0) isValid = true;
+                    else {
+                        for (MatchData match : matches) {
+                            if (match.matchId().equals(matchId)) {
+                                isValid = true;
+                                break;
+                            }
+                        }
+                        if (!isValid) out.println(ERROR_MESSAGES.MATCH_NUMBER_OUT_OF_BOUND.getValue());
                     }
                 }
             } while (!isValid);
-
             if (matchId == 0) runCreateMatch();
             else runJoinMatch();
         }
