@@ -38,7 +38,7 @@ public class MainClient {
         JarParams params = handleParams(args);
 
         try {
-            Client client = createClient(params.getServerIp(), params.getProtocol(), params.getUiType());
+            Client client = createClient(params.serverIp(), params.protocol(), params.uiType());
             client.run();
             client.getUi().showWelcomeScreen();
 
@@ -57,7 +57,7 @@ public class MainClient {
      * @param protocol the communication protocol (RMI or Socket).
      * @param uiType the type of user interface (CLI or GUI).
      * @return the created Client object.
-     * @throws IOException if an I/O error occurs during client creation.
+     * @throws UnableToConnectException if an I/O error occurs during client creation.
      */
     private static Client createClient(String serverIp, Protocols protocol, UIType uiType) throws UnableToConnectException {
         return (protocol == Protocols.RMI) ? createRmiClient(serverIp, uiType) : createSocketClient(serverIp, uiType);
@@ -69,6 +69,7 @@ public class MainClient {
      *
      * @param uiType the type of user interface (CLI or GUI).
      * @return the created RmiClient object, or null if an error occurs.
+     * @throws UnableToConnectException if an I/O error occurs during client creation.
      */
     private static Client createRmiClient(String serverIp, UIType uiType) throws UnableToConnectException {
         try {
@@ -87,7 +88,7 @@ public class MainClient {
      *
      * @param uiType the type of user interface (CLI or GUI).
      * @return the created SocketClient object.
-     * @throws IOException if an I/O error occurs during client creation.
+     * @throws UnableToConnectException if an I/O error occurs during client creation.
      */
     private static Client createSocketClient(String serverIp, UIType uiType) throws UnableToConnectException {
         try {
