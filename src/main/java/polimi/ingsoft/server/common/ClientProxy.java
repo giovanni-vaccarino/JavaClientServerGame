@@ -44,7 +44,7 @@ public abstract class ClientProxy implements VirtualView {
     }
 
     @Override
-    public void showUpdateMatchesList(List<MatchList> matches) throws IOException {
+    public void showUpdateMatchesList(List<MatchData> matches) throws IOException {
         sendMessage((ClientCommand) client -> client.showUpdateMatchesList(matches));
     }
 
@@ -107,11 +107,6 @@ public abstract class ClientProxy implements VirtualView {
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
-        sendMessage((ClientCommand) client -> client.reportError(errorMessage));
-    }
-
-    @Override
-    public void reportMatchError(ERROR_MESSAGES errorMessage) throws IOException {
         sendMessage((ClientCommand) client -> client.reportError(errorMessage));
     }
 

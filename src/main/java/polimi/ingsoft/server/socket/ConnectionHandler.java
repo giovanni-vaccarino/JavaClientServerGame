@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.server.common.ClientProxy;
-import polimi.ingsoft.server.common.Dispatcher;
 import polimi.ingsoft.server.common.command.Command;
 
 import java.io.*;
@@ -39,7 +38,8 @@ public class ConnectionHandler implements Runnable {
                 try {
                     dispatcher.dispatchCommand(command);
                 } catch (NullPointerException e) {
-                    logger.println("SOCKET: NullPointerException raised " + e.getMessage());
+                    logger.print("SOCKET: NullPointerException raised ");
+                    e.printStackTrace(logger);
                 }
             }
 

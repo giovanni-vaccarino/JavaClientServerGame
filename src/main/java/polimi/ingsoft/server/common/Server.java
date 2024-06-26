@@ -25,7 +25,6 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.lang.ref.Cleaner;
 import java.util.*;
 
 public abstract class Server implements VirtualServer {
@@ -159,7 +158,7 @@ public abstract class Server implements VirtualServer {
             }
         }
 
-        List<MatchList> matches = controller.getMatches();
+        List<MatchData> matches = controller.getMatches();
         singleUpdateMatchesList(clientToUpdate, matches);
     }
 
@@ -171,7 +170,7 @@ public abstract class Server implements VirtualServer {
         }
         int id = controller.createMatch(requiredNumPlayers);
         singleUpdateMatchCreate(clientToUpdate, id);
-        List<MatchList> matches = controller.getMatches();
+        List<MatchData> matches = controller.getMatches();
         broadcastUpdateMatchesList(matches);
 
         // Creating a new list for the players
@@ -237,11 +236,6 @@ public abstract class Server implements VirtualServer {
     }
 
     @Override
-    public void reJoinMatch(Integer matchId, String nickname) throws IOException {
-
-    }
-
-    @Override
     public void ping(String nickname) throws IOException {
         logger.println(nickname);
 
@@ -286,7 +280,7 @@ public abstract class Server implements VirtualServer {
         }
     }
 
-    protected void singleUpdateMatchesList(VirtualView client, List<MatchList> matches) {
+    protected void singleUpdateMatchesList(VirtualView client, List<MatchData> matches) {
         synchronized (getClients()) {
             try {
                 client.showUpdateMatchesList(matches);
@@ -294,7 +288,7 @@ public abstract class Server implements VirtualServer {
         }
     }
 
-    protected void broadcastUpdateMatchesList(List<MatchList> matches) throws IOException {
+    protected void broadcastUpdateMatchesList(List<MatchData> matches) throws IOException {
         synchronized (getClients()) {
             for (var client : getClients()) {
                 client.getVirtualView().showUpdateMatchesList(matches);
@@ -313,22 +307,6 @@ public abstract class Server implements VirtualServer {
             try {
                 client.showUpdateMatchJoin();
             } catch (IOException ignored) { }
-        }
-    }
-
-    protected void lobbyUpdatePlayerJoin(List<String> nicknames) {
-        List<VirtualView> clientsToNotify = new ArrayList<>();
-
-        for (var nickname : nicknames) {
-            clientsToNotify.add(getClient(nickname).getVirtualView());
-        }
-
-        synchronized (getClients()) {
-            for (var client : clientsToNotify) {
-                try {
-                    client.showUpdateLobbyPlayers(nicknames);
-                } catch (IOException ignored) { }
-            }
         }
     }
 
@@ -485,7 +463,7 @@ public abstract class Server implements VirtualServer {
             synchronized (getClientsInGame()) {
                 for(var player : players){
                     if(!player.getIsDisconnected()){
-                        addClientConnection(getClient(player.getNickname()));
+                        addClientConnection(getClientInGame(player.getNickname()));
                         removeClientInGame(getClient(player.getNickname()));
 
                         logger.println("Moving back " + player.getNickname() + " to the client list");
@@ -565,7 +543,6 @@ public abstract class Server implements VirtualServer {
             } catch(IOException e){
                 System.out.println(e.getMessage());
             }
-
         }
 
         GameState gameState = matchController.getGameState();

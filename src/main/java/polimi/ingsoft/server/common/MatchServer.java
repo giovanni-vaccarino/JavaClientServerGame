@@ -131,7 +131,6 @@ public class MatchServer implements VirtualMatchServer {
     @Override
     public void ping(String nickname) throws IOException {
         logger.println("Received MATCH PING");
-        logger.println(nickname);
         synchronized (getMatchClients()){
             synchronized (server.getClientsInGame()){
                 ClientConnection client = server.getClientInGame(nickname);
@@ -309,6 +308,7 @@ public class MatchServer implements VirtualMatchServer {
                 server.deleteGame(matchController.getMatchId());
             }
         } catch (Exception e){
+            e.printStackTrace(logger);
             handleException(clientToUpdate, e);
         }
     }

@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.client.common.VirtualView;
-import polimi.ingsoft.server.common.Dispatcher;
 import polimi.ingsoft.server.common.MatchServer;
 import polimi.ingsoft.server.common.Server;
 import polimi.ingsoft.server.common.VirtualMatchServer;

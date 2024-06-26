@@ -84,7 +84,6 @@ public class GameManager implements CLIPhaseManager {
             boolean isInitialCardFacingUp,
             GameState gameState
     ) {
-        out.println("Init model: " + state);
         if (state == State.WAITING_FOR_INITIALIZATION) {
             model.hand = hand;
             model.personalQuestCard = personalQuestCard;
@@ -145,13 +144,13 @@ public class GameManager implements CLIPhaseManager {
 
         if (gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND) {
             if (isYourTurn) {
-                if (gamePhase == GAME_PHASE.LAST_ROUND) out.println(MESSAGES.LAST_ROUND);
+                if (gamePhase == GAME_PHASE.LAST_ROUND) out.println(MESSAGES.LAST_ROUND.getValue());
                 new Thread(() -> playTurn(turnStep,gamePhase)).start();
             } else
                 out.println("Wait for your turn!");
         } else if (gamePhase == GAME_PHASE.END) {
-            out.println(MESSAGES.GAME_END);
-            //TODO change this method to list reader
+            out.println(MESSAGES.GAME_END.getValue());
+            // TODO change this method to list reader
             out.println("IL VINCITORE E': "+gameState.getWinners());
 
             out.println(MESSAGES.GO_BACK_TO_MATCH_MENU.getValue());
@@ -296,7 +295,6 @@ public class GameManager implements CLIPhaseManager {
     }
 
 
-    //TODO
     private void runChatIter() {
         String choice, receiver = null;
         int type;
@@ -479,7 +477,6 @@ public class GameManager implements CLIPhaseManager {
 
     @Override
     public void parseError(ERROR_MESSAGES error) {
-        // TODO Maybe remove this one
         switch (error) {
             case COORDINATE_NOT_VALID, NOT_ENOUGH_RESOURCES -> {
                 if ((model.gamePhase == GAME_PHASE.PLAY || model.gamePhase == GAME_PHASE.LAST_ROUND)

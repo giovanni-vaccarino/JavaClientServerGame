@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.socket;
 
 import polimi.ingsoft.server.common.ClientProxy;
-import polimi.ingsoft.server.common.Dispatcher;
 import polimi.ingsoft.server.common.command.ClientCommand;
 import polimi.ingsoft.server.common.VirtualMatchServer;
 

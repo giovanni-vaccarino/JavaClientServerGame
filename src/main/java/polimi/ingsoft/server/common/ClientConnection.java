@@ -2,6 +2,11 @@ package polimi.ingsoft.server.common;
 
 import polimi.ingsoft.client.common.VirtualView;
 
+/**
+ * Encapsulates all the data related to a specific connection to a server
+ * <p>
+ * Stores information like client view, nickname and connection status
+ */
 public class ClientConnection {
     private VirtualView virtualView;
 

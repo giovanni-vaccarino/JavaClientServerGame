@@ -1,7 +1,7 @@
 package polimi.ingsoft.client.common;
 
 import polimi.ingsoft.client.ui.gui.GUI;
-import polimi.ingsoft.server.common.MatchList;
+import polimi.ingsoft.server.common.MatchData;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 import polimi.ingsoft.client.ui.UI;
@@ -24,7 +24,6 @@ import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.SequenceInputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -98,7 +97,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
 
     @Override
-    public void showUpdateMatchesList(List<MatchList> matches) throws IOException {
+    public void showUpdateMatchesList(List<MatchData> matches) throws IOException {
         ui.updateMatchesList(matches);
     }
 
@@ -129,6 +128,7 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException{
+        System.out.println("I got GAME STATE: " + gameState.getGamePhase());
         // TODO move
         if(gameState.getGamePhase().equals(GAME_PHASE.END)){
             System.out.println("Il vincitore è: " + gameState.getWinners());
@@ -174,11 +174,6 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void reportError(ERROR_MESSAGES errorMessage) throws IOException {
-        ui.reportError(errorMessage);
-    }
-
-    @Override
-    public void reportMatchError(ERROR_MESSAGES errorMessage) throws IOException {
         ui.reportError(errorMessage);
     }
 

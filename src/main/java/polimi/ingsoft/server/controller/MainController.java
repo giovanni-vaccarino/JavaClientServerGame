@@ -1,7 +1,6 @@
 package polimi.ingsoft.server.controller;
 
-import org.w3c.dom.ls.LSException;
-import polimi.ingsoft.server.common.MatchList;
+import polimi.ingsoft.server.common.MatchData;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchAlreadyFullException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.MatchNotFoundException;
 import polimi.ingsoft.server.exceptions.MatchSelectionExceptions.NotValidNumPlayersException;
@@ -51,11 +50,11 @@ public class MainController {
      *
      * @return a list of match IDs
      */
-    public synchronized List<MatchList> getMatches(){
+    public synchronized List<MatchData> getMatches(){
         Set<Integer> keys = this.matches.keySet();
 
         return keys.stream()
-                .map(match -> new MatchList(match,
+                .map(match -> new MatchData(match,
                         getMatch(match).getLobbyPlayers().size(),
                         getMatch(match).getRequestedNumPlayers()))
                 .toList();

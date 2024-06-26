@@ -2,7 +2,7 @@ package polimi.ingsoft.client.ui.cli;
 
 import polimi.ingsoft.client.common.Client;
 import polimi.ingsoft.client.ui.cli.pages.*;
-import polimi.ingsoft.server.common.MatchList;
+import polimi.ingsoft.server.common.MatchData;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.*;
@@ -18,6 +18,7 @@ import polimi.ingsoft.server.model.chat.Message;
 import polimi.ingsoft.server.model.decks.PlayerHand;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
@@ -29,19 +30,25 @@ public class CLI extends UI {
     }
 
     private transient final PrintStream out;
+    private transient final Scanner in;
     private CLIPhase phase = CLIPhase.WELCOME;
 
     private final NicknameManager nicknameManager;
-    private final MatchManager matchManager;
-    private final LobbyManager lobbyManager;
-    private final MatchInitializationManager matchInitializationManager;
-    private final GameManager gameManager;
+    private MatchManager matchManager;
+    private LobbyManager lobbyManager;
+    private MatchInitializationManager matchInitializationManager;
+    private GameManager gameManager;
     private CLIPhaseManager currentManager;
 
     public CLI(Scanner in, PrintStream out, Client client) {
         super(client);
         this.out = out;
+        this.in = in;
         nicknameManager = new NicknameManager(in, out, this);
+        createManagers();
+    }
+
+    private void createManagers() {
         matchManager = new MatchManager(in, out, this);
         lobbyManager = new LobbyManager(out, this);
         matchInitializationManager = new MatchInitializationManager(in, out, this);
@@ -104,6 +111,12 @@ public class CLI extends UI {
 
     public void returnToMatchManager() {
         phase = CLIPhase.MATCH_CHOICE;
+        try {
+            getClient().setMatchServer(null);
+        } catch (IOException e) {
+            out.println(ERROR_MESSAGES.UNKNOWN_ERROR.getValue());
+        }
+        createManagers();
         changeManager(matchManager);
     }
 
@@ -127,7 +140,7 @@ public class CLI extends UI {
     }
 
     @Override
-    public void updateMatchesList(List<MatchList> matches) {
+    public void updateMatchesList(List<MatchData> matches) {
         if (phase == CLIPhase.MATCH_CHOICE) {
             matchManager.updateMatches(matches);
         }
@@ -215,8 +228,15 @@ public class CLI extends UI {
                                     PlaceInPublicBoard<QuestCard> quest,
                                     Map<String, Board> boards,
                                     PlayerHand playerHand) {
-        //TODO
-        System.out.println("Updating the model of the match");
+        gameManager.initializePublicBoards(resource, gold, quest);
+        gameManager.initializeBoards(boards);
+        startGameManager(
+            playerHand,
+            playerInitialSetting.getQuestCard(),
+            playerInitialSetting.getInitialCard(),
+            playerInitialSetting.getIsInitialFaceUp(),
+            gameState
+        );
     }
 
     @Override
@@ -236,7 +256,6 @@ public class CLI extends UI {
     @Override
     public void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard) {
         if (phase == CLIPhase.GAME) {
-            System.out.println("Updating public board");
             gameManager.updatePublicBoard(deckType, placeInPublicBoard);
         }
     }

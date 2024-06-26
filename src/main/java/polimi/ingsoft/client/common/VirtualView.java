@@ -1,7 +1,7 @@
 package polimi.ingsoft.client.common;
 
 
-import polimi.ingsoft.server.common.MatchList;
+import polimi.ingsoft.server.common.MatchData;
 import polimi.ingsoft.server.common.command.ClientCommand;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
@@ -24,6 +24,9 @@ import java.rmi.Remote;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents a client or its proxy
+ */
 public interface VirtualView extends Remote, Serializable {
     void sendMessage(ClientCommand command) throws IOException;
 
@@ -53,7 +56,7 @@ public interface VirtualView extends Remote, Serializable {
      * @param matches The list of match IDs.
      * @throws IOException If an I/O error occurs.
      */
-    void showUpdateMatchesList(List<MatchList> matches) throws IOException;
+    void showUpdateMatchesList(List<MatchData> matches) throws IOException;
 
 
     /**
@@ -174,11 +177,40 @@ public interface VirtualView extends Remote, Serializable {
      */
     void reportError(ERROR_MESSAGES errorMessage) throws IOException;
 
-    void reportMatchError(ERROR_MESSAGES errorMessage) throws IOException;
+    /**
+     * Sets the match server.
+     *
+     * @param server
+     * @throws IOException If an I/O error occurs.
+     */
     void setMatchServer(VirtualMatchServer server) throws IOException;
+
+    /**
+     * Sends a pong to a client. A pong is a ping request from the server.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     void pong() throws IOException;
+
+    /**
+     * Sends a match pong to a client. A match pong is a ping request from a match server.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     void matchPong() throws IOException;
 
+    /**
+     * Updates the client of a successful match rejoin after a disconnection.
+     *
+     * @param playerInitialSetting Original player initial settings.
+     * @param gameState Current match game state.
+     * @param resource Resource public board.
+     * @param gold Gold public board.
+     * @param quest Quest cards public board.
+     * @param boards Player boards.
+     * @param playerHand Last player hand.
+     * @throws IOException If an I/O error occurs.
+     */
     void showUpdateRejoinMatch(PlayerInitialSetting playerInitialSetting,
                                GameState gameState,
                                PlaceInPublicBoard<ResourceCard> resource,

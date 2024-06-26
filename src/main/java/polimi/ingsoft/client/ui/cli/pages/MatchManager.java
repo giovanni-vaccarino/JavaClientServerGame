@@ -3,7 +3,7 @@ package polimi.ingsoft.client.ui.cli.pages;
 import polimi.ingsoft.client.ui.cli.CLI;
 import polimi.ingsoft.client.ui.cli.MESSAGES;
 import polimi.ingsoft.client.ui.cli.Printer;
-import polimi.ingsoft.server.common.MatchList;
+import polimi.ingsoft.server.common.MatchData;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class MatchManager implements CLIPhaseManager {
 
     private State state = State.NONE;
 
-    private List<MatchList> matches;
+    private List<MatchData> matches;
     private int matchId;
 
     public MatchManager(Scanner in, PrintStream out, CLI cli) {
@@ -40,7 +40,7 @@ public class MatchManager implements CLIPhaseManager {
         }
     }
 
-    public void updateMatches(List<MatchList> matches) {
+    public void updateMatches(List<MatchData> matches) {
         switch (state){
             case State.WAITING_FOR_MATCHES -> {
                 this.matches = matches;
@@ -61,8 +61,8 @@ public class MatchManager implements CLIPhaseManager {
     private void showMatchesList() {
         if (matches.isEmpty()) out.println(MESSAGES.NO_MATCHES_TO_SHOW.getValue());
         int i = 0;
-        for (MatchList match : matches)
-            out.println(i + ". Match number " + match.getMatchId() + ". " + match.getJoinedPlayers() + " / " + match.getRequiredNumPlayers());
+        for (MatchData match : matches)
+            out.println(i + ". Match number " + match.matchId() + ". " + match.joinedPlayers() + " / " + match.requiredNumPlayers());
 
     }
 
