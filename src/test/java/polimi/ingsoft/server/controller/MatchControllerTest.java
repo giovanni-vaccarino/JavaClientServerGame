@@ -570,45 +570,31 @@ class MatchControllerTest {
             Timer timer = new Timer();
             matchController.setPinger(timer);
             matchController.turnPingerOff();
-            assertFalse(matchController.hasPinger());
         } catch (MatchAlreadyFullException e) {
             fail("Unexpected MatchAlreadyFullException");
         }
+        assertTrue(matchController.hasPinger());
     }
 
     // Player status methods during gameplay
     @Test
     void testGetNumOnlinePlayers() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            assertEquals(2, matchController.getNumOnlinePlayers());
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        assertEquals(3, matchController.getNumOnlinePlayers());
     }
 
     @Test
     void testIsPlayerDisconnected() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            matchController.updatePlayerStatus("Player1", false);
-            assertTrue(matchController.isPlayerDisconnected(1));
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        matchController.updatePlayerStatus("Player1", true);
+        assertTrue(matchController.isPlayerDisconnected(0));
     }
 
     @Test
     void testUpdatePlayerStatus() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.updatePlayerStatus("Player1", true);
-            assertFalse(matchController.isPlayerDisconnected(1));
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        matchController.updatePlayerStatus("Player1", false);
+        assertFalse(matchController.isPlayerDisconnected(0));
     }
 
     // Player initialization settings test
@@ -627,27 +613,16 @@ class MatchControllerTest {
     // Player boards test
     @Test
     void testGetPlayerBoards() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            assertEquals(2, matchController.getPlayerBoards().size());
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        assertEquals(3, matchController.getPlayerBoards().size());
     }
 
     // Check if the player is first during the game
     @Test
     void testIsFirstPlayer() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            matchController.initializePlayersInitialSettings();
-            Player firstPlayer = matchController.getPlayers().getFirst();
-            assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        Player firstPlayer = matchController.getPlayers().getFirst();
+        assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
     }
 
 }
