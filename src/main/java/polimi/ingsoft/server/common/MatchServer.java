@@ -420,13 +420,13 @@ public class MatchServer implements VirtualMatchServer {
         Integer numOnlinePlayers = matchController.getNumOnlinePlayers();
         switch (numOnlinePlayers){
             case 0 -> {
-                logger.println("TIMER HAS BEEN SET. THE GAME IS GOING TO BE DELETED IN x SECONDS");
+                logger.println("TIMER HAS BEEN SET. THE GAME IS GOING TO BE DELETED IN 10 SECONDS");
                 matchController.getGameState().setBlockedMatchState(BLOCKED_MATCH_STATE.BLOCKED_NO_PLAYERS);
                 matchBlockedTimer.startTimer(10);
             }
 
             case 1 -> {
-                logger.println("TIMER HAS BEEN SET. THE GAME IS GOING TO BE DELETED IN x SECONDS");
+                logger.println("TIMER HAS BEEN SET. THE GAME IS GOING TO BE DELETED IN 10 SECONDS");
                 matchController.getGameState().setBlockedMatchState(BLOCKED_MATCH_STATE.BLOCKED_ONE_PLAYER);
                 matchBlockedTimer.startTimer(10);
             }
