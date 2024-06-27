@@ -39,6 +39,7 @@ The screenshots can be found at deliverables/Test Coverage
 The JavaDoc can be found at deliverables/JavaDoc, by opening index.html
 
 ## Running the game
+The jars can be found at deliverables/JARs
 
 ### Running the Client
 It is requested to insert the server ip. You can run the client using the following command:
