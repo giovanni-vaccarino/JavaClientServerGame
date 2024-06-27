@@ -21,15 +21,24 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link MatchController} class.
+ */
 class MatchControllerTest {
     private MatchController matchController;
 
+    /**
+     * Sets up the test environment before each test.
+     */
     @BeforeEach
     void setUp() {
         PublicBoard publicBoard = PublicBoardFactory.createPublicBoard();
         matchController = new MatchController(System.out, 1, 3, publicBoard, new ChatController());
     }
 
+    /**
+     * Tests player joining and initialization process.
+     */
     @Test
     void testPlayerJoiningAndInitialization() {
         try {
@@ -48,6 +57,9 @@ class MatchControllerTest {
         assertEquals(INITIAL_STEP.COLOR, matchController.getGameState().getCurrentInitialStep());
     }
 
+    /**
+     * Tests that {@link MatchAlreadyFullException} is thrown when adding more players than the maximum allowed.
+     */
     @Test
     void testMatchAlreadyFullException() {
         try {
@@ -61,6 +73,9 @@ class MatchControllerTest {
         assertThrows(MatchAlreadyFullException.class, () -> matchController.addPlayer("Player4"));
     }
 
+    /**
+     * Tests player color selection process.
+     */
     @Test
     void testPlayerColorSelection() {
         try {
@@ -86,6 +101,9 @@ class MatchControllerTest {
         assertEquals(PlayerColor.YELLOW, matchController.getPlayerInitialSettings().get(2).getColor());
     }
 
+    /**
+     * Tests that {@link InitalChoiceAlreadySetException} is thrown when a player tries to reselect a color.
+     */
     @Test
     void testPlayerColorAlreadySelectedException() {
         //Adding 3 players to the match (requested number of players to start = 3)
@@ -110,6 +128,9 @@ class MatchControllerTest {
                 matchController.setPlayerColor("Player1", PlayerColor.YELLOW));
     }
 
+    /**
+     * Tests that {@link ColorAlreadyPickedException} is thrown when a player tries to select an already picked color.
+     */
     @Test
     void testPlayerColorAlreadyPickedException() {
         //Adding 3 players to the match (requested number of players to start = 3)
@@ -132,6 +153,9 @@ class MatchControllerTest {
                 matchController.setPlayerColor("Player3", PlayerColor.BLUE));
     }
 
+    /**
+     * Tests the switch from the initial card face selection step to the quest card selection step.
+     */
     @Test
     void testInitialStepSwitchFromInitialCardToQuestCard() {
         //Adding 3 players to the match (requested number of players to start = 3)
@@ -164,7 +188,9 @@ class MatchControllerTest {
         assertEquals(INITIAL_STEP.QUEST_CARD, matchController.getGameState().getCurrentInitialStep());
     }
 
-
+    /**
+     * Tests the switch from the quest card selection step to the play phase.
+     */
     @Test
     void testInitialStepSwitchFromQuestCardToPlay() {
         //Adding 3 players to the match (requested number of players to start = 3)
@@ -298,6 +324,10 @@ class MatchControllerTest {
     }
 */
 
+    /**
+     * Tests the WrongInitialStepException scenario.
+     * Ensures the match controller throws the correct exception when methods are called out of the expected order.
+     */
     @Test
     void testWrongInitialStepException() {
         //Adding 3 players to the match (requested number of players to start = 3)
@@ -318,7 +348,10 @@ class MatchControllerTest {
         assertThrows(WrongStepException.class, () -> matchController.setQuestCard("Player2", firstQuestCard));
     }
 
-
+    /**
+     * Tests the WrongPlayerForCurrentTurnException scenario.
+     * Ensures the match controller throws the correct exception when a non-current player attempts to take a turn.
+     */
     @Test
     void testWrongPlayerForCurrentTurnException() {
         this.setupInitialPhase();
@@ -341,6 +374,10 @@ class MatchControllerTest {
                 matchController.drawCard(notCurrentPlayer, TYPE_HAND_CARD.RESOURCE, PlaceInPublicBoard.Slots.SLOT_B));
     }
 
+    /**
+     * Tests the WrongTurnStepException scenario.
+     * Ensures the match controller throws the correct exception when a player attempts an action outside of their turn step.
+     */
     @Test
     void testWrongTurnStepException() {
         this.setupInitialPhase();
@@ -356,6 +393,10 @@ class MatchControllerTest {
         );
     }
 
+    /**
+     * Tests the broadcasting message functionality.
+     * Ensures the broadcast message is correctly sent and received.
+     */
     @Test
     void testSendBroadcastMessage() {
         this.setupInitialPhase();
@@ -366,6 +407,10 @@ class MatchControllerTest {
         assertEquals(message, matchController.writeBroadcastMessage(sender, message).getText());
     }
 
+    /**
+     * Sets up the initial phase for the match.
+     * Adds players, sets their colors, initial card faces, and quest cards.
+     */
     void setupInitialPhase() {
         // Adding 3 players to the match (requested number of players to start = 3)
         try {
@@ -406,6 +451,9 @@ class MatchControllerTest {
         }
     }
 
+    /**
+     * Tests the retrieval of the public board.
+     */
     @Test
     void getPublicBoard() {
         System.out.println(matchController.getPublicBoard());
@@ -416,48 +464,75 @@ class MatchControllerTest {
 //        System.out.println(matchController.getRequestedNumPlayers());
 //    }
 
+    /**
+     * Tests the retrieval of the match ID.
+     */
     @Test
     void getMatchId() {
         System.out.println(matchController.getMatchId());
     }
 
+    /**
+     * Tests the retrieval of the game state.
+     */
     @Test
     void getGameState() {
         System.out.println(matchController.getGameState());
     }
 
+    /**
+     * Tests the retrieval of players.
+     */
     @Test
     void getPlayers() {
         System.out.println(matchController.getPlayers());
     }
 
+    /**
+     * Tests the retrieval of player initial settings.
+     */
     @Test
     void getPlayerInitialSettings() {
         System.out.println(matchController.getPlayerInitialSettings());
     }
 
+    /**
+     * Tests the retrieval of player names.
+     */
     @Test
     void getNamePlayers() {
         System.out.println(matchController.getNamePlayers());
     }
 
+    /**
+     * Tests the retrieval of initial settings by player nickname.
+     */
     @Test
     void getPlayerInitialSettingByNickname() {
         System.out.println(matchController.getPlayerInitialSettingByNickname("Player1"));
         System.out.println(matchController.getPlayerInitialSettingByNickname(""));
     }
 
+    /**
+     * Tests the retrieval of a player by their nickname.
+     */
     @Test
     void getPlayerByNickname() {
         System.out.println(matchController.getPlayerByNickname("Player1"));
         System.out.println(matchController.getPlayerByNickname(""));
     }
 
+    /**
+     * Tests the retrieval of player boards.
+     */
     @Test
     void getPlayerBoards() {
         System.out.println(matchController.getPlayerBoards());
     }
 
+    /**
+     * Tests the addition of players to the match.
+     */
     @Test
     void addPlayer() throws MatchAlreadyFullException {
         matchController.addPlayer("Player3");
@@ -466,6 +541,10 @@ class MatchControllerTest {
         matchController.addPlayer("Player4");
     }
 
+    /**
+     * Tests the initialization of players.
+     * Ensures that the players are correctly initialized.
+     */
     @Test
     void initializePlayers() {
         setupInitialPhase();
@@ -475,6 +554,9 @@ class MatchControllerTest {
         assertEquals(players, matchController.getPlayers());
     }
 
+    /**
+     * Tests setting the player color.
+     */
     @Test
     void setPlayerColor() throws WrongGamePhaseException, WrongStepException, ColorAlreadyPickedException, InitalChoiceAlreadySetException, MatchAlreadyFullException {
         matchController.addPlayer("player4");
@@ -485,6 +567,10 @@ class MatchControllerTest {
 
     }
 
+    /**
+     * Tests writing a broadcast message.
+     * Ensures the broadcast message is correctly sent.
+     */
     @Test
     void writeBroadcastMessage() {
         setupInitialPhase();
@@ -494,6 +580,10 @@ class MatchControllerTest {
         matchController.writeBroadcastMessage(player.getNickname(), "Example message");
     }
 
+    /**
+     * Tests writing a private message.
+     * Ensures the private message is correctly sent.
+     */
     @Test
     void writePrivateMessage() {
         setupInitialPhase();
@@ -508,6 +598,10 @@ class MatchControllerTest {
         }
     }
 
+    /**
+     * Tests removing a player's initial setting.
+     * Ensures the player's initial setting is correctly removed.
+     */
     @Test
     void removePlayerInitialSettingTest() {
         setupInitialPhase();
@@ -518,7 +612,9 @@ class MatchControllerTest {
         assertEquals(matchController.getPlayerInitialSettings().size(), size - 1);
     }
 
-    // Join phase tests
+    /**
+     * Tests the retrieval of players in the lobby.
+     */
     @Test
     void testGetLobbyPlayers() {
         try {
@@ -530,6 +626,11 @@ class MatchControllerTest {
         }
     }
 
+    /**
+     * Tests if removing a lobby player works as expected.
+     * This test adds two players to the lobby and then removes one,
+     * verifying the size of the lobby players list and the remaining player.
+     */
     @Test
     void testRemoveLobbyPlayer() {
         try {
@@ -543,6 +644,10 @@ class MatchControllerTest {
         }
     }
 
+    /**
+     * Tests adding players to the lobby.
+     * This test adds two players and verifies the size of the lobby players list.
+     */
     @Test
     void testAddPlayer() {
         try {
@@ -554,7 +659,9 @@ class MatchControllerTest {
         }
     }
 
-    // Pinger methods tests
+    /**
+     * Tests setting and checking the presence of a pinger for the match.
+     */
     @Test
     void testSetPinger() {
         try {
@@ -567,7 +674,9 @@ class MatchControllerTest {
         }
     }
 
-
+    /**
+     * Tests turning off the pinger for the match.
+     */
     @Test
     void testTurnPingerOff() {
         try {
@@ -581,13 +690,18 @@ class MatchControllerTest {
         assertTrue(matchController.hasPinger());
     }
 
-    // Player status methods during gameplay
+    /**
+     * Tests getting the number of online players in the match.
+     */
     @Test
     void testGetNumOnlinePlayers() {
         this.setupInitialPhase();
         assertEquals(3, matchController.getNumOnlinePlayers());
     }
 
+    /**
+     * Tests updating player status to disconnected and checking if the player is disconnected.
+     */
     @Test
     void testIsPlayerDisconnected() {
         this.setupInitialPhase();
@@ -595,6 +709,9 @@ class MatchControllerTest {
         assertTrue(matchController.isPlayerDisconnected(0));
     }
 
+    /**
+     * Tests updating player status to connected and checking if the player is not disconnected.
+     */
     @Test
     void testUpdatePlayerStatus() {
         this.setupInitialPhase();
@@ -602,7 +719,9 @@ class MatchControllerTest {
         assertFalse(matchController.isPlayerDisconnected(0));
     }
 
-    // Player initialization settings test
+    /**
+     * Tests initializing initial settings for players.
+     */
     @Test
     void testInitializePlayersInitialSettings() {
         try {
@@ -615,14 +734,18 @@ class MatchControllerTest {
         }
     }
 
-    // Player boards test
+    /**
+     * Tests retrieving player boards during the match.
+     */
     @Test
     void testGetPlayerBoards() {
         this.setupInitialPhase();
         assertEquals(3, matchController.getPlayerBoards().size());
     }
 
-    // Check if the player is first during the game
+    /**
+     * Tests checking if a specific player is the first player in the match.
+     */
     @Test
     void testIsFirstPlayer() {
         this.setupInitialPhase();
@@ -632,7 +755,9 @@ class MatchControllerTest {
         assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
     }
 
-    // test Winner setting
+    /**
+     * Tests setting the match state to have only winners and retrieves the list of winners.
+     */
     @Test
     void testCalculateWinner() {
         this.setupInitialPhase();
@@ -641,6 +766,9 @@ class MatchControllerTest {
         assertNotNull(winners);
     }
 
+    /**
+     * Tests setting and retrieving the blocked state of the match.
+     */
     @Test
     void testBlockedState() {
         this.setupInitialPhase();
@@ -648,6 +776,9 @@ class MatchControllerTest {
         assertEquals(matchController.getGameState().getBlockedMatchState(), BLOCKED_MATCH_STATE.NOT_BLOCKED);
     }
 
+    /**
+     * Tests simulating gameplay within the match controller.
+     */
     @Test
     void testGame() {
         this.setupInitialPhase();
@@ -671,6 +802,11 @@ class MatchControllerTest {
         }
     }
 
+    /**
+     * Retrieves the current player based on the nickname from the match controller.
+     *
+     * @return The current player object.
+     */
     public Player getCurrentPlayer(){
         String nickname = matchController.getGameState().getCurrentPlayerNickname();
         Player currentPlayer = null;
@@ -682,7 +818,13 @@ class MatchControllerTest {
 
         return currentPlayer;
     }
-    
+
+
+    /**
+     * Simulates placing a card for the given player within the match controller.
+     *
+     * @param myPlayer The player for whom the card is being placed.
+     */
     public void placeCard(Player myPlayer){
         Random random = new Random();
         Integer size;
@@ -707,7 +849,12 @@ class MatchControllerTest {
             }
         }
     }
-    
+
+    /**
+     * Simulates drawing a card for the given player within the match controller.
+     *
+     * @param myPlayer The player for whom the card is being drawn.
+     */
     public void drawCard(Player myPlayer){
         Random random = new Random();
         TYPE_HAND_CARD typeHandCard = null;
