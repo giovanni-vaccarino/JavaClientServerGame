@@ -69,7 +69,7 @@ public class RmiClient extends Client {
                 }
             }, "RmiClientCommandReader").start();
         } catch (IOException e) {
-            // TODO handle
+            System.out.println(e.getMessage());
         }
     }
 

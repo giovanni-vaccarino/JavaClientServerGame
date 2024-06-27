@@ -37,7 +37,6 @@ public abstract class Card implements Drawable, Serializable, Cloneable {
     public Card clone() {
         try {
             Card clone = (Card) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

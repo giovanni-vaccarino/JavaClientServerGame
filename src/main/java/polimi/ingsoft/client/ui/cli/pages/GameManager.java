@@ -149,7 +149,6 @@ public class GameManager implements CLIPhaseManager {
             } else out.println("Wait for your turn!");
         } else if (gamePhase == GAME_PHASE.END) {
             out.println(MESSAGES.GAME_END.getValue());
-            // TODO change this method to list reader
             out.println("IL VINCITORE E': "+gameState.getWinners());
 
             out.println(MESSAGES.GO_BACK_TO_MATCH_MENU.getValue());

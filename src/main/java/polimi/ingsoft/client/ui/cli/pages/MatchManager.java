@@ -174,7 +174,6 @@ public class MatchManager implements CLIPhaseManager {
         if (state == State.WAITING_FOR_MATCHES) {
             if (error == ERROR_MESSAGES.UNABLE_TO_LIST_MATCHES) {
                 out.println("ERROR: " + error.getValue());
-                // TODO wait for a timeout and retry
             }
         } else if (state == State.WAITING_FOR_JOIN) {
             if (error == ERROR_MESSAGES.UNABLE_TO_JOIN_MATCH) {
@@ -197,7 +196,6 @@ public class MatchManager implements CLIPhaseManager {
                 setMatchId();
             }
         } else {
-            // TODO Maybe remove this one
             out.println("UNEXPECTED ERROR: " + error.getValue());
         }
     }

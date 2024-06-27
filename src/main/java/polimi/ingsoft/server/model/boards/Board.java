@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO refactor
 
 /**
  * Player's Board: every card placed from a player ends in this object

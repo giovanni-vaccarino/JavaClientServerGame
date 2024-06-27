@@ -34,7 +34,6 @@ public class LobbyManager implements CLIPhaseManager {
 
     @Override
     public void parseError(ERROR_MESSAGES error) {
-        // TODO Maybe remove this one
         out.println("UNEXPECTED ERROR: " + error.getValue());
     }
 }

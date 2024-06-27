@@ -36,6 +36,7 @@ public abstract class UI implements Serializable {
 
     private Boolean isUpdateMatchRequested = false;
 
+
     /**
      * Constructs a UI object with the specified client.
      *
@@ -45,6 +46,7 @@ public abstract class UI implements Serializable {
         this.client = client;
     }
 
+
     /**
      * Displays the welcome screen.
      *
@@ -52,10 +54,12 @@ public abstract class UI implements Serializable {
      */
     public abstract void showWelcomeScreen() throws IOException;
 
+
     /**
      * Updates the nickname of the player.
      */
     public abstract void updateNickname();
+
 
     /**
      * Updates the list of matches.
@@ -64,10 +68,12 @@ public abstract class UI implements Serializable {
      */
     public abstract void updateMatchesList(List<MatchData> matches);
 
+
     /**
      * Shows the update for match join.
      */
     public abstract void showUpdateMatchJoin();
+
 
     /**
      * Updates the list of players in the lobby.
@@ -76,12 +82,14 @@ public abstract class UI implements Serializable {
      */
     public abstract void updatePlayersInLobby(List<String> nicknames);
 
+
     /**
      * Displays the created match with the specified match ID.
      *
      * @param matchId the ID of the created match
      */
     public abstract void showMatchCreate(Integer matchId);
+
 
     /**
      * Reports an error with the specified error message.
@@ -90,6 +98,7 @@ public abstract class UI implements Serializable {
      */
     public abstract void reportError(ERROR_MESSAGES errorMessage);
 
+
     /**
      * Shows the update for the game state.
      *
@@ -97,12 +106,14 @@ public abstract class UI implements Serializable {
      */
     public abstract void showUpdateGameState(GameState gameState);
 
+
     /**
      * Shows the update for initial settings of the player.
      *
      * @param playerInitialSetting the initial settings of the player
      */
     public abstract void showUpdateInitialSettings(PlayerInitialSetting playerInitialSetting);
+
 
     /**
      * Creates the public board with the specified resource cards, gold cards, and quest cards.
@@ -113,6 +124,7 @@ public abstract class UI implements Serializable {
      */
     public abstract void createPublicBoard(PlaceInPublicBoard<ResourceCard> resourceCards, PlaceInPublicBoard<GoldCard> goldCards, PlaceInPublicBoard<QuestCard> questCards);
 
+
     /**
      * Updates the public board with the specified deck type and place in public board.
      *
@@ -120,6 +132,7 @@ public abstract class UI implements Serializable {
      * @param placeInPublicBoard the place in public board to update
      */
     public abstract void updatePublicBoard(TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> placeInPublicBoard);
+
 
     /**
      * Updates the player board with the specified nickname, coordinates, played card, and score.
@@ -131,12 +144,14 @@ public abstract class UI implements Serializable {
      */
     public abstract void updatePlayerBoard(String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score);
 
+
     /**
      * Sets the player boards with the specified map of player boards.
      *
      * @param playerBoard the map of player boards to set
      */
     public abstract void setPlayerBoards(Map<String, Board> playerBoard);
+
 
     /**
      * Updates the player hand with the specified player hand.
@@ -145,12 +160,14 @@ public abstract class UI implements Serializable {
      */
     public abstract void updatePlayerHand(PlayerHand playerHand);
 
+
     /**
      * Updates the broadcast chat with the specified message.
      *
      * @param message the message to add to the broadcast chat
      */
     public abstract void updateBroadcastChat(Message message);
+
 
     /**
      * Updates the private chat with the specified receiver and message.
@@ -159,6 +176,7 @@ public abstract class UI implements Serializable {
      * @param message  the private message to add to the chat
      */
     public abstract void updatePrivateChat(String receiver, Message message);
+
 
     /**
      * Sets the model for rejoining a match with the specified parameters.
@@ -179,6 +197,7 @@ public abstract class UI implements Serializable {
                                              Map<String, Board> boards,
                                              PlayerHand playerHand);
 
+
     /**
      * Gets the client instance.
      *
@@ -187,6 +206,7 @@ public abstract class UI implements Serializable {
     public VirtualView getClient() {
         return client;
     }
+
 
     /**
      * Gets the server instance.
@@ -197,6 +217,7 @@ public abstract class UI implements Serializable {
         return client.getServer();
     }
 
+
     /**
      * Gets the match server instance.
      *
@@ -205,6 +226,7 @@ public abstract class UI implements Serializable {
     public VirtualMatchServer getMatchServer() {
         return client.getMatchServer();
     }
+
 
     /**
      * Gets the nickname of the player.
@@ -215,6 +237,7 @@ public abstract class UI implements Serializable {
         return nickname;
     }
 
+
     /**
      * Sets the stub nickname.
      *
@@ -223,6 +246,7 @@ public abstract class UI implements Serializable {
     public void setStubNickname(String stubNickname) {
         this.stub = stubNickname;
     }
+
 
     /**
      * Gets the stub.
@@ -233,6 +257,7 @@ public abstract class UI implements Serializable {
         return this.stub;
     }
 
+
     /**
      * Sets whether an update match is requested.
      *
@@ -242,6 +267,7 @@ public abstract class UI implements Serializable {
         this.isUpdateMatchRequested = isUpdateMatchRequested;
     }
 
+
     /**
      * Gets whether an update match is requested.
      *
@@ -250,6 +276,7 @@ public abstract class UI implements Serializable {
     public Boolean getIsUpdateMatchRequested() {
         return this.isUpdateMatchRequested;
     }
+
 
     /**
      * Sets the nickname of the player and updates the server with the nickname.
@@ -265,6 +292,7 @@ public abstract class UI implements Serializable {
         }
     }
 
+
     /**
      * Sets the color of the player.
      *
@@ -278,6 +306,7 @@ public abstract class UI implements Serializable {
         }
     }
 
+
     /**
      * Sets whether the initial card is facing up.
      *
@@ -290,6 +319,7 @@ public abstract class UI implements Serializable {
             throw new RuntimeException(e);
         }
     }
+
 
     /**
      * Sets the quest card for the player.
