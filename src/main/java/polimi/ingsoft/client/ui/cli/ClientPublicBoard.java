@@ -79,7 +79,7 @@ public class ClientPublicBoard {
             row++;
             System.out.print(RESET + "\n");
         } while (count < 3);
-        if(mixed.getFirst()!=null)System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            ¡‾‾‾‾‾‾‾‾¡            ");
+        if(mixed.getFirst()!=null)System.out.print(ClientHand.defineColor(null, mixed.getFirst()) + BLACKTEXT + "            ¡¯¯¯¯¯¯¯¯¡            ");
         else System.out.print(WHITE + "                                  ");
         System.out.print(RESET + "     ");
         System.out.print(ClientHand.defineColor(null, mixed.get(1)) + "                                  ");
@@ -143,7 +143,7 @@ public class ClientPublicBoard {
         } catch (NoSuchElementException e) {
             outColor = YELLOW + BLACKTEXT;
             if (row == 2 || row == 8) return (outColor + "!________!");
-            else if (row == 6 || row == 0) return (outColor + "¡‾‾‾‾‾‾‾‾¡");
+            else if (row == 6 || row == 0) return (outColor + "¡¯¯¯¯¯¯¯¯¡");
             else return (outColor + "|        |");
         } catch (NullPointerException f) {
             return ClientHand.defineColor(null, mixed.get(index)) + "          ";
@@ -157,7 +157,7 @@ public class ClientPublicBoard {
         else if (color == Resource.LEAF) outColor = GREEN + BLACKTEXT;
         else outColor = YELLOW + BLACKTEXT;
         if (row == 2 || row == 8) return (outColor + "!________!");
-        else if (row == 6 || row == 0) return (outColor + "¡‾‾‾‾‾‾‾‾¡");
+        else if (row == 6 || row == 0) return (outColor + "¡¯¯¯¯¯¯¯¯¡");
         else return (outColor + "|        |");
     }
 

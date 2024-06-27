@@ -157,7 +157,7 @@ public class ClientHand {
         } catch (NoSuchElementException e) {
             outColor = YELLOW + BLACKTEXT;
             if (j == 2 || j == 8) return (outColor + "!________!");
-            else if (j == 6 || j == 0) return (outColor + "¡‾‾‾‾‾‾‾‾¡");
+            else if (j == 6 || j == 0) return (outColor + "¡¯¯¯¯¯¯¯¯¡");
             else return (outColor + "|        |");
         }
         if(tempCorner==null){
@@ -180,7 +180,7 @@ public class ClientHand {
         else if (color == Resource.LEAF) outColor = GREEN + BLACKTEXT;
         else outColor = YELLOW + BLACKTEXT;
         if (j == 2 || j == 8) return (outColor + "!________!");
-        else if (j == 6 || j == 0) return (outColor + "¡‾‾‾‾‾‾‾‾¡");
+        else if (j == 6 || j == 0) return (outColor + "¡¯¯¯¯¯¯¯¯¡");
         else return (outColor + "|        |");
     }
 

@@ -668,7 +668,7 @@ public class ClientBoard {
         String color;
         pre=pre+BLACKTEXT;
         if (corner.isEmpty()) return switch(count){
-            case 0->pre + YELLOW + "¡‾‾‾‾‾‾‾‾¡";
+            case 0->pre + YELLOW + "¡¯¯¯¯¯¯¯¯¡";
             case 1->pre + YELLOW + "|        |";
                 default->pre + YELLOW + "!________!";
         };
@@ -683,7 +683,7 @@ public class ClientBoard {
             pre = pre + color;
             switch (count) {
                 case 0:
-                    return pre + BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡";
+                    return pre + BLACKTEXT + "¡¯¯¯¯¯¯¯¯¡";
                 case 1:
                     return pre + printObject(corner.getItems().getFirst());
                 case 2:
@@ -730,14 +730,14 @@ public class ClientBoard {
             switch (card.getCenter().getItems().size()) {
                 case 1:
                     return switch (row) {
-                        case 3 -> actualColor+"  "+defineColor(card,1) + BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡"+actualColor+"  ";
+                        case 3 -> actualColor+"  "+defineColor(card,1) + BLACKTEXT + "¡¯¯¯¯¯¯¯¯¡"+actualColor+"  ";
                         case 4 -> actualColor+"  "+defineColor(card,1) + BLACKTEXT + "|        |"+actualColor+"  ";
                         case 5 -> actualColor+"  "+defineColor(card,1) + BLACKTEXT + "!________!"+actualColor+"  ";
                         default -> actualColor + "              ";
                     };
                 case 2:
                     switch (row) {
-                        case 1, 4 -> pre = BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡" + actualColor + "  ";
+                        case 1, 4 -> pre = BLACKTEXT + "¡¯¯¯¯¯¯¯¯¡" + actualColor + "  ";
                         case 2, 5 -> pre = BLACKTEXT + "|        |" + actualColor + "  ";
                         case 3, 6 -> pre = BLACKTEXT + "!________!" + actualColor + "  ";
                         default-> pre=actualColor + "            ";
@@ -747,7 +747,7 @@ public class ClientBoard {
                     break;
                 case 3:
                     switch (row) {
-                        case 1, 3, 5 -> pre = BLACKTEXT + "¡‾‾‾‾‾‾‾‾¡" + actualColor + "  ";
+                        case 1, 3, 5 -> pre = BLACKTEXT + "¡¯¯¯¯¯¯¯¯¡" + actualColor + "  ";
                         case 2, 4 -> pre = BLACKTEXT + "|        |" + actualColor + "  ";
                         case 6 -> pre = BLACKTEXT + "!________!" + actualColor + "  ";
                         case 7 -> pre = actualColor + "            ";
