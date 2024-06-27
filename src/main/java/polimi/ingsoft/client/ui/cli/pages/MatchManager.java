@@ -60,10 +60,8 @@ public class MatchManager implements CLIPhaseManager {
 
     private void showMatchesList() {
         if (matches.isEmpty()) out.println(MESSAGES.NO_MATCHES_TO_SHOW.getValue());
-        int i = 1;
         for (MatchData match : matches) {
-            out.println(i + ". Match number " + match.matchId() + ": " + match.joinedPlayers() + " / " + match.requiredNumPlayers()  + " players in lobby");
-            i++;
+            out.println(match.matchId()  + ". Match number " + match.matchId() + ": " + match.joinedPlayers() + " / " + match.requiredNumPlayers()  + " players in lobby");
         }
 
     }
