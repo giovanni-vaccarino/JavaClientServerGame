@@ -120,20 +120,47 @@ public class GameState implements Serializable, Cloneable {
     }
 
 
+    /**
+     * Returns the number of players in the lobby.
+     *
+     * @return the number of players in lobby
+     */
     private Integer getNumLobbyPlayers(){
         return matchController.getLobbyPlayers().size();
     }
 
+
+    /**
+     * Decreases the number of player setting their initial choices.
+     */
     public void decreaseSettingPlayer(){
         effectiveNumPlayers -= 1;
     }
 
+
+    /**
+     * Checks if the current player is the last one setting their initial choice.
+     *
+     * @return true if the current player is the last one setting, false otherwise
+     */
     public Boolean isLastPlayerSetting(){
         return playerStepCheck.size() == effectiveNumPlayers - 1;
     }
 
+
+    /**
+     * Sets the blocked match state.
+     *
+     * @param blockedMatchState the blocked match state to set
+     */
     public void setBlockedMatchState(BLOCKED_MATCH_STATE blockedMatchState){this.blockedMatchState = blockedMatchState;}
 
+
+    /**
+     * Returns the blocked match state.
+     *
+     * @return the blocked match state
+     */
     public BLOCKED_MATCH_STATE getBlockedMatchState(){return this.blockedMatchState;}
 
 
@@ -236,6 +263,7 @@ public class GameState implements Serializable, Cloneable {
      * @throws WrongPlayerForCurrentTurnException if the player is not the current player
      * @throws WrongStepException                if the move is not allowed in the current step
      * @throws WrongGamePhaseException           if the move is not allowed in the current game phase
+     * @throws MatchBlockedException              if the match is blocked
      */
     public void validateMove(Player player, TURN_STEP move) throws WrongPlayerForCurrentTurnException, WrongStepException, WrongGamePhaseException, MatchBlockedException {
         if (blockedMatchState != BLOCKED_MATCH_STATE.NOT_BLOCKED) throw new MatchBlockedException();
@@ -353,6 +381,10 @@ public class GameState implements Serializable, Cloneable {
         this.updateState();
     }
 
+
+    /**
+     * Sets the only winner of the game. Called if only one player is remained in the game(after the timer is expired)
+     */
     public void setOnlyWinner(){
         this.gamePhase = GAME_PHASE.END;
         this.calculateWinners();
@@ -389,6 +421,12 @@ public class GameState implements Serializable, Cloneable {
         setWinners(calculateQuestPointsWinners(questCardPoints, winners));
     }
 
+
+    /**
+     * Calculates the winners based on points.
+     *
+     * @return a list of winners
+     */
     private List<String> calculatePointsWinners(){
         List<String> winners = new ArrayList<>();
         int maxPoints = -1;
@@ -409,6 +447,13 @@ public class GameState implements Serializable, Cloneable {
     }
 
 
+    /**
+     * Calculates the winners based on quest card points in case of a tie.
+     *
+     * @param questCardPoints a map of quest card points
+     * @param winners         a list of current winners
+     * @return a list of winners based on quest card points
+     */
     private List<String> calculateQuestPointsWinners(Map<String, Integer> questCardPoints, List<String> winners){
         List<String> tieWinners = new ArrayList<>(winners);
         winners.clear();
@@ -427,11 +472,22 @@ public class GameState implements Serializable, Cloneable {
         return winners;
     }
 
+
+    /**
+     * Sets the winners of the game.
+     *
+     * @param winners a list of winners
+     */
     private void setWinners(List<String> winners){
         this.winners = winners;
     }
 
 
+    /**
+     * Returns the winners of the game.
+     *
+     * @return a list of winners
+     */
     public List<String> getWinners(){
         return this.winners;
     }

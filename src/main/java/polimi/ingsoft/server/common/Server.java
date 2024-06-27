@@ -42,72 +42,187 @@ public abstract class Server implements VirtualServer {
         initExceptionHandlers();
     }
 
-    //TODO handle this calls to connection manager in another way
-
+    /**
+     * Creates a new match server for the given match controller.
+     *
+     * @param matchController the match controller
+     * @param clients the list of clients
+     * @param logger the PrintStream for logging
+     * @return the created VirtualMatchServer
+     */
     protected abstract VirtualMatchServer createMatchServer(MatchController matchController, List<VirtualView> clients, PrintStream logger);
 
+
+    /**
+     * Gets a map of match servers.
+     *
+     * @return the map of match servers
+     */
     protected abstract Map<Integer, VirtualMatchServer> getMatchServers();
 
+
+    /**
+     * Gets the list of clients connected to the server(not in game).
+     *
+     * @return the list of clients
+     */
     protected List<ClientConnection> getClients(){
         return ConnectionManager.getInstance().getClients();
     }
 
+
+    /**
+     * Gets a client connection by nickname.
+     *
+     * @param nickname the nickname of the client
+     * @return the client connection
+     */
     protected ClientConnection getClient(String nickname){
         return ConnectionManager.getInstance().getClient(nickname);
     }
 
+
+    /**
+     * Checks if a nickname is available.
+     *
+     * @param nickname the nickname to check
+     * @return true if the nickname is available, false otherwise
+     */
     protected Boolean isNicknameAvailable(String nickname){
         return ConnectionManager.getInstance().isNicknameAvailable(nickname);
     }
 
+
+    /**
+     * Gets a map of match notification clients.
+     *
+     * @return the map of match notification clients
+     */
     protected Map<Integer, List<VirtualView>> getMatchNotificationClients(){
         return ConnectionManager.getInstance().getMatchNotificationList();
     }
 
+
+    /**
+     * Adds a client connection to the server.
+     *
+     * @param clientConnection the client connection to add
+     */
     protected void addClientConnection(ClientConnection clientConnection){
         ConnectionManager.getInstance().addClientConnection(clientConnection);
     }
 
+
+    /**
+     * Removes a client connection from the server.
+     *
+     * @param clientConnection the client connection to remove
+     */
     protected void removeClientConnection(ClientConnection clientConnection){
         ConnectionManager.getInstance().removeClientFromMainServer(clientConnection);
     }
 
+
+    /**
+     * Gets the list of clients currently in a game.
+     *
+     * @return the list of clients in game
+     */
     protected List<ClientConnection> getClientsInGame(){
         return ConnectionManager.getInstance().getClientsInGame();
     }
 
+
+    /**
+     * Gets a client in game by their virtual view.
+     *
+     * @param virtualView the virtual view of the client
+     * @return the client connection
+     */
     protected ClientConnection getClientInGame(VirtualView virtualView){
         return ConnectionManager.getInstance().getClientInGame(virtualView);
     }
 
+
+    /**
+     * Gets a client in game by their nickname.
+     *
+     * @param nickname the nickname of the client
+     * @return the client connection
+     */
     protected ClientConnection getClientInGame(String nickname){
         return ConnectionManager.getInstance().getClientInGame(nickname);
     }
 
+
+    /**
+     * Adds a client to the in-game client list.
+     *
+     * @param clientConnection the client connection to add
+     */
     protected void addClientInGame(ClientConnection clientConnection){
         ConnectionManager.getInstance().addClientInGame(clientConnection);
     }
 
+
+    /**
+     * Removes a client from the in-game client list.
+     *
+     * @param clientConnection the client connection to remove
+     */
     protected void removeClientInGame(ClientConnection clientConnection){
         ConnectionManager.getInstance().removeClientInGame(clientConnection);
     }
 
+
+    /**
+     * Adds a disconnected client to the list of disconnected clients for a specific match.
+     *
+     * @param clientConnection the client connection to add
+     * @param matchId the ID of the match
+     */
     protected void addDisconnectedClient(ClientConnection clientConnection, Integer matchId){
         ConnectionManager.getInstance().addDisconnectedClient(clientConnection, matchId);
     }
 
+
+    /**
+     * Removes a disconnected client by their nickname.
+     *
+     * @param nickname the nickname of the client
+     */
     protected void removeDisconnectedClient(String nickname){
         ConnectionManager.getInstance().removeDisconnectedClient(nickname);
     }
 
+
+    /**
+     * Gets a map of disconnected clients and their match IDs.
+     *
+     * @return the map of disconnected clients
+     */
     protected Map<ClientConnection, Integer> getDisconnectedClients(){
         return ConnectionManager.getInstance().getDisconnectedClients();
     }
 
+
+    /**
+     * Gets a disconnected client by their nickname.
+     *
+     * @param nickname the nickname of the client
+     * @return the disconnected client connection
+     */
     protected ClientConnection getDisconnectedClient(String nickname){
         return ConnectionManager.getInstance().getDisconnectedClient(nickname);
     }
 
+
+    /**
+     * Checks if a player is disconnected based on their nickname.
+     *
+     * @param nickname the nickname of the player
+     * @return true if the player is disconnected, false otherwise
+     */
     protected Boolean isPlayerDisconnected(String nickname){
         return ConnectionManager.getInstance().isPlayerDisconnected(nickname);
     }
@@ -256,6 +371,14 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sets the nickname for a client.
+     *
+     * @param client the virtual view of the client
+     * @param nickname the new nickname to be set
+     * @throws NicknameNotAvailableException if the nickname is already in use
+     */
     protected void setNicknameForClient(VirtualView client, String nickname) throws NicknameNotAvailableException {
         synchronized (getClients()) {
             synchronized (getClientsInGame()){
@@ -274,6 +397,13 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+
+    /**
+     * Sends a nickname update to a single client.
+     *
+     * @param client the virtual view of the client to update
+     */
     protected void singleUpdateNickname(VirtualView client) {
         synchronized (getClients()) {
             try {
@@ -282,6 +412,13 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends a matches list update to a single client.
+     *
+     * @param client the virtual view of the client to update
+     * @param matches the list of matches to send
+     */
     protected void singleUpdateMatchesList(VirtualView client, List<MatchData> matches) {
         synchronized (getClients()) {
             try {
@@ -290,6 +427,13 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Broadcasts a matches list update to all clients.
+     *
+     * @param matches the list of matches to broadcast
+     * @throws IOException if an I/O error occurs
+     */
     protected void broadcastUpdateMatchesList(List<MatchData> matches) throws IOException {
         synchronized (getClients()) {
             for (var client : getClients()) {
@@ -298,12 +442,26 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends a match creation update to a single client.
+     *
+     * @param client the virtual view of the client to update
+     * @param matchId the ID of the created match
+     * @throws IOException if an I/O error occurs
+     */
     protected void singleUpdateMatchCreate(VirtualView client, Integer matchId) throws IOException {
         synchronized (getClients()) {
             client.showUpdateMatchCreate(matchId);
         }
     }
 
+
+    /**
+     * Sends a match join update to a single client.
+     *
+     * @param client the virtual view of the client to update
+     */
     protected void singleUpdateMatchJoin(VirtualView client) {
         synchronized (getClients()) {
             try {
@@ -312,6 +470,15 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+
+    /**
+     * Sends initial settings update to a single client.
+     *
+     * @param matchId the ID of the match
+     * @param client the virtual view of the client to update
+     * @param playerInitialSetting the initial settings of the player
+     */
     public void singleUpdateInitialSettings(Integer matchId, VirtualView client, PlayerInitialSetting playerInitialSetting) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
 
@@ -322,6 +489,13 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends game state update to clients in a match.
+     *
+     * @param matchId the ID of the match
+     * @param gameState the updated game state
+     */
     public void matchUpdateGameState(Integer matchId, GameState gameState) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
 
@@ -334,6 +508,14 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends player hand update to a single client.
+     *
+     * @param matchId the ID of the match
+     * @param client the virtual view of the client to update
+     * @param playerHand the updated player hand
+     */
     public void singleUpdatePlayerHand(Integer matchId, VirtualView client, PlayerHand playerHand) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
 
@@ -344,6 +526,14 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends public board update to clients in a match.
+     *
+     * @param matchId the ID of the match
+     * @param deckType the type of deck
+     * @param publicBoardUpdate the updated public board
+     */
     public void matchUpdatePublicBoard(Integer matchId, TYPE_HAND_CARD deckType, PlaceInPublicBoard<?> publicBoardUpdate) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
 
@@ -356,6 +546,16 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends player board update to clients in a match.
+     *
+     * @param matchId the ID of the match
+     * @param nickname the nickname of the player
+     * @param coordinates the coordinates of the update
+     * @param playedCard the played card
+     * @param score the updated score
+     */
     public void matchUpdatePlayerBoard(Integer matchId, String nickname, Coordinates coordinates, PlayedCard playedCard, Integer score) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
 
@@ -368,6 +568,13 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends broadcast message update to clients in a match.
+     *
+     * @param matchId the ID of the match
+     * @param message the broadcast message
+     */
     public void matchUpdateBroadcastMessage(Integer matchId, Message message) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
 
@@ -380,6 +587,15 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends private message update to a single client.
+     *
+     * @param matchId the ID of the match
+     * @param nickname the nickname of the sender
+     * @param recipient the nickname of the recipient
+     * @param message the private message
+     */
     public void singleUpdatePrivateMessage(Integer matchId, String nickname, String recipient, Message message) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
         VirtualView client = getClientInGame(nickname).getVirtualView();
@@ -391,6 +607,16 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Sends game start update to clients in a match.
+     *
+     * @param matchId the ID of the match
+     * @param resource the resource cards on the public board
+     * @param gold the gold cards on the public board
+     * @param quest the quest cards on the public board
+     * @param boards the player boards
+     */
     public void matchUpdateGameStart(
             Integer matchId,
             PlaceInPublicBoard<ResourceCard> resource,
@@ -409,6 +635,20 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+
+    /**
+     * Sends rejoin match update to a player.
+     *
+     * @param nickname the nickname of the player
+     * @param playerInitialSetting the initial settings of the player
+     * @param gameState the current game state
+     * @param resource the resource cards on the public board
+     * @param gold the gold cards on the public board
+     * @param quest the quest cards on the public board
+     * @param boards the player boards
+     * @param playerHand the player's hand
+     */
     public void reJoinMatchUpdate(
             String nickname,
             PlayerInitialSetting playerInitialSetting,
@@ -428,6 +668,13 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Reports an error to a client.
+     *
+     * @param client the virtual view of the client to report the error to
+     * @param error the error message to report
+     */
     public void reportError(VirtualView client, ERROR_MESSAGES error) {
         synchronized (getClients()) {
             try {
@@ -438,6 +685,15 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+
+    /**
+     * Reports a match-related error to clients in a match.
+     *
+     * @param matchId the ID of the match
+     * @param client the virtual view of the client to report the error to
+     * @param error the error message to report
+     */
     public void reportMatchError(Integer matchId, VirtualView client, ERROR_MESSAGES error) {
         List<VirtualView> clientsToNotify = getMatchNotificationClients().get(matchId);
 
@@ -450,6 +706,12 @@ public abstract class Server implements VirtualServer {
         }
     }
 
+
+    /**
+     * Deletes a game, moving active players back to the client list and cleaning up associated resources.
+     *
+     * @param matchId the ID of the match to delete
+     */
     protected void deleteGame(Integer matchId){
         List<Player> players = controller.getMatch(matchId).getPlayers();
         getMatchServers().get(matchId);
@@ -487,6 +749,12 @@ public abstract class Server implements VirtualServer {
     }
 
 
+    /**
+     * Checks if a player is already in a game.
+     *
+     * @param nickname the nickname of the player to check
+     * @return true if the player is already in a game, false otherwise
+     */
     private Boolean isPlayerAlreadyInGame(String nickname){
         synchronized (getDisconnectedClients()){
             return isPlayerDisconnected(nickname);
@@ -494,6 +762,13 @@ public abstract class Server implements VirtualServer {
     }
 
 
+    /**
+     * Handles reconnection of a player to a match.
+     *
+     * @param nickname the nickname of the player reconnecting
+     * @param stub the stub associated with the client
+     * @return the ID of the match the player reconnected to
+     */
     private Integer handleReconnection(String nickname, String stub){
         VirtualView virtualView;
         Integer matchId;
@@ -521,6 +796,13 @@ public abstract class Server implements VirtualServer {
     }
 
 
+
+    /**
+     * Handles updates when a player rejoins a match.
+     *
+     * @param nickname the nickname of the player rejoining
+     * @param matchId the ID of the match
+     */
     private void reJoinUpdates(String nickname, Integer matchId){
         MatchController matchController = controller.getMatch(matchId);
         Player player = matchController.getPlayerByNickname(nickname)
@@ -568,6 +850,10 @@ public abstract class Server implements VirtualServer {
         );
     }
 
+
+    /**
+     * Initializes exception handlers for various exceptions.
+     */
     private void initExceptionHandlers() {
         exceptionHandlers.put(NullPointerException.class,
                 (client, exception) -> reportError(client, ERROR_MESSAGES.UNKNOWN_ERROR));
@@ -582,6 +868,14 @@ public abstract class Server implements VirtualServer {
                 (client, exception) -> reportError(client, ERROR_MESSAGES.MATCH_DOES_NOT_EXIST));
     }
 
+
+    /**
+     * Handles an exception that occurs for a specific client by delegating
+     * to the appropriate exception handler or reporting an unknown error.
+     *
+     * @param clientToUpdate the VirtualView of the client that encountered the exception
+     * @param exception the exception that occurred
+     */
     private void handleException(VirtualView clientToUpdate, Exception exception) {
         ExceptionHandler handler = exceptionHandlers.get(exception.getClass());
         if (handler != null) {

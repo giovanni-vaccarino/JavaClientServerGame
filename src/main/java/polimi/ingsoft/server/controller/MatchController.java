@@ -179,6 +179,12 @@ public class MatchController implements Serializable {
                 .ifPresent(lobbyPlayers::remove);
     }
 
+
+    /**
+     * Removes the initial setting for a player.
+     *
+     * @param nickname the nickname of the player whose initial setting to remove
+     */
     public void removePlayerInitialSetting(String nickname){
         playerInitialSettings.stream()
                 .filter(p -> p.getNickname().equals(nickname))
@@ -188,6 +194,10 @@ public class MatchController implements Serializable {
         gameState.decreaseSettingPlayer();
     }
 
+
+    /**
+     * Initializes the initial settings for the players in the lobby.
+     */
     public void initializePlayersInitialSettings(){
         for(var player : lobbyPlayers){
             // Retrieving from Public Board 1 initial card, 2 resource, 1 gold card and 2 possible quest cards
@@ -247,12 +257,26 @@ public class MatchController implements Serializable {
                 toList();
     }
 
+
+    /**
+     * Retrieves the initial settings for a player by their nickname.
+     *
+     * @param nickname the nickname of the player
+     * @return an optional containing the initial settings if found, empty otherwise
+     */
     public synchronized Optional<PlayerInitialSetting> getPlayerInitialSettingByNickname(String nickname) {
         return playerInitialSettings.stream()
                 .filter(player -> player.getNickname().equals(nickname))
                 .findFirst();
     }
 
+
+    /**
+     * Retrieves a player by their nickname.
+     *
+     * @param nickname the nickname of the player
+     * @return an optional containing the player if found, empty otherwise
+     */
     public synchronized Optional<Player> getPlayerByNickname(String nickname) {
         return players.stream()
                 .filter(player -> player.getNickname().equals(nickname))
@@ -260,6 +284,11 @@ public class MatchController implements Serializable {
     }
 
 
+    /**
+     * Retrieves the boards of all players.
+     *
+     * @return a map of player nicknames to their respective boards
+     */
     public synchronized Map<String, Board> getPlayerBoards(){
         Map<String, Board> playerBoards = new HashMap<>();
 
@@ -302,6 +331,13 @@ public class MatchController implements Serializable {
                 this.players;
     }
 
+
+    /**
+     * Checks if a player is the first player.
+     *
+     * @param nickname the nickname of the player to check
+     * @return true if the player is the first player, false otherwise
+     */
     public Boolean isFirstPlayer(String nickname){
         Integer firstPlayerIndex = gameState.getFirstPlayerIndex();
 
@@ -432,6 +468,7 @@ public class MatchController implements Serializable {
      * @param playerSender the nickname of the player sending the message
      * @param message      the message to send
      * @return the added message
+     * @throws NotValidMessageException if the message typed is not valid
      */
     public synchronized Message writeBroadcastMessage(String playerSender, String message) throws NotValidMessageException{
         return this.chatController.writeBroadcastMessage(playerSender, message);
@@ -445,6 +482,8 @@ public class MatchController implements Serializable {
      * @param recipient the nickname of the player receiving the message
      * @param message      the message to send
      * @return the added message
+     * @throws PlayerNotFoundException if the receiver player has not been found
+     * @throws NotValidMessageException if the message typed is not valid
      */
     public synchronized Message writePrivateMessage(String sender, String recipient, String message) throws PlayerNotFoundException, NotValidMessageException {
         return this.chatController.writePrivateMessage(sender, recipient, message);

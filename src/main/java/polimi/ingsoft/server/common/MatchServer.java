@@ -63,25 +63,35 @@ public class MatchServer implements VirtualMatchServer {
 
         initExceptionHandlers();
         synchronized (matchController){
-            logger.println("Tentativo di apertura match ping");
             if(!matchController.hasPinger()){
-                logger.println("Tentativo di apertura match ping riuscito");
                 Timer pinger = scheduleTimeoutRoutine();
                 matchController.setPinger(pinger);
             }
         }
     }
 
+
+    /**
+     * Retrieves the list of virtual views for the current match clients.
+     *
+     * @return a list of VirtualView objects representing the match clients
+     */
     private List<VirtualView> getMatchClients(){
         return server.getMatchNotificationClients().get(matchController.getMatchId());
     }
 
+
+    /**
+     * Schedules a periodic task to check the connection status of clients
+     * and handles disconnections appropriately.
+     *
+     * @return a Timer object for the scheduled task
+     */
     private Timer scheduleTimeoutRoutine() {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 // Send ping to all clients that are playing the game
-                //TODO ensure there are no deadlocks with this nested synchronized
                 synchronized (server.getClientsInGame()){
                     synchronized (getMatchClients()) {
                         logger.println("CLIENTS IN GAME" + matchController.getMatchId() + ": " + getMatchClients().stream().map(virtualView -> server.getClientInGame(virtualView).getNickname()).toList());
@@ -319,6 +329,11 @@ public class MatchServer implements VirtualMatchServer {
         }
     }
 
+
+    /**
+     * Starts the game update process by initializing and sending the public boards
+     * and player boards to the clients.
+     */
     private void startGameUpdate() {
         PlaceInPublicBoard<ResourceCard> resourcePublicBoard = matchController.getPublicBoard().getPublicBoardResource();
         PlaceInPublicBoard<GoldCard> goldPublicBoard = matchController.getPublicBoard().getPublicBoardGold();
@@ -335,6 +350,12 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
+    /**
+     * Handles the disconnection of a player based on the current game phase.
+     *
+     * @param nickname  the nickname of the disconnected player
+     * @param gamePhase the current game phase
+     */
     private void handlePlayerDisconnection(String nickname, GAME_PHASE gamePhase) {
         switch (gamePhase) {
             case WAITING_FOR_PLAYERS -> {
@@ -366,6 +387,9 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
+    /**
+     * Notifies the end of the timer based on the current blocked match state.
+     */
     public void notifyTimerEnd(){
         switch (matchController.getGameState().getBlockedMatchState()){
             case BLOCKED_NO_PLAYERS -> {
@@ -386,6 +410,12 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
+    /**
+     * Handles the blocked match state based on the number of online players
+     * and sets or stops the match timer accordingly.
+     *
+     * @return the current BLOCKED_MATCH_STATE
+     */
     private BLOCKED_MATCH_STATE handleBlockedMatch(){
         Integer numOnlinePlayers = matchController.getNumOnlinePlayers();
         switch (numOnlinePlayers){
@@ -411,6 +441,11 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
+    /**
+     * Handles the rejoin state of a player based on their nickname.
+     *
+     * @param nickname the nickname of the player rejoining the game
+     */
     private void handleRejoinState(String nickname) {
         REJOIN_STATE rejoinState = matchController.updatePlayerStatus(nickname, true);
 
@@ -436,6 +471,12 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
+    /**
+     * Draws a random card for the specified player based on the provided draw parameters.
+     *
+     * @param nickname   the nickname of the player drawing the card
+     * @param drawParams the parameters for drawing the card
+     */
     private void drawRandomCard(String nickname, DrawParams drawParams){
         TYPE_HAND_CARD deckType = drawParams.getDeckType();
         PlaceInPublicBoard.Slots slot = drawParams.getSlot();
@@ -464,6 +505,9 @@ public class MatchServer implements VirtualMatchServer {
     }
 
 
+    /**
+     * Initializes the exception handlers for different types of exceptions.
+     */
     private void initExceptionHandlers() {
         exceptionHandlers.put(NullPointerException.class,
                 (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.UNKNOWN_ERROR));
@@ -496,6 +540,14 @@ public class MatchServer implements VirtualMatchServer {
                 (client, exception) -> server.reportMatchError(matchController.getMatchId(), client, ERROR_MESSAGES.NOT_ENOUGH_RESOURCES));
     }
 
+
+    /**
+     * Handles an exception that occurs for a specific client by delegating
+     * to the appropriate exception handler or reporting an unknown error.
+     *
+     * @param clientToUpdate the VirtualView of the client that encountered the exception
+     * @param exception the exception that occurred
+     */
     private void handleException(VirtualView clientToUpdate, Exception exception) {
         ExceptionHandler handler = exceptionHandlers.get(exception.getClass());
         if (handler != null) {
