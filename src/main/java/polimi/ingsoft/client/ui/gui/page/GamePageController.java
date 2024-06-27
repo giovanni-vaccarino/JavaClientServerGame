@@ -891,7 +891,7 @@ public class GamePageController implements Initializable{
         });
 
         // Set the style for the ListView
-        chatMessages.setStyle("-fx-font-family: 'Old English Text MT'; -fx-font-size: 20px; -fx-background-color: transparent;");
+        chatMessages.setStyle("-fx-font-family: 'Times New Roman'; -fx-font-size: 20px; -fx-background-color: transparent;");
     }
 
     public void sendMessage(ActionEvent actionEvent) throws IOException {
