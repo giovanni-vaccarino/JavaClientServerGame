@@ -102,7 +102,7 @@ public class MatchServer implements VirtualMatchServer {
 
                             if (!clientConnection.getConnected()) {
                                 // Client has disconnected :(
-                                logger.println("Il player " + clientConnection.getNickname() + " si è disconnesso dal game :(");
+                                logger.println("The player " + clientConnection.getNickname() + " is now disconnected :(");
                                 disconnectedClients.add(clientConnection);
                             }
                         }

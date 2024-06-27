@@ -27,10 +27,10 @@ public class RmiServer extends Server {
                     ServerCommand command = methodQueue.take();
                     command.execute(this);
                 } catch (IOException e) {
-                    System.out.println("RMICHIUSO:  " + e.getMessage());
+                    System.out.println("RMICLOSED:  " + e.getMessage());
                     Thread.currentThread().interrupt();
                 } catch (InterruptedException e) {
-                    System.out.println("RMICHIUSO " + e.getMessage());
+                    System.out.println("RMICLOSED " + e.getMessage());
                 }
             }
         }, "RmiServerCommandReader").start();
@@ -43,7 +43,6 @@ public class RmiServer extends Server {
     @Override
     public void sendMessage(ServerCommand command) throws IOException {
         try {
-            logger.println("RMISERVER: mi è arrivata una richiesta");
             methodQueue.put(command);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
