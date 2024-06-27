@@ -15,6 +15,10 @@ import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the Player class.
+ * These tests validate the behavior of the Player class methods.
+ */
 class PlayerTest {
     static Player player;
     static PlayerHand hand;
@@ -23,6 +27,12 @@ class PlayerTest {
     static Board board;
     static Deck<ResourceCard> deck;
 
+    /**
+     * Initializes common objects needed for testing.
+     * Creates a Player instance with a hand, board, and initial state.
+     * @throws FileNotFoundException If a required file is not found.
+     * @throws JsonProcessingException If there is an error in processing JSON data.
+     */
     @BeforeAll
     static void init() throws FileNotFoundException, JsonProcessingException {
         DeckFactory factory=new DeckFactory();
@@ -32,21 +42,38 @@ class PlayerTest {
         board=new Board(factory.createInitialDeck().draw(),false,true,PlayerColor.RED);
         player=new Player(hand,"name",PlayerColor.RED,board,null);
     }
+
+    /**
+     * Tests the getBoard() method of the Player class.
+     * Verifies that the player's board is retrieved correctly.
+     */
     @Test
     void getBoard() {
         assertEquals(board,player.getBoard());
     }
 
+    /**
+     * Tests the getNickname() method of the Player class.
+     * Verifies that the player's nickname is retrieved correctly.
+     */
     @Test
     void getNickname() {
         assertEquals("name",player.getNickname());
     }
 
+    /**
+     * Tests the getQuestCard() method of the Player class.
+     * Verifies that initially, no quest card is assigned to the player.
+     */
     @Test
     void getQuestCard() {
         assertNull(player.getQuestCard());
     }
 
+    /**
+     * Tests the setQuestCard() method of the Player class.
+     * Verifies that the player's quest card can be set and retrieved correctly.
+     */
     @Test
     void setQuestCard() {
         assertNull(player.getQuestCard());
@@ -54,11 +81,19 @@ class PlayerTest {
         assertEquals(player.getQuestCard(),quest);
     }
 
+    /**
+     * Tests the getHand() method of the Player class.
+     * Verifies that the player's hand is retrieved correctly.
+     */
     @Test
     void getHand() {
         assertEquals(hand,player.getHand());
     }
 
+    /**
+     * Tests the addToHand() method of the Player class.
+     * Verifies that a resource card can be added to the player's hand.
+     */
     @Test
     void addToHand() {
         res=deck.draw();
@@ -67,6 +102,10 @@ class PlayerTest {
         assertTrue(player.getHand().getCards().contains(res));
     }
 
+    /**
+     * Tests the removeFromHand() method of the Player class.
+     * Verifies that a resource card can be removed from the player's hand.
+     */
     @Test
     void removeFromHand() {
         res=deck.draw();

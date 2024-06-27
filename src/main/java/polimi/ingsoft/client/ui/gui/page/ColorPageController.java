@@ -198,7 +198,7 @@ public class ColorPageController implements Initializable {
         Parent root = null;
         try {
             root = FXMLLoader.load(resourceUrl);
-            getStage().getScene().setRoot(root); // TODO capisci da dove arriva exception --> ignora
+            getStage().getScene().setRoot(root);
         } catch (Exception ignore) {
         }
     }

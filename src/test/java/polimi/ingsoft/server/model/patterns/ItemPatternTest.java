@@ -17,10 +17,19 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the ItemPattern class.
+ */
 class ItemPatternTest {
     static HashMap<Item, Integer> cost;
     static Board board;
     static ItemPattern pattern;
+
+    /**
+     * Initializes the cost map, board, and item pattern for testing.
+     * @throws FileNotFoundException if a required file is not found
+     * @throws JsonProcessingException if there is an error processing JSON
+     */
     @BeforeAll
     static void init() throws FileNotFoundException, JsonProcessingException {
         cost=new HashMap<>();
@@ -36,6 +45,10 @@ class ItemPatternTest {
         board=new Board(ini,false,true, PlayerColor.RED);
         pattern=new ItemPattern(cost);
     }
+
+    /**
+     * Tests the getMatch method of ItemPattern class under different conditions.
+     */
     @Test
     void getMatch() {
         assertEquals(pattern.getMatch(board,new Coordinates(0,0)),1);
@@ -64,6 +77,9 @@ class ItemPatternTest {
 
     }
 
+    /**
+     * Tests the getCost method of ItemPattern class.
+     */
     @Test
     void getCost() {
         assertEquals(cost,pattern.getCost());

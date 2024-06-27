@@ -15,8 +15,18 @@ import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * Unit tests for the CornerPattern class.
+ */
 class CornerPatternTest {
     static Board board;
+
+    /**
+     * Initializes the board for testing.
+     * @throws FileNotFoundException if a required file is not found
+     * @throws JsonProcessingException if there is an error processing JSON
+     */
     @BeforeAll
     static void init() throws FileNotFoundException, JsonProcessingException {
         DeckFactory factory=new DeckFactory();
@@ -31,11 +41,17 @@ class CornerPatternTest {
 
     }
 
+    /**
+     * Tests the getMatch method of CornerPattern class.
+     */
     @Test
     void getMatch() {
         assertEquals(4,new CornerPattern().getMatch(board,new Coordinates(0,0)));
     }
 
+    /**
+     * Tests the setCost method of CornerPattern class with a string parameter.
+     */
     @Test
     void setCost() {
         new CornerPattern().setCost("string");

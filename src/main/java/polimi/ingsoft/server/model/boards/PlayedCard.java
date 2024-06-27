@@ -177,7 +177,6 @@ public class PlayedCard implements Serializable, Cloneable {
         try {
             PlayedCard clone = (PlayedCard) super.clone();
             clone.card = (GameCard) card.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

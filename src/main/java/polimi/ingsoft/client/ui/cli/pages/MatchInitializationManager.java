@@ -230,7 +230,6 @@ public class MatchInitializationManager implements CLIPhaseManager {
             state = State.SELECTING_QUEST_CARD;
             new Thread(this::selectQuestCard).start();
         } else {
-            // TODO Maybe remove this one
             out.println("UNEXPECTED ERROR: " + error.getValue());
         }
     }
