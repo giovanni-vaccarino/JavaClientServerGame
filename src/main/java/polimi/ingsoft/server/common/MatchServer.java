@@ -84,7 +84,7 @@ public class MatchServer implements VirtualMatchServer {
                 //TODO ensure there are no deadlocks with this nested synchronized
                 synchronized (server.getClientsInGame()){
                     synchronized (getMatchClients()) {
-                        logger.println("CLIENTS IN GAME" + matchController.getMatchId() + ": " + server.getClientsInGame().stream().map(ClientConnection::getNickname).toList());
+                        logger.println("CLIENTS IN GAME" + matchController.getMatchId() + ": " + getMatchClients().stream().map(virtualView -> server.getClientInGame(virtualView).getNickname()).toList());
                         List<ClientConnection> disconnectedClients = new ArrayList<>();
 
                         for (var client : getMatchClients()) {
@@ -223,12 +223,14 @@ public class MatchServer implements VirtualMatchServer {
 
     @Override
     public void sendBroadcastMessage(String player, String message) throws IOException {
-        Message messageSent = matchController.writeBroadcastMessage(player, message);
+        try{
+            Message messageSent = matchController.writeBroadcastMessage(player, message);
+            this.server.matchUpdateBroadcastMessage(
+                    matchController.getMatchId(),
+                    messageSent
+            );
+        } catch (NotValidMessageException ignore){}
 
-        this.server.matchUpdateBroadcastMessage(
-                matchController.getMatchId(),
-                messageSent
-        );
     }
 
     @Override
@@ -243,6 +245,8 @@ public class MatchServer implements VirtualMatchServer {
 
             this.server.singleUpdatePrivateMessage(matchController.getMatchId(), player, recipient, _message);
             this.server.singleUpdatePrivateMessage(matchController.getMatchId(), recipient, player, _message);
+        } catch (NotValidMessageException ignore){
+
         } catch (Exception e){
             handleException(clientToUpdate, e);
         }

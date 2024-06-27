@@ -1,5 +1,6 @@
 package polimi.ingsoft.server.controller;
 
+import polimi.ingsoft.server.exceptions.MatchExceptions.NotValidMessageException;
 import polimi.ingsoft.server.exceptions.MatchExceptions.PlayerNotFoundException;
 import polimi.ingsoft.server.model.chat.Chat;
 import polimi.ingsoft.server.model.chat.Message;
@@ -39,7 +40,7 @@ public class ChatController implements Serializable {
      * @param message the text of the message
      * @return the Message object representing the added message
      */
-    public Message writeBroadcastMessage(String sender, String message) {
+    public Message writeBroadcastMessage(String sender, String message) throws NotValidMessageException {
         return broadcastChat.addMessage(sender, message);
     }
 
@@ -53,7 +54,7 @@ public class ChatController implements Serializable {
      * @return the Message object representing the added message
      * @throws PlayerNotFoundException if the recipient is not found
      */
-    public Message writePrivateMessage(String sender, String recipient, String message) throws PlayerNotFoundException {
+    public Message writePrivateMessage(String sender, String recipient, String message) throws PlayerNotFoundException , NotValidMessageException{
         Chat chat = privateChats.get(recipient);
         if (chat == null)
             throw new PlayerNotFoundException();

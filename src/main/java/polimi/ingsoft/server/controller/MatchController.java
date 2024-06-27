@@ -433,7 +433,7 @@ public class MatchController implements Serializable {
      * @param message      the message to send
      * @return the added message
      */
-    public synchronized Message writeBroadcastMessage(String playerSender, String message){
+    public synchronized Message writeBroadcastMessage(String playerSender, String message) throws NotValidMessageException{
         return this.chatController.writeBroadcastMessage(playerSender, message);
     }
 
@@ -446,7 +446,7 @@ public class MatchController implements Serializable {
      * @param message      the message to send
      * @return the added message
      */
-    public synchronized Message writePrivateMessage(String sender, String recipient, String message) throws PlayerNotFoundException {
+    public synchronized Message writePrivateMessage(String sender, String recipient, String message) throws PlayerNotFoundException, NotValidMessageException {
         return this.chatController.writePrivateMessage(sender, recipient, message);
     }
 }
