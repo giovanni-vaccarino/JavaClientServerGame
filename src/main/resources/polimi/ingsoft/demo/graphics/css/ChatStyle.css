@@ -5,7 +5,7 @@
     -fx-border-color: transparent;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Garamond';
+    -fx-font-family: 'Times New Roman';
     -fx-text-base-color: #323232;
 }
 
@@ -16,7 +16,7 @@
     -fx-border-color: #705f16;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Garamond';
+    -fx-font-family: 'Times New Roman';
     -fx-text-base-color: #323232;
 }
 
@@ -27,7 +27,7 @@
     -fx-border-color: #332115;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Garamond';
+    -fx-font-family: 'Times New Roman';
     -fx-text-base-color: #323232;
 }
 
@@ -46,5 +46,5 @@
     -fx-border-radius: 10;
     -fx-border-width: 2;
     -fx-font-size: 20px;
-    -fx-font-family: 'Garamond';
+    -fx-font-family: 'Times New Roman';
 }
