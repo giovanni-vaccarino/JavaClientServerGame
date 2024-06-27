@@ -24,11 +24,18 @@ class CornerSpaceTest {
          t.add(Object.SCROLL);
          x=new CornerSpace(t);
     }
+
+    /**
+     * Test corner space items getter
+     */
     @Test
     void getItems() {
         assertEquals(t,x.getItems());
     }
 
+    /**
+     * Test emptiness
+     */
     @Test
     void isEmpty() {
          assertEquals(false,x.isEmpty());

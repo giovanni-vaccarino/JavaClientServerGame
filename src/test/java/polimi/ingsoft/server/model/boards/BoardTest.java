@@ -253,6 +253,10 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
 
         res8=new ResourceCard("lol",front,back,0);
     }
+
+    /**
+     * Test add card to board feature
+     */
     @Test
     void add() {
         a=new Board(initial,true,true, PlayerColor.RED);
@@ -287,6 +291,9 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         System.out.println("FEATHERS: "+a.getFeathers());
     }
 
+    /**
+     * Test check board feature, verifying that some coordinates are available or not
+     */
     @Test
     void check() {
         this.add();
@@ -294,6 +301,9 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         assertFalse(a.check(new Coordinates(4, 4)));
     }
 
+    /**
+     * Test card getter for specific coordinates
+     */
     @Test
     void getCard() {
         this.add();
@@ -301,6 +311,9 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         assertNull(a.getCard(new Coordinates(24, 1)));
     }
 
+    /**
+     * Test cards getter
+     */
     @Test
     void getCards() {
         this.add();
@@ -314,6 +327,9 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         assertEquals(res7,a.getCards().get(new Coordinates(3,1)).getCard());
     }
 
+    /**
+     * Test resource counter getter, returns information on the resources in a board
+     */
     @Test
     void getResources() {
         this.add();
@@ -326,6 +342,9 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         assertEquals(1,a.getResources().get(Object.FEATHER));
     }
 
+    /**
+     * Test point calculation
+     */
     @Test
     void updatePoints() {
         this.add();
@@ -338,6 +357,9 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
         ;
     }
 
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         this.add();
@@ -348,84 +370,126 @@ static ResourceCard res1,res2,res3,res4,res5,res6,res7,res8;
 
     }
 
+    /**
+     * Test color getter
+     */
     @Test
     void getColor() {
         this.add();
         assertEquals(PlayerColor.RED,a.getColor());
     }
 
+    /**
+     * Test available places getter
+     */
     @Test
     void getAvailablePlaces() {
         this.add();
         System.out.print(a.getAvailablePlaces());
     }
 
+    /**
+     * Test blocked flag
+     */
     @Test
     void isNotBlocked() {
         this.add();
         assertTrue(a.isNotBlocked());
     }
 
+    /**
+     * Test number of cards getter
+     */
     @Test
     void getNumCards() {
         this.add();
         assertEquals(a.getCards().size(),a.getNumCards());
     }
 
+    /**
+     * Test wolfs getter
+     */
     @Test
     void getWolfs() {
         this.add();
         assertEquals(3,a.getWolfs());
     }
 
+    /**
+     * Test leaves getter
+     */
     @Test
     void getLeaves() {
         this.add();
         assertEquals(4,a.getLeaves());
     }
 
+    /**
+     * Test mushrooms getter
+     */
     @Test
     void getMushrooms() {
         this.add();
         assertEquals(2,a.getMushrooms());
     }
 
+    /**
+     * Test butterflies getter
+     */
     @Test
     void getButterflies() {
         this.add();
         assertEquals(2,a.getButterflies());
     }
 
+    /**
+     * Test feathers getter
+     */
     @Test
     void getFeathers() {
         this.add();
         assertEquals(1,a.getFeathers());
     }
 
+    /**
+     * Test scrolls getter
+     */
     @Test
     void getScrolls() {
         this.add();
         assertEquals(0,a.getScrolls());
     }
 
+    /**
+     * Test potions getter
+     */
     @Test
     void getPotions() {
         this.add();
         assertEquals(0,a.getPotions());
     }
 
+    /**
+     * Test first player
+     */
     @Test
     void getFirstPlayer() {
         this.add();
         assertTrue(a.getFirstPlayer());
     }
 
+    /**
+     * Test printing coordinates
+     */
     @Test
     void getPrintingCoordinates() {
         this.add();
         assertEquals(new Coordinates(0,0),a.getPrintingCoordinates());
     }
 
+    /**
+     * Test printing coordinates update
+     */
     @Test
     void updatePrintingCoordinates() {
         this.add();

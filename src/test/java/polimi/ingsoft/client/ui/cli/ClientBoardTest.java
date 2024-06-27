@@ -17,7 +17,11 @@ import polimi.ingsoft.server.model.items.Item;
 import polimi.ingsoft.server.model.patterns.CornerPattern;
 import polimi.ingsoft.server.model.patterns.ItemPattern;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 

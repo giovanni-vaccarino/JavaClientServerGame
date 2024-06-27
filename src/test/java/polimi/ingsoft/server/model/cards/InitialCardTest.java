@@ -21,6 +21,9 @@ class InitialCardTest {
         card=deck.draw();
     }
 
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         assertEquals(0,card.getScore());

@@ -56,33 +56,51 @@ class GoldCardTest {
         board=new Board(initialdeck.draw(),true,true, PlayerColor.RED);
     }
 
+    /**
+     * Test gold card play pattern getter
+     */
     @Test
     void getPlayPattern() {
         assertEquals(pattern,gold.getPlayPattern());
         System.out.println(goldDeck.draw().getPlayPattern());
     }
 
+    /**
+     * Test gold card point pattern getter
+     */
     @Test
     void getPointPattern() {
         assertNull(gold.getPointPattern());
         System.out.println(goldDeck.draw().getPlayPattern());
     }
 
+    /**
+     * Test gold card condition matches on a given board
+     */
     @Test
     void getMatches() {
         assertEquals(0,gold.getMatches(board));
     }
 
+    /**
+     * Test gold card playability getter
+     */
     @Test
     void getPlayability() {
         assertEquals(0,gold.getPlayability(board));
     }
 
+    /**
+     * Test points getter
+     */
     @Test
     void getPoints() {
         assertEquals(1,gold.getPoints(board,new Coordinates(1,1)));
     }
 
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         assertEquals(3,gold.getScore());

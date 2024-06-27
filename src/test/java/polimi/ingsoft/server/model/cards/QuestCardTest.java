@@ -30,21 +30,34 @@ class QuestCardTest {
         Deck<InitialCard> initial=factory.createInitialDeck();
         board=new Board(initial.draw(),true,true, PlayerColor.RED);
     }
+
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         System.out.println(a.getScore());
     }
 
+    /**
+     * Test quest card condition matches on a given board
+     */
     @Test
     void getMatches() {
         assertEquals(0,a.getMatches(board));
     }
 
+    /**
+     * Test quest card point pattern getter
+     */
     @Test
     void getPointPattern() {
         System.out.println("pointpattern:"+ a.getPointPattern());
     }
 
+    /**
+     * Test quest card play pattern getter
+     */
     @Test
     void getPlayPattern() {
         System.out.println("playpattern:" + a.getPlayPattern());

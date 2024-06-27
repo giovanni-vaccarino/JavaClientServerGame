@@ -18,17 +18,26 @@ class CardTest {
         a=deck.draw();
     }
 
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         System.out.println(a.getScore());
     }
 
+    /**
+     * Test ID getter
+     */
     @Test
     void getID() {
 
         System.out.println(a.getID());
     }
 
+    /**
+     * Test clone method
+     */
     @Test
     void testClone() {
         assertEquals(a,a.clone());
