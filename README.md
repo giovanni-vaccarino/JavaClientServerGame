@@ -36,7 +36,7 @@ Line Coverage:
 The screenshots can be found at deliverables/Test Coverage
 
 ## JavaDoc
-The JavaDoc can be found in deliverables/JavaDoc, by opening index.html
+The JavaDoc can be found at deliverables/JavaDoc, by opening index.html
 
 ## Run (build from Maven)
 --
