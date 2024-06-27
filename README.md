@@ -30,8 +30,14 @@ Legend:
 
 ## Unit Test Coverage Data
 Line Coverage:
-- Controller: xx%
-- Model: xx%
+- Controller: 96%
+- Model: 96%
+
+The screenshots can be found at deliverables/Test Coverage
+
+## JavaDoc
+The JavaDoc can be found in deliverables/JavaDoc, by opening index.html
+
 ## Run (build from Maven)
 --
 ### 0. Requirements
