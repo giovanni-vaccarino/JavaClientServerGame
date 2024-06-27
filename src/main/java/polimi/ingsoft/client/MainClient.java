@@ -7,11 +7,11 @@ import polimi.ingsoft.client.ui.cli.IPChoiceCLI;
 import polimi.ingsoft.client.ui.cli.JarParams;
 import polimi.ingsoft.client.ui.cli.Protocols;
 import polimi.ingsoft.client.socket.SocketClient;
+import polimi.ingsoft.server.common.Utils.Utils;
 import polimi.ingsoft.server.exceptions.UnableToConnectException;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -73,7 +73,9 @@ public class MainClient {
      */
     private static Client createRmiClient(String serverIp, UIType uiType) throws UnableToConnectException {
         try {
-            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+            String ipAddress = Utils.getHostAddress(printStream);
+
+            System.setProperty("java.rmi.server.hostname", ipAddress);
             return new RmiClient(serverIp, rmiServerName, rmiServerPort, uiType, printStream, scanner);
         } catch (RemoteException | NotBoundException exception) {
             throw new UnableToConnectException();

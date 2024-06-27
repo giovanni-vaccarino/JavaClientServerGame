@@ -5,15 +5,15 @@ import polimi.ingsoft.server.common.VirtualServer;
 import polimi.ingsoft.server.controller.MainController;
 import polimi.ingsoft.server.rmi.RmiServer;
 import polimi.ingsoft.server.socket.SocketServer;
+import polimi.ingsoft.server.common.Utils.Utils;
 
 import java.io.PrintStream;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.rmi.RemoteException;
+import java.net.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Arrays;
 
 /**
  * The MainServer class initializes and starts the RMI and Socket servers for the application.
@@ -54,8 +54,10 @@ public class MainServer {
      */
     private static void runRmiServer() {
         try {
+            String ipAddress = Utils.getHostAddress(logger);
+            
             System.setProperty("java.rmi.server.disableHttp", "true");
-            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+            System.setProperty("java.rmi.server.hostname", ipAddress);
             VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(rmiServer, 0);
 
             Registry registry = LocateRegistry.createRegistry(1234);
