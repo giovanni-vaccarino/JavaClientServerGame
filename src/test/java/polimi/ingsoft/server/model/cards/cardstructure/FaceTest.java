@@ -35,63 +35,99 @@ class FaceTest {
         k=new CenterSpace(e);
     }
 
+    /**
+     * Test center space getter
+     */
     @Test
     void getCenter(){
         t.setCenter(k);
         assertEquals(k,t.getCenter());
     }
+
+    /**
+     * Test center space setter
+     */
     @Test
     void setCenter(){
        t.setCenter(k);
        assertEquals(k,t.getCenter());
     }
+
+    /**
+     * Test up left getter
+     */
     @Test
     void getUpLeft() {
        t.setUpLeft(x);
        assertEquals(x,t.getUpLeft());
     }
 
+    /**
+     * Test up left setter
+     */
     @Test
     void setUpLeft() {
        t.setUpLeft(x);
        assertEquals(x,t.getUpLeft());
     }
 
+    /**
+     * Test up right getter
+     */
     @Test
     void getUpRight() {
         t.setUpRight(y);
         assertEquals(y,t.getUpRight());
     }
 
+    /**
+     * Test up right setter
+     */
     @Test
     void setUpRight() {
         t.setUpRight(y);
         assertEquals(y,t.getUpRight());
     }
 
+    /**
+     * Test bottom left getter
+     */
     @Test
     void getBottomLeft() {
         t.setBottomLeft(z);
         assertEquals(z,t.getBottomLeft());
     }
 
+    /**
+     * Test bottom left setter
+     */
     @Test
     void setBottomLeft() {
         t.setBottomLeft(z);
         assertEquals(z,t.getBottomLeft());
     }
 
+    /**
+     * Test bottom right getter
+     */
     @Test
     void getBottomRight() {
         t.setBottomRight(w);
         assertEquals(w,t.getBottomRight());
     }
 
+    /**
+     * Test bottom right setter
+     */
     @Test
     void setBottomRight() {
        t.setBottomRight(w);
         assertEquals(w,t.getBottomRight());
     }
+
+    /**
+     * Test equals method
+     */
     @Test
     void equalsTest(){
        assertFalse(t.equals(null));

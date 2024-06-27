@@ -13,11 +13,18 @@ class LinkTest {
     public static void init(){
         link=new Link(Resource.LEAF,new Coordinates(0,0));
     }
+
+    /**
+     * Test position from beginning of scheme pattern
+     */
     @Test
     void getPosFromBegin() {
         assertEquals(new Coordinates(0,0),link.getPosFromBegin());
     }
 
+    /**
+     * Test color getter
+     */
     @Test
     void getColor() {
         assertEquals(Resource.LEAF,link.getColor());

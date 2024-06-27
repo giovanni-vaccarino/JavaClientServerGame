@@ -21,16 +21,26 @@ class SpaceTest {
                 list.add(Resource.LEAF);
         a=new CornerSpace(list);
     }
+
+    /**
+     * Test space items getter
+     */
     @Test
     void getItems() {
         assertEquals(list,a.getItems());
     }
 
+    /**
+     * Test emptiness
+     */
     @Test
     void isEmpty() {
         assertFalse(a.isEmpty());
     }
 
+    /**
+     * Test equals method
+     */
     @Test
     void testEquals() {
         assertTrue(a.equals(new CornerSpace(list)));
@@ -38,6 +48,9 @@ class SpaceTest {
         assertFalse(a.equals(new CornerSpace(null)));
     }
 
+    /**
+     * Test hash method
+     */
     @Test
     void testHashCode() {
         System.out.println(a.hashCode());

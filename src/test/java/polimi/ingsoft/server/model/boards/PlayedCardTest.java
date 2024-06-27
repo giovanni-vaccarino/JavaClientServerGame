@@ -31,11 +31,18 @@ class PlayedCardTest {
         a=new ResourceCard("resouce",front,back,2);
         card=new PlayedCard(a,true,0);
     }
+
+    /**
+     * Test color getter
+     */
     @Test
     void getColor() {
         assertEquals(card.getColor(),Resource.BUTTERFLY);
     }
 
+    /**
+     * Test face getter
+     */
     @Test
     void getFace() {
         assertEquals(front,card.getFace());
@@ -43,6 +50,9 @@ class PlayedCardTest {
         assertEquals(back,card.getFace());
     }
 
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         card=new PlayedCard(a,true,0);
@@ -51,6 +61,9 @@ class PlayedCardTest {
         assertEquals(2,card.getScore());
     }
 
+    /**
+     * Test upRight setter
+     */
     @Test
     void setUpRight() {
         assertTrue(card.isFreeUpRight());
@@ -58,6 +71,9 @@ class PlayedCardTest {
         assertFalse(card.isFreeUpRight());
     }
 
+    /**
+     * Test upLeft setter
+     */
     @Test
     void setUpLeft() {
         assertTrue(card.isFreeUpLeft());
@@ -65,6 +81,9 @@ class PlayedCardTest {
         assertFalse(card.isFreeUpLeft());
     }
 
+    /**
+     * Test downRight setter
+     */
     @Test
     void setDownRight() {
         assertTrue(card.isFreeDownRight());
@@ -72,6 +91,9 @@ class PlayedCardTest {
         assertFalse(card.isFreeDownRight());
     }
 
+    /**
+     * Test downLeft setter
+     */
     @Test
     void setDownLeft() {
         assertTrue(card.isFreeDownLeft());
@@ -79,10 +101,17 @@ class PlayedCardTest {
         assertFalse(card.isFreeDownLeft());
     }
 
+    /**
+     * Test order getter
+     */
     @Test
     void getOrder() {
             assertEquals(0,card.getOrder());
     }
+
+    /**
+     * Test clone method
+     */
     @Test
     void testClone() {
         System.out.println(card.clone().getCard().getFront().getCenter().getItems().toString());

@@ -25,31 +25,49 @@ class ResourceCardTest {
         a=res.draw();
     }
 
+    /**
+     * Test resource card playability
+     */
     @Test
     void getPlayability() {
         assertEquals(a.getPlayability(board),1);
     }
 
+    /**
+     * Test points getter
+     */
     @Test
     void getPoints() {
         assertEquals(1,a.getPoints(board,new Coordinates(0,0)));
     }
 
+    /**
+     * Test play pattern getter
+     */
     @Test
     void getPlayPattern() {
         assertNull(a.getPlayPattern());
     }
 
+    /**
+     * Test point pattern
+     */
     @Test
     void getPointPattern() {
         assertNull(a.getPointPattern());
     }
 
+    /**
+     * Test resource card matches on a given board
+     */
     @Test
     void getMatches() {
         assertEquals(1,a.getMatches(board));
     }
 
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         System.out.println(a.getScore());

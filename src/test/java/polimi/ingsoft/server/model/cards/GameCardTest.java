@@ -39,52 +39,80 @@ class GameCardTest {
         t=new ResourceCard("id",front,back,score);
     }
 
+    /**
+     * Test score getter
+     */
     @Test
     void getScore() {
         assertEquals(1,t.getScore(false));
         assertEquals(0,t.getScore(true));
     }
 
+    /**
+     * Test front face getter
+     */
     @Test
     void getFront() {
         assertEquals(front,t.getFront());
     }
 
+    /**
+     * Test back face getter
+     */
     @Test
     void getBack() {
         assertEquals(back,t.getBack());
     }
 
+    /**
+     * Test UpLeftCorner getter
+     */
     @Test
     void getUpLeftCorner() {
         assertEquals(front1,t.getUpLeftCorner(true));
         assertEquals(back1,t.getUpLeftCorner(false));
     }
 
+    /**
+     * Test UpRightCorner getter
+     */
     @Test
     void getUpRightCorner() {
         assertEquals(front2,t.getUpRightCorner(true));
         assertEquals(back2,t.getUpRightCorner(false));
     }
 
+    /**
+     * Test BottomLeftCorner getter
+     */
     @Test
     void getBottomLeftCorner() {
         assertEquals(front3,t.getBottomLeftCorner(true));
         assertEquals(back3,t.getBottomLeftCorner(false));
     }
 
+    /**
+     * Test BottomRightCorner getter
+     */
     @Test
     void getBottomRightCorner() {
         assertEquals(front4,t.getBottomRightCorner(true));
         assertEquals(back4,t.getBottomRightCorner(false));
     }
 
+    /**
+     * Test eqyals mehtod
+     */
     @Test
     void equals(){
         assertTrue(t.equals(t));
         assertFalse(t.equals(null));
         assertTrue(t.equals(new ResourceCard("id",front,back,score)));
     }
+
+    /**
+     * Test hash method
+     */
     @Test
     void hashCodeTest(){
         System.out.println(t.hashCode());
