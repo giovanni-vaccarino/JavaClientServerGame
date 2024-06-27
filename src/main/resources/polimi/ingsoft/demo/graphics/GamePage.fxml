@@ -343,7 +343,7 @@
 
         <StackPane layoutX="887.0" layoutY="65.0" prefWidth="461" prefHeight="630" alignment="CENTER"
                    visible="false" fx:id="chatMessagesPane">
-            <ListView fx:id="chatMessages" style="-fx-background-color: #dfd7b0">
+            <ListView fx:id="chatMessages" style="-fx-background-color: #dfd7b0; -fx-font-family: 'Times New Roman'">
             </ListView>
         </StackPane>
 
