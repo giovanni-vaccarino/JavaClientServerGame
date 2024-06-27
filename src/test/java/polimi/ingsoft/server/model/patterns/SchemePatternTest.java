@@ -19,10 +19,18 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * Unit tests for the SchemePattern class.
+ */
 class SchemePatternTest {
     static Board board;
     static ArrayList<Link> link1,link2,link3,link4,link5,link6,link7,link8;
     SchemePattern pattern;
+
+    /**
+     * Initializes the board and links for testing.
+     */
     @BeforeAll
     public static void init(){
         ArrayList<Item> corners=new ArrayList<Item>();
@@ -250,6 +258,14 @@ class SchemePatternTest {
         link8.add(new Link(Resource.MUSHROOM,new Coordinates(1,3)));
 
     }
+
+    /**
+     * Tests the getMatch method of the SchemePattern class.
+     * Verifies that the getMatch method returns the correct number of matched links on the board
+     * based on different SchemePattern instances initialized with specific link configurations.
+     * Each SchemePattern instance is tested with the assertEquals method against expected values.
+     * The commented-out println statements are used for debugging purposes.
+     */
     @Test
     void getMatch() {
 
@@ -285,6 +301,13 @@ class SchemePatternTest {
         assertEquals(1,pattern.getMatch(board,new Coordinates(0,0)));
         /**///System.out.println("RES8:"+pattern.getMatch(board));
     }
+
+    /**
+     * Tests the getOrder method of the SchemePattern class.
+     * Verifies that the getOrder method correctly retrieves the order of links
+     * associated with a SchemePattern instance initialized with a specific link configuration.
+     * The getOrder method result is printed to the console using System.out.println.
+     */
     @Test
     public void getOrder(){
         pattern=new SchemePattern(link1);

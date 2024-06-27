@@ -19,11 +19,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class ChatTest {
     private Chat chat;
 
+    /**
+     * Sets up the test environment by creating a new instance of Chat before each test.
+     */
     @BeforeEach
     public void createChat() {
         chat = new Chat();
     }
 
+    /**
+     * Verifies that a single message is correctly added to the chat.
+     */
     @Test
     public void shouldAddSingleMessage() {
         String playerSender = "Player1";
@@ -33,6 +39,9 @@ class ChatTest {
         assertEquals(1, chat.getMessages().size());
     }
 
+    /**
+     * Verifies that multiple messages are correctly added to the chat.
+     */
     @Test
     public void shouldAddManyMessages() {
         int messagesNumber = 20;
@@ -44,6 +53,9 @@ class ChatTest {
         assertEquals(messagesNumber, chat.getMessages().size());
     }
 
+    /**
+     * Verifies that adding an empty message throws NotValidMessageException.
+     */
     @Test
     public void shouldThrowExceptionForEmptyText() {
         String playerSender = "Player1";
@@ -52,6 +64,9 @@ class ChatTest {
         assertThrows(NotValidMessageException.class, () -> chat.addMessage(playerSender, textMessage));
     }
 
+    /**
+     * Verifies that adding a null message throws NotValidMessageException.
+     */
     @Test
     public void shouldThrowExceptionForNullText() {
         String playerSender = "Player1";
@@ -59,6 +74,9 @@ class ChatTest {
         assertThrows(NotValidMessageException.class, () -> chat.addMessage(playerSender, null));
     }
 
+    /**
+     * Verifies that adding a message with a null sender throws NotValidMessageException.
+     */
     @Test
     public void shouldThrowExceptionForNullSender() {
         String textMessage = "Gianni la papera";
@@ -74,6 +92,10 @@ class ChatTest {
         static ArrayList<Item> b=new ArrayList<Item>(),c=new ArrayList<Item>(),d=new ArrayList<Item>(), f=new ArrayList<Item>(),g=new ArrayList<Item>(),h=new ArrayList<Item>(),i=new ArrayList<Item>();
         static ArrayList<Resource> e=new ArrayList<Resource>();
         static CenterSpace center;
+
+        /**
+         * Sets up the test environment by initializing static variables before all tests.
+         */
         @BeforeAll
         public static void init() {
             c.add(Resource.BUTTERFLY);
@@ -93,40 +115,61 @@ class ChatTest {
             t=new ResourceCard("id",front,back,score);
         }
 
+        /**
+         * Verifies the getScore method of GameCard.
+         */
         @Test
         void getScore() {
             assertEquals(1,t.getScore(false));
             assertEquals(0,t.getScore(true));
         }
 
+        /**
+         * Verifies the getFront method of GameCard.
+         */
         @Test
         void getFront() {
             assertEquals(front,t.getFront());
         }
 
+        /**
+         * Verifies the getBack method of GameCard.
+         */
         @Test
         void getBack() {
             assertEquals(back,t.getBack());
         }
 
+        /**
+         * Verifies the getUpLeftCorner method of GameCard.
+         */
         @Test
         void getUpLeftCorner() {
             assertEquals(front1,t.getUpLeftCorner(true));
             assertEquals(back1,t.getUpLeftCorner(false));
         }
 
+        /**
+         * Verifies the getUpRightCorner method of GameCard.
+         */
         @Test
         void getUpRightCorner() {
             assertEquals(front2,t.getUpRightCorner(true));
             assertEquals(back2,t.getUpRightCorner(false));
         }
 
+        /**
+         * Verifies the getBottomLeftCorner method of GameCard.
+         */
         @Test
         void getBottomLeftCorner() {
             assertEquals(front3,t.getBottomLeftCorner(true));
             assertEquals(back3,t.getBottomLeftCorner(false));
         }
 
+        /**
+         * Verifies the getBottomRightCorner method of GameCard.
+         */
         @Test
         void getBottomRightCorner() {
             assertEquals(front4,t.getBottomRightCorner(true));
@@ -135,6 +178,9 @@ class ChatTest {
     }
 
     static class MessageTest {
+        /**
+         * Verifies that a Message object is correctly created.
+         */
         @Test
         public void shouldCreateMessage() {
             String playerSender = "Gianni";
@@ -146,6 +192,9 @@ class ChatTest {
             assertEquals(message.getText(), textMessage);
         }
 
+        /**
+         * Verifies the getText method of Message.
+         */
         @Test
         public void shouldGetText() {
             String textMessage = "Gianni il cuoco";
@@ -154,6 +203,9 @@ class ChatTest {
             assertEquals(message.getText(), textMessage);
         }
 
+        /**
+         * Verifies the getSender method of Message.
+         */
         @Test
         public void shouldGetSender() {
             String playerSender = "Gianni";
@@ -162,6 +214,9 @@ class ChatTest {
             assertEquals(message.getSender(), playerSender);
         }
 
+        /**
+         * Verifies the printable format of the message.
+         */
         @Test
         public void shouldGetPrintableFormatMessage() {
             String playerSender = "Gianni";

@@ -10,8 +10,18 @@ import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link CardCollection} class.
+ */
 class CardCollectionTest {
     static CardCollection<ResourceCard> deck=new Deck<>(), deck2;
+
+    /**
+     * Initializes the test environment by creating instances of decks before all tests.
+     *
+     * @throws FileNotFoundException if the resource file is not found.
+     * @throws JsonProcessingException if there is an error processing JSON.
+     */
     @BeforeAll
     static void init() throws FileNotFoundException, JsonProcessingException {
         DeckFactory factory=new DeckFactory();
@@ -19,6 +29,10 @@ class CardCollectionTest {
 
     }
 
+    /**
+     * Tests the shuffle method of the {@link CardCollection}.
+     * Prints the first card before and after shuffling to demonstrate the change.
+     */
     @Test
     void shuffle() {
         System.out.println(deck2.cards.getFirst());
@@ -26,6 +40,10 @@ class CardCollectionTest {
         System.out.println(deck2.cards.getFirst());
     }
 
+    /**
+     * Tests the isCardCollectionEmpty method of the {@link CardCollection}.
+     * Verifies that an empty deck returns true and a non-empty deck returns false.
+     */
     @Test
     void isCardCollectionEmpty() {
         assertTrue(deck.isCardCollectionEmpty());
