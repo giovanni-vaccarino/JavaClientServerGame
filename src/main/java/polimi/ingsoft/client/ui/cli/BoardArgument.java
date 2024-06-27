@@ -10,7 +10,6 @@ import java.util.List;
  */
 public enum BoardArgument implements Arguments {
 
-    //TODO FIX THESE COORDINATES
     UP("up", new Coordinates(0, 2), List.of(new Coordinates[]{
             new Coordinates(0, 2),
             new Coordinates(-1, 3),

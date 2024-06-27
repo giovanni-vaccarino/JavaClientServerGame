@@ -84,7 +84,6 @@ public class PlaceInPublicBoard<T extends Drawable> implements Serializable, Clo
      * @return TRUE if a PlaceInPublicBoard contains no more cards and no more card could be drawn from PlaceInPublicBoard's relative deck
      */
     public Boolean isPlaceInPublicBoardEmpty(){
-        //TODO check if slotA and slotB null are correct
         return deck.isCardCollectionEmpty() && slotA == null && slotB == null;
     }
 

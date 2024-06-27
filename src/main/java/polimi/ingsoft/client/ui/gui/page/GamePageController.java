@@ -556,14 +556,11 @@ public class GamePageController implements Initializable{
         Coordinates coordinates = GUIsingleton.getInstance().getGamePageController().getPosFromTableToGraph(x,y);
         if(mixedCard!=null){
             try {
-                System.out.println("Mixed card inviata: "+coordinates.getX()+":"+coordinates.getY());
                 getGui().getMatchServer().placeCard(nickname,mixedCard,coordinates, PlaceCardUtils.getIsFrontPlayerHandCard(xPlayedCard,yPlayedCard));
                 mixedCard = null;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }else{
-            System.out.println("Mixed card NON inviata 2");
         }
     }
 

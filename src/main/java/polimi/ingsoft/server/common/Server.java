@@ -250,7 +250,6 @@ public abstract class Server implements VirtualServer {
         }
 
         try {
-            //TODO refactor
             if(isPlayerAlreadyInGame(nickname)){
                 Integer matchId = handleReconnection(nickname, stub);
                 singleUpdateNickname(clientToUpdate);

@@ -272,7 +272,6 @@ public class UIModel {
      * @param playerHand the player's hand to set
      */
     public void setPlayerHand(List<MixedCard> playerHand) {
-        System.out.println("Adesso hai " + playerHand.size() + " carte in mano");
         this.playerHand = playerHand;
     }
 
@@ -312,12 +311,6 @@ public class UIModel {
 
         playerBoard.getCards().put(coordinates, playedCard);
         playerBoard.updatePoints(score - playerBoard.getScore());
-
-        if(playedCard == null){
-            System.out.println("Played Card NULL");
-        }else {
-            System.out.println("Played Card NON NULL "+coordinates.getX()+":"+coordinates.getY());
-        }
     }
 
     /**
