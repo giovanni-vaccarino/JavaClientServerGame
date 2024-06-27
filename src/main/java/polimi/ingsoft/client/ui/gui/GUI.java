@@ -143,10 +143,10 @@ public class GUI extends UI{
     public void showUpdateMatchJoin() {
         switch (getUiModel().getClientState()){
             case NEWGAME:
-                GUIsingleton.getInstance().getNewGamePageController().nextPage();
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getNewGamePageController().nextPage());
                 break;
             case JOINGAME:
-                GUIsingleton.getInstance().getJoinGamePageController().nextPage();
+                javafx.application.Platform.runLater(() -> GUIsingleton.getInstance().getJoinGamePageController().nextPage());
                 break;
         }
     }

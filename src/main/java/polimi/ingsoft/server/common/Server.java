@@ -466,6 +466,8 @@ public abstract class Server implements VirtualServer {
                 for(var player : players){
                     if(!player.getIsDisconnected()){
                         addClientConnection(getClientInGame(player.getNickname()));
+                        ClientConnection client = getClient(player.getNickname());
+                        client.setConnected(true);
                         removeClientInGame(getClient(player.getNickname()));
 
                         logger.println("Moving back " + player.getNickname() + " to the client list");
