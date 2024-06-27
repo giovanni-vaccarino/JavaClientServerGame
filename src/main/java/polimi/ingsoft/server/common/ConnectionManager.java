@@ -43,7 +43,7 @@ public class ConnectionManager {
                     for (var client : getClients()) {
                         if (!client.getConnected()) {
                             // Client has disconnected :(
-                            logger.println("Il player si è disconnesso :(");
+                            logger.println("The player " + client.getNickname() + " is now disconnected :(");
                             disconnectedClients.add(client);
                         }
                     }

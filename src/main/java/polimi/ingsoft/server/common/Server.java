@@ -233,7 +233,6 @@ public abstract class Server implements VirtualServer {
         logger.println("SERVER: generated stub " + stub);
 
         synchronized (getClients()) {
-            logger.println("aggiunto correttamente stub: " + stub);
             addClientConnection(new ClientConnection(client, stub));
         }
 
@@ -366,7 +365,8 @@ public abstract class Server implements VirtualServer {
 
         synchronized (getClients()){
             ClientConnection client = getClient(nickname);
-            client.setConnected(true);
+            if(client != null)
+                client.setConnected(true);
         }
     }
 

@@ -406,7 +406,6 @@ public class GameState implements Serializable, Cloneable {
             Integer pointsSecondCommon = secondCommonQuest.getMatches(player.getBoard());
             Integer pointsPersonal = personalQuest.getMatches(player.getBoard());
 
-            System.out.println(player.getNickname() + " ha fatto: " + pointsFirstCommon + " e " + pointsSecondCommon + " e " + pointsPersonal);
             player.getBoard().updatePoints(pointsFirstCommon + pointsSecondCommon + pointsPersonal);
             questCardPoints.put(player.getNickname(), pointsFirstCommon + pointsSecondCommon + pointsPersonal);
         }
