@@ -74,23 +74,52 @@ public class MatchController implements Serializable {
         this.gameState = new GameState(this, requestedNumPlayers);
     }
 
+
+    /**
+     * Checks if the pinger timer is set.
+     *
+     * @return true if the pinger is set, false otherwise
+     */
     public boolean hasPinger() {
         return pinger != null;
     }
 
+
+    /**
+     * Sets the pinger timer.
+     *
+     * @param pinger the pinger timer to set
+     */
     public void setPinger(Timer pinger) {
         this.pinger = pinger;
     }
 
+
+    /**
+     * Stops the timer
+     */
     public void turnPingerOff() {
         if (pinger != null) pinger.cancel();
     }
 
+
+    /**
+     * Gets the requested number of players for this match.
+     *
+     * @return the requested number of players
+     */
     public Integer getRequestedNumPlayers(){
         return this.requestedNumPlayers;
     }
 
 
+    /**
+     * Updates the disconnected status of a player.
+     *
+     * @param nickname        the nickname of the player to update
+     * @param isDisconnected  true if the player is disconnected, false otherwise
+     * @return the rejoin state for the player
+     */
     public synchronized REJOIN_STATE updatePlayerStatus(String nickname, Boolean isDisconnected){
         Player player = getPlayerByNickname(nickname).orElse(null);
 
@@ -105,21 +134,44 @@ public class MatchController implements Serializable {
     }
 
 
+    /**
+     * Checks if a player is disconnected.
+     *
+     * @param index the index of the player to check
+     * @return true if the player is disconnected, false otherwise
+     */
     public synchronized Boolean isPlayerDisconnected(Integer index){
         return players.get(index).getIsDisconnected();
     }
 
 
+    /**
+     * Gets the number of online players.
+     *
+     * @return the number of online players
+     */
     public synchronized Integer getNumOnlinePlayers(){
         return Math.toIntExact(players.stream()
                 .filter(player -> !player.getIsDisconnected())
                 .count());
     }
 
+
+    /**
+     * Gets the list of players in the lobby.
+     *
+     * @return the list of lobby players
+     */
     public List<String> getLobbyPlayers(){
         return lobbyPlayers;
     }
 
+
+    /**
+     * Removes a player from the lobby.
+     *
+     * @param nickname the nickname of the player to remove
+     */
     public void removeLobbyPlayer(String nickname){
         lobbyPlayers.stream()
                 .filter(p -> p.equals(nickname))

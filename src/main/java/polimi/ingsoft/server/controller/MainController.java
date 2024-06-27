@@ -83,6 +83,7 @@ public class MainController {
         if(requiredNumPlayers < 2 || requiredNumPlayers > 4){
             throw new NotValidNumPlayersException();
         }
+
         int matchId = this.idMatch;
         idMatch += 1;
 
@@ -97,7 +98,6 @@ public class MainController {
      * Delete the MatchController for the specified match ID.
      *
      * @param matchId the ID of the match
-     * @throws MatchNotFoundException    if the match is not found
      */
     public synchronized void deleteMatch(int matchId){
         MatchController matchController = matches.get(matchId);
@@ -115,14 +115,11 @@ public class MainController {
      * @throws MatchNotFoundException    if the match is not found
      */
     public synchronized void joinMatch(Integer matchId, String nickname) throws MatchAlreadyFullException, MatchNotFoundException {
-        System.out.println("CONTROLLER: match exists result with id " + matchId + " " + matchExists(matchId));
         if(!matchExists(matchId)){
             throw new MatchNotFoundException();
         }
 
         MatchController match = getMatch(matchId);
-
-        System.out.println("CONTROLLER: match " + match);
 
         match.addPlayer(nickname);
     }

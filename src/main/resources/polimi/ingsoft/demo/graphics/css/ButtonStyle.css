@@ -1,6 +1,6 @@
 .splitMenuButtonSmall {
     -fx-font-size: 20px;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
@@ -29,7 +29,7 @@
     -fx-padding: 0.0em; /* Adjust padding as needed */
     /*-fx-text-fill: #d34813;*/
     /*-fx-text-fill: #705f16;*/
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-underline: true;
     -fx-text-base-color: #323232;
 }
@@ -41,7 +41,7 @@
     -fx-border-color: #dfd7b0;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
@@ -52,7 +52,7 @@
     -fx-border-color: #dfd7b0;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
@@ -64,7 +64,7 @@
     -fx-border-color: #dfd7b0;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
@@ -75,7 +75,7 @@
     -fx-border-color: #dfd7b0;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
@@ -86,7 +86,7 @@
     -fx-border-color: #dfd7b0;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
@@ -97,7 +97,7 @@
     -fx-border-color: #dfd7b0;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
@@ -108,7 +108,7 @@
     -fx-border-color: #323232;
     -fx-border-radius: 10;
     -fx-border-width: 2;
-    -fx-font-family: 'Old English Text MT';
+    -fx-font-family: 'Garamond';
     -fx-text-base-color: #323232;
 }
 
