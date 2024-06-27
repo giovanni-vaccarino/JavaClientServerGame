@@ -43,6 +43,8 @@ public class GameManager implements CLIPhaseManager {
         GameState initialGameState;
     }
 
+    private Thread playTurnThread;
+
     private final GameModel model = new GameModel();
     private final TemporaryModel temporaryModel = new TemporaryModel();
 
@@ -145,12 +147,16 @@ public class GameManager implements CLIPhaseManager {
         if (gamePhase == GAME_PHASE.PLAY || gamePhase == GAME_PHASE.LAST_ROUND) {
             if (isYourTurn) {
                 if (gamePhase == GAME_PHASE.LAST_ROUND) out.println(MESSAGES.LAST_ROUND.getValue());
-                new Thread(() -> playTurn(turnStep,gamePhase)).start();
+                playTurnThread = new Thread(() -> playTurn(turnStep,gamePhase));
+                playTurnThread.start();
             } else out.println("Wait for your turn!");
         } else if (gamePhase == GAME_PHASE.END) {
             out.println(MESSAGES.GAME_END.getValue());
             out.println("IL VINCITORE E': "+gameState.getWinners());
 
+            if(playTurnThread.isAlive()){
+                playTurnThread.interrupt();
+            }
             out.println(MESSAGES.GO_BACK_TO_MATCH_MENU.getValue());
             in.nextLine();
             cli.returnToMatchManager();
