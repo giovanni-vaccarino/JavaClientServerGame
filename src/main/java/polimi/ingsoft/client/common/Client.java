@@ -127,7 +127,6 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameState(GameState gameState) throws IOException{
-        // TODO move
         if(gameState.getGamePhase().equals(GAME_PHASE.END)){
             System.out.println("Il vincitore è: " + gameState.getWinners());
         }
@@ -137,7 +136,6 @@ public abstract class Client extends UnicastRemoteObject implements VirtualView,
 
     @Override
     public void showUpdateGameStart(PlaceInPublicBoard<ResourceCard> resource, PlaceInPublicBoard<GoldCard> gold, PlaceInPublicBoard<QuestCard> quest, Map<String, Board> boards) throws IOException {
-        // TODO remove this - Do not change this order
         ui.createPublicBoard(resource, gold, quest);
         ui.setPlayerBoards(boards);
     }

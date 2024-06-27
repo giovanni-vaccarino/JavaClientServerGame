@@ -362,7 +362,6 @@ public abstract class Server implements VirtualServer {
         synchronized (clientsToNotify) {
             for (var client : clientsToNotify) {
                 try {
-                    // TODO implement score
                     client.showUpdateBoard(nickname, coordinates, playedCard, score);
                 } catch (IOException ignored) { }
             }

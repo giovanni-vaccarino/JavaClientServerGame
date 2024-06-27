@@ -149,7 +149,6 @@ public class Coordinates implements Serializable, Cloneable {
     public Coordinates clone() {
         try {
             Coordinates clone = (Coordinates) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

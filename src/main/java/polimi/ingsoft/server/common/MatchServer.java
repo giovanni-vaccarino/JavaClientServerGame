@@ -48,7 +48,7 @@ public class MatchServer implements VirtualMatchServer {
 
     private final PrintStream logger;
     private final MatchController matchController;
-    // TODO temp
+
     private final Server server;
 
     private final Map<Class<? extends Exception>, ExceptionHandler> exceptionHandlers = new HashMap<>();
