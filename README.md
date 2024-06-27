@@ -57,6 +57,11 @@ The default comunication protocol is RMI. Appending the argument -socket, the ga
 ```
 java -jar <name_of_the_jar>.jar -rmi
 ```
+#### Running the client when JavaFX is not supported
+This line allows to execute the client on a computer that doesn't support JavaFx
+```
+java --module-path Desktop/javafx-sdk-21.0.3/lib --add-modules javafx.controls,javafx.fxml -Dprism.order=sw -Dprism.verbose=true -Djava.awt.headless=false --add-exports=javafx.graphics/com.sun.javafx.util=ALL-UNNAMED -jar Desktop/client.jar
+```
 
 ### Running the Server
 To start the server run the command:
