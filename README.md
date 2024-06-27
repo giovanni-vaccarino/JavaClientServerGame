@@ -55,7 +55,7 @@ java -jar <name_of_the_jar>.jar -cli
 #### Choosing the comunication protocol
 The default comunication protocol is RMI. Appending the argument -socket, the game will be started with tcp protocol. 
 ```
-java -jar <name_of_the_jar>.jar -rmi
+java -jar <name_of_the_jar>.jar -socket
 ```
 #### Running the client when JavaFX modules are not found
 ```
