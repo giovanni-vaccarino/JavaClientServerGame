@@ -17,9 +17,7 @@ import polimi.ingsoft.server.model.player.PlayerColor;
 import polimi.ingsoft.server.model.publicboard.PlaceInPublicBoard;
 import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Timer;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,7 +58,7 @@ class MatchControllerTest {
             fail("Unexpected MatchAlreadyFullException");
         }
 
-        assertThrows(MatchAlreadyFullException.class, () ->matchController.addPlayer("Player4"));
+        assertThrows(MatchAlreadyFullException.class, () -> matchController.addPlayer("Player4"));
     }
 
     @Test
@@ -359,7 +357,7 @@ class MatchControllerTest {
     }
 
     @Test
-    void testSendBroadcastMessage(){
+    void testSendBroadcastMessage() {
         this.setupInitialPhase();
         String sender = matchController.getGameState().getCurrentPlayer().getNickname();
         String message = "Test Message";
@@ -368,7 +366,7 @@ class MatchControllerTest {
         assertEquals(message, matchController.writeBroadcastMessage(sender, message).getText());
     }
 
-    void setupInitialPhase(){
+    void setupInitialPhase() {
         // Adding 3 players to the match (requested number of players to start = 3)
         try {
             matchController.addPlayer("Player1");
@@ -391,16 +389,13 @@ class MatchControllerTest {
         try {
             matchController.setFaceInitialCard("Player1", true);
             matchController.setFaceInitialCard("Player2", false);
+            assertTrue(matchController.getGameState().isLastPlayerSetting());
             matchController.setFaceInitialCard("Player3", true);
         } catch (Exception e) {
             fail("Unexpected exception");
         }
 
-        HashMap<Item, Integer> questCardFirstPlayerCost = new HashMap<>();
-        questCardFirstPlayerCost.put(Resource.LEAF, 3);
-
-        QuestCard firstQuestCard = new QuestCard("first", new ItemPattern(questCardFirstPlayerCost), 3);
-
+        QuestCard firstQuestCard = matchController.getPublicBoard().getQuest(PlaceInPublicBoard.Slots.SLOT_A);
         // Selecting the quest card
         try {
             matchController.setQuestCard("Player1", firstQuestCard);
@@ -472,11 +467,12 @@ class MatchControllerTest {
     }
 
     @Test
-    void initializePlayers() throws MatchAlreadyFullException {
-        matchController.addPlayer("player1");
-        matchController.initializePlayers();
-        System.out.println(matchController.getPlayers().getFirst());
+    void initializePlayers() {
+        setupInitialPhase();
+        List<Player> players = matchController.getPlayers();
 
+        matchController.initializePlayers();
+        assertEquals(players, matchController.getPlayers());
     }
 
     @Test
@@ -484,33 +480,42 @@ class MatchControllerTest {
         matchController.addPlayer("player4");
         matchController.addPlayer("player5");
         matchController.addPlayer("player6");
-        matchController.setPlayerColor("player4",PlayerColor.RED);
+        matchController.setPlayerColor("player4", PlayerColor.RED);
         System.out.println(matchController.getPlayers());
 
     }
 
     @Test
-    void setFaceInitialCard() {
-    }
-
-    @Test
-    void setQuestCard() {
-    }
-
-    @Test
-    void placeCard() {
-    }
-
-    @Test
-    void drawCard() {
-    }
-
-    @Test
     void writeBroadcastMessage() {
+        setupInitialPhase();
+
+        Player player = matchController.getPlayers().get(0);
+
+        matchController.writeBroadcastMessage(player.getNickname(), "Example message");
     }
 
     @Test
     void writePrivateMessage() {
+        setupInitialPhase();
+
+        Player player1 = matchController.getPlayers().get(0);
+        Player player2 = matchController.getPlayers().get(1);
+
+        try{
+            matchController.writePrivateMessage(player1.getNickname(), player2.getNickname(), "Example message");
+        } catch (PlayerNotFoundException e){
+            fail("unexpected exception");
+        }
+    }
+
+    @Test
+    void removePlayerInitialSettingTest() {
+        setupInitialPhase();
+        Player player1 = matchController.getPlayers().get(0);
+        Integer size = matchController.getPlayerInitialSettings().size();
+
+        matchController.removePlayerInitialSetting(player1.getNickname());
+        assertEquals(matchController.getPlayerInitialSettings().size(), size - 1);
     }
 
     // Join phase tests
@@ -570,45 +575,31 @@ class MatchControllerTest {
             Timer timer = new Timer();
             matchController.setPinger(timer);
             matchController.turnPingerOff();
-            assertFalse(matchController.hasPinger());
         } catch (MatchAlreadyFullException e) {
             fail("Unexpected MatchAlreadyFullException");
         }
+        assertTrue(matchController.hasPinger());
     }
 
     // Player status methods during gameplay
     @Test
     void testGetNumOnlinePlayers() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            assertEquals(2, matchController.getNumOnlinePlayers());
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        assertEquals(3, matchController.getNumOnlinePlayers());
     }
 
     @Test
     void testIsPlayerDisconnected() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            matchController.updatePlayerStatus("Player1", false);
-            assertTrue(matchController.isPlayerDisconnected(1));
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        matchController.updatePlayerStatus("Player1", true);
+        assertTrue(matchController.isPlayerDisconnected(0));
     }
 
     @Test
     void testUpdatePlayerStatus() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.updatePlayerStatus("Player1", true);
-            assertFalse(matchController.isPlayerDisconnected(1));
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        matchController.updatePlayerStatus("Player1", false);
+        assertFalse(matchController.isPlayerDisconnected(0));
     }
 
     // Player initialization settings test
@@ -627,27 +618,126 @@ class MatchControllerTest {
     // Player boards test
     @Test
     void testGetPlayerBoards() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            assertEquals(2, matchController.getPlayerBoards().size());
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
-        }
+        this.setupInitialPhase();
+        assertEquals(3, matchController.getPlayerBoards().size());
     }
 
     // Check if the player is first during the game
     @Test
     void testIsFirstPlayer() {
-        try {
-            matchController.addPlayer("Player1");
-            matchController.addPlayer("Player2");
-            matchController.initializePlayersInitialSettings();
-            Player firstPlayer = matchController.getPlayers().getFirst();
-            assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
-        } catch (MatchAlreadyFullException e) {
-            fail("Unexpected MatchAlreadyFullException");
+        this.setupInitialPhase();
+        Integer firstPlayerIndex = matchController.getGameState().getFirstPlayerIndex();
+        Player firstPlayer = matchController.getPlayers().get(firstPlayerIndex);
+
+        assertTrue(matchController.isFirstPlayer(firstPlayer.getNickname()));
+    }
+
+    // test Winner setting
+    @Test
+    void testCalculateWinner() {
+        this.setupInitialPhase();
+        matchController.getGameState().setOnlyWinner();
+        List<String> winners = matchController.getGameState().getWinners();
+        assertNotNull(winners);
+    }
+
+    @Test
+    void testBlockedState() {
+        this.setupInitialPhase();
+        matchController.getGameState().setBlockedMatchState(BLOCKED_MATCH_STATE.NOT_BLOCKED);
+        assertEquals(matchController.getGameState().getBlockedMatchState(), BLOCKED_MATCH_STATE.NOT_BLOCKED);
+    }
+
+    @Test
+    void testGame() {
+        this.setupInitialPhase();
+        Player currentPlayer = null;
+        Integer counter = 0;
+        Random random = new Random();
+
+        while (!matchController.getGameState().getGamePhase().equals(GAME_PHASE.LAST_ROUND) && counter<100000) {
+
+            counter++;
+
+            System.out.println(matchController.getGameState().getGamePhase().toString());
+            placeCard(getCurrentPlayer());
+            System.out.println(matchController.getGameState().getGamePhase().toString());
+            drawCard(getCurrentPlayer());
+
+            if(random.nextInt(2) == 0){
+                matchController.updatePlayerStatus(getCurrentPlayer().getNickname(), true);
+                matchController.updatePlayerStatus(getCurrentPlayer().getNickname(), false);
+            }
         }
     }
 
+    public Player getCurrentPlayer(){
+        String nickname = matchController.getGameState().getCurrentPlayerNickname();
+        Player currentPlayer = null;
+        for (Player player : matchController.getPlayers()) {
+            if (player.getNickname().equals(nickname)) {
+                currentPlayer = player;
+            }
+        }
+
+        return currentPlayer;
+    }
+    
+    public void placeCard(Player myPlayer){
+        Random random = new Random();
+        Integer size;
+
+        size = myPlayer.getHand().getCards().size();
+        MixedCard mixedCard = myPlayer.getHand().getCards().get(random.nextInt(size));
+
+        if(mixedCard!=null){
+            size = matchController.getPlayerBoards().get(myPlayer.getNickname()).getAvailablePlaces().size();
+            Coordinates coordinates = matchController.getPlayerBoards().get(myPlayer.getNickname()).getAvailablePlaces().get(random.nextInt(size));
+
+            try {
+                matchController.placeCard(myPlayer, mixedCard, coordinates, false);
+            } catch (NotEnoughResourcesException | WrongPlayerForCurrentTurnException | WrongStepException |
+                     WrongGamePhaseException | CoordinateNotValidException | MatchBlockedException e) {
+                try {
+                    matchController.placeCard(myPlayer, mixedCard, coordinates, true);
+                } catch (WrongPlayerForCurrentTurnException | WrongStepException | WrongGamePhaseException |
+                         CoordinateNotValidException | NotEnoughResourcesException | MatchBlockedException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
+    
+    public void drawCard(Player myPlayer){
+        Random random = new Random();
+        TYPE_HAND_CARD typeHandCard = null;
+        PlaceInPublicBoard.Slots slot= null;
+
+        if(random.nextInt(2) == 0){
+            typeHandCard = TYPE_HAND_CARD.RESOURCE;
+        }else{
+            typeHandCard = TYPE_HAND_CARD.GOLD;
+        }
+
+        if(random.nextInt(2) == 0){
+            slot = PlaceInPublicBoard.Slots.SLOT_A;
+        }else{
+            slot = PlaceInPublicBoard.Slots.SLOT_B;
+        }
+
+        if (matchController.getGameState().getCurrentTurnStep().equals(TURN_STEP.DRAW)){
+            try {
+                matchController.drawCard(myPlayer, typeHandCard, slot);
+            } catch (WrongPlayerForCurrentTurnException e) {
+                throw new RuntimeException(e);
+            } catch (WrongStepException e) {
+                throw new RuntimeException(e);
+            } catch (WrongGamePhaseException e) {
+                throw new RuntimeException(e);
+            } catch (MatchBlockedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 }

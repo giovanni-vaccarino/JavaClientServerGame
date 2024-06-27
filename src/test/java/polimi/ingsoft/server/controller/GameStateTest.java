@@ -1,68 +1,27 @@
 package polimi.ingsoft.server.controller;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import polimi.ingsoft.server.exceptions.MatchExceptions.ColorAlreadyPickedException;
+import polimi.ingsoft.server.factories.PublicBoardFactory;
+import polimi.ingsoft.server.model.player.PlayerColor;
+import polimi.ingsoft.server.model.publicboard.PublicBoard;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameStateTest {
+    private MatchController matchController;
+    private GameState gameState;
 
-    @Test
-    void getCurrentPlayer() {
-    }
-
-    @Test
-    void getFirstPlayerIndex() {
-    }
-
-    @Test
-    void getGamePhase() {
-    }
-
-    @Test
-    void getCurrentInitialStep() {
-    }
-
-    @Test
-    void getCurrentTurnStep() {
-    }
-
-    @Test
-    void getCurrentPlayerNickname() {
-    }
-
-    @Test
-    void updateState() {
-    }
-
-    @Test
-    void updateInitialStep() {
-    }
-
-    @Test
-    void updateTurnStep() {
-    }
-
-    @Test
-    void validateMove() {
-    }
-
-    @Test
-    void validateInitialChoice() {
-    }
-
-    @Test
-    void checkColorAvailability() {
-    }
-
-    @Test
-    void goToNextPlayer() {
-    }
-
-    @Test
-    void getWinners() {
+    @BeforeEach
+    void setUp() {
+        PublicBoard publicBoard = PublicBoardFactory.createPublicBoard();
+        matchController = new MatchController(System.out, 1, 3, publicBoard, new ChatController());
+        gameState = matchController.getGameState();
     }
 
     @Test
     void testClone() {
+        gameState.clone();
     }
 }

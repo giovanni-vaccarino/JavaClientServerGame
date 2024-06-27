@@ -1,9 +1,9 @@
 package polimi.ingsoft.server.common;
 
 import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.common.Utils.MatchTimer;
 import polimi.ingsoft.server.common.command.MatchServerCommand;
 import polimi.ingsoft.server.controller.MatchController;
-import polimi.ingsoft.server.controller.MatchTimer;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.*;
 import polimi.ingsoft.server.model.player.PlayerColor;

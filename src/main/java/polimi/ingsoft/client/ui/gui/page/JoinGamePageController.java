@@ -11,7 +11,7 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.stage.Stage;
 import polimi.ingsoft.client.ui.gui.GUI;
 import polimi.ingsoft.client.ui.gui.GUIsingleton;
-import polimi.ingsoft.server.common.MatchData;
+import polimi.ingsoft.server.common.Utils.MatchData;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
 
 import java.io.IOException;

@@ -1,6 +1,7 @@
 package polimi.ingsoft.server.common;
 
 import polimi.ingsoft.client.common.VirtualView;
+import polimi.ingsoft.server.common.Utils.MatchData;
 import polimi.ingsoft.server.common.command.ClientCommand;
 import polimi.ingsoft.server.controller.GameState;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;

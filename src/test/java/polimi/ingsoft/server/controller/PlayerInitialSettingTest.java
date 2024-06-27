@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import polimi.ingsoft.server.factories.DeckFactory;
 import polimi.ingsoft.server.model.cards.InitialCard;
 import polimi.ingsoft.server.model.cards.QuestCard;
-import polimi.ingsoft.server.model.decks.Deck;
 import polimi.ingsoft.server.model.decks.PlayerHand;
 import polimi.ingsoft.server.model.player.PlayerColor;
 

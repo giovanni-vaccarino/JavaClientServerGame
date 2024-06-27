@@ -10,7 +10,6 @@ import polimi.ingsoft.server.enumerations.INITIAL_STEP;
 import polimi.ingsoft.server.enumerations.TURN_STEP;
 import polimi.ingsoft.server.model.cards.QuestCard;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
@@ -76,16 +75,6 @@ public class GameState implements Serializable, Cloneable {
      */
     public Player getCurrentPlayer() {
         return matchController.getPlayers().get(currentPlayerIndex);
-    }
-
-
-    /**
-     * Returns the list of player nicknames.
-     *
-     * @return the list of player nicknames
-     */
-    private List<String> getPlayersNick(){
-        return this.matchController.getNamePlayers();
     }
 
 

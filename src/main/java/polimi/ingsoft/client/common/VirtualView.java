@@ -1,7 +1,7 @@
 package polimi.ingsoft.client.common;
 
 
-import polimi.ingsoft.server.common.MatchData;
+import polimi.ingsoft.server.common.Utils.MatchData;
 import polimi.ingsoft.server.common.command.ClientCommand;
 import polimi.ingsoft.server.controller.PlayerInitialSetting;
 import polimi.ingsoft.server.enumerations.ERROR_MESSAGES;
