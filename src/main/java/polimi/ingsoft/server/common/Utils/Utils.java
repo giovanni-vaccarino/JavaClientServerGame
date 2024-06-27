@@ -18,13 +18,20 @@ public class Utils {
         StringBuilder sb = new StringBuilder(10);
 
         for (int i = 0; i < 10; i++) {
-            int index = (int)(AlphaNumericString.length() * Math.random());
+            int index = (int) (AlphaNumericString.length() * Math.random());
             sb.append(AlphaNumericString.charAt(index));
         }
 
         return sb.toString();
     }
 
+    /**
+     * Allows to exclude localhost Network Interfaces and IPV6 interfaces
+     *
+     * @param out allows to print log
+     * @return the proper Client's IP
+     * @throws UnknownHostException whenever the host is unknown
+     */
     public static String getHostAddress(PrintStream out) throws UnknownHostException {
         try {
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
