@@ -36,7 +36,7 @@ Line Coverage:
 The screenshots can be found at deliverables/Test Coverage
 
 ## JavaDoc
-The JavaDoc can be found at deliverables/JavaDoc, by opening index.html
+The JavaDoc can be easily generated from the IDE
 
 ## Running the game
 The jars can be found at deliverables/JARs
